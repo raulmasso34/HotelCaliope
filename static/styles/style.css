@@ -78,4 +78,120 @@ body {
 .login-container .register-link:hover {
     color: #4d9dc7;
 }
-       
+.logo{
+    height: 100px;
+    margin-bottom: 5%;
+}
+
+/*---------------REGISTRO--------------*/
+/* Reset de márgenes y padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo del cuerpo y el fondo */
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f6f5f2; /* Fondo crema */
+}
+
+/* Contenedor del formulario */
+.register-container {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.register-container:hover {
+    transform: translateY(-5px);
+}
+
+/* Encabezado con logo */
+.header {
+    margin-bottom: 1.5rem;
+}
+
+.logo {
+    width: 80px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.register-container h2 {
+    color: #4a5568;
+    font-size: 24px;
+    margin-bottom: 0.3rem;
+}
+
+.register-container p {
+    color: #718096;
+    font-size: 16px;
+    margin-bottom: 1.5rem;
+}
+
+/* Campos de entrada */
+.register-container input[type="text"],
+.register-container input[type="email"],
+.register-container input[type="password"] {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    background-color: #f3f4f6;
+    color: #4a5568;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+/* Efecto hover y enfoque en los campos */
+.register-container input[type="text"]:focus,
+.register-container input[type="email"]:focus,
+.register-container input[type="password"]:focus {
+    border-color: #6cb2eb;
+    background-color: #eaf4fb;
+}
+
+/* Botón de registro */
+.register-container button {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #6cb2eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.register-container button:hover {
+    background-color: #4d9dc7;
+}
+
+/* Enlace a la página de login */
+.register-container .login-link {
+    display: block;
+    margin-top: 1rem;
+    font-size: 14px;
+    color: #6cb2eb;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.register-container .login-link:hover {
+    color: #4d9dc7;
+}

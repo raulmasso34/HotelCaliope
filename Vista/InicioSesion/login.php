@@ -10,7 +10,7 @@
     <div class="login-container">
        
         <div class="header">
-            <img src="https://via.placeholder.com/80" alt="Hotel Logo" class="logo">
+            <img class="logo" src="../../static/img/logo.png" alt="Hotel Logo" class="logo">
             <h2>Bienvenido al Hotel Caliope</h2>
           
         </div>
@@ -20,7 +20,7 @@
             <input type="text" placeholder="Username" required>
             <input type="password" placeholder="Password" required>
             <button type="submit">Login</button>
-            <a href="#" class="register-link">Crear cuenta</a>
+            <a href="registre.php" class="register-link">Crear cuenta</a>
         </form>
     </div>
 </body>
