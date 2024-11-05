@@ -20,7 +20,7 @@
             <input type="text" placeholder="Username" required>
             <input type="password" placeholder="Password" required>
             <button type="submit">Login</button>
-            <a href="registre.php" class="register-link">Crear cuenta</a>
+            <a href="registre.php" class="login-link">No tienes cuenta? Registrate</a>
         </form>
     </div>
 </body>
