@@ -3,10 +3,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// index.php o donde inicialices el controlador
-require_once('../config/Database.php'); // Asegúrate de que esta ruta sea correcta
-require_once('../models/Usuario.php'); // Asegúrate de incluir el modelo de Usuario
-
+require_once('../../Configuracion/Database.php'); 
+require_once('../../Modelo/UersModel/LoginModel.php');
 
 // Crear conexión a la base de datos    
 $db = new Database();
@@ -29,30 +27,34 @@ class LoginController {
 
         // Verificar si se envió el formulario de login
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['Username'];
-            $password = $_POST['password'];
+            // Validar que los campos existen y no están vacíos
+            $username = isset($_POST['Username']) ? $_POST['Username'] : '';
+            $password = isset($_POST['password']) ? $_POST['password'] : '';
 
-            // Verificar las credenciales
-            $user = $this->usuarioModel->getUserByUsername($username);
-            if ($user && password_verify($password, $user['Password'])) {
-                echo "Usuario autenticado correctamente"; // Mensaje temporal
-                $_SESSION['Username'] = $user['Username'];
-                $_SESSION['ID_Usuari'] = $user['ID_Usuari'];
-                $_SESSION['role'] = $user['role']; 
+            if (!empty($username) && !empty($password)) {
+                // Verificar las credenciales
+                $user = $this->usuarioModel->getUserByUsername($username);
                 
-                // Redirige al dashboard o página de inicio
-                header('Location: ../views/layout/main.php');
-                exit();
+                if ($user && password_verify($password, $user['Password'])) {
+                    // Autenticación correcta
+                    $_SESSION['Usuari'] = $user['Usuari'];
+                    $_SESSION['Id_Client'] = $user['Id_Client'];
+                    
+                    // Redirige al dashboard o página de inicio
+                    header('Location: ../../Vista/Inicio/index.php');
+                    exit();
+                } else {
+                    // Autenticación fallida, redirige a la página de login
+                    $error_message = "Usuari o contrasenya incorrecta.";
+                    header('Location: ../../Vista/InicioSesion/login.php?error=' . urlencode($error_message));
+                    exit();
+                }
             } else {
-                echo "<h1>Fallo en la autenticación</h1>"; // Mensaje temporal para depurar
-                $error_message = "Usuari o contrasenya incorrecta.";
-                header('../views/usuarios/login.php');
-                exit();
+                echo "<h1>Faltan datos de usuario o contraseña</h1>"; // Mensaje para depurar
             }
-            
         } else {
             // Si no es una solicitud POST, solo carga la vista de login
-            require_once('../views/usuarios/login.php');
+            require_once('../../Vista/InicioSesion/login.php');
         }
     }
 
@@ -60,7 +62,7 @@ class LoginController {
     public function logout() {
         session_start();
         session_destroy(); // Destruye la sesión
-        header('Location: ../views/usuarios/login.php'); // Redirige al formulario de login
+        header('Location: ../../Vista/InicioSesion/login.php'); // Redirige al formulario de login
         exit();
     }
 }

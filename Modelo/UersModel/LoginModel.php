@@ -1,110 +1,75 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-require_once '/var/www/html/MCV/config/Database.php';
-
-class Usuario {
+class Client {
     private $con;
 
     public function __construct($dbConnection) {
         $this->con = $dbConnection; // Almacenar la conexión a la base de datos
     }
 
-    public function getUserByUsername($username) {
-        $sql = "SELECT ID_Usuari, Username, Password, role FROM Usuaris WHERE BINARY Username = ?";
+    // Método para obtener un cliente por su ID
+    public function getClientById($idClient) {
+        $sql = "SELECT Id_Client, Nom, Cognom, DNI, CorreuElectronic, Telefon, Usuari, Password, Id_Pais FROM Clients WHERE Id_Client = ?";
         $stmt = $this->con->prepare($sql);
-
-        if (!$stmt) {
-            die("Error en la preparación de la consulta: " . $this->con->error);
-        }
-
-        $stmt->bind_param("s", $username);
+        $stmt->bind_param("i", $idClient);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        if ($result->num_rows > 0) {
-            return $result->fetch_assoc();
+        return $result->num_rows > 0 ? $result->fetch_assoc() : null;
+    }
+
+    // Método para registrar un nuevo cliente
+    public function registerClient($nom, $cognom, $dni, $correuElectronic, $telefon, $usuari, $hashed_password, $idPais) {
+        $sql = "INSERT INTO Clients (Nom, Cognom, DNI, CorreuElectronic, Telefon, Usuari, Password, Id_Pais) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("sssssissi", $nom, $cognom, $dni, $correuElectronic, $telefon, $usuari, $hashed_password, $idPais);
+
+        if ($stmt->execute()) {
+            return true; // Registro exitoso
         } else {
-            return null;
+            throw new Exception("Error en la consulta SQL: " . $stmt->error);
         }
+    }
+
+    // Método para actualizar el perfil del cliente
+    public function updateClient($idClient, $nom, $cognom, $dni, $correuElectronic, $telefon, $usuari, $newPassword = null) {
+        if ($newPassword) {
+            $hashed_password = password_hash($newPassword, PASSWORD_DEFAULT);
+            $sql = "UPDATE Clients SET Nom = ?, Cognom = ?, DNI = ?, CorreuElectronic = ?, Telefon = ?, Usuari = ?, Password = ? WHERE Id_Client = ?";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bind_param("sssssisi", $nom, $cognom, $dni, $correuElectronic, $telefon, $usuari, $hashed_password, $idClient);
+        } else {
+            $sql = "UPDATE Clients SET Nom = ?, Cognom = ?, DNI = ?, CorreuElectronic = ?, Telefon = ?, Usuari = ? WHERE Id_Client = ?";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bind_param("ssssssi", $nom, $cognom, $dni, $correuElectronic, $telefon, $usuari, $idClient);
+        }
+
+        return $stmt->execute(); // Devuelve el resultado de la ejecución
+    }
+
+    // Método para eliminar un cliente
+    public function deleteClient($idClient) {
+        $sql = "DELETE FROM Clients WHERE Id_Client = ?";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("i", $idClient);
+        return $stmt->execute(); // Devuelve el resultado de la ejecución
     }
 
     // Método para comprobar si un DNI ya está registrado
     public function checkDNI($dni) {
-        $sql = "SELECT * FROM Usuaris WHERE DNI = ?";
+        $sql = "SELECT * FROM Clients WHERE DNI = ?";
         $stmt = $this->con->prepare($sql);
         $stmt->bind_param("s", $dni);
         $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
-        return $result;
+        return $stmt->get_result()->num_rows > 0; // Retorna verdadero si el DNI ya existe
     }
 
     // Método para comprobar si un nombre de usuario ya está en uso
-    public function checkUsername($username) {
-        $sql = "SELECT * FROM Usuaris WHERE Username = ?";
+    public function checkUsername($usuari) {
+        $sql = "SELECT * FROM Clients WHERE Usuari = ?";
         $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("s", $username);
+        $stmt->bind_param("s", $usuari);
         $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
-        return $result;
-    }
-
-    // Método para registrar un nuevo usuario
-    public function registerUser($username, $hashed_password, $role, $id_jugador, $id_entrenador, $dni) {
-        $sql = "INSERT INTO Usuaris (Username, `Password`, `role`, ID_Jugadors, ID_Entrenador, DNI) VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("ssssis", $username, $hashed_password, $role, $id_jugador, $id_entrenador, $dni);
-
-        if ($stmt->execute()) {
-            $stmt->close();
-            return true;  // Registro exitoso
-        } else {
-            echo "Error en la consulta SQL: " . $stmt->error;
-            $stmt->close();
-            return false;  // Error en el registro
-        }
-    }
-
-    // Método para actualizar el perfil del usuario
-    public function updateProfile($userId, $newUsername, $newPassword) {
-        if (empty($newPassword)) {
-            // Si no hay nueva contraseña, solo actualiza el nombre de usuario
-            $sql = "UPDATE Usuaris SET Username = ? WHERE ID_Usuari = ?";
-            $stmt = $this->con->prepare($sql);
-            $stmt->bind_param("si", $newUsername, $userId); // "si" para un string y un entero
-        } else {
-            // Si hay nueva contraseña, actualiza nombre de usuario y contraseña
-            $hashed_password = password_hash($newPassword, PASSWORD_DEFAULT);
-            $sql = "UPDATE Usuaris SET Username = ?, `Password` = ? WHERE ID_Usuari = ?";
-            $stmt = $this->con->prepare($sql);
-            $stmt->bind_param("ssi", $newUsername, $hashed_password, $userId); // "ssi" para dos strings y un entero
-        }
-
-        // Ejecutar la consulta
-        $result = $stmt->execute();
-        $stmt->close(); // Cierra la declaración después de ejecutarla
-        return $result; // Devuelve el resultado de la ejecución
-    }
-
-    // Método para obtener un usuario por su ID
-    public function getUserById($userId) {
-        $sql = "SELECT ID_Usuari, Username, role FROM Usuaris WHERE ID_Usuari = ?";
-        $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("i", $userId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            return $result->fetch_assoc();
-        } else {
-            return null;
-        }
-
-        $stmt->close(); // Este código no se ejecutará porque `return` termina la función
+        return $stmt->get_result()->num_rows > 0; // Retorna verdadero si el nombre de usuario ya existe
     }
 }
 ?>
