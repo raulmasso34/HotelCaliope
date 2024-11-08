@@ -25,44 +25,46 @@ class LoginController {
 
     public function login() {
         session_start(); // Iniciar la sesión
-
-        // Verificar si se envió el formulario de login
+    
+        // Verificar si se envió el formulario de login (POST)
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Validar que los campos existen y no están vacíos
-            $username = isset($_POST['usuario']) ? trim($_POST['usuario']) : ''; // Modificado para coincidir con el formulario
-            $dni = isset($_POST['dni']) ? trim($_POST['dni']) : ''; // Agregado para DNI
-            $password = isset($_POST['password']) ? $_POST['password'] : '';
-
+            $username = isset($_POST['Usuari']) ? trim($_POST['Usuari']) : ''; // Nombre de usuario
+            $dni = isset($_POST['DNI']) ? trim($_POST['DNI']) : ''; // DNI
+            $password = isset($_POST['Password']) ? $_POST['Password'] : ''; // Contraseña
+    
+            // Verificar si los campos no están vacíos
             if (!empty($username) && !empty($dni) && !empty($password)) {
-                // Buscar al usuario por su nombre de usuario o DNI
-                $user = $this->usuarioModel->getUserByUsernameOrDni($username, $dni);
+                // Buscar al usuario por nombre de usuario o DNI
+                $user = $this->usuarioModel->getUserByUsername($username, $dni);
                 
+                // Verificar que el usuario existe y la contraseña es correcta
                 if ($user && password_verify($password, $user['Password'])) {
-                    // Autenticación correcta
-                    $_SESSION['Usuari'] = $user['Usuari'];
-                    $_SESSION['Id_Client'] = $user['Id_Client'];
-                    
-                    // Redirige al dashboard o página de inicio
+                    // Autenticación exitosa
+                    $_SESSION['Usuari'] = $user['Usuari']; // Nombre de usuario en sesión
+                    $_SESSION['Id_Client'] = $user['Id_Client']; // ID del cliente en sesión
+        
+                    // Redirigir al dashboard o página de inicio
                     header('Location: ../../Vista/Inicio/index.php');
                     exit();
                 } else {
-                    // Autenticación fallida, redirige a la página de login con un mensaje de error
+                    // Autenticación fallida, redirigir a la página de login con un mensaje de error
                     $error_message = "Usuario o contraseña incorrecta.";
                     header('Location: ../../Vista/InicioSesion/login.php?error=' . urlencode($error_message));
                     exit();
                 }
             } else {
-                // Si los campos están vacíos
+                // Si algún campo está vacío, redirigir con mensaje de error
                 $error_message = "Por favor, complete todos los campos.";
                 header('Location: ../../Vista/InicioSesion/login.php?error=' . urlencode($error_message));
                 exit();
             }
         } else {
-            // Si no es una solicitud POST, solo carga la vista de login
+            // Si no es una solicitud POST, mostrar el formulario de login
             require_once('../../Vista/InicioSesion/login.php');
         }
     }
-
+    
     // Cerrar sesión
     public function logout() {
         session_start();
