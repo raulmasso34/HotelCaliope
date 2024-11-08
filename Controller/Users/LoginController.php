@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once('../../Configuracion/Database.php'); 
-require_once('../../Modelo/UersModel/LoginModel.php');
+require_once('../../Modelo/UsersModel/LoginModel.php');
 
 // Crear conexión a la base de datos    
 $db = new Database();
