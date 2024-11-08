@@ -21,10 +21,11 @@ ini_set('display_errors', 1);
         
         <!-- Formulario de Login -->
         <form action="../../Controller/Users/LoginController.php" method="POST">
-            <input type="text" name="usuario" placeholder="Usuario" required>
-            <input type="text" name="dni" placeholder="DNI" required>
-            <input type="password" name="password" placeholder="Contraseña" required>
-            <button type="submit">Login</button>
+        <input type="text" name="Usuari" placeholder="Usuario" required>
+        <input type="text" name="DNI" placeholder="DNI" required>
+        <input type="password" name="Password" placeholder="Contraseña" required>
+
+        <button type="submit">Login</button>
             <a href="registre.php" class="login-link">No tienes cuenta? Regístrate</a>
         </form>
     </div>
