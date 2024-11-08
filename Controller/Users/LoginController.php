@@ -17,6 +17,7 @@ $loginController->login(); // Llama al método login
 class LoginController {
     private $usuarioModel;
 
+    // Constructor que recibe la conexión a la base de datos
     public function __construct($dbConnection) {
         // Crear una instancia del modelo con la conexión a la DB
         $this->usuarioModel = new Usuario($dbConnection);
@@ -28,12 +29,13 @@ class LoginController {
         // Verificar si se envió el formulario de login
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Validar que los campos existen y no están vacíos
-            $username = isset($_POST['Username']) ? $_POST['Username'] : '';
+            $username = isset($_POST['usuario']) ? trim($_POST['usuario']) : ''; // Modificado para coincidir con el formulario
+            $dni = isset($_POST['dni']) ? trim($_POST['dni']) : ''; // Agregado para DNI
             $password = isset($_POST['password']) ? $_POST['password'] : '';
 
-            if (!empty($username) && !empty($password)) {
-                // Verificar las credenciales
-                $user = $this->usuarioModel->getUserByUsername($username);
+            if (!empty($username) && !empty($dni) && !empty($password)) {
+                // Buscar al usuario por su nombre de usuario o DNI
+                $user = $this->usuarioModel->getUserByUsernameOrDni($username, $dni);
                 
                 if ($user && password_verify($password, $user['Password'])) {
                     // Autenticación correcta
@@ -44,13 +46,16 @@ class LoginController {
                     header('Location: ../../Vista/Inicio/index.php');
                     exit();
                 } else {
-                    // Autenticación fallida, redirige a la página de login
-                    $error_message = "Usuari o contrasenya incorrecta.";
+                    // Autenticación fallida, redirige a la página de login con un mensaje de error
+                    $error_message = "Usuario o contraseña incorrecta.";
                     header('Location: ../../Vista/InicioSesion/login.php?error=' . urlencode($error_message));
                     exit();
                 }
             } else {
-                echo "<h1>Faltan datos de usuario o contraseña</h1>"; // Mensaje para depurar
+                // Si los campos están vacíos
+                $error_message = "Por favor, complete todos los campos.";
+                header('Location: ../../Vista/InicioSesion/login.php?error=' . urlencode($error_message));
+                exit();
             }
         } else {
             // Si no es una solicitud POST, solo carga la vista de login
@@ -66,4 +71,3 @@ class LoginController {
         exit();
     }
 }
-?>
