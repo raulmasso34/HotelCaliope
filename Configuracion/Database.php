@@ -3,7 +3,7 @@ class Database {
     private $servername = "localhost"; // Servidor MySQL
     private $username = "root"; // Nombre de usuario de la base de datos
     private $password = "password"; // Cambia esto según tu configuración
-    private $dbname = "hotelcaliope"; // Cambia esto según tu base de datos
+    private $dbname = "HotelCaliope"; // Cambia esto según tu base de datos
     public $connection;
 
     public function getConnection() {
