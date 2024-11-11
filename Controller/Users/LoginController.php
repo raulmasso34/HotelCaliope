@@ -1,9 +1,7 @@
-
-
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+error_reporting(E_ALL); // Asegúrate de que los errores se muestren
 
 require_once '../../Modelo/UsersModel/LoginModel.php'; // Incluir el modelo
 
@@ -12,7 +10,6 @@ class LoginController {
 
     // Constructor que recibe la conexión a la base de datos
     public function __construct($dbConnection) {
-        // Crear una instancia del modelo con la conexión a la DB
         $this->usuarioModel = new LoginModel($dbConnection); 
     }
 
@@ -29,7 +26,7 @@ class LoginController {
     
             // Registrar los valores recibidos en el formulario para depuración
             error_log("Usuario: " . $username);  // Log de usuario
-            error_log("Password " . $password); // Log de contraseña
+            error_log("Password: " . $password); // Log de contraseña
             error_log("DNI: " . $dni); // Log de DNI
     
             // Verificar si los campos no están vacíos
@@ -43,6 +40,7 @@ class LoginController {
                     // Autenticación exitosa
                     $_SESSION['Usuari'] = $user['Usuari']; // Nombre de usuario en sesión
                     $_SESSION['Id_Client'] = $user['Id_Client']; // ID del cliente en sesión
+                    error_log("Login exitoso para el usuario: " . $user['Usuari']);
     
                     // Redirigir a la página de inicio después del login exitoso
                     header('Location: ../../Vista/Inicio/index.php');
@@ -75,4 +73,3 @@ class LoginController {
         exit(); // Terminar el script
     }
 }
-?>

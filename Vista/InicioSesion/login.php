@@ -1,12 +1,10 @@
-<!-- /Vista/InicioSesion/login.php -->
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Hotel Caliope</title>
-    <link rel="stylesheet" href="../../static/styles/style.css">
+    <link rel="stylesheet" href="../../static/styles/style.css"> <!-- Ajusta la ruta si es necesario -->
 </head>
 <body>
     <div class="login-container">
@@ -22,9 +20,10 @@
             <input type="password" name="Password" placeholder="Contraseña" required>
 
             <button type="submit">Login</button>
-           
         </form>
-        <a href="registre.php" class="login-link">No tienes cuenta? Regístrate</a>
+        
+        <!-- Enlace para registro de nuevo usuario -->
+        <a href="registre.php" class="login-link">¿No tienes cuenta? Regístrate</a>
 
         <!-- Mostrar mensaje de error si existe -->
         <?php if (isset($_GET['error'])): ?>
