@@ -37,7 +37,7 @@
   <a href="#">Academy</a>
   <a href="#">YouTube</a>
   </div>
-</div>
+</div>hola
 </td>
   <td>
   <div class="dropdown">
@@ -50,13 +50,9 @@
 </div>
 </td>
 </table>
-
-
-
 </section>
 <section id="iniciar" class="iniciar">
 <img src="../../imagenes/header/iniciar.png" alt="iniciar">
-
 </section>
 </header>
 <hr>
