@@ -6,7 +6,6 @@
 
     <link rel="stylesheet" href="../../css/inicio/style.css">
 
-    <link rel="stylesheet" href="../../static/styles/style.css">
 
     <title>HotelCaliope</title>
 </head>
@@ -36,7 +35,7 @@
   <a href="#">Academy</a>
   <a href="#">YouTube</a>
   </div>
-</div>hola
+</div>
 </td>
   <td>
   <div class="dropdown">
