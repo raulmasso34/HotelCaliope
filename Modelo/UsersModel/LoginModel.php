@@ -1,34 +1,35 @@
 <?php
+require_once __DIR__ . '/../../Configuracion/Database.php';  // Asegúrate de que la ruta sea correcta
+
 class LoginModel {
-    private $con;
+    private $conn;
 
-    // Constructor que recibe la conexión a la base de datos
-    public function __construct($dbConnection) {
-        $this->con = $dbConnection; // Almacenar la conexión a la base de datos
+    public function __construct($db) {
+        $this->conn = $db;  // Establecer la conexión
     }
 
-    // Método para obtener un usuario por su nombre de usuario o DNI
-    public function getUserByUsername($username) {
-        // Query SQL para obtener el usuario
-        $sql = "SELECT Id_Client, Usuari, Password FROM Clients WHERE Usuari = ?";
-        $stmt = $this->con->prepare($sql);
-        
-        // Vincular parámetros y ejecutar la consulta
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    public function authenticate($username, $password) {
+        // Consulta para obtener el usuario por su nombre
+        $sql = "SELECT * FROM Clients WHERE Usuari = ?";
 
-        // Si hay resultados, devolverlos
-        if ($result->num_rows > 0) {
-            return $result->fetch_assoc(); // Retorna los datos del usuario si existe
-        } else {
-            return null; // Usuario no encontrado
+        // Preparar la consulta
+        if ($stmt = $this->conn->prepare($sql)) {
+            $stmt->bind_param("s", $username);  // Asociar el parámetro
+            $stmt->execute();  // Ejecutar la consulta
+
+            // Obtener los resultados
+            $result = $stmt->get_result();
+
+            // Si encontramos el usuario
+            if ($user = $result->fetch_assoc()) {
+                // Verificar la contraseña usando password_verify
+                if (password_verify($password, $user['Password'])) {
+                    return $user;  // Usuario autenticado correctamente
+                }
+            }
         }
-    }
 
-    // Método para verificar la contraseña
-    public function verifyPassword($hashedPassword, $password) {
-        return password_verify($password, $hashedPassword); // Compara la contraseña cifrada
+        return false;  // Si no se encontró el usuario o la contraseña no es válida
     }
 }
 ?>
