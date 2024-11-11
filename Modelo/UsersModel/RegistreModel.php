@@ -1,11 +1,9 @@
 <?php
-// /models/RegistreModel.php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../../Configuracion/Database.php';
+
 
 class RegistreModel {
     private $conn;
-    private $table_name = "cliente";
-
     public $nom;
     public $cognom;
     public $dni;
@@ -21,25 +19,26 @@ class RegistreModel {
     }
 
     public function registrar() {
-        $query = "INSERT INTO " . $this->table_name . " (Nom, Cognom, DNI, CorreuElectronic, Telefon, Usuari, Password, Ciudad, CodigoPostal)
-                  VALUES (:nom, :cognom, :dni, :correuElectronic, :telefon, :usuari, :password, :ciudad, :codigoPostal)";
-        
-        $stmt = $this->conn->prepare($query);
+        // Usamos los placeholders ? para mysqli
+        $sql = "INSERT INTO Clients (Nom, Cognom, DNI, CorreuElectronic, Telefon, Usuari, Password, Ciudad, CodigoPostal)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        // Hash de la contraseña
-        $hashed_password = password_hash($this->password, PASSWORD_BCRYPT);
+        $stmt = $this->conn->prepare($sql);
 
-        $stmt->bindParam(":nom", $this->nom);
-        $stmt->bindParam(":cognom", $this->cognom);
-        $stmt->bindParam(":dni", $this->dni);
-        $stmt->bindParam(":correuElectronic", $this->correuElectronic);
-        $stmt->bindParam(":telefon", $this->telefon);
-        $stmt->bindParam(":usuari", $this->usuari);
-        $stmt->bindParam(":password", $hashed_password);
-        $stmt->bindParam(":ciudad", $this->ciudad);
-        $stmt->bindParam(":codigoPostal", $this->codigoPostal);
+        // Bind de parámetros
+        $stmt->bind_param("sssssssss", 
+            $this->nom, 
+            $this->cognom, 
+            $this->dni, 
+            $this->correuElectronic, 
+            $this->telefon, 
+            $this->usuari, 
+            password_hash($this->password, PASSWORD_BCRYPT), // Encriptamos la contraseña
+            $this->ciudad, 
+            $this->codigoPostal
+        );
 
-        return $stmt->execute();
+        return $stmt->execute(); // Devuelve true si la ejecución es exitosa
     }
 }
 ?>
