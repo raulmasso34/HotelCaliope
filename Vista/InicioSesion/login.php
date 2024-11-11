@@ -23,7 +23,9 @@ error_reporting(E_ALL);
         <form method="POST" action="../../Controller/Users/LoginController.php">
         <label for="Usuari">Usuario:</label>
         <input type="text" name="Usuari" id="Usuari" required><br><br>
-
+        <label for="DNI">DNI:</label>
+        <input type="text" name="DNI" id="DNI" required><br><br>
+    
         <label for="Password">Contraseña:</label>
         <input type="password" name="Password" id="Password" required><br><br>
 

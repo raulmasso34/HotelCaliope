@@ -1,19 +1,15 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="../../static/styles/inicio/style.css">
-
-
-    <title>HotelCaliope</title>
+    <title>Document</title>
 </head>
 <body>
-<header>
+    <header>
 
 <section id="logo" class="logo">
-<a href="index.php"> <img src="../../imagenes/header/LOGO.png" alt="logo"></a>
+  <img src="../../static/img/logo.png" alt="logo">
 </section>
 
 <section id="menu" class="menu">
@@ -53,10 +49,13 @@
 <section id="iniciar" class="iniciar">
 <a href="../InicioSesion/login.php"><img src="../../imagenes/header/iniciar.png" alt="iniciar"></a>
 </section>
-</header>
-<hr>
-<footer>
+    </header>
 
-</footer>
+
+
+
+    <footer>
+
+    </footer>
 </body>
 </html>
