@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../../css/inicio/style.css">
+
     <link rel="stylesheet" href="../../static/styles/style.css">
+
     <title>HotelCaliope</title>
 </head>
 <body>
 <header>
 
 <section id="logo" class="logo">
-  <img src="../../static/img/logo.png" alt="logo">
+  <img src="../../imagenes/header/LOGO.png" alt="logo">
 </section>
 
 <section id="menu" class="menu">
