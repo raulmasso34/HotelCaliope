@@ -1,8 +1,7 @@
 /*header*/
 header{
-<<<<<<< HEAD
-border:1px solid black;
-    height: 170px;
+  border:1px solid black;
+  height: 170px;
 }
 
 /* logo */
@@ -52,10 +51,6 @@ margin-top: -120px;
    margin-left: 1600px;
 margin-top: -70px;
 }
-=======
-    border:1px solid black;
-        height: 170px;
-    }
     
     /* logo */
     img[alt="logo"]{
@@ -104,4 +99,4 @@ margin-top: -70px;
        margin-left: 1600px;
     margin-top: -70px;
     }
->>>>>>> 13b1dcbabbbd8b92cce20def413681a2c955606a
+
