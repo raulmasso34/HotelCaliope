@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="../../css/inicio/style.css">
+    <link rel="stylesheet" href="../../static/styles/inicio/style.css">
 
-    <link rel="stylesheet" href="../../static/styles/style.css">
 
     <title>HotelCaliope</title>
 </head>
@@ -37,7 +36,7 @@
   <a href="#">Academy</a>
   <a href="#">YouTube</a>
   </div>
-</div>hola
+</div>
 </td>
   <td>
   <div class="dropdown">
@@ -52,7 +51,7 @@
 </table>
 </section>
 <section id="iniciar" class="iniciar">
-<img src="../../imagenes/header/iniciar.png" alt="iniciar">
+<a href="../InicioSesion/login.php"><img src="../../imagenes/header/iniciar.png" alt="iniciar"></a>
 </section>
 </header>
 <hr>
