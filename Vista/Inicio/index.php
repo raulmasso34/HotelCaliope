@@ -20,7 +20,7 @@
   <table>
   <td>
   <div class="dropdown">
-  <a href="#">HubSpot Resources</a>
+  <a href="../Ciudades/NewYork.php">NewYork</a>
   <div class="dropdown-content">
   <a href="#">Blog</a>
   <a href="#">Academy</a>
