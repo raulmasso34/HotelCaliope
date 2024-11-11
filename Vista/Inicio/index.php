@@ -50,7 +50,7 @@
 </table>
 </section>
 <section id="iniciar" class="iniciar">
-<img src="../../imagenes/header/iniciar.png" alt="iniciar">
+<a href="../InicioSesion/login.php"><img src="../../imagenes/header/iniciar.png" alt="iniciar"></a>
 </section>
 </header>
 <hr>
