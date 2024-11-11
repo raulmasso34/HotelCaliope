@@ -1,78 +1,43 @@
-
-
 <?php
+require_once __DIR__ . '/../../Configuracion/Database.php';  // Asegúrate de que la ruta sea correcta
+require_once __DIR__ . '/../../Modelo/UsersModel/LoginModel.php';  // Asegúrate de que la ruta sea correcta
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once '../../Modelo/UsersModel/LoginModel.php'; // Incluir el modelo
 
 class LoginController {
-    private $usuarioModel;
+    private $conn;
+    private $loginModel;
 
-    // Constructor que recibe la conexión a la base de datos
-    public function __construct($dbConnection) {
-        // Crear una instancia del modelo con la conexión a la DB
-        $this->usuarioModel = new LoginModel($dbConnection); 
+    public function __construct() {
+        // Obtener la conexión a la base de datos
+        $this->conn = (new Database())->getConnection();
+        $this->loginModel = new LoginModel($this->conn);  // Crear una instancia del modelo
     }
 
-    // Método para procesar el login
     public function login() {
-        session_start(); // Iniciar la sesión
-    
-        // Verificar si se envió el formulario de login (POST)
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Validar que los campos existen y no están vacíos
-            $username = isset($_POST['Usuari']) ? trim($_POST['Usuari']) : ''; // Nombre de usuario
-            $dni = isset($_POST['DNI']) ? trim($_POST['DNI']) : ''; // DNI
-            $password = isset($_POST['Password']) ? $_POST['Password'] : ''; // Contraseña
-    
-            // Registrar los valores recibidos en el formulario para depuración
-            error_log("Usuario: " . $username);  // Log de usuario
-            error_log("Password " . $password); // Log de contraseña
-            error_log("DNI: " . $dni); // Log de DNI
-    
-            // Verificar si los campos no están vacíos
-            if (!empty($username) && !empty($dni) && !empty($password)) {
-                // Buscar al usuario por nombre de usuario o DNI
-                $user = $this->usuarioModel->getUserByUsername($username, $password, $dni);
-                error_log("Resultado de la consulta: " . var_export($user, true)); // Log de resultado de consulta
-    
-                // Verificar que el usuario existe y la contraseña es correcta
-                if ($user) {
-                    // Autenticación exitosa
-                    $_SESSION['Usuari'] = $user['Usuari']; // Nombre de usuario en sesión
-                    $_SESSION['Id_Client'] = $user['Id_Client']; // ID del cliente en sesión
-    
-                    // Redirigir a la página de inicio después del login exitoso
-                    header('Location: ../../Vista/Inicio/index.php');
-                    exit(); // Asegúrate de que el script termine aquí
-                } else {
-                    // Autenticación fallida
-                    $error_message = "Usuario o contraseña incorrecta.";
-                    error_log("Error en la autenticación: " . $error_message);
-                    header('Location: ../../Vista/InicioSesion/login.php?error=' . urlencode($error_message));
-                    exit(); // Terminar el script
-                }
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $username = $_POST['Usuari'];  // Obtener el nombre de usuario del formulario
+            $password = $_POST['Password'];  // Obtener la contraseña del formulario
+
+            // Autenticar el usuario
+            $user = $this->loginModel->authenticate($username, $password);
+
+            if ($user) {
+                // Si el usuario existe y la contraseña es correcta, redirigir al dashboard
+                echo "Bienvenido, " . $user['Usuari'];  // O usar header("Location: dashboard.php"); para redirigir
+                header("Location: ../../Vista/Inicio/index.php");
+                exit;
             } else {
-                // Si algún campo está vacío
-                $error_message = "Por favor, complete todos los campos.";
-                error_log("Campos vacíos: " . $error_message); // Log de campos vacíos
-                header('Location: ../../Vista/InicioSesion/login.php?error=' . urlencode($error_message));
-                exit(); // Terminar el script
+                // Si las credenciales son incorrectas
+                echo "Usuario o contraseña incorrectos.";
             }
-        } else {
-            // Si no es una solicitud POST, mostrar el formulario de login
-            require_once('../../Vista/InicioSesion/login.php');
         }
     }
-
-    // Cerrar sesión
-    public function logout() {
-        session_start();
-        session_destroy(); // Destruir la sesión
-        header('Location: ../../Vista/InicioSesion/login.php'); // Redirige al formulario de login
-        exit(); // Terminar el script
-    }
 }
+
+// Crear el controlador y ejecutar el método login
+$controller = new LoginController();
+$controller->login();
 ?>

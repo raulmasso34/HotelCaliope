@@ -1,38 +1,35 @@
-
-
 <?php
-class LoginModel {
-    private $con;
+require_once __DIR__ . '/../../Configuracion/Database.php';  // Asegúrate de que la ruta sea correcta
 
-    // Constructor que recibe la conexión a la base de datos
-    public function __construct($dbConnection) {
-        $this->con = $dbConnection; // Almacenar la conexión a la base de datos
+class LoginModel {
+    private $conn;
+
+    public function __construct($db) {
+        $this->conn = $db;  // Establecer la conexión
     }
 
-    // Método para obtener un usuario por su nombre de usuario o DNI
-    public function getUserByUsername($username, $password, $dni) {
-        // Query SQL para obtener el usuario
-        $sql = "SELECT Id_Client, Usuari, Password, DNI FROM Clients WHERE Usuari = ? AND DNI = ?";
-        $stmt = $this->con->prepare($sql);
-        
-        // Vincular parámetros y ejecutar la consulta
-        $stmt->bind_param("ss", $username, $dni);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    public function authenticate($username, $password) {
+        // Consulta para obtener el usuario por su nombre
+        $sql = "SELECT * FROM Clients WHERE Usuari = ?";
 
-        // Si hay resultados, verificar las credenciales
-        if ($result->num_rows > 0) {
-            $user = $result->fetch_assoc();
+        // Preparar la consulta
+        if ($stmt = $this->conn->prepare($sql)) {
+            $stmt->bind_param("s", $username);  // Asociar el parámetro
+            $stmt->execute();  // Ejecutar la consulta
 
-            // Compara la contraseña
-            if ($user['Password'] === $password) {
-                return $user; // Retorna los datos del usuario si la contraseña es correcta
-            } else {
-                return null; // Contraseña incorrecta
+            // Obtener los resultados
+            $result = $stmt->get_result();
+
+            // Si encontramos el usuario
+            if ($user = $result->fetch_assoc()) {
+                // Verificar la contraseña usando password_verify
+                if (password_verify($password, $user['Password'])) {
+                    return $user;  // Usuario autenticado correctamente
+                }
             }
-        } else {
-            return null; // Usuario no encontrado
         }
+
+        return false;  // Si no se encontró el usuario o la contraseña no es válida
     }
 }
 ?>

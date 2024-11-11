@@ -14,16 +14,37 @@
             <h2>¡Regístrate en nuestro hotel!</h2>
         </div>
         
-        <!-- Formulario de Registro -->
-        <form action="register_process.php" method="POST">
-            <input type="text" name="full_name" placeholder="Nombre Completo" required>
-            <input type="text" name="dni" placeholder="DNI" required>
-            <input type="email" name="email" placeholder="Correo Electrónico" required>
-            <input type="password" name="password" placeholder="Contraseña" required>
-            <input type="password" name="confirm_password" placeholder="Confirmar Contraseña" required>
-            <button type="submit">Registrarse</button>
-            <a href="login.php" class="login-link">¿Ya tienes una cuenta? Inicia sesión</a>
-        </form>
+        <form action="/HotelCaliope/HotelCaliope-2/Controller/Users/RegistreController.php" method="POST">
+        <label>Nombre:</label>
+        <input type="text" name="Nom" required><br>
+
+        <label>Apellido:</label>
+        <input type="text" name="Cognom" required><br>
+
+        <label>DNI:</label>
+        <input type="text" name="DNI" required><br>
+
+        <label>Correo Electrónico:</label>
+        <input type="email" name="CorreuElectronic" required><br>
+
+        <label>Teléfono:</label>
+        <input type="text" name="Telefon"><br>
+
+        <label>Usuario:</label>
+        <input type="text" name="Usuari" required><br>
+
+        <label>Contraseña:</label>
+        <input type="password" name="Password" required><br>
+
+        <label>Ciudad:</label>
+        <input type="text" name="Ciudad"><br>
+
+        <label>Código Postal:</label>
+        <input type="text" name="CodigoPostal"><br>
+
+        <input type="submit" value="Registrarse">
+    </form>
+    <a href="login.php" class="login-link">Ya tienes cueta? Inicia sesión</a>
     </div>
 </body>
 </html>

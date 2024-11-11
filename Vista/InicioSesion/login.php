@@ -1,5 +1,9 @@
-<!-- /Vista/InicioSesion/login.php -->
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -16,15 +20,15 @@
         </div>
         
         <!-- Formulario de Login -->
-        <form action="../../Controller/Users/LoginController.php" method="POST">
-            <input type="text" name="Usuari" placeholder="Usuario" required>
-            <input type="text" name="DNI" placeholder="DNI" required>
-            <input type="password" name="Password" placeholder="Contraseña" required>
+        <form method="POST" action="../../Controller/Users/LoginController.php">
+        <label for="Usuari">Usuario:</label>
+        <input type="text" name="Usuari" id="Usuari" required><br><br>
 
-            <button type="submit">Login</button>
-            <a href="registre.php" class="login-link">No tienes cuenta? Regístrate</a>
-        </form>
+        <label for="Password">Contraseña:</label>
+        <input type="password" name="Password" id="Password" required><br><br>
 
+        <button type="submit">Iniciar sesión</button>
+    </form>
         <!-- Mostrar mensaje de error si existe -->
         <?php if (isset($_GET['error'])): ?>
             <div class="error-message">
