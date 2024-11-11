@@ -5,7 +5,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
 class LoginController {
     private $conn;
     private $loginModel;
@@ -19,10 +18,11 @@ class LoginController {
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $username = $_POST['Usuari'];  // Obtener el nombre de usuario del formulario
+            $dni = $_POST['DNI'];  // Obtener el DNI del formulario
             $password = $_POST['Password'];  // Obtener la contraseña del formulario
 
             // Autenticar el usuario
-            $user = $this->loginModel->authenticate($username, $password);
+            $user = $this->loginModel->authenticate($username, $password, $dni);
 
             if ($user) {
                 // Si el usuario existe y la contraseña es correcta, redirigir al dashboard
