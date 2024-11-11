@@ -12,7 +12,7 @@
 <body>
 <header>
 <section id="logo" class="logo">
-  <img src="../../imagenes/header/LOGO.png" alt="logo">
+<a href="index.php"> <img src="../../imagenes/header/LOGO.png" alt="logo"></a>
 </section>
 
 <section id="menu" class="menu">
