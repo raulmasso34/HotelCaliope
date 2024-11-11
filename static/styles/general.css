@@ -14,6 +14,7 @@ header {
     padding: 20px;
     background-color: #9dccfc; /* Light blue header */
     color: rgb(0, 0, 0);
+    border: 2px solid green;
     
 }
 
@@ -21,29 +22,27 @@ header {
 #logo img {
     max-width: 100%;
     height: auto;
-    width: 150px; /* Adjust logo size */
+    width: 150px; 
 }
 
-/* Menu Styling */
 #menu {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     flex-grow: 1;
-    width: max-content;
-
+    width: 30%;
 }
 
-#menu table {
-    border-collapse: collapse;
-    width: 100%;
+#menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
 }
 
-#menu td {
-    padding: 15px;
-    text-align: center;
+#menu li {
+    margin: 0 30px; /* Space out the menu items */
 }
 
-/* Dropdown Styles */
 .dropdown {
     position: relative;
     display: inline-block;
@@ -59,13 +58,14 @@ header {
 }
 
 .dropdown a:hover {
-    background-color: #9dd6f3; /* Lighter blue hover for links */
+    background-color: #003048; 
+    color: white;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #a7d3ff; /* Match header blue */
+    background-color: #0b2035;
     min-width: 160px;
     z-index: 1;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -83,7 +83,8 @@ header {
 }
 
 .dropdown-content a:hover {
-    background-color: #acd8ed; /* Lighter blue on hover for dropdown items */
+    background-color: #acd8ed;
+    color: #003048;
 }
 
 /* Iniciar Section */
@@ -124,4 +125,65 @@ header {
     #iniciar {
         margin-top: 15px;
     }
+}
+
+
+
+
+
+
+/*-------------------FORMULARIO DE RESERVA-------------------------------*/
+
+.form-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+}
+
+select,
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
 }
