@@ -33,7 +33,9 @@ class RegistreController {
         $this->registreModel->codigoPostal = $data['CodigoPostal'];
 
         if ($this->registreModel->registrar()) {
-            return "Usuario registrado con éxito.";
+            // Redirige a la página de inicio de sesión
+            header("Location: ../"); // Cambia esta ruta por la correcta
+            exit(); // Asegúrate de llamar a exit() para detener la ejecución del script
         } else {
             return "Error al registrar el usuario.";
         }

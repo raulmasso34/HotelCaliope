@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../Configuracion/Database.php';
 
 
+
 class RegistreModel {
     private $conn;
     public $nom;
@@ -19,11 +20,14 @@ class RegistreModel {
     }
 
     public function registrar() {
-        // Usamos los placeholders ? para mysqli
+        // Cambia la tabla 'cliente' a 'Clients'
         $sql = "INSERT INTO Clients (Nom, Cognom, DNI, CorreuElectronic, Telefon, Usuari, Password, Ciudad, CodigoPostal)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($sql);
+
+        // Encriptamos la contraseña y asignamos a una variable para evitar el "Notice"
+        $hashedPassword = password_hash($this->password, PASSWORD_BCRYPT);
 
         // Bind de parámetros
         $stmt->bind_param("sssssssss", 
@@ -33,7 +37,7 @@ class RegistreModel {
             $this->correuElectronic, 
             $this->telefon, 
             $this->usuari, 
-            password_hash($this->password, PASSWORD_BCRYPT), // Encriptamos la contraseña
+            $hashedPassword, // Usamos la variable $hashedPassword
             $this->ciudad, 
             $this->codigoPostal
         );
