@@ -8,6 +8,7 @@
 </head>
 <body>
 <header>
+
 <section id="logo" class="logo">
   <img src="../../static/img/logo.png" alt="logo">
 </section>
