@@ -3,7 +3,7 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #e6f7ff; /* Light blue background */
+    background-color: #e1edf3; /* Light blue background */
 }
 
 /* Header Section */
@@ -12,8 +12,9 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background-color: #83bef8; /* Light blue header */
-    color: white;
+    background-color: #9dccfc; /* Light blue header */
+    color: rgb(0, 0, 0);
+    
 }
 
 /* Logo Styling */
@@ -28,6 +29,8 @@ header {
     display: flex;
     justify-content: center;
     flex-grow: 1;
+    width: max-content;
+
 }
 
 #menu table {
@@ -47,7 +50,7 @@ header {
 }
 
 .dropdown a {
-    color: white;
+    color: rgb(0, 0, 0);
     text-decoration: none;
     font-size: 16px;
     padding: 10px;
@@ -56,13 +59,13 @@ header {
 }
 
 .dropdown a:hover {
-    background-color: #66ccff; /* Lighter blue hover for links */
+    background-color: #9dd6f3; /* Lighter blue hover for links */
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #3399ff; /* Match header blue */
+    background-color: #a7d3ff; /* Match header blue */
     min-width: 160px;
     z-index: 1;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -80,7 +83,7 @@ header {
 }
 
 .dropdown-content a:hover {
-    background-color: #66ccff; /* Lighter blue on hover for dropdown items */
+    background-color: #acd8ed; /* Lighter blue on hover for dropdown items */
 }
 
 /* Iniciar Section */
