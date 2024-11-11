@@ -44,7 +44,7 @@
 
         <input type="submit" value="Registrarse">
     </form>
-    </form>
+    <a href="login.php" class="login-link">Ya tienes cueta? Inicia sesión</a>
     </div>
 </body>
 </html>

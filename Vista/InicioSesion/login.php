@@ -22,8 +22,9 @@
             <input type="password" name="Password" placeholder="Contraseña" required>
 
             <button type="submit">Login</button>
-            <a href="registre.php" class="login-link">No tienes cuenta? Regístrate</a>
+           
         </form>
+        <a href="registre.php" class="login-link">No tienes cuenta? Regístrate</a>
 
         <!-- Mostrar mensaje de error si existe -->
         <?php if (isset($_GET['error'])): ?>
