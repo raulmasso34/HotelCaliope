@@ -174,6 +174,17 @@ input[type="date"] {
     margin-top: 5px;
 }
 
+/* Estilo para alinear los campos de fecha uno al lado del otro */
+.form-group-horizontal {
+    display: flex;
+    gap: 10px;
+}
+
+/* Ajuste para los campos dentro de la fila */
+.form-group-horizontal .form-group {
+    flex: 1;
+}
+
 button {
     background-color: #007bff;
     color: white;
