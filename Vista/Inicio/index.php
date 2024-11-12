@@ -23,7 +23,7 @@
             </div>
               </li>
               <li class="dropdown">
-                <a href="#" aria-label="Ver recursos de HubSpot">HubSpot Resources</a>
+                <a href="#" aria-label="Ver recursos de HubSpot">Ofertas</a>
                   <div class="dropdown-content">
                     <a href="#">Blog</a>
                     <a href="#">Academy</a>
@@ -31,7 +31,7 @@
                   </div>
               </li>
               <li class="dropdown">
-                <a href="#" aria-label="Ver más recursos de HubSpot">HubSpot Resources</a>
+                <a href="#" aria-label="Ver más recursos de HubSpot">Actividades</a>
                 <div class="dropdown-content">
                   <a href="#">Blog</a>
                   <a href="#">Academy</a>
@@ -42,11 +42,30 @@
             </ul>
 
         </nav>
-      <a href="../InicioSesion/login.php"><i class="fa-solid fa-user fa-2x"></i></a>
+      <a class="login-btn" href="../InicioSesion/login.php"><i class="fa-solid fa-user fa-3x"></i></a>
     </header>
 
     <div class="form-reservas">
         <h1>Haz tu reserva!</h1>
+        <div class="formulario">
+            <form action="" method="post">
+                <label for="checkin">Fecha de Llegada:</label>
+                <input type="date" id="checkin" name="checkin" required>
+
+                <label for="checkout">Fecha de Salida:</label>
+                <input type="date" id="checkout" name="checkout" required>
+
+                <label for="tipo_habitacion">Tipo de Habitación:</label>
+                <select id="tipo_habitacion" name="tipo_habitacion" required>
+                    <option value="sencilla">Sencilla</option>
+                    <option value="doble">Doble</option>
+                    <option value="suite">Suite</option>
+                </select>
+
+                <button type="submit">Reservar Ahora</button>
+            </form>
+
+        </div>
     </div>
 
  
