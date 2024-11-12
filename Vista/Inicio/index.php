@@ -43,56 +43,13 @@
 
         </nav>
       <a href="../InicioSesion/login.php"><i class="fa-solid fa-user fa-2x"></i></a>
-  </header>
+    </header>
 
-    <main>
-      <section>
-      <div class="form-container">
-          <h2>Reserva tu Estancia</h2>
-          <form action="#" method="post">
-              <!-- Selección de ciudad -->
-              <div class="form-group">
-                  <label for="ciudad">Ciudad:</label>
-                  <select id="ciudad" name="ciudad" required>
-                      <option value="">Selecciona una ciudad</option>
-                      <option value="madrid">Madrid</option>
-                      <option value="barcelona">Barcelona</option>
-                      <option value="sevilla">Sevilla</option>
-                      <option value="valencia">Valencia</option>
-                      <option value="bilbao">Bilbao</option>
-                  </select>
-              </div>
+    <div class="form-reservas">
+        <h1>Haz tu reserva!</h1>
+    </div>
 
-              <!-- Selección de fechas de check-in y check-out en una fila -->
-              <div class="form-group-horizontal">
-                  <div class="form-group">
-                      <label for="checkin">Fecha de Check-In:</label>
-                      <input type="date" id="checkin" name="checkin" required>
-                  </div>
-                  <div class="form-group">
-                      <label for="checkout">Fecha de Check-Out:</label>
-                      <input type="date" id="checkout" name="checkout" required>
-                  </div>
-              </div>
-
-              <!-- Selección de habitación -->
-              <div class="form-group">
-                  <label for="habitacion">Tipo de Habitación:</label>
-                  <select id="habitacion" name="habitacion" required>
-                      <option value="">Selecciona una opción</option>
-                      <option value="individual">Individual</option>
-                      <option value="doble">Doble</option>
-                      <option value="suite">Suite</option>
-                  </select>
-              </div>
-
-              <!-- Botón de envío -->
-              <button type="submit">Reservar</button>
-          </form>
-      </div>
-    </section>
-
-  </main>
+ 
 
 
   <footer>

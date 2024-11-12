@@ -133,70 +133,8 @@ header {
 
 
 /*-------------------FORMULARIO DE RESERVA-------------------------------*/
-
-.form-container {
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+.form-reservas{
+    border: 2px solid red;
     width: 100%;
-    margin: auto;
-    max-width: 500px;
-    border: 2px solid green;
-    text-align: center;
-}
-
-h2 {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-label {
-    font-size: 14px;
-    color: #333;
-    margin-bottom: 8px;
-    display: block;
-}
-
-select,
-input[type="date"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    margin-top: 5px;
-}
-
-/* Estilo para alinear los campos de fecha uno al lado del otro */
-.form-group-horizontal {
-    display: flex;
-    gap: 10px;
-}
-
-/* Ajuste para los campos dentro de la fila */
-.form-group-horizontal .form-group {
-    flex: 1;
-}
-
-button {
-    background-color: #007bff;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #0056b3;
+    height: 300px;
 }
