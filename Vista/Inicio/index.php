@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../../static/styles/general.css">
+  <link rel="stylesheet" href="../../static/styles/index.css">
   <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
   <!-- CSS de Flatpickr -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -100,7 +101,16 @@
             <button type="submit">Reservar Ahora</button>
         </form>
     </div>
-    .
+
+    <!--CAJA/ SECCIÓN DE LA DESCRIPCIÓN-->
+    <div class="desc-box">
+        <div class="left-desc">
+
+        </div>
+        <div class="right-desc">
+
+        </div>
+    </div>
 
   
 
