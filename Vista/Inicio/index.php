@@ -17,7 +17,7 @@
   <header>
     <section>
       <a href="../Inicio/index.php" aria-label="Ir a la página principal">
-        <img src="../../static/img/logo.png" alt="Logo de Hotel Caliope">
+        <img class="logo-header" src="../../static/img/logo.png" alt="Logo de Hotel Caliope">
       </a>
     </section>
     <nav id="menu" class="menu">
