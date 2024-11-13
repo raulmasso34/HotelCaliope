@@ -76,4 +76,14 @@
   
     flex-shrink: 0;
 }
+
+
+/*--------------------------------SECCION DE PEQUEÑA DESCIPCION DE LOS HOTELES--------------------------*/
+
+.desc-hoteles{
+    border: 2px solid red;
+    height: 200px;
+    width: 80%;
+    margin: auto;
+}
   
