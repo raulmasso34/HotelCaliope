@@ -3,6 +3,9 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    height: 1900px;
+    width: 100%;
     background-color: #e1edf3; /* Light blue background */
 }
 
@@ -12,17 +15,20 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    height: 8%;
     background-color: #9dccfc; /* Light blue header */
     color: rgb(0, 0, 0);
     border: 2px solid green;
+
     
 }
 
 /* Logo Styling */
 #logo img {
     max-width: 100%;
-    height: auto;
+    height: 100px;
     width: 150px; 
+   
 }
 
 #menu {
@@ -45,7 +51,7 @@ header {
 
 .dropdown {
     position: relative;
-   
+    
     display: inline-block;
 }
 
@@ -146,7 +152,7 @@ header {
 }
 
 .form-reservas h1{
-    margin: auto;
+    margin: 2.5% auto;
     text-align: center;
 
 }
@@ -154,10 +160,10 @@ header {
 .formulario{
     background-color: #ffffff;
     padding: 20px;
-    width: 60%;
+    width: 80%;
     margin:3% auto;
     text-align: center;
-    border: 2px solid red;
+ 
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
 }
