@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../../static/styles/general.css">
+  <link rel="stylesheet" href="../../static/styles/ciudades/newyork.css">
   <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
-  <title>Document</title>
+  <title>NewYork</title>
 </head>
 <body>
   <header>
@@ -44,7 +45,9 @@
         </nav>
       <a href="../InicioSesion/login.php"><i class="fa-solid fa-user fa-2x"></i></a>
   </header>
-
+<section>
+  
+</section>
   
   <footer>
 
