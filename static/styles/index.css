@@ -17,11 +17,20 @@
     margin: auto;
 
 }
+.left-desc h1{
+    font-family: "Patrick Hand", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
 
 .contenido-desc{
     border: 2px solid green;
     text-align: justify;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: "Arial";
+    font-size: 20px;
+    width: 90%;
+    margin: auto;
+
 
 }
 
