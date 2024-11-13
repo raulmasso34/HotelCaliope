@@ -4,4 +4,33 @@
     width: 70%;
     margin: auto;
     text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+.left-desc{
+    border: 2px solid red;
+    width: 50%;
+    height: 100%;
+    margin: auto;
+
+}
+
+.contenido-desc{
+    border: 2px solid green;
+    text-align: justify;
+    font-family: 'Times New Roman', Times, serif;
+
+}
+
+.right-desc{
+    border: 2px solid blue;
+    width: 50%;
+    height: 100%;
+    margin: auto;
+
+
+
 }

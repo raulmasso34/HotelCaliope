@@ -5,10 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../../static/styles/general.css">
   <link rel="stylesheet" href="../../static/styles/index.css">
-  <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
-  <!-- CSS de Flatpickr -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!--LINK FONT AWESOME ICONOS-->
+    <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
+
+    <!-- CSS de Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- HTML (en la sección <head>) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
   
   
   <title>Document</title>
@@ -105,10 +110,13 @@
     <!--CAJA/ SECCIÓN DE LA DESCRIPCIÓN-->
     <div class="desc-box">
         <div class="left-desc">
-
+            <H1> ¿PORQUE TENEMOS LOS MEJORES HOETELES?</H1>
+            <div class="contenido-desc">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi aperiam officiis perspiciatis necessitatibus veniam corporis natus quos enim nemo reiciendis quod mollitia dolor inventore, nesciunt voluptate magnam sint explicabo dolores doloribus repudiandae alias illo amet incidunt sapiente? Nulla, nam nobis excepturi modi culpa dolor et quod earum cum enim cupiditate?</p>
+            </div>
         </div>
         <div class="right-desc">
-
+            <!--AÑADIR CARRUSEL DE FOTOS-->
         </div>
     </div>
 
