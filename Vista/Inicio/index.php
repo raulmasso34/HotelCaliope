@@ -8,6 +8,8 @@
   <!-- CSS de Flatpickr -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  
+  
   <title>Document</title>
 </head>
 <body>
@@ -53,62 +55,63 @@
   <div class="form-reservas">
       <h1>Haz tu reserva!</h1>
       <div class="formulario">
-    <form action="" method="post">
-        <!-- Fecha de Llegada -->
-        <label for="checkin">Fecha de Llegada:</label>
-        <input type="date" id="checkin" name="checkin" required>
+        <form action="" method="post">
+            <!-- Fecha de Llegada -->
+            <label for="checkin">Fecha de Llegada:</label>
+            <input type="date" id="checkin" name="checkin" required>
 
-        <!-- Fecha de Salida -->
-        <label for="checkout">Fecha de Salida:</label>
-        <input type="date" id="checkout" name="checkout" required>
+            <!-- Fecha de Salida -->
+            <label for="checkout">Fecha de Salida:</label>
+            <input type="date" id="checkout" name="checkout" required>
 
-        <!-- Tipo de Habitación -->
-        <label for="tipo_habitacion">Tipo de Habitación:</label>
-        <select id="tipo_habitacion" name="tipo_habitacion" required>
-            <option value="sencilla">Sencilla</option>
-            <option value="doble">Doble</option>
-            <option value="suite">Suite</option>
-        </select>
+            <!-- Tipo de Habitación -->
+            <label for="tipo_habitacion">Tipo de Habitación:</label>
+            <select id="tipo_habitacion" name="tipo_habitacion" required>
+                <option value="sencilla">Sencilla</option>
+                <option value="doble">Doble</option>
+                <option value="suite">Suite</option>
+            </select>
+            <!--
+            
+            <div class="personas">
+                <label class="personas-label" onclick="togglePersonas()">Seleccionar Tipo de Persona</label>
+                <div class="personas-content" id="personas-content">
+                    
+                    <!-- Selección de tipo de persona 
+                    <select id="tipo_persona" name="tipo_persona" onchange="mostrarCantidad()">
+                    <option value="niños">Niños</option>
+                    <option value="adultos">Adultos</option>
+                    <option value="abuelos">Abuelos</option>
+                    </select>
 
-        <div class="personas">
-            <label class="personas-label" onclick="togglePersonas()">Seleccionar Tipo de Persona</label>
-            <div class="personas-content" id="personas-content">
-                
-                <!-- Selección de tipo de persona -->
-                <select id="tipo_persona" name="tipo_persona" onchange="mostrarCantidad()">
-                <option value="niños">Niños</option>
-                <option value="adultos">Adultos</option>
-                <option value="abuelos">Abuelos</option>
-                </select>
-
-                <!-- Contador de la cantidad -->
-                <div class="counter-container" id="cantidad-container">
-                <label for="cantidad">Cantidad:</label>
-                <button type="button" onclick="decrement('cantidad')">-</button>
-                <input type="number" id="cantidad" name="cantidad" value="1" min="1" readonly>
-                <button type="button" onclick="increment('cantidad')">+</button>
+                    <!-- Contador de la cantidad 
+                    <div class="counter-container" id="cantidad-container">
+                    <label for="cantidad">Cantidad:</label>
+                    <button type="button" onclick="decrement('cantidad')">-</button>
+                    <input type="number" id="cantidad" name="cantidad" value="1" min="1" readonly>
+                    <button type="button" onclick="increment('cantidad')">+</button>
+                    </div>
                 </div>
             </div>
-        </div>
+            -->
+            
+
+            <!-- Botón de Envío -->
+            <button type="submit">Reservar Ahora</button>
+        </form>
+    </div>
+    .
+
   
 
-        <!-- Botón de Envío -->
-        <button type="submit">Reservar Ahora</button>
-    </form>
-</div>
-
-  </div>
-
   <!-- Script de inicialización de Flatpickr -->
-  <script src="../../static/js/calendario.js">
-  </script>
+ 
  
 
   <footer>
   </footer>
 
-  <script src="../../static/js/personas.js">
-
-</script>
+  <script src="../../static/js/personas.js"></script>
+  <script src="../../static/js/calendario.js"></script>
 </body>
 </html>
