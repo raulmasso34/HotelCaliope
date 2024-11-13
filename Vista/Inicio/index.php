@@ -115,12 +115,25 @@
         <div class="left-desc">
             <strong><H1> ¿PORQUE TENEMOS LOS MEJORES HOETELES?</H1></strong>
             <div class="contenido-desc">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi aperiam officiis perspiciatis necessitatibus veniam corporis natus quos enim nemo reiciendis quod mollitia dolor inventore, nesciunt voluptate magnam sint explicabo dolores doloribus repudiandae alias illo amet incidunt sapiente? Nulla, nam nobis excepturi modi culpa dolor et quod earum cum enim cupiditate?</p>
+                <p>En Hoteles Caliope, ofrecemos una experiencia inigualable porque sabemos que cada detalle cuenta. Nos enorgullece brindar instalaciones de primer nivel, diseño sofisticado y una atmósfera acogedora que invita a la relajación. Nuestros hoteles están ubicados en destinos exclusivos, con vistas impresionantes y servicios personalizados. Nuestro equipo de profesionales apasionados está listo para atenderte, asegurándose de que disfrutes de una experiencia llena de comodidad y lujo. ¡En Hoteles Caliope, transformamos tu viaje en un momento inolvidable!</p>
             </div>
+            <button type="submit">Reservar Ahora</button>  
         </div>
+        
         <div class="right-desc">
             <!--AÑADIR CARRUSEL DE FOTOS-->
-        </div>
+
+            <div class="carousel">
+                <div class="carousel-images">
+                    <img src="../../static/img/hotel1.jpg" alt="Foto 1">
+                    <img src="../../static/img/hotel2.jpg" alt="Foto 2">
+                    <img src="../../static/img/hotel3.jpg" alt="Foto 3">
+                    <img src="../../static/img/hotel4.jpg" alt="Foto 4">
+                    <script src="../../static/js/carrusel_index.js"></script>
+                </div>
+            </div>
+        
+         </div>
     </div>
 
   
