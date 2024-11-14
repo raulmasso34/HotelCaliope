@@ -30,7 +30,12 @@ error_reporting(E_ALL);
         <input type="password" name="Password" id="Password" required><br><br>
 
         <button type="submit">Iniciar sesión</button>
+    
     </form>
+        <div class="register-link">
+            <p>¿No tienes cuenta? <a href="registre.php">Regístrate aquí</a></p>
+        </div>
+
         <!-- Mostrar mensaje de error si existe -->
         <?php if (isset($_GET['error'])): ?>
             <div class="error-message">
