@@ -28,8 +28,10 @@
                         <a href="" aria-label="Ver ciudades disponibles">Ciudades</a>
                         <div class="dropdown-content">
                             <a href="../Ciudades/NewYork.php">New York</a>
-                            <a href="#">Academy</a>
-                            <a href="#">YouTube</a>
+                            <a href="#">Pirineos</a>
+                            <a href="#">Galicia</a>
+                            <a href="#">California</a>
+                            <a href="#">Floridas</a>
                         </div>
                     </li>
                     <li class="dropdown">
@@ -111,11 +113,14 @@
                 <img src="../../static/img/hotel2.jpg" alt="Foto 2">
                 <img src="../../static/img/hotel3.jpg" alt="Foto 3">
                 <img src="../../static/img/hotel4.jpg" alt="Foto 4">
+                <button class="carousel-control prev" onclick="prevSlide()">❮</button>
+                <button class="carousel-control next" onclick="nextSlide()">❯</button>
             </div>
-            <button class="carousel-control prev" onclick="prevSlide()">❮</button>
-            <button class="carousel-control next" onclick="nextSlide()">❯</button>
+            
             <div class="desc-ciudades">
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse totam explicabo...</p>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse totam explicabo consequuntur reiciendis distinctio fugit quaerat porro repellendus maxime natus. Voluptates qui reiciendis dolor fuga exercitationem quidem aspernatur, debitis amet, accusantium quae, et asperiores dignissimos ullam velit aperiam ipsum. Dolor esse recusandae, enim ipsum molestiae quos nisi dolorem mollitia perspiciatis.
+
+            </p>
             </div>
         </div>
         <div class="hoteles">

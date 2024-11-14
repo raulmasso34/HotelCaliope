@@ -1,23 +1,36 @@
-// CARROUSEL PARA LA PARTE DE DESCRIPCION DE LAS CIUDADES
+document.addEventListener("DOMContentLoaded", function () {
+    const carousels = document.querySelectorAll(".hoteles-img");
 
-let currentIndex = 0;
-const images = document.querySelectorAll(".hoteles-img img");
+    carousels.forEach((carousel) => {
+        const images = carousel.querySelectorAll("img");
+        let currentIndex = 0;
 
-function showSlide(index) {
-    // Oculta todas las imágenes, luego muestra solo la imagen actual
-    images.forEach(img => img.classList.remove("active"));
-    images[index].classList.add("active");
-}
+        // Función para mostrar la imagen actual
+        function showSlide(index) {
+            images.forEach((img) => img.classList.remove("active"));
+            images[index].classList.add("active");
+        }
 
-function nextSlide() {
-    currentIndex = (currentIndex + 1) % images.length;
-    showSlide(currentIndex);
-}
+        // Función para ir a la siguiente imagen
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showSlide(currentIndex);
+        }
 
-function prevSlide() {
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
-    showSlide(currentIndex);
-}
+        // Función para ir a la imagen anterior
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            showSlide(currentIndex);
+        }
 
-// Inicializa el carrusel mostrando la primera imagen
-showSlide(currentIndex);
+        // Botones de navegación
+        const nextButton = carousel.parentNode.querySelector(".next");
+        const prevButton = carousel.parentNode.querySelector(".prev");
+
+        if (nextButton) nextButton.addEventListener("click", nextSlide);
+        if (prevButton) prevButton.addEventListener("click", prevSlide);
+
+        // Inicializa el carrusel mostrando la primera imagen
+        showSlide(currentIndex);
+    });
+});
