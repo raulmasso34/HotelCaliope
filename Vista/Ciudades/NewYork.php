@@ -116,8 +116,46 @@
 </section>
 </section>
   
-  <footer>
+<footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="../../static/img/logo-blanco.png" alt="hotel caliope logo blanco">
+                <p>Hotel Caliope - Un viaje de lujo</p>
+            </div>
 
-  </footer>
+            <div class="footer-links">
+                <h4>Enlaces rápidos</h4>
+                <ul>
+                    <li><a href="../Inicio/index.php">Inicio</a></li>
+                    <li><a href="../Ciudades/NewYork.php">Ciudades</a></li>
+                    <li><a href="#">Ofertas</a></li>
+                    <li><a href="#">Actividades</a></li>
+                    <li><a href="../InicioSesion/login.php">Iniciar sesión</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Contacto</h4>
+                <p><strong>Teléfono:</strong> +123 456 789</p>
+                <p><strong>Email:</strong> contacto@hotelcaliope.com</p>
+                <p><strong>Dirección:</strong> Calle Ficticia, 123, Ciudad, País</p>
+            </div>
+
+            <div class="footer-socials">
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Hotel Caliope. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
 </body>
 </html>
