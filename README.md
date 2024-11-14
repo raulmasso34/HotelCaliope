@@ -12,3 +12,4 @@ Para comprobar que la conexion a la base de datos funciona correctamente, tienes
 - Hay que poner carrusel de fotos en el header y la parte de reserva
 - Hay que modificar para que puedan elegir cuantas perosnas van y el tipo(niño,adulto...)
 - En la parte de descripcion de index.php, añadir carrusel con fotos de distintos lugares.✅
+- Poner en para buscar habitacions lo siguiente: fecha llegada, fecha salida, ciudad,tipo(elegir entre habitacion y actividad).(si el usuario elige habitacion le       aparecera el tipo de habitacion, si elige actividad le tiene que salir cuantas personas son).
