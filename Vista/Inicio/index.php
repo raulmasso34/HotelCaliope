@@ -96,9 +96,18 @@
         </div>
     </div>
     <div class="desc-hoteles">
-        <div class="hoteles"></div>
-        <div class="hoteles"></div>
-        <div class="hoteles"></div>
+        <div class="hoteles">
+            <div class="hoteles-img"></div>
+            <div class="desc-ciudades"></div>
+        </div>
+        <div class="hoteles">
+        <div class="hoteles-img"></div>
+        <div class="desc-ciudades"><p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse totam explicabo consequuntur reiciendis distinctio fugit quaerat porro repellendus maxime natus. Voluptates qui reiciendis dolor fuga exercitationem quidem aspernatur, debitis amet, accusantium quae, et asperiores dignissimos ullam velit aperiam ipsum. Dolor esse recusandae, enim ipsum molestiae quos nisi dolorem mollitia perspiciatis.</p></div>
+        </div>
+        <div class="hoteles">
+        <div class="hoteles-img"></div>
+        <div class="desc-ciudades"></div>
+        </div>
     </div>
 
     <footer></footer>

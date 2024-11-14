@@ -85,10 +85,27 @@
     height: 600px;
     width: 80%;
     margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: nowrap;
 }
   
 .hoteles{
     border: 2px solid rgb(32, 19, 89);
     width: 100%;
     height: 100%;
+}
+
+
+.hoteles-img{
+    border: 2px solid green;
+    height: 50%;
+    width: 100%;
+}
+.desc-ciudades{
+    border: 2px solid blue;
+    height: 50%;
+    width: 100%;
 }
