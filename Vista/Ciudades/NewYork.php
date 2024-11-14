@@ -4,49 +4,61 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../../static/styles/general.css">
-  <link rel="stylesheet" href="../../static/styles/ciudades/newyork.css">
+  <link rel="stylesheet" href="../../static/styles/index.css">
   <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
-  <title>NewYork</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="../../static/js/carrusel_index2.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="../../static/styles/ciudades/newyork.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Permanent+Marker&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+  <title>Hoteles Caliope</title>
 </head>
 <body>
-  <header>
-    <section>
-      <a href="../Inicio/index.php" aria-label="Ir a la página principal"><img src="../../static/img/logo.png" alt="Logo de Hotel Caliope"></a>
-    </section>
-    <nav id="menu" class="menu">
-      <ul>
-        <li class="dropdown">
-          <a href="" aria-label="Ver ciudades disponibles">Ciudades</a>
-            <div class="dropdown-content">
-              <a href="../Ciudades/NewYork.php">New York</a>
-              <a href="#">Academy</a>
-              <a href="#">YouTube</a>
-            </div>
-              </li>
-              <li class="dropdown">
-                <a href="#" aria-label="Ver recursos de HubSpot">HubSpot Resources</a>
-                  <div class="dropdown-content">
-                    <a href="#">Blog</a>
-                    <a href="#">Academy</a>
-                    <a href="#">YouTube</a>
-                  </div>
-              </li>
-              <li class="dropdown">
-                <a href="#" aria-label="Ver más recursos de HubSpot">HubSpot Resources</a>
-                <div class="dropdown-content">
-                  <a href="#">Blog</a>
-                  <a href="#">Academy</a>
-                  <a href="#">YouTube</a>
-                </div>
-              </li>
-              
-            </ul>
+    <div class="background-carousel">
+        <header>
+            <section>
+                <a href="../Inicio/index.php" aria-label="Ir a la página principal">
+                    <img class="logo-header" src="../../static/img/logo.png" alt="Logo de Hotel Caliope">
+                </a>
+            </section>
+            <nav id="menu" class="menu">
+                <ul>
+                    <li class="dropdown">
+                        <a href="" aria-label="Ver ciudades disponibles">Ciudades</a>
+                        <div class="dropdown-content">
+                            <a href="../Ciudades/NewYork.php">New York</a>
+                            <a href="#">Pirineos</a>
+                            <a href="#">Galicia</a>
+                            <a href="#">California</a>
+                            <a href="#">Floridas</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" aria-label="Ver ofertas">Ofertas</a>
+                        <div class="dropdown-content">
+                            <a href="#">Blog</a>
+                            <a href="#">Academy</a>
+                            <a href="#">YouTube</a>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" aria-label="Ver actividades">Actividades</a>
+                        <div class="dropdown-content">
+                            <a href="#">Blog</a>
+                            <a href="#">Academy</a>
+                            <a href="#">YouTube</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <a class="login-btn" href="../InicioSesion/login.php">
+                <i class="fa-solid fa-user fa-3x"></i>
+            </a>
+        </header>
 
-        </nav>
-      <a href="../InicioSesion/login.php"><i class="fa-solid fa-user fa-2x"></i></a>
-  </header>
-<section>
-<div class="form-reservas">
+        <div class="form-reservas">
             <h1>Haz tu reserva!</h1>
             <div class="formulario">
                 <form action="" method="post">
