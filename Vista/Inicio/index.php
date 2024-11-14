@@ -103,9 +103,9 @@
     <div class="desc-hoteles">
         <div class="hoteles">
         <div class="hoteles-img">
-            <img src="../../static/img/hotel1.jpg" alt="Foto 1" class="active">
-            <img src="../../static/img/hotel2.jpg" alt="Foto 2">
-            <img src="../../static/img/hotel3.jpg" alt="Foto 3">
+            <img src="../../static/img/index/ny.jpg" alt="Foto 1" class="active">
+            <img src="../../static/img/index/ny2.jpg" alt="Foto 2">
+            <img src="../../static/img/index/ny3.jpg" alt="Foto 3">
             <img src="../../static/img/hotel4.jpg" alt="Foto 4">
             
             <!-- Botones para mover las imágenes -->
@@ -115,17 +115,17 @@
             <div class="desc-ciudades">
                 <h1>NEW YORK</h1>
 
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse totam explicabo consequuntur reiciendis distinctio fugit quaerat porro repellendus maxime natus. Voluptates qui reiciendis dolor fuga exercitationem quidem aspernatur, debitis amet, accusantium quae, et asperiores dignissimos ullam velit aperiam ipsum. </p>
-                <button class="button-desc-ciudades">Ver mas</button>
+                <p>Disfruta de la vibrante energía de Nueva York con una ubicación inmejorable y un servicio de lujo. A pocos minutos de los principales puntos turísticos, nuestro hotel te ofrece comodidad y estilo para hacer de tu visita una experiencia inolvidable. ¡Reserva ahora y haz de tu viaje algo único! </p>
+                <a href="../Ciudades/NewYork.php"><button class="button-desc-ciudades">Ver mas</button></a>
                 
             </div>
         </div>
         <div class="hoteles">
             <div class="hoteles-img">
-                <img src="../../static/img/hotel1.jpg" alt="Foto 1" class="active">
-                <img src="../../static/img/hotel2.jpg" alt="Foto 2">
-                <img src="../../static/img/hotel3.jpg" alt="Foto 3">
-                <img src="../../static/img/hotel4.jpg" alt="Foto 4">
+                
+                <img src="../../static/img/index/tossa2.jpg" alt="Foto 2">
+                <img src="../../static/img/index/tossa3.jpg" alt="Foto 3">
+                <img src="../../static/img/index/tossa4.jpg" alt="Foto 4">
                 <button class="carousel-control prev" onclick="prevSlide()">❮</button>
                 <button class="carousel-control next" onclick="nextSlide()">❯</button>
             </div>
@@ -134,7 +134,7 @@
                 <h1>TOSA DE MAR</h1>
 
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse totam explicabo consequuntur reiciendis distinctio fugit quaerat porro repellendus maxime natus. Voluptates qui reiciendis dolor fuga exercitationem quidem aspernatur, debitis amet, accusantium quae, et asperiores dignissimos ullam velit aperiam ipsum. </p>
-                <button class="button-desc-ciudades">Ver mas</button>
+                <a href="../Ciudades/NewYork.php"><button class="button-desc-ciudades">Ver mas</button></a>
                 
             </div>
         </div>
@@ -150,12 +150,18 @@
                 <h1>PIRINEOS</h1>
 
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse totam explicabo consequuntur reiciendis distinctio fugit quaerat porro repellendus maxime natus. Voluptates qui reiciendis dolor fuga exercitationem quidem aspernatur, debitis amet, accusantium quae, et asperiores dignissimos ullam velit aperiam ipsum. </p>
-                <button class="button-desc-ciudades">Ver mas</button>
+
+                <a href="../Ciudades/NewYork.php"><button class="button-desc-ciudades">Ver mas</button></a>
                     
             </div>
             </div>
         </div>
     </div>
+    <section class="opiniones-box">
+        <div class="opinions"></div>
+        <div class="opinions"></div>
+        <div class="opinions"></div>
+    </section>
 
     <footer></footer>
 
