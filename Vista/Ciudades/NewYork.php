@@ -66,14 +66,14 @@
         </div>
     
 </section>
-<section id="ciudad">
-  <div>
+<section id="ciudad" class="ciudad">
+  <div id="imagen-ny" class="imagen-ny">
     <img src="../../static/img/ciudades/nuevayork/ny.jpeg" alt="newyork">
   </div>
-  <div>
-    <h3></h3>
-    <p></p>
-    <button></button>
+  <div id="descripcion-ciudad" class="descripcion-ciudad">
+    <h3 id="titulo-desc">NUEVA YORK</h3>
+    <p id="descripcion">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+    <button id="sabermas-descripcion">Saber mas</button>
   </div>
 </section>
   
