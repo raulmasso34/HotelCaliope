@@ -1,14 +1,60 @@
-section[id="newyork"]{
-    border: 1px solid black;
-    height: 15%;
+/*seccion imagen mas descripcion de la ciudad*/
+section[class="ciudad"]{
+    height: 500px;
+    width: 70%;
+    margin: 5% auto;
+    text-align: center;
     display: flex;
-    
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: wrap;
+    border: 1px solid black;
+   
+
 }
 
+/* imagen seccion */
+div[id="imagen-ny"]{
+    border: 1px solid black;
+    width: 50%;
+   
+}
 img[alt="newyork"]{
-    position: relative;
-    height: 400px;
-    width: 500px;
-    margin-top: 1%;
-    margin-left: 10%;
+    border: 1px solid black;
+    width: 100%;
+    height: 100%;
+   
+}
+
+/* texto descripcion imagen */
+
+div[id="descripcion-ciudad"] {
+    border: 1px solid black;
+    width: 50%;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 20px; 
+}
+
+#titulo-desc, #descripcion {
+    width: 100%; 
+    text-align: justify; 
+    margin: 2% 10%; 
+}
+
+#titulo-desc {
+    text-align: center; 
+    margin-bottom: 10px; 
+}
+
+#descripcion {
+    text-align: justify; 
+}
+
+#sabermas-descripcion{
+    width: 30%;
 }
