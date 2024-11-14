@@ -46,7 +46,35 @@
       <a href="../InicioSesion/login.php"><i class="fa-solid fa-user fa-2x"></i></a>
   </header>
 <section>
-  
+<div class="form-reservas">
+            <h1>Haz tu reserva!</h1>
+            <div class="formulario">
+                <form action="" method="post">
+                    <label for="checkin">Fecha de Llegada:</label>
+                    <input type="date" id="checkin" name="checkin" required>
+                    <label for="checkout">Fecha de Salida:</label>
+                    <input type="date" id="checkout" name="checkout" required>
+                    <label for="tipo_habitacion">Tipo de Habitación:</label>
+                    <select id="tipo_habitacion" name="tipo_habitacion" required>
+                        <option value="sencilla">Sencilla</option>
+                        <option value="doble">Doble</option>
+                        <option value="suite">Suite</option>
+                    </select>
+                    <button type="submit">Reservar Ahora</button>
+                </form>
+            </div>
+        </div>
+    
+</section>
+<section id="ciudad">
+  <div>
+    <img src="../../static/img/ciudades/nuevayork/ny.jpeg" alt="newyork">
+  </div>
+  <div>
+    <h3></h3>
+    <p></p>
+    <button></button>
+  </div>
 </section>
   
   <footer>
