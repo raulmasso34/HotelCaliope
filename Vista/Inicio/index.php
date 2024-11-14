@@ -203,7 +203,7 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-logo">
-                <img src="../../static/img/logo-white.png" alt="Logo Hotel Caliope">
+                <img src="../../static/img/logo-blanco.png" alt="hotel caliope logo blanco">
                 <p>Hotel Caliope - Un viaje de lujo</p>
             </div>
 

@@ -265,11 +265,13 @@ button:hover {
 
 /* Estilos generales del footer */
 .footer {
-    background-color: #010b35; /* Color oscuro para lujo */
-    color: #fff; /* Texto blanco */
+    background: linear-gradient(135deg, #122055, #1e3c78); /* Gradiente sutil de azul oscuro */
+    color: #fff;
     padding: 40px 20px;
     font-family: 'Arial', sans-serif;
     text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .footer-container {
@@ -345,11 +347,11 @@ button:hover {
 }
 
 .footer-bottom {
-    background-color: #111;
+    background-color: #000231;
     padding: 20px 0;
     margin-top: 30px;
     font-size: 14px;
-    color: #aaa;
+    color: #ffffff;
 }
 
 .footer-bottom p {
