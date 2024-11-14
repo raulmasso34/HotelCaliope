@@ -66,8 +66,15 @@
         </div>
     
 </section>
-<section>
-  
+<section id="ciudad">
+  <div>
+    <img src="../../static/img/ciudades/nuevayork/ny.jpeg" alt="newyork">
+  </div>
+  <div>
+    <h3></h3>
+    <p></p>
+    <button></button>
+  </div>
 </section>
   
   <footer>
