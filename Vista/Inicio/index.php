@@ -89,10 +89,11 @@
             <div class="right-desc">
                 <div class="carousel">
                     <div class="carousel-images">
-                        <img src="../../static/img/hotel1.jpg" alt="Foto 1">
-                        <img src="../../static/img/hotel2.jpg" alt="Foto 2">
-                        <img src="../../static/img/hotel3.jpg" alt="Foto 3">
-                        <img src="../../static/img/hotel4.jpg" alt="Foto 4">
+                        <img src="../../static/img/index/hotel1.jpg" alt="Foto 1">
+                        <img src="../../static/img/index/hotel2.jpg" alt="Foto 2">
+                        <img src="../../static/img/index/hotel3.jpg" alt="Foto 3">
+                        <img src="../../static/img/index/hotel4.jpg" alt="Foto 4">
+                        <img src="../../static/img/index/hotel5.jpg" alt="Foto 4">
                     </div>
                 </div>
             </div>
