@@ -157,14 +157,13 @@
     
     align-items: center;
   
-    border: 2px solid red;
     justify-content: center;
 }
 
 .desc-ciudades h1{
     width: 100%;
     text-align: center;
-    border: 2px solid red;
+    
     padding: 2%;
 }
 
@@ -243,13 +242,60 @@
 
 /*----------------------------------OPIIONES-----------------------------*/
 .opiniones-box{
-    border: 2px solid red;
-    height: 300px;
+    
+    height: 400px;
     width: 80%;
     margin: 10% auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: wrap;
 
 }
 
 .opinions{
-
+    border: 2px solid green;
+    width: 33%;
+    margin: auto;
+    height: 100%;
 }
+
+.fto-opi{
+    border: 2px solid red;
+    width: 100%;
+    height: 30%;
+    text-align: center;
+}
+.icon-opi {
+    
+    border: 2px solid red;
+    margin: auto;
+    width: 21%; 
+    height: 100%; 
+    border-radius: 50%;
+    object-fit: cover; 
+}
+
+
+.opinions h3 {
+    font-size: 18px;
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.opinions p {
+    font-size: 16px;
+    color: #555;
+    text-align: justify;
+   margin: 3%;
+}
+
+.opinions p strong {
+    font-size: 16px;
+    color: #333;
+    font-weight: normal;
+}
+
+

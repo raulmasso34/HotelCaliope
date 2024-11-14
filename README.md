@@ -9,6 +9,7 @@ Para comprobar que la conexion a la base de datos funciona correctamente, tienes
          test_conexion.php
 
 -------------------------------------- FALTA / MODIFICAR ------------------------------------------------------
+
 - Hay que poner carrusel de fotos en el header y la parte de reserva
 - Hay que modificar para que puedan elegir cuantas perosnas van y el tipo(niño,adulto...)
 - En la parte de descripcion de index.php, añadir carrusel con fotos de distintos lugares.✅
@@ -25,4 +26,8 @@ Para comprobar que la conexion a la base de datos funciona correctamente, tienes
 
 ---------------------------------------LINKS UTILES----------------------------------
 https://www.html6.es
+https://fontawesome.com --> ICONOS
+
+
+
 

@@ -158,9 +158,35 @@
         </div>
     </div>
     <section class="opiniones-box">
-        <div class="opinions"></div>
-        <div class="opinions"></div>
-        <div class="opinions"></div>
+
+        <div class="opinions">
+            <div class="fto-opi">
+            <img class="icon-opi" src="../../static/img/index/perfil-op.jpg" alt="">
+            </div>
+            
+            <h3>"Un lugar increíble para descansar"</h3>
+            <p>"El Hotel Caliope superó todas mis expectativas. Las habitaciones son cómodas, el servicio es excelente y la ubicación es perfecta para explorar la ciudad. ¡Definitivamente volveré!"</p>
+            <p><strong>- Laura G.</strong></p>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+
+        <div class="opinions">
+            <h3>"Una experiencia inolvidable"</h3>
+            <p>"Pasé un fin de semana maravilloso en el Hotel Caliope. El personal fue muy atento y las instalaciones de primera. La vista desde mi habitación fue espectacular. ¡Altamente recomendado!"</p>
+            <p><strong>- Juan M.</strong></p>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+
+        <div class="opinions">
+            <h3>"El mejor hotel para una escapada a la ciudad"</h3>
+            <p>"Me encantó mi estancia en el Hotel Caliope. Todo fue impecable, desde la limpieza hasta la comida. Además, su ubicación es ideal para recorrer los principales puntos de interés. ¡Lo mejor de Nueva York!"</p>
+            <p><strong>- Sofia T.</strong></p>
+            <div class="stars-opi">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+           
+        </div>
+
     </section>
 
     <footer></footer>
