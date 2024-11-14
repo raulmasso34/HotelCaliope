@@ -1,4 +1,14 @@
-section[id="ciudad"]{
+section[id="newyork"]{
     border: 1px solid black;
     height: 15%;
+    display: flex;
+    
+}
+
+img[alt="newyork"]{
+    position: relative;
+    height: 400px;
+    width: 500px;
+    margin-top: 1%;
+    margin-left: 10%;
 }
