@@ -2,7 +2,8 @@
     
     height: 500px;
     width: 70%;
-    margin: 5% auto;
+    
+    margin: 2% auto;
     text-align: center;
     display: flex;
     flex-direction: row;
@@ -18,9 +19,10 @@
     margin: 0 0 0 0 ;
 }
 .left-desc{
-
+   
     width: 50%;
-    height: 80%;
+    height: 100%;
+    margin: 0 0 0 0;
 
 
 }
@@ -28,6 +30,8 @@
     font-family: "Patrick Hand", cursive;
     font-weight: 400;
     font-style: normal;
+    
+    margin: 0;
    
 }
 
@@ -37,13 +41,14 @@
     font-family: "Arial";
     
     width: 90%;
-    margin: 5%;
+    
 
 
 }
 .contenido-desc p{
     font-size: 25px;
     margin-left: 5%;
+  
     margin-right: 5%;
 }
 
