@@ -240,3 +240,16 @@
     width: 100%;
     flex-shrink: 0;
 }
+
+/*----------------------------------OPIIONES-----------------------------*/
+.opiniones-box{
+    border: 2px solid red;
+    height: 300px;
+    width: 80%;
+    margin: 10% auto;
+
+}
+
+.opinions{
+
+}

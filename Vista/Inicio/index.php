@@ -157,7 +157,11 @@
             </div>
         </div>
     </div>
-    <section class="opiniones-box"></section>
+    <section class="opiniones-box">
+        <div class="opinions"></div>
+        <div class="opinions"></div>
+        <div class="opinions"></div>
+    </section>
 
     <footer></footer>
 
