@@ -88,6 +88,33 @@
     <button id="sabermas-descripcion">Saber mas</button>
   </div>
 </section>
+
+<section id="tres-imagenes" class="tres-imagenes">
+<section id="contenido">
+    <div id="imagenes">
+        <img src="../../static/img/ciudades/nuevayork/ny.jpeg"" alt="contenido">
+    </div>
+    <div>
+        <p></p>
+    </div>
+</section>
+<section id="contenido">
+    <div id="imagenes">
+    <img src="../../static/img/ciudades/nuevayork/ny.jpeg"" alt="contenido">
+    </div>
+    <div>
+        <p></p>
+    </div>
+</section>
+<section id="contenido">
+    <div id="imagenes">
+    <img src="../../static/img/ciudades/nuevayork/ny.jpeg"" alt="contenido">
+    </div>
+    <div>
+        <p></p>
+    </div>
+</section>
+</section>
   
   <footer>
 
