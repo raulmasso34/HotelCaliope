@@ -8,6 +8,7 @@
   <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="../../static/js/carrusel_index2.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Permanent+Marker&family=Shadows+Into+Light&display=swap" rel="stylesheet">
@@ -97,16 +98,36 @@
     </div>
     <div class="desc-hoteles">
         <div class="hoteles">
-            <div class="hoteles-img"></div>
-            <div class="desc-ciudades"></div>
+            <div class="hoteles-img">
+            <img src="" alt="">
+            </div>
+            <div class="desc-ciudades">
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse totam explicabo consequuntur reiciendis distinctio fugit quaerat porro repellendus maxime natus. Voluptates qui reiciendis dolor fuga exercitationem quidem aspernatur, debitis amet, accusantium quae, et asperiores dignissimos ullam velit aperiam ipsum. Dolor esse recusandae, enim ipsum molestiae quos nisi dolorem mollitia perspiciatis.</p>
+            </div>
         </div>
         <div class="hoteles">
-        <div class="hoteles-img"></div>
-        <div class="desc-ciudades"><p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse totam explicabo consequuntur reiciendis distinctio fugit quaerat porro repellendus maxime natus. Voluptates qui reiciendis dolor fuga exercitationem quidem aspernatur, debitis amet, accusantium quae, et asperiores dignissimos ullam velit aperiam ipsum. Dolor esse recusandae, enim ipsum molestiae quos nisi dolorem mollitia perspiciatis.</p></div>
+            <div class="hoteles-img">
+                <img src="../../static/img/hotel1.jpg" alt="Foto 1" class="active">
+                <img src="../../static/img/hotel2.jpg" alt="Foto 2">
+                <img src="../../static/img/hotel3.jpg" alt="Foto 3">
+                <img src="../../static/img/hotel4.jpg" alt="Foto 4">
+            </div>
+            <button class="carousel-control prev" onclick="prevSlide()">❮</button>
+            <button class="carousel-control next" onclick="nextSlide()">❯</button>
+            <div class="desc-ciudades">
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse totam explicabo...</p>
+            </div>
         </div>
         <div class="hoteles">
-        <div class="hoteles-img"></div>
-        <div class="desc-ciudades"></div>
+            <div class="hoteles-img">
+            <img src="" alt="">
+            </div>
+                <div class="desc-ciudades">
+
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse totam explicabo consequuntur reiciendis distinctio fugit quaerat porro repellendus maxime natus. Voluptates qui reiciendis dolor fuga exercitationem quidem aspernatur, debitis amet, accusantium quae, et asperiores dignissimos ullam velit aperiam ipsum. Dolor esse recusandae, enim ipsum molestiae quos nisi dolorem mollitia perspiciatis.
+
+                </p>
+            </div>
         </div>
     </div>
 
