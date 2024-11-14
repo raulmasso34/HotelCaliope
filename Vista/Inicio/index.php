@@ -8,7 +8,7 @@
   <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="../../static/js/carrusel_index2.js"></script>
+  <script src="../../static/js/index/carrusel_index2.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Permanent+Marker&family=Shadows+Into+Light&display=swap" rel="stylesheet">
@@ -159,6 +159,19 @@
     </div>
     <section class="opiniones-box">
 
+    <div class="opinions">
+            <div class="fto-opi">
+            <img class="icon-opi" src="../../static/img/index/perfil-op.jpg" alt="">
+            </div>
+            
+            <h3>"Un lugar increíble para descansar"</h3>
+            <p>"El Hotel Caliope superó todas mis expectativas. Las habitaciones son cómodas, el servicio es excelente y la ubicación es perfecta para explorar la ciudad. ¡Definitivamente volveré!"</p>
+            <p><strong>- Laura G.</strong></p>
+            <div class="stars-opi">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+        </div>
+
         <div class="opinions">
             <div class="fto-opi">
             <img class="icon-opi" src="../../static/img/index/perfil-op.jpg" alt="">
@@ -167,32 +180,70 @@
             <h3>"Un lugar increíble para descansar"</h3>
             <p>"El Hotel Caliope superó todas mis expectativas. Las habitaciones son cómodas, el servicio es excelente y la ubicación es perfecta para explorar la ciudad. ¡Definitivamente volveré!"</p>
             <p><strong>- Laura G.</strong></p>
-            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-        </div>
-
-        <div class="opinions">
-            <h3>"Una experiencia inolvidable"</h3>
-            <p>"Pasé un fin de semana maravilloso en el Hotel Caliope. El personal fue muy atento y las instalaciones de primera. La vista desde mi habitación fue espectacular. ¡Altamente recomendado!"</p>
-            <p><strong>- Juan M.</strong></p>
-            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-        </div>
-
-        <div class="opinions">
-            <h3>"El mejor hotel para una escapada a la ciudad"</h3>
-            <p>"Me encantó mi estancia en el Hotel Caliope. Todo fue impecable, desde la limpieza hasta la comida. Además, su ubicación es ideal para recorrer los principales puntos de interés. ¡Lo mejor de Nueva York!"</p>
-            <p><strong>- Sofia T.</strong></p>
             <div class="stars-opi">
                 <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
             </div>
-           
+        </div>
+
+        <div class="opinions">
+            <div class="fto-opi">
+            <img class="icon-opi" src="../../static/img/index/perfil-op.jpg" alt="">
+            </div>
+            
+            <h3>"Un lugar increíble para descansar"</h3>
+            <p>"El Hotel Caliope superó todas mis expectativas. Las habitaciones son cómodas, el servicio es excelente y la ubicación es perfecta para explorar la ciudad. ¡Definitivamente volveré!"</p>
+            <p><strong>- Laura G.</strong></p>
+            <div class="stars-opi">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
         </div>
 
     </section>
 
-    <footer></footer>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="../../static/img/logo-blanco.png" alt="hotel caliope logo blanco">
+                <p>Hotel Caliope - Un viaje de lujo</p>
+            </div>
 
-    <script src="../../static/js/personas.js"></script>
+            <div class="footer-links">
+                <h4>Enlaces rápidos</h4>
+                <ul>
+                    <li><a href="../Inicio/index.php">Inicio</a></li>
+                    <li><a href="../Ciudades/NewYork.php">Ciudades</a></li>
+                    <li><a href="#">Ofertas</a></li>
+                    <li><a href="#">Actividades</a></li>
+                    <li><a href="../InicioSesion/login.php">Iniciar sesión</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Contacto</h4>
+                <p><strong>Teléfono:</strong> +123 456 789</p>
+                <p><strong>Email:</strong> contacto@hotelcaliope.com</p>
+                <p><strong>Dirección:</strong> Calle Ficticia, 123, Ciudad, País</p>
+            </div>
+
+            <div class="footer-socials">
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Hotel Caliope. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+
+    <script src="../../static/js/index/personas.js"></script>
     <script src="../../static/js/calendario.js"></script>
-    <script src="../../static/js/carrusel_index.js"></script>
+    <script src="../../static/js/index/carrusel_index.js"></script>
 </body>
 </html>
