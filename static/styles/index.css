@@ -82,8 +82,13 @@
 
 .desc-hoteles{
     border: 2px solid red;
-    height: 200px;
+    height: 600px;
     width: 80%;
     margin: auto;
 }
   
+.hoteles{
+    border: 2px solid rgb(32, 19, 89);
+    width: 100%;
+    height: 100%;
+}

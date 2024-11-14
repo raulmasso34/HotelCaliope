@@ -96,9 +96,9 @@
         </div>
     </div>
     <div class="desc-hoteles">
-        <div class="hotel"></div>
-        <div class="hotel"></div>
-        <div class="hotel"></div>
+        <div class="hoteles"></div>
+        <div class="hoteles"></div>
+        <div class="hoteles"></div>
     </div>
 
     <footer></footer>
