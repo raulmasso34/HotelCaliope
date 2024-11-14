@@ -139,10 +139,9 @@
         </div>
         <div class="hoteles">
             <div class="hoteles-img">
-                    <img src="../../static/img/hotel1.jpg" alt="Foto 1" class="active">
-                    <img src="../../static/img/hotel2.jpg" alt="Foto 2">
-                    <img src="../../static/img/hotel3.jpg" alt="Foto 3">
-                    <img src="../../static/img/hotel4.jpg" alt="Foto 4">
+                    <img src="../../static/img/index/index-img1.jpg" alt="Foto 1" class="">
+                    <img src="../../static/img/index/index-img2.jpg" alt="Foto 2">
+                    <img src="../../static/img/index/index-img3.jpg" alt="Foto 3">
                     <button class="carousel-control prev" onclick="prevSlide()">❮</button>
                     <button class="carousel-control next" onclick="nextSlide()">❯</button>
             </div>
