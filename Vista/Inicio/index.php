@@ -38,9 +38,9 @@
                     <li class="dropdown">
                         <a href="#" aria-label="Ver ofertas">Ofertas</a>
                         <div class="dropdown-content">
-                            <a href="#">Blog</a>
-                            <a href="#">Academy</a>
-                            <a href="#">YouTube</a>
+                            <a href="#">Packs</a>
+                            <a href="#">Temporadas</a>
+                            <a href="#">De ultimo minuto</a>
                         </div>
                     </li>
                     <li class="dropdown">
