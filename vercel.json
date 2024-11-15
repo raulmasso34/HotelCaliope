@@ -2,14 +2,14 @@
     "version": 2,
     "builds": [
       {
-        "src": "/Vista/Index/index.php",
+        "src": "Vista/Index/index.php",
         "use": "@vercel/php"
       }
     ],
     "routes": [
       {
         "src": "/",
-        "dest": "/Vista/Index/index.php"
+        "dest": "Vista/Index/index.php"
       }
     ]
   }
