@@ -4,47 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Regístrate</title>
-    <link rel="stylesheet" href="../../static/styles/style.css">
+    <link rel="stylesheet" href="../../static/styles/InicioSesion.css">
 </head>
 <body>
-    <div class="register-container">
+    <div class="registro-container">
         <!-- Logo y título -->
-        <div class="header">
-            <img src="../../static/img/logo.png" alt="Hotel Logo" class="logo">
+        <div class="registro-header">
+            <img src="../../static/img/logo.png" alt="Hotel Logo" class="registro-logo">
             <h2>¡Regístrate en nuestro hotel!</h2>
         </div>
         
+        <!-- Formulario de Registro -->
         <form action="/HotelCaliope/HotelCaliope-2/Controller/Users/RegistreController.php" method="POST">
-        <label>Nombre:</label>
-        <input type="text" name="Nom" required><br>
+            <div class="registro-form-row">
+                <div class="registro-form-group">
+                    <label for="nom">Nombre:</label>
+                    <input type="text" id="nom" name="Nom" required>
+                </div>
 
-        <label>Apellido:</label>
-        <input type="text" name="Cognom" required><br>
+                <div class="registro-form-group">
+                    <label for="cognom">Apellido:</label>
+                    <input type="text" id="cognom" name="Cognom" required>
+                </div>
+            </div>
 
-        <label>DNI:</label>
-        <input type="text" name="DNI" required><br>
+            <div class="registro-form-row">
+                <div class="registro-form-group">
+                    <label for="dni">DNI:</label>
+                    <input type="text" id="dni" name="DNI" required>
+                </div>
 
-        <label>Correo Electrónico:</label>
-        <input type="email" name="CorreuElectronic" required><br>
+                <div class="registro-form-group">
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" name="CorreuElectronic" required>
+                </div>
+            </div>
 
-        <label>Teléfono:</label>
-        <input type="text" name="Telefon"><br>
+            <div class="registro-form-row">
+                <div class="registro-form-group">
+                    <label for="telefon">Teléfono:</label>
+                    <input type="text" id="telefon" name="Telefon">
+                </div>
 
-        <label>Usuario:</label>
-        <input type="text" name="Usuari" required><br>
+                <div class="registro-form-group">
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" id="usuario" name="Usuari" required>
+                </div>
+            </div>
 
-        <label>Contraseña:</label>
-        <input type="password" name="Password" required><br>
+            <div class="registro-form-row">
+                <div class="registro-form-group">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="Password" required>
+                </div>
 
-        <label>Ciudad:</label>
-        <input type="text" name="Ciudad"><br>
+                <div class="registro-form-group">
+                    <label for="ciudad">Ciudad:</label>
+                    <input type="text" id="ciudad" name="Ciudad">
+                </div>
+            </div>
 
-        <label>Código Postal:</label>
-        <input type="text" name="CodigoPostal"><br>
+            <div class="registro-form-row">
+                <div class="registro-form-group">
+                    <label for="codigoPostal">Código Postal:</label>
+                    <input type="text" id="codigoPostal" name="CodigoPostal">
+                </div>
+            </div>
 
-        <input type="submit" value="Registrarse">
-    </form>
-    <a href="login.php" class="login-link">Ya tienes cueta? Inicia sesión</a>
+            <button class="registre-btn" type="submit">Registrarse</button>
+        </form>
+
+        <div class="register-link">
+            <p>¿Ya tines cuenta? <a href="login.php">Inicia sesión</a></p>
+        </div>
     </div>
 </body>
 </html>

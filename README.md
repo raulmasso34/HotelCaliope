@@ -6,6 +6,7 @@ Para que la base de datos tenga conexion, se tiene que llmar igual que como indi
 private $dbname = "HotelCaliope"
 
 Para comprobar que la conexion a la base de datos funciona correctamente, tienes que ir a tu localhost y abrir sirectamente el archivo:
+
          test_conexion.php
 
 -------------------------------------- FALTA / MODIFICAR ------------------------------------------------------
