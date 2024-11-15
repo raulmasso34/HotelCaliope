@@ -29,14 +29,14 @@
                         <a href="" aria-label="Ver ciudades disponibles">Ciudades</a>
                         <div class="dropdown-content">
                             <a href="../Ciudades/NewYork.php">New York</a>
-                            <a href="#">Pirineos</a>
+                            <a href="../Ciudades/Pirineos.php">Pirineos</a>
                             <a href="#">Galicia</a>
-                            <a href="#">California</a>
+                            <a href="../Ciudades/California.php">California</a>
                             <a href="#">Floridas</a>
                         </div>
                     </li>
                     <li class="dropdown">
-                        <a href="#" aria-label="Ver ofertas">Ofertas</a>
+                        <a href="../Ofertas/ofertasIndex.php" aria-label="Ver ofertas">Ofertas</a>
                         <div class="dropdown-content">
                             <a href="#">Packs</a>
                             <a href="#">Temporadas</a>
