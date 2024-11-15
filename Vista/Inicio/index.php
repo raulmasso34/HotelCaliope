@@ -15,6 +15,7 @@
   <title>Hoteles Caliope</title>
 </head>
 <body>
+    
     <div class="background-carousel">
         <header>
             <section>
