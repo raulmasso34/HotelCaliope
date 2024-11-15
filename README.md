@@ -29,6 +29,11 @@ Para comprobar que la conexion a la base de datos funciona correctamente, tienes
 https://www.html6.es
 https://fontawesome.com --> ICONOS
 
+---------------------------------------IMPORTANTE-------------------------------------
+
+Los width son de 80% y margin auto, para que sea todo igual.
+
+
 
 
 

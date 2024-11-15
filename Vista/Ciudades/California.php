@@ -78,7 +78,7 @@
         </div>
     </div>
 
-    <div class="general_box">
+    <div class="general-box">
 
     </div>
 
