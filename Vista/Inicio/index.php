@@ -15,7 +15,7 @@
   <title>Hoteles Caliope</title>
 </head>
 <body>
-    
+
     <div class="background-carousel">
         <header>
             <section>
@@ -134,7 +134,7 @@
             <div class="desc-ciudades">
                 <h1>TOSA DE MAR</h1>
 
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse totam explicabo consequuntur reiciendis distinctio fugit quaerat porro repellendus maxime natus. Voluptates qui reiciendis dolor fuga exercitationem quidem aspernatur, debitis amet, accusantium quae, et asperiores dignissimos ullam velit aperiam ipsum. </p>
+                <p>Disfruta de la vibrante energía de Nueva York con una ubicación inmejorable y un servicio de lujo. A pocos minutos de los principales puntos turísticos, nuestro hotel te ofrece comodidad y estilo para hacer de tu visita una experiencia inolvidable. ¡Reserva ahora y haz de tu viaje algo único! </p>
                 <a href="../Ciudades/NewYork.php"><button class="button-desc-ciudades">Ver mas</button></a>
                 
             </div>
@@ -150,7 +150,7 @@
             <div class="desc-ciudades">
                 <h1>PIRINEOS</h1>
 
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse totam explicabo consequuntur reiciendis distinctio fugit quaerat porro repellendus maxime natus. Voluptates qui reiciendis dolor fuga exercitationem quidem aspernatur, debitis amet, accusantium quae, et asperiores dignissimos ullam velit aperiam ipsum. </p>
+                <p>Disfruta de la vibrante energía de Nueva York con una ubicación inmejorable y un servicio de lujo. A pocos minutos de los principales puntos turísticos, nuestro hotel te ofrece comodidad y estilo para hacer de tu visita una experiencia inolvidable. ¡Reserva ahora y haz de tu viaje algo único! </p>
 
                 <a href="../Ciudades/NewYork.php"><button class="button-desc-ciudades">Ver mas</button></a>
                     
