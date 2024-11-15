@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "Vista/Inicio/index.php",
+      "use": "@vercel/php"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "Vista/Inicio/index.php"
+    }
+  ]
+}
