@@ -1,8 +1,13 @@
 {
-    "rewrites": [
-      {
-        "source": "/",
-        "destination": "/Vista/Inicio/index.php"
-      }
-    ]
-  }
+  "functions": {
+    "Vista/Inicio/index.php": {
+      "runtime": "vercel-php@0.1.0"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/Vista/Inicio/index.html"
+    }
+  ]
+}
