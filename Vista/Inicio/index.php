@@ -8,10 +8,15 @@
   <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="../../static/js/index/carrusel_index2.js"></script>
+ 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Permanent+Marker&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+    <!--SCRIPTS PARA CARROUSELS-->
+
+    <script src="../../static/js/index/carrusel_index2.js"></script>
+
   <title>Hoteles Caliope</title>
 </head>
 <body>
@@ -201,6 +206,8 @@
 
     </section>
 
+    <!------------------------------------------FOOTER------------------------------------------->
+
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-logo">
@@ -243,8 +250,6 @@
     </footer>
 
 
-    <script src="../../static/js/index/personas.js"></script>
-    <script src="../../static/js/calendario.js"></script>
-    <script src="../../static/js/index/carrusel_index.js"></script>
+   
 </body>
 </html>
