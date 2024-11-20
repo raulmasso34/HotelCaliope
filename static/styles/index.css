@@ -60,21 +60,21 @@
 
 }
 .carousel {
-    overflow: hidden; /* Oculta las imágenes que se salen del contenedor */
-    width: 100%; /* Ajusta el tamaño del contenedor */
-    height: 300px; /* Ajusta la altura según las imágenes */
+    overflow: hidden; /* Oculta el contenido desbordado */
+    width: 100%; /* Ajusta al tamaño deseado */
     position: relative;
 }
 
 .carousel-images {
-    display: flex;
-    transition: transform 0.5s ease-in-out; /* Animación suave al cambiar de imagen */
+    display: flex; /* Coloca las imágenes en línea horizontal */
+    transition: transform 0.5s ease-in-out; /* Suaviza el desplazamiento */
 }
 
 .carousel-images img {
-    width: 100%; /* Asegura que cada imagen ocupe todo el ancho del carrusel */
+    width: 100%; /* Cada imagen ocupa todo el ancho del carrusel */
     flex-shrink: 0; /* Evita que las imágenes se reduzcan */
 }
+
 
 
 /*--------------------------------SECCION DE PEQUEÑA DESCIPCION DE LOS HOTELES--------------------------*/
