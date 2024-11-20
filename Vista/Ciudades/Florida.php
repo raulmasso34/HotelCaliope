@@ -4,23 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../../static/styles/general.css">
-  <link rel="stylesheet" href="../../static/styles/index.css">
+  <link rel="stylesheet" href="../../static/styles/ciudades/general_andrea.css">
   <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="../../static/js/carrusel_index2.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="../../static/styles/ciudades/newyork.css">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Permanent+Marker&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+   
+
   <title>Hoteles Caliope</title>
 </head>
 <body>
+
     <div class="background-carousel">
         <header>
             <section>
                 <a href="../Inicio/index.php" aria-label="Ir a la página principal">
-                    <img class="logo-header" src="../../static/img/logo.png" alt="Logo de Hotel Caliope">
+                <img class="logo-header"  src="../../static/img/logo-blanco.png" alt="hotel caliope logo blanco">
                 </a>
             </section>
             <nav id="menu" class="menu">
@@ -28,18 +30,19 @@
                     <li class="dropdown">
                         <a href="" aria-label="Ver ciudades disponibles">Ciudades</a>
                         <div class="dropdown-content">
-                            <a href="../Ciudades/NewYork.php">New York</a>
-                            <a href="../Ciudades/California.php">California</a>
-                            <a href="../Ciudades/Tossa.php">Tossa De Mar</a>
+                        <a href="../Ciudades/NewYork.php">New York</a>
+                            <a href="../Ciudades/Pirineos.php">Pirineos</a>
                             <a href="../Ciudades/Galicia.php">Galicia</a>
+                            <a href="../Ciudades/California.php">California</a>
+                            <a href="../Ciudades/Tossa.php">Tossa</a>
                         </div>
                     </li>
                     <li class="dropdown">
-                        <a href="#" aria-label="Ver ofertas">Ofertas</a>
+                        <a href="../Ofertas/ofertasIndex.php" aria-label="Ver ofertas">Ofertas</a>
                         <div class="dropdown-content">
-                            <a href="#">Blog</a>
-                            <a href="#">Academy</a>
-                            <a href="#">YouTube</a>
+                            <a href="#">Packs</a>
+                            <a href="#">Temporadas</a>
+                            <a href="#">De ultimo minuto</a>
                         </div>
                     </li>
                     <li class="dropdown">
@@ -75,61 +78,103 @@
                 </form>
             </div>
         </div>
-    
-</section>
-<section id="ciudad" class="ciudad">
-  <div id="imagen-ny" class="imagen-ny">
-    <img src="../../static/img/ciudades/nuevayork/ny.jpeg" alt="newyork">
-  </div>
-  <div id="descripcion-ciudad" class="descripcion-ciudad">
-    <h3 id="titulo-desc">NUEVA YORK</h3>
-    <p id="descripcion">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-    <button id="sabermas-descripcion">Saber mas</button>
-  </div>
-</section>
+    </div>
 
-<section id="tres-imagenes" class="tres-imagenes">
-<section id="contenido">
-    <div id="imagenes">
-        <img src="../../static/img/ciudades/nuevayork/ny.jpeg"" alt="contenido">
-    </div>
-    <div>
-        <p id="texto-contenido">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-        <button id="boton-contenido">ir</button></div>
-</section>
-<section id="contenido">
-    <div id="imagenes">
-    <img src="../../static/img/ciudades/nuevayork/ny.jpeg"" alt="contenido">
-    </div>
-    <div>
-        <p id="texto-contenido">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-        <button id="boton-contenido">ir</button>
-    </div>
-</section>
-<section id="contenido">
-    <div id="imagenes">
-    <img src="../../static/img/ciudades/nuevayork/ny.jpeg" alt="contenido">
-    </div>
-    <div>
-        <p id="texto-contenido">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-    <button id="boton-contenido">ir</button>
-    </div>
-</section>
-</section>
+    <div class="general-box">
 
-<section id="galeria">
-<section id="imagen-grande">
-<img src="../../static/img/ciudades/nuevayork/ny.jpeg" alt="imagen1">
-</section>
-<section id="imagenes-peques">
-<div id="imagen1"><img src="../../static/img/ciudades/nuevayork/ny.jpeg" alt="imagen2"></div>
-<div id="imagen2"><img src="../../static/img/ciudades/nuevayork/ny.jpeg" alt="imagen3"></div>
-<div id="imagen3"><img src="../../static/img/ciudades/nuevayork/ny.jpeg" alt="imagen4"></div>
-<div id="imagen4"><img src="../../static/img/ciudades/nuevayork/ny.jpeg" alt="imagen5"></div>
-</section>
-</section>
-  
-<footer class="footer">
+        <div class="left-cali">
+        <strong>
+            <h1>FLORIDA, <br>UNA EXPERIENCIA INOLVIDABLE</h1>
+        </strong>
+                
+            <div class="contenido-desc">
+                   
+                <p>
+                    En Hoteles Caliope, ofrecemos una experiencia inigualable porque sabemos que cada detalle cuenta. Nos enorgullece brindar instalaciones de primer nivel, diseño sofisticado y una atmósfera acogedora que invita a la relajación. Nuestros hoteles están ubicados en destinos exclusivos, con vistas impresionantes y servicios personalizados. Nuestro equipo de profesionales apasionados está listo para atenderte, asegurándose de que disfrutes de una experiencia llena de comodidad y lujo. ¡En Hoteles Caliope, transformamos tu viaje en un momento inolvidable!
+                </p>
+            </div>
+
+        </div>
+        <div class="right-cali">
+            <div class="carousel">
+                <div class="carousel-images">
+                    <img src="../../static/img/ciudades/florida/florida1.jpg" alt="Foto 1">
+                    <img src="../../static/img/ciudades/florida/florida3.jpg" alt="Foto 2">
+                    <img src="../../static/img/ciudades/florida/florida2.jpg" alt="Foto 3">
+                   s
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <section class="contenido-box"> 
+        <div class="contenido-mini">
+            <img class="mini-img" src="../../static/img/ciudades/california/california.jpg" alt="">
+            <h1>CONTENIDO</h1>
+            <div class="txt-mini">
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni ex repellendus neque! Doloremque neque quod quam quis, rerum doloribus incidunt! Corporis, in? Repudiandae est voluptatibus exercitationem vitae corporis, laborum reiciendis.</p>
+            </div>
+            
+        </div>
+        <div class="contenido-mini">
+            <img class="mini-img" src="../../static/img/ciudades/california/california.jpg" alt="">
+            <h1>CONTENIDO</h1>
+            <div class="txt-mini">
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni ex repellendus neque! Doloremque neque quod quam quis, rerum doloribus incidunt! Corporis, in? Repudiandae est voluptatibus exercitationem vitae corporis, laborum reiciendis.</p>
+            </div>
+            
+        </div>
+        <div class="contenido-mini">
+            <img class="mini-img" src="../../static/img/ciudades//florida/florida4.jpg" alt="">
+            <h1>CONTENIDO</h1>
+            <div class="txt-mini">
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni ex repellendus neque! Doloremque neque quod quam quis, rerum doloribus incidunt! Corporis, in? Repudiandae est voluptatibus exercitationem vitae corporis, laborum reiciendis.</p>
+            </div>
+            
+        </div>
+
+
+    </section>
+
+    <section class="gallery-gen">
+        <h1>Gallery</h1>
+        <div class="gallery-box">
+            <div class="gallery-mini-izq">
+                <img src="../../static/img/ciudades/california/california1.jpg" alt="">
+            </div>
+            <div class="gallery-mini-der">
+                <div class="mini-der">
+                    <img src="../../static/img/ciudades/california/california1.jpg" alt="">
+                </div>
+                <div class="mini-der">
+                <img src="../../static/img/ciudades/california/california1.jpg" alt="">
+                </div>
+                <div class="mini-der">
+                <img src="../../static/img/ciudades/california/california1.jpg" alt="">
+                </div>
+                <div class="mini-der">
+                <img src="../../static/img/ciudades/california/california1.jpg" alt="">
+                </div>
+            </div>
+        </div>
+       
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <footer class="footer">
         <div class="footer-container">
             <div class="footer-logo">
                 <img src="../../static/img/logo-blanco.png" alt="hotel caliope logo blanco">
@@ -170,5 +215,11 @@
         </div>
     </footer>
 
+     <!--SCRIPTS PARA CARROUSELS-->
+     <script src="../../../static/js/index/personas.js"></script>
+    <script src="../../../static/js/calendario.js"></script>
+    <script src="../../static/js/ciudades/california.js"></script>
+    <script src="../../../static/js/index/carrusel_index2.js"></script>
+
 </body>
-</html>
+</head>

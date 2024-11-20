@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../../static/styles/general.css">
-  <link rel="stylesheet" href="../../static/styles/ciudades/california.css">
+  <link rel="stylesheet" href="../../static/styles/ciudades/general_andrea.css">
   <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -30,11 +30,11 @@
                     <li class="dropdown">
                         <a href="" aria-label="Ver ciudades disponibles">Ciudades</a>
                         <div class="dropdown-content">
-                            <a href="../Ciudades/NewYork.php">New York</a>
-                            <a href="#">Pirineos</a>
-                            <a href="#">Galicia</a>
-                          
-                            <a href="#">Floridas</a>
+                        <a href="../Ciudades/NewYork.php">New York</a>
+                            <a href="../Ciudades/Pirineos.php">Pirineos</a>
+                            <a href="../Ciudades/Galicia.php">Galicia</a>
+                            <a href="../Ciudades/Florida.php">Florida</a>
+                            <a href="../Ciudades/Tossa.php">Tossa</a>
                         </div>
                     </li>
                     <li class="dropdown">
