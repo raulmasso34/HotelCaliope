@@ -132,13 +132,18 @@
 
 .gallery-mini-izq{
     border: 2px solid blue;
-    width: 50%;
+    width: 49%;
     height: 100%;
     margin: auto;
 }
+.gallery-mini-izq img{
+    height: 100%;
+    width: 100%;
+}
+
 .gallery-mini-der{
     
-    width: 50%;
+    width: 49%;
     height: 100%;
     margin: auto;
     flex-direction: row;
@@ -156,4 +161,9 @@
     border: 2px solid red;
     width: 50%;
     height: 49%;
+}
+
+.mini-der img{
+    height: 100%;
+    width: 100%;
 }

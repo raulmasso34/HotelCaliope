@@ -141,15 +141,21 @@
         <h1>Gallery</h1>
         <div class="gallery-box">
             <div class="gallery-mini-izq">
-                
+                <img src="../../static/img/ciudades/california/california1.jpg" alt="">
             </div>
             <div class="gallery-mini-der">
                 <div class="mini-der">
                     <img src="../../static/img/ciudades/california/california1.jpg" alt="">
                 </div>
-                <div class="mini-der"></div>
-                <div class="mini-der"></div>
-                <div class="mini-der"></div>
+                <div class="mini-der">
+                <img src="../../static/img/ciudades/california/california1.jpg" alt="">
+                </div>
+                <div class="mini-der">
+                <img src="../../static/img/ciudades/california/california1.jpg" alt="">
+                </div>
+                <div class="mini-der">
+                <img src="../../static/img/ciudades/california/california1.jpg" alt="">
+                </div>
             </div>
         </div>
        
