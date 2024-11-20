@@ -12,11 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Permanent+Marker&family=Shadows+Into+Light&display=swap" rel="stylesheet">
 
-    <!--SCRIPTS PARA CARROUSELS-->
-    <script src="../../../static/js/index/personas.js"></script>
-    <script src="../../../static/js/calendario.js"></script>
-    <script src="../../static/js/ciudades/california.js"></script>
-    <script src="../../../static/js/index/carrusel_index2.js"></script>
+   
 
   <title>Hoteles Caliope</title>
 </head>
@@ -112,6 +108,20 @@
 
     </div>
 
+    <section class="contenido-box"> 
+        <div class="contenido-mini">
+            <img class="mini-img" src="../../static/img/ciudades/california/california.jpg" alt="">
+        </div>
+        <div class="contenido-mini">
+
+        </div>
+        <div class="contenido-mini">
+
+        </div>
+
+
+    </section>
+
 
 
 
@@ -165,6 +175,12 @@
             <p>&copy; 2024 Hotel Caliope. Todos los derechos reservados.</p>
         </div>
     </footer>
+
+     <!--SCRIPTS PARA CARROUSELS-->
+     <script src="../../../static/js/index/personas.js"></script>
+    <script src="../../../static/js/calendario.js"></script>
+    <script src="../../static/js/ciudades/california.js"></script>
+    <script src="../../../static/js/index/carrusel_index2.js"></script>
 
 </body>
 </head>

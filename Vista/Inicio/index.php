@@ -252,6 +252,7 @@
     <script src="../../static/js/index/carrusel_index2.js"></script>
 
     <script src="../../static/js/index/carrusel_index.js"></script>
+    
    
 </body>
 </html>
