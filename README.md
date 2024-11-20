@@ -31,8 +31,8 @@ https://fontawesome.com --> ICONOS
 
 ---------------------------------------IMPORTANTE-------------------------------------
 
-Los width son de 80% y margin auto, para que sea todo igual.
-
+- Los width son de 80% y margin auto, para que sea todo igual.
+- Los SCRIPTS ponerlos abajo del codigo, si no NO FUNCIONA!
 
 
 
