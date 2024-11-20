@@ -35,9 +35,10 @@
                         <div class="dropdown-content">
                             <a href="../Ciudades/NewYork.php">New York</a>
                             <a href="../Ciudades/Pirineos.php">Pirineos</a>
-                            <a href="#">Galicia</a>
+                            <a href="../Ciudades/Galicia.php">Galicia</a>
                             <a href="../Ciudades/California.php">California</a>
-                            <a href="#">Floridas</a>
+                            <a href="../Ciudades/Florida.php">Florida</a>
+                            <a href="../Ciudades/Tossa.php">Tossa</a>
                         </div>
                     </li>
                     <li class="dropdown">

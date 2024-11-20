@@ -28,11 +28,11 @@
                     <li class="dropdown">
                         <a href="" aria-label="Ver ciudades disponibles">Ciudades</a>
                         <div class="dropdown-content">
-                            <a href="../Ciudades/NewYork.php">New York</a>
-                            <a href="#">Pirineos</a>
-                            <a href="#">Galicia</a>
-                            <a href="#">California</a>
-                            <a href="#">Floridas</a>
+                            <a href="../Ciudades/Pirineos.php">Pirineos</a>
+                            <a href="../Ciudades/Galicia.php">Galicia</a>
+                            <a href="../Ciudades/California.php">California</a>
+                            <a href="../Ciudades/Florida">Florida</a>
+                            <a href="../Ciudades/Tossa">Tossa De Mar</a>
                         </div>
                     </li>
                     <li class="dropdown">
