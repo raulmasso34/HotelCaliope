@@ -30,7 +30,7 @@
                         <div class="dropdown-content">
                             <a href="../Ciudades/NewYork.php">New York</a>
                             <a href="../Ciudades/California.php">California</a>
-                            <a href="../Ciudades/Tossa">Tossa De Mar</a>
+                            <a href="../Ciudades/Tossa.php">Tossa De Mar</a>
                             <a href="../Ciudades/Galicia.php">Galicia</a>
                         </div>
                     </li>

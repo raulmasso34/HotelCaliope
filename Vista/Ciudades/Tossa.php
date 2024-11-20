@@ -32,8 +32,8 @@
                             <a href="../Ciudades/Pirineos.php">Pirineos</a>
                             <a href="../Ciudades/Galicia.php">Galicia</a>
                             <a href="../Ciudades/California.php">California</a>
-                            <a href="../Ciudades/Florida">Florida</a>
-                            <a href="../Ciudades/Tossa">Tossa De Mar</a>
+                            <a href="../Ciudades/Florida.php">Florida</a>
+                            <a href="../Ciudades/Tossa.php">Tossa De Mar</a>
                         </div>
                     </li>
                     <li class="dropdown">
