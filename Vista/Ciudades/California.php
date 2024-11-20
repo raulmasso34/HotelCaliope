@@ -33,7 +33,7 @@
                             <a href="../Ciudades/NewYork.php">New York</a>
                             <a href="#">Pirineos</a>
                             <a href="#">Galicia</a>
-                            <a href="#">California</a>
+                          
                             <a href="#">Floridas</a>
                         </div>
                     </li>
@@ -144,7 +144,9 @@
                 
             </div>
             <div class="gallery-mini-der">
-                <div class="mini-der"></div>
+                <div class="mini-der">
+                    <img src="../../static/img/ciudades/california/california1.jpg" alt="">
+                </div>
                 <div class="mini-der"></div>
                 <div class="mini-der"></div>
                 <div class="mini-der"></div>
