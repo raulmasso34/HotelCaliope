@@ -109,12 +109,24 @@
 </section>
 <section id="contenido">
     <div id="imagenes">
-    <img src="../../static/img/ciudades/nuevayork/ny.jpeg"" alt="contenido">
+    <img src="../../static/img/ciudades/nuevayork/ny.jpeg" alt="contenido">
     </div>
     <div>
         <p id="texto-contenido">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
     <button id="boton-contenido">ir</button>
     </div>
+</section>
+</section>
+
+<section id="galeria">
+<section id="imagen-grande">
+<img src="../../static/img/ciudades/nuevayork/ny.jpeg" alt="imagen1">
+</section>
+<section id="imagenes-peques">
+<div id="imagen1"><img src="../../static/img/ciudades/nuevayork/ny.jpeg" alt="imagen2"></div>
+<div id="imagen2"><img src="../../static/img/ciudades/nuevayork/ny.jpeg" alt="imagen3"></div>
+<div id="imagen3"><img src="../../static/img/ciudades/nuevayork/ny.jpeg" alt="imagen4"></div>
+<div id="imagen4"><img src="../../static/img/ciudades/nuevayork/ny.jpeg" alt="imagen5"></div>
 </section>
 </section>
   
