@@ -95,7 +95,16 @@
         <img src="../../static/img/ciudades/nuevayork/ny.jpeg"" alt="contenido">
     </div>
     <div>
-        <p></p>
+        <p id="texto-contenido">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+        <button id="boton-contenido">ir</button></div>
+</section>
+<section id="contenido">
+    <div id="imagenes">
+    <img src="../../static/img/ciudades/nuevayork/ny.jpeg"" alt="contenido">
+    </div>
+    <div>
+        <p id="texto-contenido">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+        <button id="boton-contenido">ir</button>
     </div>
 </section>
 <section id="contenido">
@@ -103,15 +112,8 @@
     <img src="../../static/img/ciudades/nuevayork/ny.jpeg"" alt="contenido">
     </div>
     <div>
-        <p></p>
-    </div>
-</section>
-<section id="contenido">
-    <div id="imagenes">
-    <img src="../../static/img/ciudades/nuevayork/ny.jpeg"" alt="contenido">
-    </div>
-    <div>
-        <p></p>
+        <p id="texto-contenido">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+    <button id="boton-contenido">ir</button>
     </div>
 </section>
 </section>
