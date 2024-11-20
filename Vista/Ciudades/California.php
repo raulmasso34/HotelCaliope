@@ -33,7 +33,7 @@
                             <a href="../Ciudades/NewYork.php">New York</a>
                             <a href="#">Pirineos</a>
                             <a href="#">Galicia</a>
-                            <a href="#">California</a>
+                          
                             <a href="#">Floridas</a>
                         </div>
                     </li>
@@ -111,15 +111,48 @@
     <section class="contenido-box"> 
         <div class="contenido-mini">
             <img class="mini-img" src="../../static/img/ciudades/california/california.jpg" alt="">
+            <h1>CONTENIDO</h1>
+            <div class="txt-mini">
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni ex repellendus neque! Doloremque neque quod quam quis, rerum doloribus incidunt! Corporis, in? Repudiandae est voluptatibus exercitationem vitae corporis, laborum reiciendis.</p>
+            </div>
+            
         </div>
         <div class="contenido-mini">
-
+            <img class="mini-img" src="../../static/img/ciudades/california/california.jpg" alt="">
+            <h1>CONTENIDO</h1>
+            <div class="txt-mini">
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni ex repellendus neque! Doloremque neque quod quam quis, rerum doloribus incidunt! Corporis, in? Repudiandae est voluptatibus exercitationem vitae corporis, laborum reiciendis.</p>
+            </div>
+            
         </div>
         <div class="contenido-mini">
-
+            <img class="mini-img" src="../../static/img/ciudades/california/california.jpg" alt="">
+            <h1>CONTENIDO</h1>
+            <div class="txt-mini">
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni ex repellendus neque! Doloremque neque quod quam quis, rerum doloribus incidunt! Corporis, in? Repudiandae est voluptatibus exercitationem vitae corporis, laborum reiciendis.</p>
+            </div>
+            
         </div>
 
 
+    </section>
+
+    <section class="gallery-gen">
+        <h1>Gallery</h1>
+        <div class="gallery-box">
+            <div class="gallery-mini-izq">
+                
+            </div>
+            <div class="gallery-mini-der">
+                <div class="mini-der">
+                    <img src="../../static/img/ciudades/california/california1.jpg" alt="">
+                </div>
+                <div class="mini-der"></div>
+                <div class="mini-der"></div>
+                <div class="mini-der"></div>
+            </div>
+        </div>
+       
     </section>
 
 
