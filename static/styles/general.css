@@ -8,7 +8,7 @@ body {
     padding: 0;
     
     box-sizing: border-box;
-    height: 3000px;
+    height: max-content;
     width: 100%;
     background-color: #e1edf3; /* Light blue background */
 }
