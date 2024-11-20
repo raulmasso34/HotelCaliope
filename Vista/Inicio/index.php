@@ -99,7 +99,7 @@
                         <img src="../../static/img/index/hotel2.jpg" alt="Foto 2">
                         <img src="../../static/img/index/hotel3.jpg" alt="Foto 3">
                         <img src="../../static/img/index/hotel4.jpg" alt="Foto 4">
-                        <img src="../../static/img/index/hotel5.jpg" alt="Foto 4">
+                        <img src="../../static/img/index/hotel5.jpg" alt="Foto 5">
                     </div>
                 </div>
             </div>
