@@ -87,7 +87,11 @@
             
             </div>
             <div class="footer-sec">
-            <h1>Contacto</h1>
+            <h1>Dónde nos encontramos</h1>
+                <p class="sec-tres">
+                Calle xxx 99999
+                Lorem ipsum, España
+                </p>
             </div>
         </div>
     </footer>

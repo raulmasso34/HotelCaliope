@@ -355,10 +355,11 @@ button:hover {
 }
 
 .footer-box{
-    border: 2px solid red;
+   
     display: flex;
     height: 100%;
-    width: 100%;
+    width: 70%;
+    margin: auto;
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
@@ -367,23 +368,27 @@ button:hover {
 }
 
 .footer-sec{
-    border: 2px solid rgb(11, 117, 13);
+    
     height: 80%;
-    width: 25%;
+    width: 30%;
+    border: 2px solid red;
+
     text-align: center;
     margin: auto;
 }
 
 .footer-sec h1{
     font-size: 40px;
-    font-family: "Cormorant Garamond", serif;
-    font-weight: 600;
-    font-style: italic;
+    font-family: "Rancho", cursive;
+    font-weight: 400;
+    color: white;
+    font-style: normal;
 }
 .footer-sec p{
     font-size: 25px;
     width: 80%;
     margin: auto;
+    color: white;
     text-align: justify;
 }
 
@@ -396,14 +401,23 @@ button:hover {
 .links-footer a {
     display: block;
     margin: 5px 0; /* Espacio entre los enlaces */
-    font-size: 14px;
+    font-size: 20px;
+    width: 45%;
+    text-align: justify;
+    margin: auto;
     text-decoration: none;
-    color: rgb(11, 117, 13); /* Color verde */
+    color: rgb(255, 255, 255); /* Color verde */
     transition: color 0.3s ease;
+    border: 2px solid red;
+    margin-top: 2%;
 }
 
 .links-footer a:hover {
-    color: #4CAF50; /* Color verde más claro cuando se pasa el mouse */
+    color: #b9b9b9; /* Color verde más claro cuando se pasa el mouse */
 }
 
 
+.sec-tres{
+    font-size: 14px;
+    border: 2px soldi green;
+}
