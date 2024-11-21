@@ -15,7 +15,7 @@
 </head>
 <body>
     <header class="main-header">
-        <img class="main-header-img" src="../static/img/florida/florida2 .jpg" alt="Fondo de California">
+        <img class="main-header-img" src="../static/img/florida/florida2.jpg" alt="Fondo de California">
         <section class="main-up">
             <div class="main-up-left">
                 <img src="../static/img/logo.png" alt="Imagen secundaria">
