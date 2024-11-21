@@ -87,27 +87,85 @@
         </section>
     </header>
 
+    <div class="main-main">
+        
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <footer class="main-footer">
         <div class="footer-box">
+            <!-- Sección: Sobre el Hotel -->
             <div class="footer-sec">
                 <h1>Sobre el hotel</h1>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.</p>
+                <a href="../vista/index.php"><img class="img-footer" src="../static/img/logo_blanco.png" alt=""></a>
+                <div class="language-selector">
+                <select id="language-select" onchange="changeLanguage()">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                </select>
+                </div>
             </div>
+
+            <!-- Sección: Links -->
             <div class="footer-sec">
                 <h1>Links</h1>
                 <div class="links-footer">
-                        <a href="#">Sobre nosotros</a>
-                        <a href="#">Servicios</a>
-                        <a href="#">Hoteles</a>
+                    <a href="#">Sobre nosotros</a>
+                    <a href="#">Servicios</a>
+                    <a href="#">Hoteles</a>
                 </div>
-            
             </div>
+
+            <!-- Sección: Contacto y Redes Sociales -->
             <div class="footer-sec">
-            <h1>Contacto</h1>
+                <h1>Dónde nos encontramos</h1>
+                <div class="sec-tres">
+                    <p>Calle xxx 99999 <br> Lorem ipsum, España</p>
+                    <span class="contact-info">
+                        <i class="fa-solid fa-phone"></i> 999 999 999
+                    </span>
+                    <span class="contact-info">
+                        <i class="fa-solid fa-envelope"></i> hotelcalope@gmail.com
+                    </span>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
+
     <!-----------------------------------SCRIPTS---------------------------->
     <script src="../static/js/main.js"></script>
 </body>
