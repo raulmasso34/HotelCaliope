@@ -380,4 +380,30 @@ button:hover {
     font-weight: 600;
     font-style: italic;
 }
+.footer-sec p{
+    font-size: 25px;
+    width: 80%;
+    margin: auto;
+    text-align: justify;
+}
+
+
+.links-footer {
+    text-align: center;
+    margin: auto;
+}
+
+.links-footer a {
+    display: block;
+    margin: 5px 0; /* Espacio entre los enlaces */
+    font-size: 14px;
+    text-decoration: none;
+    color: rgb(11, 117, 13); /* Color verde */
+    transition: color 0.3s ease;
+}
+
+.links-footer a:hover {
+    color: #4CAF50; /* Color verde más claro cuando se pasa el mouse */
+}
+
 

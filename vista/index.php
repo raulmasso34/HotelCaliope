@@ -75,9 +75,16 @@
         <div class="footer-box">
             <div class="footer-sec">
                 <h1>Sobre el hotel</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.</p>
             </div>
             <div class="footer-sec">
-            <h1>Links</h1>
+                <h1>Links</h1>
+                <div class="links-footer">
+                        <a href="#">Sobre nosotros</a>
+                        <a href="#">Servicios</a>
+                        <a href="#">Hoteles</a>
+                </div>
+            
             </div>
             <div class="footer-sec">
             <h1>Contacto</h1>
