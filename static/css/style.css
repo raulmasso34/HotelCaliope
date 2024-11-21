@@ -1,0 +1,289 @@
+/* Reglas generales */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #e1edf3; /* Fondo azul claro */
+    height: 5000px; /* Altura extra para scroll */
+}
+
+/* Estilo del header */
+.main-header {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Ocupa la altura completa de la ventana */
+    overflow: hidden;
+   
+}
+
+/* Imagen de fondo */
+.main-header-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1; /* Envía al fondo */
+}
+
+.main-up {
+    position: fixed; /* Fija la posición en la ventana */
+    top: 0; /* Alinea en la parte superior */
+    left: 50%; /* Centra horizontalmente */
+    transform: translateX(-50%); /* Ajusta la posición por el ancho */
+    display: flex;
+    
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    z-index: 1000; /* Asegura que esté sobre otros elementos */
+    border-radius: 10px; /* Bordes redondeados */
+    width: 100%; /* Ocupa un 85% del ancho de la ventana */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    
+}
+.main-up.transparent {
+    background-color: rgba(0, 0, 0, 0); /* Sin fondo */
+    box-shadow: none; /* Sin sombra */
+}
+
+.main-up.scrolled {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.main-up-left{
+    display: flex;
+    margin-left: 8%;
+   
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Estilo para main-up-left */
+.main-up-left img {
+    max-width: 100%;
+    max-height: 100px; /* Limita la altura del logo */
+    object-fit: contain; /* Escala correctamente */
+    transition: transform 0.3s ease;
+}
+.main-up.scrolled .main-up-left img {
+    transform: translateY(0); /* Mantiene la posición del logo al hacer scroll */
+}
+
+/* Estilo para main-up-right */
+.main-up-right {
+    display: flex;
+   
+    align-items: center;
+    margin-right: 8%;
+}
+
+.links {
+    display: flex;
+    gap: 20px; /* Espaciado entre los enlaces */
+}
+
+.links a {
+    text-decoration: none;
+    color: rgb(56, 92, 233); /* Color del texto */
+    font-weight: bold;
+    font-size: 20px;
+   /* transition: color 0.1s, transform 0.1s; /* Transiciones */
+}
+
+.links a:hover {
+    color: rgb(26, 4, 89); /* Color al pasar el mouse */
+    transform: scale(1.1); /* Ligero aumento */
+}
+
+/*---------------------------CENTRO IMG-------------------*/
+
+
+.main-center{
+   
+    z-index: 999;
+    margin: 8% auto;
+    display: flex;
+    
+    height: 65%;
+    width: 80%;
+
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+
+}
+
+.center-up{
+  
+
+    height: 50%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+
+}
+.center-up-up{
+
+    height: 20%;
+    margin-top: 2%;
+    text-align: center;
+    width: 50%;
+}
+.center-up-down{
+    
+    height: 65%;
+ 
+    width: 50%;
+    text-align: center;
+}
+.center-up-down h1{
+    font-size: 40px;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    font-style: italic;
+}
+
+/*-----------BOTONes RESERVA----------*/
+
+.center-down{
+    
+    height: 50%;
+    width: 100%;
+
+}
+
+
+
+/* Estilo del formulario de reserva */
+.reserva-form {
+   
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 100%;
+   
+    padding: 40px;
+    text-align: center;
+}
+.form-reservas{
+ 
+    width: 100%;
+    height: 300px;
+}
+
+.form-reservas h1{
+    margin: 2.5% auto;
+    text-align: center;
+
+}
+
+.formulario{
+    background-color: #ffffff;
+    padding: 20px;
+    width: 80%;
+    margin:3% auto;
+    text-align: center;
+ 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+form label {
+    
+    padding: 10px;
+    margin: 10px;
+    width: 100%;
+}
+
+form input,
+form select {
+    width: 13%; /* Ocupa el ancho completo del formulario */
+    padding: 10px;
+    margin-bottom: 15px; /* Espacio entre cada campo */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.3s ease; /* Suave transición para enfoque */
+}
+
+
+/* Efecto de enfoque en los campos */
+form input:focus,
+form select:focus {
+    border-color: #021476; 
+    outline: none; 
+}
+
+.counter-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.counter-container label {
+    flex: 1;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilo de los botones de incremento y decremento */
+.counter-container button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    color: #333;
+    font-size: 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0 5px;
+}
+
+/* Efecto hover para botones */
+.counter-container button:hover {
+    background-color: #ddd;
+}
+
+/* Estilo del campo de número */
+.counter-container input[type="number"] {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+}
+
+button {
+    width: 15%;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #003048; 
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #9dccfc; 
+    color: rgb(0, 0, 0);
+}
