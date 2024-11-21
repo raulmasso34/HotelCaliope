@@ -88,7 +88,7 @@
     </header>
 
     <div class="main-main">
-        
+
     </div>
 
 
@@ -163,6 +163,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="privacidad">
+            
         </div>
     </footer>
 
