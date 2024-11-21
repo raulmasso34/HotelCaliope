@@ -16,22 +16,34 @@ body {
 .main-header {
     position: relative;
     width: 100%;
-    height: 100vh; /* Ocupa la altura completa de la ventana */
+    height: 100vh; /* Ocupa toda la altura de la ventana */
     overflow: hidden;
-   
 }
 
-/* Imagen de fondo */
-.main-header-img {
+/* Imágenes del carrusel (fondo) */
+.carousel-background {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: -1; /* Envía al fondo */
+    z-index: -1; /* Enviar al fondo */
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out; /* Transición suave entre imágenes */
 }
 
+/* La primera imagen será visible inicialmente */
+.carousel-background:first-child {
+    opacity: 1;
+}
+
+/* Contenido sobre el fondo */
+.main-header-content {
+    position: relative;
+    z-index: 1;
+    /* Otros estilos para el contenido dentro del header */
+}
 .main-up {
     position: fixed; /* Fija la posición en la ventana */
     top: 0; /* Alinea en la parte superior */
@@ -287,3 +299,85 @@ button:hover {
     background-color: #9dccfc; 
     color: rgb(0, 0, 0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*-----------------------------FOOTER-----------------------------------------------*/
+
+.main-footer{
+    border: 2px solid red;
+    width: 100%;
+    height: 600px;
+    background-color: #333;
+
+}
+
+.footer-box{
+    border: 2px solid red;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: center;
+    flex-wrap: nowrap;
+}
+
+.footer-sec{
+    border: 2px solid rgb(11, 117, 13);
+    height: 80%;
+    width: 25%;
+    text-align: center;
+    margin: auto;
+}
+
+.footer-sec h1{
+    font-size: 40px;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    font-style: italic;
+}
+

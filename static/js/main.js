@@ -16,12 +16,28 @@ window.addEventListener('scroll', () => {
 });
 
 
-flatpickr("#start-date", {
-    dateFormat: "Y-m-d", // Formato de la fecha
-    minDate: "today" // La fecha mínima que se puede seleccionar es el día de hoy
-});
+// CARRUSEL PRINCIPAL
 
-flatpickr("#end-date", {
-    dateFormat: "Y-m-d", // Formato de la fecha
-    minDate: "today" // La fecha mínima que se puede seleccionar es el día de hoy
-});
+let currentIndex = 0;
+const backgrounds = document.querySelectorAll('.carousel-background'); // Selecciona todas las imágenes de fondo
+
+// Función para cambiar el fondo
+function changeBackground() {
+    // Ocultar la imagen actual
+    backgrounds[currentIndex].style.opacity = 0;
+    
+    // Avanzar al siguiente fondo, asegurándonos de que sea cíclico
+    currentIndex = (currentIndex + 1) % backgrounds.length;
+    
+    // Mostrar la siguiente imagen
+    backgrounds[currentIndex].style.opacity = 1;
+}
+
+// Iniciar el carrusel con un intervalo de 5 segundos
+function startBackgroundCarousel() {
+    setInterval(changeBackground, 3000); // Cambiar cada 5 segundos
+}
+
+// Iniciar el carrusel de fondo cuando la página cargue
+window.onload = startBackgroundCarousel;
+
