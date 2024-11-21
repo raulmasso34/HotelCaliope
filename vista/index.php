@@ -34,7 +34,7 @@
             <div class="dropdown-content">
                 <div class="dropdown-section">
                     <h4>Europa</h4>
-                    <a href="#">Galicia</a>
+                    <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
                     <a href="#">Tossa de Mar</a>
                     <a href="#">Pirineos</a>
                 </div>
