@@ -21,12 +21,29 @@
                 <img src="../static/img/logo.png" alt="Imagen secundaria">
             </div>
             <div class="main-up-right">
-                <div class="links">
-                    <a href="#">Sobre nosotros</a>
-                    <a href="#">Servicios</a>
-                    <a href="#">Hoteles</a>
+    <div class="links">
+        <a href="#">Sobre nosotros</a>
+        <a href="#">Servicios</a>
+        <div class="dropdown">
+            <a href="#" class="dropbtn">Hoteles</a>
+            <div class="dropdown-content">
+                <div class="dropdown-section">
+                    <h4>Europa</h4>
+                    <a href="#">Galicia</a>
+                    <a href="#">Tossa de Mar</a>
+                    <a href="#">Pirineos</a>
+                </div>
+                <div class="dropdown-section">
+                    <h4>USA</h4>
+                    <a href="#">Florida</a>
+                    <a href="#">California</a>
+                    <a href="#">Nueva York</a>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
         </section>
         <section class="main-center">
             <div class="center-up">
