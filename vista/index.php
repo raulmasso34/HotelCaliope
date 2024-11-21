@@ -15,7 +15,12 @@
 </head>
 <body>
     <header class="main-header">
-        <img class="main-header-img" src="../static/img/florida/florida2.jpg" alt="Fondo de California">
+    <div class="carousel">
+        <img class="carousel-background" src="../static/img/florida/florida3.jpg" alt="Fondo 1">
+        <img class="carousel-background" src="../static/img/florida/florida4.jpg" alt="Fondo 2">
+        <img class="carousel-background" src="../static/img/florida/florida5.jpg" alt="Fondo 3">
+    </div>
+       
         <section class="main-up">
             <div class="main-up-left">
                 <img src="../static/img/logo.png" alt="Imagen secundaria">
@@ -60,7 +65,7 @@
             </div>
             <div class="center-down">
                 <div class="form-reservas">
-                <h1>Haz tu reserva!</h1>
+                
                 <div class="formulario">
                     <form action="" method="post">
                         <label for="checkin">Fecha de Llegada:</label>
@@ -84,7 +89,24 @@
 
 
     <footer class="main-footer">
-
+        <div class="footer-box">
+            <div class="footer-sec">
+                <h1>Sobre el hotel</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.</p>
+            </div>
+            <div class="footer-sec">
+                <h1>Links</h1>
+                <div class="links-footer">
+                        <a href="#">Sobre nosotros</a>
+                        <a href="#">Servicios</a>
+                        <a href="#">Hoteles</a>
+                </div>
+            
+            </div>
+            <div class="footer-sec">
+            <h1>Contacto</h1>
+            </div>
+        </div>
     </footer>
     <!-----------------------------------SCRIPTS---------------------------->
     <script src="../static/js/main.js"></script>
