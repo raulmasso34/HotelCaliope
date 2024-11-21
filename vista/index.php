@@ -165,7 +165,7 @@
             </div>
         </div>
         <div class="privacidad">
-            
+            <p>Lorem ipsum dolor sit ame</p>
         </div>
     </footer>
 

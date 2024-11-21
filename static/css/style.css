@@ -411,6 +411,7 @@ button:hover {
     background-color: #333;
     color: white;
     padding: 40px 0;
+    height: max-content;
     font-family: Arial, sans-serif;
 }
 
@@ -420,6 +421,7 @@ button:hover {
     justify-content: space-between;
     width: 80%;
     margin: auto;
+    height: max-content;
 }
 
 .footer-sec {
@@ -443,9 +445,9 @@ button:hover {
 
 .footer-sec .links-footer a {
     display: block;
-    font-size: 16px;
+    font-size: 20px;
     color: #fff;
-    margin: 8px 0;
+    margin: 3% 0;
     text-decoration: none;
     transition: color 0.3s ease;
 }
@@ -486,16 +488,17 @@ button:hover {
 }
 
 .sec-tres p {
-    font-size: 16px;
+    font-size: 20px;
     margin-bottom: 15px;
 }
 
 .contact-info {
-    font-size: 16px;
+    font-size: 20px;
     color: #fff;
     margin-bottom: 15px;
     display: flex;
     align-items: center;
+    margin: 3%;
 }
 
 .contact-info i {
@@ -505,11 +508,12 @@ button:hover {
 .social-icons {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 20px;
 }
 
 .social-icon {
-    font-size: 20px;
+    font-size: 30px;
+    margin-top: 3%;
     color: #fff;
     transition: color 0.3s ease;
 }
@@ -520,7 +524,21 @@ button:hover {
 .privacidad{
     width: 100%;
     background-color: #222;
-    height: 100px;
+    height: 50px;
+    text-align: center;
+    margin: 1.5% auto;
+    margin-bottom: 0px;
+
+    
+}
+
+.privacidad p{
+    color: #fff;
+    font-size: 16px;
+    margin: auto;
+    padding: 15px;
+
+    
 }
 
 /* Responsividad */
