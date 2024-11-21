@@ -9,7 +9,7 @@ body {
     padding: 0;
     width: 100%;
     background-color: #e1edf3; /* Fondo azul claro */
-    height: 5000px; /* Altura extra para scroll */
+    height: max-content; /* Altura extra para scroll */
 }
 
 /* Estilo del header */
@@ -516,6 +516,11 @@ button:hover {
 
 .social-icon:hover {
     color: #b9b9b9;
+}
+.privacidad{
+    width: 100%;
+    background-color: #222;
+    height: 100px;
 }
 
 /* Responsividad */
