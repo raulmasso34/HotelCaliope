@@ -11,7 +11,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../static/css/style.css">
-    <title>Document</title>
+
+    <link rel="stylesheet" href="../../../static/styles/general.css">
+    <link rel="stylesheet" href="../../../static/styles/ciudades/california.css">
+    <script src="../../../../static/js/index/personas.js"></script>
+    <script src="../../../../static/js/calendario.js"></script>
+    <script src="../../../static/js/ciudades/california.js"></script>
+    <script src="../../../../static/js/index/carrusel_index2.js"></script>
+    <title>Galicia</title>
 </head>
 <body>
     <header class="main-header">
@@ -85,28 +92,84 @@
           
         </section>
     </header>
+<div class="general-box">
 
+<div class="left-cali">
+<strong>
+    <h1>CALIFORNIA, <br>UNA EXPERIENCIA INOLVIDABLE</h1>
+</strong>
+        
+    <div class="contenido-desc">
+           
+        <p>
+            En Hoteles Caliope, ofrecemos una experiencia inigualable porque sabemos que cada detalle cuenta. Nos enorgullece brindar instalaciones de primer nivel, diseño sofisticado y una atmósfera acogedora que invita a la relajación. Nuestros hoteles están ubicados en destinos exclusivos, con vistas impresionantes y servicios personalizados. Nuestro equipo de profesionales apasionados está listo para atenderte, asegurándose de que disfrutes de una experiencia llena de comodidad y lujo. ¡En Hoteles Caliope, transformamos tu viaje en un momento inolvidable!
+        </p>
+    </div>
+
+</div>
+<div class="right-cali">
+    <div class="carousel">
+        <div class="carousel-images">
+            <img src="../../../static/img/california/california.jpg" alt="Foto 1">
+            <img src="../../../static/img/california/california.jpg" alt="Foto 2">
+            <img src="../../../static/img/california/california.jpg" alt="Foto 3">
+           s
+        </div>
+    </div>
+</div>
+
+</div>
 
     <footer class="main-footer">
         <div class="footer-box">
+            <!-- Sección: Sobre el Hotel -->
             <div class="footer-sec">
                 <h1>Sobre el hotel</h1>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.</p>
+                <a href="../../../vista/index.php"><img class="img-footer" src="../../../static/img/logo_blanco.png" alt="logo-blanco"></a>
+                <div class="language-selector">
+                <select id="language-select" onchange="changeLanguage()">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                </select>
+                </div>
             </div>
+
+            <!-- Sección: Links -->
             <div class="footer-sec">
                 <h1>Links</h1>
                 <div class="links-footer">
-                        <a href="#">Sobre nosotros</a>
-                        <a href="#">Servicios</a>
-                        <a href="#">Hoteles</a>
+                    <a href="#">Sobre nosotros</a>
+                    <a href="#">Servicios</a>
+                    <a href="#">Hoteles</a>
                 </div>
-            
             </div>
+
+            <!-- Sección: Contacto y Redes Sociales -->
             <div class="footer-sec">
-            <h1>Contacto</h1>
+                <h1>Dónde nos encontramos</h1>
+                <div class="sec-tres">
+                    <p>Calle xxx 99999 <br> Lorem ipsum, España</p>
+                    <span class="contact-info">
+                        <i class="fa-solid fa-phone"></i> 999 999 999
+                    </span>
+                    <span class="contact-info">
+                        <i class="fa-solid fa-envelope"></i> hotelcalope@gmail.com
+                    </span>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="privacidad">
+            
+        </div>
     </footer>
+
     <!-----------------------------------SCRIPTS---------------------------->
     <script src="../static/js/main.js"></script>
 </body>
