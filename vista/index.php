@@ -46,6 +46,7 @@
                 </div>
             </div>
         </div>
+        <a href="#">Ofertas</a>
     </div>
 </div>
 
@@ -88,7 +89,10 @@
     </header>
 
     <div class="main-main">
-
+        <div class="main-box">
+            <div class="main-box-box"></div>
+            <div class="main-box-box"></div>
+        </div>
     </div>
 
 
@@ -165,7 +169,7 @@
             </div>
         </div>
         <div class="privacidad">
-            
+            <p>Lorem ipsum dolor sit ame</p>
         </div>
     </footer>
 

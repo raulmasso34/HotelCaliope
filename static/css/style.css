@@ -89,6 +89,25 @@ body {
 a {
     text-decoration: none;
     color: #000;
+    position: relative; /* Necesario para la línea debajo */
+}
+
+a::after {
+    content: ''; /* Crea un pseudo-elemento vacío */
+    position: absolute;
+    bottom: 0; /* Ubica la línea justo debajo del texto */
+    left: 0;
+    width: 100%; /* Hace que la línea ocupe todo el ancho del enlace */
+    height: 2px; /* Grosor de la línea */
+    background-color: #000; /* Color de la línea */
+    transform: scaleX(0); /* Inicialmente no visible */
+    transform-origin: bottom right; /* Inicia la animación desde la derecha */
+    transition: transform 0.3s ease; /* Efecto suave al pasar el cursor */
+}
+
+a:hover::after {
+    transform: scaleX(1); /* Al pasar el cursor, la línea se expande */
+    transform-origin: bottom left; /* Cambia el origen de la animación a la izquierda */
 }
 
 /* Estilos del dropdown */
@@ -162,14 +181,14 @@ h4 {
 
 .links a {
     text-decoration: none;
-    color: rgb(56, 92, 233); /* Color del texto */
+    color: rgb(20, 52, 195); /* Color del texto */
     font-weight: bold;
     font-size: 20px;
    /* transition: color 0.1s, transform 0.1s; /* Transiciones */
 }
 
 .links a:hover {
-    color: rgb(26, 4, 89); /* Color al pasar el mouse */
+    color: rgb(3, 1, 39); /* Color al pasar el mouse */
     transform: scale(1.1); /* Ligero aumento */
 }
 
@@ -368,6 +387,14 @@ button:hover {
 }
 
 
+.main-box{
+
+}
+.main-box-box{
+    
+}
+
+
 
 
 
@@ -411,6 +438,7 @@ button:hover {
     background-color: #333;
     color: white;
     padding: 40px 0;
+    height: max-content;
     font-family: Arial, sans-serif;
 }
 
@@ -420,6 +448,7 @@ button:hover {
     justify-content: space-between;
     width: 80%;
     margin: auto;
+    height: max-content;
 }
 
 .footer-sec {
@@ -443,9 +472,9 @@ button:hover {
 
 .footer-sec .links-footer a {
     display: block;
-    font-size: 16px;
+    font-size: 20px;
     color: #fff;
-    margin: 8px 0;
+    margin: 3% 0;
     text-decoration: none;
     transition: color 0.3s ease;
 }
@@ -486,16 +515,17 @@ button:hover {
 }
 
 .sec-tres p {
-    font-size: 16px;
+    font-size: 20px;
     margin-bottom: 15px;
 }
 
 .contact-info {
-    font-size: 16px;
+    font-size: 20px;
     color: #fff;
     margin-bottom: 15px;
     display: flex;
     align-items: center;
+    margin: 3%;
 }
 
 .contact-info i {
@@ -505,11 +535,12 @@ button:hover {
 .social-icons {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 20px;
 }
 
 .social-icon {
-    font-size: 20px;
+    font-size: 30px;
+    margin-top: 3%;
     color: #fff;
     transition: color 0.3s ease;
 }
@@ -520,7 +551,21 @@ button:hover {
 .privacidad{
     width: 100%;
     background-color: #222;
-    height: 100px;
+    height: 50px;
+    text-align: center;
+    margin: 1.5% auto;
+    margin-bottom: 0px;
+
+    
+}
+
+.privacidad p{
+    color: #fff;
+    font-size: 16px;
+    margin: auto;
+    padding: 15px;
+
+    
 }
 
 /* Responsividad */
