@@ -90,10 +90,93 @@
 
     <div class="main-main">
         <div class="main-box">
-            <div class="main-box-box"></div>
-            <div class="main-box-box"></div>
+            <div class="main-box-box">
+                <div class="stars-main">
+                    <span style="font-size: 20px;  color: rgb(230, 182, 11);">
+                    <i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star "></i>
+                    </span>
+                </div>
+                <div class="main-title">
+                    <h3>LOREM IST AME TUU </h3>
+                    <h1>Lorem ipsum dolor </h1>
+                </div>
+                <div class="main-txt">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem adipisci soluta alias voluptatem facere? Vitae iure ratione saepe quos blanditiis fugiat molestias, maxime reprehenderit harum. Quod molestiae consectetur perferendis deserunt.</p>
+
+                    <div class="main-botones">
+                        <button>VER MAS</button>
+                        <button>Reservar</button>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="main-box-right">
+                <div class="img-left">
+                    <img class="img-main" src="../static/img/florida/florida1.jpg" alt="">
+                </div>
+                <div class="img-right">
+                    <img class="img-main" src="../static/img/florida/florida3.jpg" alt="">
+                </div>
+                    
+            </div>
         </div>
     </div>
+    <section class="hoteles-nu">
+        <div class="hoteles-txt">
+            <h1>Nuestros hoteles en...</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat sequi nisi repudiandae atque? Cupiditate ipsum natus optio ab quasi ex?</p>
+        </div>
+        <div class="hoteles-box">
+            <div class="hoteles-nu-gen">
+                <div class="sub-hoteles-nu">
+                    <img class="sub-img" src="../static/img/california/california.jpg" alt="">
+                </div>
+                <div class="sub-hoteles-nu">
+                    <h1>
+                       Florida
+                    </h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi blanditiis odio eaque beatae quod, porro repellendus fugit, vero deleniti sint consectetur id quasi distinctio itaque ratione magni maiores tenetur! Molestias!</p>
+                    <div class="hoteles-boton">
+                    <button>VER MAS</button>
+                    <button>RESERVAR</button>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="hoteles-nu-gen">
+                <div class="sub-hoteles-nu">
+                    <img class="sub-img" src="../static/img/california/california.jpg" alt="">
+                </div>
+                <div class="sub-hoteles-nu">
+                    <h1>
+                       California
+                    </h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi blanditiis odio eaque beatae quod, porro repellendus fugit, vero deleniti sint consectetur id quasi distinctio itaque ratione magni maiores tenetur! Molestias!</p>
+                    <div class="hoteles-boton">
+                    <button>VER MAS</button>
+                    <button>RESERVAR</button>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="hoteles-nu-gen">
+                <div class="sub-hoteles-nu">
+                    <img class="sub-img" src="../static/img/california/california.jpg" alt="">
+                </div>
+                <div class="sub-hoteles-nu">
+                    <h1>
+                       New York
+                    </h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi blanditiis odio eaque beatae quod, porro repellendus fugit, vero deleniti sint consectetur id quasi distinctio itaque ratione magni maiores tenetur! Molestias!</p>
+                    <div class="hoteles-boton">
+                    <button>VER MAS</button>
+                    <button>RESERVAR</button>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </section>
 
 
 

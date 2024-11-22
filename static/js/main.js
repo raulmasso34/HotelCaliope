@@ -35,83 +35,10 @@ function changeBackground() {
 
 // Iniciar el carrusel con un intervalo de 5 segundos
 function startBackgroundCarousel() {
-    setInterval(changeBackground, 3000); // Cambiar cada 5 segundos
+    setInterval(changeBackground, 3500); // Cambiar cada 5 segundos
 }
 
 // Iniciar el carrusel de fondo cuando la página cargue
 window.onload = startBackgroundCarousel;
 
-
-
-
-//-------------------------------IDIOMA---------------------------
-function changeLanguage() {
-    const lang = document.getElementById('language-select').value;
-
-    // Cambiar el contenido de la página según el idioma seleccionado
-    if (lang === 'es') {
-        document.getElementById('about-hotel').innerText = 'Sobre el hotel';
-        document.getElementById('about-hotel-text').innerText = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.';
-        document.getElementById('links-title').innerText = 'Links';
-        document.getElementById('about-link').innerText = 'Sobre nosotros';
-        document.getElementById('services-link').innerText = 'Servicios';
-        document.getElementById('hotels-link').innerText = 'Hoteles';
-        document.getElementById('location-title').innerText = 'Dónde nos encontramos';
-        document.getElementById('address').innerHTML = 'Calle xxx 99999 <br> Lorem ipsum, España';
-        document.getElementById('phone').innerText = '999 999 999';
-        document.getElementById('email').innerText = 'hotelcalope@gmail.com';
-    } else if (lang === 'en') {
-        document.getElementById('about-hotel').innerText = 'About the hotel';
-        document.getElementById('about-hotel-text').innerText = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.';
-        document.getElementById('links-title').innerText = 'Links';
-        document.getElementById('about-link').innerText = 'About Us';
-        document.getElementById('services-link').innerText = 'Services';
-        document.getElementById('hotels-link').innerText = 'Hotels';
-        document.getElementById('location-title').innerText = 'Where to find us';
-        document.getElementById('address').innerHTML = 'Street xxx 99999 <br> Lorem ipsum, Spain';
-        document.getElementById('phone').innerText = '999 999 999';
-        document.getElementById('email').innerText = 'hotelcalope@gmail.com';
-    } else if (lang === 'fr') {
-        document.getElementById('about-hotel').innerText = 'À propos de l\'hôtel';
-        document.getElementById('about-hotel-text').innerText = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.';
-        document.getElementById('links-title').innerText = 'Liens';
-        document.getElementById('about-link').innerText = 'À propos de nous';
-        document.getElementById('services-link').innerText = 'Services';
-        document.getElementById('hotels-link').innerText = 'Hôtels';
-        document.getElementById('location-title').innerText = 'Où nous trouver';
-        document.getElementById('address').innerHTML = 'Rue xxx 99999 <br> Lorem ipsum, Espagne';
-        document.getElementById('phone').innerText = '999 999 999';
-        document.getElementById('email').innerText = 'hotelcalope@gmail.com';
-    }
-}
-
-function changeLanguage() {
-    const lang = document.getElementById('language-select').value;
-    
-    // Guardar el idioma seleccionado en localStorage
-    localStorage.setItem('language', lang);
-
-    // Llamar a la función que cambia los textos según el idioma
-    applyLanguage(lang);
-}
-
-function applyLanguage(lang) {
-    if (lang === 'es') {
-        document.getElementById('about-hotel').innerText = 'Sobre el hotel';
-        // ... Cambiar otros textos en español
-    } else if (lang === 'en') {
-        document.getElementById('about-hotel').innerText = 'About the hotel';
-        // ... Cambiar otros textos en inglés
-    } else if (lang === 'fr') {
-        document.getElementById('about-hotel').innerText = 'À propos de l\'hôtel';
-        // ... Cambiar otros textos en francés
-    }
-}
-
-// Cuando la página carga, revisar si hay un idioma guardado
-window.onload = () => {
-    const storedLanguage = localStorage.getItem('language') || 'es'; // Por defecto, Español
-    document.getElementById('language-select').value = storedLanguage;
-    applyLanguage(storedLanguage);
-};
 
