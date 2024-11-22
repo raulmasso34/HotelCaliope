@@ -42,3 +42,20 @@ function startBackgroundCarousel() {
 window.onload = startBackgroundCarousel;
 
 
+// SCROLL EFECTO
+document.addEventListener('DOMContentLoaded', () => {
+    const mainSection = document.querySelector('.main-main');
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                mainSection.classList.add('visible');
+                observer.unobserve(mainSection); // Deja de observar después de activar la animación
+            }
+        });
+    }, {
+        threshold: 0.4  // Se activa cuando el 30% del elemento es visible
+    });
+
+    observer.observe(mainSection);
+});

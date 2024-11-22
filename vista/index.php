@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -26,29 +27,29 @@
                 <img src="../static/img/logo.png" alt="Imagen secundaria">
             </div>
             <div class="main-up-right">
-    <div class="links">
-        <a href="#">Sobre nosotros</a>
-        <a href="#">Servicios</a>
-        <div class="dropdown">
-            <a href="#" class="dropbtn">Hoteles</a>
-            <div class="dropdown-content">
-                <div class="dropdown-section">
-                    <h4>Europa</h4>
-                    <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
-                    <a href="#">Tossa de Mar</a>
-                    <a href="#">Pirineos</a>
-                </div>
-                <div class="dropdown-section">
-                    <h4>USA</h4>
-                    <a href="#">Florida</a>
-                    <a href="#">California</a>
-                    <a href="#">Nueva York</a>
-                </div>
+                <div class="links">
+                    <a href="#">Sobre nosotros</a>
+                    <a href="#">Servicios</a>
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Hoteles</a>
+                        <div class="dropdown-content">
+                            <div class="dropdown-section">
+                                <h4>Europa</h4>
+                                <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                                <a href="#">Tossa de Mar</a>
+                                <a href="#">Pirineos</a>
+                            </div>
+                            <div class="dropdown-section">
+                                <h4>USA</h4>
+                                <a href="#">Florida</a>
+                                <a href="#">California</a>
+                                <a href="#">Nueva York</a>
+                            </div>
+                        </div>
+                    </div>
+                <a href="#">Ofertas</a>
             </div>
-        </div>
-        <a href="#">Ofertas</a>
-    </div>
-</div>
+        
 
         </section>
         <section class="main-center">
@@ -121,6 +122,9 @@
             </div>
         </div>
     </div>
+
+    <!-------------------------------HOTLES------------------------->
+
     <section class="hoteles-nu">
         <div class="hoteles-txt">
             <h1>Nuestros hoteles en...</h1>
@@ -178,6 +182,49 @@
         </div>
     </section>
 
+    <!--------------------------BENEFICIOS-------------------------------->
+
+    <section class="ben-gen">
+        <div class="ben-box">
+            <div class="ben-txt">
+                <h1>BENEFICIOS</h1>
+            </div>
+            <div class="ben-ben">
+                <div class="ben-sub">
+                    <i class="fa-solid fa-utensils fa-xl"></i>
+                    <h1>BENEFIT </h1>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A officia, cum impedit doloremque perferendis dolore, tempora dolorem, quis asperiores non minima obcaecati corporis delectus! Sit beatae, cumque velit laudantium odio autem corrupti error quasi at unde assumenda saepe architecto modi.</p>
+                </div>
+                <div class="ben-sub">
+                
+                <i class="fa-solid fa-umbrella-beach fa-xl"></i>
+                <h1>BENEFIT </h1>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A officia, cum impedit doloremque perferendis dolore, tempora dolorem, quis asperiores non minima obcaecati corporis delectus! Sit beatae, cumque velit laudantium odio autem corrupti error quasi at unde assumenda saepe architecto modi.</p>
+                </div>
+                <div class="ben-sub">
+                    <i class="fa-solid fa-gem fa-xl"></i>
+                    <h1>BENEFIT </h1>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A officia, cum impedit doloremque perferendis dolore, tempora dolorem, quis asperiores non minima obcaecati corporis delectus! Sit beatae, cumque velit laudantium odio autem corrupti error quasi at unde assumenda saepe architecto modi.</p>
+                </div>
+                <div class="ben-sub">
+                    <i class="fa-solid fa-briefcase fa-xl"></i>
+                    <h1>BENEFIT </h1>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A officia, cum impedit doloremque perferendis dolore, tempora dolorem, quis asperiores non minima obcaecati corporis delectus! Sit beatae, cumque velit laudantium odio autem corrupti error quasi at unde assumenda saepe architecto modi.</p>
+                </div>
+                <div class="ben-sub">
+                    <i class="fa-solid fa-trophy fa-xl"></i>
+                    <h1>BENEFIT </h1>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A officia, cum impedit doloremque perferendis dolore, tempora dolorem, quis asperiores non minima obcaecati corporis delectus! Sit beatae, cumque velit laudantium odio autem corrupti error quasi at unde assumenda saepe architecto modi.</p>
+                </div>
+                <div class="ben-sub">
+                    <i class="fa-solid fa-bed fa-xl"></i>
+                    <h1>BENEFIT </h1>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A officia, cum impedit doloremque perferendis dolore, tempora dolorem, quis asperiores non minima obcaecati corporis delectus! Sit beatae, cumque velit laudantium odio autem corrupti error quasi at unde assumenda saepe architecto modi.</p>
+
+                </div>
+            </div>
+        </div>
+    </section>
 
 
 
