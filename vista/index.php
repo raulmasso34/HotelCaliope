@@ -320,10 +320,27 @@
     <section class="mapa">
         <div class="mapa-box">
             <h2>MAPA INTERCATIVO</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra aliquet eget sit amet tellus cras adipiscing enim. Tempus imperdiet nulla malesuada pellentesque elit.</p>
+            <p>Descubre en este mapa interactivo todas las áreas donde puedes encontrarnos. Explora nuestras ubicaciones estratégicas, diseñadas para ofrecerte experiencias únicas y memorables en cada destino. ¡Planea tu próxima aventura con nosotros!</p>
             <div id="map"></div>
         </div>
        
+    </section>
+
+    <section class="contacto">
+        <div class="contacto-box">
+            <div class="contacto-sub">
+               
+                <h3>No nos pierdas de vista</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eligendi, aperiam itaque tempora perferendis consequatur?</p>
+                <br> <br>
+
+                <i class="fa-solid fa-phone fa-2xl"> 111 222 346</i>
+            </div>
+            <div class="contacto-sub">
+                
+            </div>
+        </div>
+
     </section>
 
 
