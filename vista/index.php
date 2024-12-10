@@ -19,6 +19,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
     <title>Document</title>
 </head>
 <body>
@@ -292,14 +298,33 @@
 
     <section class="descubrir">
         <div class="descubrir-box">
-            <div class="descubrir-sub"></div>
-            <div class="descubrir-sub"></div>
-            <div class="descubrir-sub"></div>
-            <div class="descubrir-sub"></div>
+            <div class="descubrir-sub">
+                <img class="desc-img" src="../static/img/florida/florida3.jpg" alt="">
+            </div>
+            <div class="descubrir-sub">
+                <h5>DISCOVER</h5>
+                <h3> SERVICIO 1</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam ab dolore consequuntur impedit tempore culpa aperiam aspernatur illo blanditiis repellat fuga sunt quisquam ad eum vel magnam quos exercitationem, necessitatibus omnis quam quis. Dolore obcaecati nostrum in harum deleniti laudantium magnam repudiandae iusto quae evenie</p>
+            </div>
+            <div class="descubrir-sub">
+                <h5>DISCOVER</h5>
+                <h3> SERVICIO 2</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam ab dolore consequuntur impedit tempore culpa aperiam aspernatur illo blanditiis repellat fuga sunt quisquam ad eum vel magnam quos exercitationem, necessitatibus omnis quam quis. Dolore obcaecati nostrum in harum deleniti laudantium magnam repudiandae iusto quae eaa</p>
+            </div>
+            <div class="descubrir-sub">
+                <img class="desc-img" src="../static/img/california/california.jpg" alt="">
+            </div>
         </div>
     </section>
 
-
+    <section class="mapa">
+        <div class="mapa-box">
+            <h2>MAPA INTERCATIVO</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra aliquet eget sit amet tellus cras adipiscing enim. Tempus imperdiet nulla malesuada pellentesque elit.</p>
+            <div id="map"></div>
+        </div>
+       
+    </section>
 
 
 

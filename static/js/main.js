@@ -15,7 +15,9 @@ window.addEventListener('scroll', () => {
     }
 });
 
+
 // CARRUSEL PRINCIPAL
+
 let currentIndex = 0;
 const backgrounds = document.querySelectorAll('.carousel-background'); // Selecciona todas las imágenes de fondo
 
@@ -31,15 +33,34 @@ function changeBackground() {
     backgrounds[currentIndex].style.opacity = 1;
 }
 
-// Iniciar el carrusel con un intervalo de 3.5 segundos
+// Iniciar el carrusel con un intervalo de 5 segundos
 function startBackgroundCarousel() {
-    setInterval(changeBackground, 3500); // Cambiar cada 3.5 segundos
+    setInterval(changeBackground, 3500); // Cambiar cada 5 segundos
 }
 
 // Iniciar el carrusel de fondo cuando la página cargue
 window.onload = startBackgroundCarousel;
 
+
 // SCROLL EFECTO
+document.addEventListener('DOMContentLoaded', () => {
+    const mainSection = document.querySelector('.main-main');
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                mainSection.classList.add('visible');
+                observer.unobserve(mainSection); // Deja de observar después de activar la animación
+            }
+        });
+    }, {
+        threshold: 0.4  // Se activa cuando el 30% del elemento es visible
+    });
+
+    observer.observe(mainSection);
+});
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const opinions = document.querySelectorAll('.opinion'); // Todas las opiniones
     const dots = document.querySelectorAll('.dot');        // Todos los puntos
@@ -69,3 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializa la primera opinión como activa
     showOpinion(opinionIndex);
 });
+
+
+var map = L.map('map').setView([41.545, 1.893], 13);
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+var marker = L.marker([41.545, 1.893]).addTo(map);

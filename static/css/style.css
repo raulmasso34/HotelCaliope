@@ -50,12 +50,12 @@ body {
     left: 50%; /* Centra horizontalmente */
     transform: translateX(-50%); /* Ajusta la posición por el ancho */
     display: flex;
-    
+    height: 115px;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
     z-index: 1000; /* Asegura que esté sobre otros elementos */
-    border-radius: 10px; /* Bordes redondeados */
+    border-top-right-radius: 10px; /* Bordes redondeados */
     width: 100%; /* Ocupa un 85% del ancho de la ventana */
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     
@@ -67,7 +67,7 @@ body {
 
 .main-up.scrolled {
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
+    background-color: rgb(255, 255, 255); /* Fondo blanco semi-transparente */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
@@ -991,16 +991,87 @@ button:hover {
 
 /*-----------------------------------DESCUBRIR----------------------------*/
 
+.descubrir{
+    border: 2px solid #c5d0e671;
+    height: 900px;
+    width: 100%;
+    background-color: #c5d0e671;
+    margin: auto;
+}
 
 
+.descubrir-box{
+  
+    height: 80%;
+    margin: auto;
+    margin-top: 3.9%;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-star;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.descubrir-sub{
+    
+    width: 48%;
+    height: 48%;
+    margin: auto;
+}
 
 
+.desc-img{
+    height: 100%;
+    width: 100%;
+}
+
+.descubrir-sub h5{
+    font-family: "Oswald", sans-serif;
+    font-size: 20px;
+    margin-left: 5%;
+}
+
+.descubrir-sub h3{
+    font-family: "Cormorant Garamond", serif;
+    margin-left: 5%;
+}
 
 
+.descubrir-sub p{
+    margin-left: 5%;
+    margin-right: 5%;
+    font-size: 20px;
+    text-align: justify;
+}
 
 
+/*---------------------------------MAPA----------------------------*/
 
+.mapa{
+    height: 800px;
+    width: 100%;
+    border: 2px solid red;
+    margin-bottom: 10px;
+}
 
+.mapa-box{
+    border: 2px solid rgb(0, 42, 255);
+    width: 60%;
+    height: 100%;
+    margin: auto;
+}
+
+.mapa-box h2{
+    font-family: "Cormorant Garamond", serif;
+    text-align: center;
+    height: 80px;
+}
+
+#map { height: 70%; 
+    margin-top: 2%;
+
+}
 
 
 
@@ -1053,6 +1124,7 @@ button:hover {
     background-color: #333;
     color: white;
     padding: 40px 0;
+    
     height: max-content;
     font-family: Arial, sans-serif;
 }
