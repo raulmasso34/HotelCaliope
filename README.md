@@ -35,5 +35,8 @@ https://fontawesome.com --> ICONOS
 - Los SCRIPTS ponerlos abajo del codigo, si no NO FUNCIONA!
 
 
+Comando para arreglar lo del commit
+
+git pull --tags origin main --no-rebase
 
 
