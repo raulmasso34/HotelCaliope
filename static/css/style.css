@@ -1062,7 +1062,16 @@ button:hover {
 .mapa-box h2{
     font-family: "Cormorant Garamond", serif;
     text-align: center;
-    height: 80px;
+    font-size: 40px;
+    border: 2px solid red;
+}
+
+.mapa-box p{
+    border: 2px solid red;
+    width: 60%;
+    margin: 0 auto;
+    font-size: 20px;
+
 }
 
 #map { height: 70%; 
