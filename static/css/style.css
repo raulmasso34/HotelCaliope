@@ -758,7 +758,7 @@ button:hover {
 
 .ben-sub p {
     font-size: 14px;
-    margin: 0% 0% 10% 5%; /* Añade espacio debajo del ícono */
+    margin: 0% 4% 10% 5%; /* Añade espacio debajo del ícono */
     flex-grow: 1;
     overflow: hidden;  /* Evita el desbordamiento */
     text-overflow: ellipsis;  /* Añade '...' si el texto es demasiado largo */
