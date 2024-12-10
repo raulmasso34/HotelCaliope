@@ -60,21 +60,21 @@
 
 }
 .carousel {
-    overflow: hidden; /* Oculta el contenido desbordado */
+    overflow: hidden; 
     width: 100%;
     position: relative;
-    height: 300px; /* Asegúrate de definir una altura */
+    height: 300px;
 }
 
 .carousel-images {
-    display: flex; /* Coloca las imágenes en una fila */
-    transition: transform 0.5s ease-in-out; /* Suaviza el desplazamiento */
+    display: flex; 
+    transition: transform 0.5s ease-in-out; 
 }
 
 .carousel-images img {
-    width: 100%; /* Las imágenes deben ocupar todo el ancho del contenedor */
-    flex-shrink: 0; /* No permite que las imágenes se reduzcan */
-    height: auto; /* Mantiene la proporción */
+    width: 100%; 
+    flex-shrink: 0; 
+    height: auto; 
 }
 
 
@@ -94,7 +94,7 @@
 }
 
 .hoteles {
-    width: calc(33% - 20px); /* Ajusta al tamaño de cada hotel */
+    width: calc(33% - 20px); 
     height: 100%;
     overflow: hidden;
     display: flex;
@@ -105,7 +105,7 @@
 .hoteles-img {
     height: 50%;
     width: 100%;
-    position: relative; /* Para los botones del carrusel */
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -118,7 +118,7 @@
 }
 
 .hoteles-img img.active {
-    display: block; /* Solo muestra la imagen activa */
+    display: block; 
 }
 
 /* Botones de control del carrusel */

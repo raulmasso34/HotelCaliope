@@ -766,6 +766,164 @@ button:hover {
 
 
 
+/*---------------------------------------PROMOCIONES------------------------------------*/
+
+
+.promociones{
+  
+    height: 700px;
+    margin-top: 3%;
+    width: 100%;
+    background: rgb(34 34 34);
+
+}
+.promociones-box{
+   
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width:55%;
+    height: 100%;
+    margin: auto;
+
+}
+
+.prom{
+
+    margin:4% 0 0 2%;
+    width: 30%;
+    height: 80%;
+    
+}
+
+
+.prom h6{
+    color:#489fb5;
+    font-family: "Oswald", sans-serif;
+    font-size: 20px;
+   
+    margin: 0;
+    letter-spacing: 5px;
+    width: max-content;
+}
+
+.prom h5{
+    color: white;
+    font-size: 40px;
+    font-family: sans-serif;
+   
+    text-transform:none;
+    margin:4% 0;
+    width: max-content;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.prom p{
+  
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.764);
+    width: 93%;
+    margin-top: 10%;
+    
+    text-align: justify;
+
+
+
+}
+
+.prom-white{
+   
+    margin: 4% 2% 0 2%;
+    width: 30%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    
+    background-color: white;
+    height: 80%;
+}
+
+
+.img-prom{
+    height: 40%;
+    width: 100%;
+}
+
+.prom-white h4{
+    font-family: "Cormorant Garamond", serif;
+    width: max-content;
+    margin-left: 6%;
+    margin-top: 4%;
+    font-style: italic;
+   
+    font-size: 40px;
+}
+
+.prom-white h6{
+    font-family: "Cormorant Garamond";
+    width: max-content;
+   
+    color:#489fb5;
+    margin: 6% 6% 0;
+    font-style: italic;
+    
+    font-size: 35px;
+}
+.prom-white p{
+
+    margin: 6%;
+    font-size: 25px;
+
+    
+}
+/*--------------------------------------OPINIONES--------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -811,7 +969,7 @@ button:hover {
 .footer-sec h1 {
     font-size: 28px;
     margin-bottom: 20px;
-    font-family: "Rancho", cursive;
+    font-family: "Cormorant Garamond", serif;
 }
 
 .footer-sec p {
@@ -819,6 +977,7 @@ button:hover {
     line-height: 1.6;
     color: #ccc;
     margin-bottom: 20px;
+    
 }
 
 .footer-sec .links-footer a {

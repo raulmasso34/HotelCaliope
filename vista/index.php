@@ -10,6 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Permanent+Marker&family=Shadows+Into+Light&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Patrick+Hand&family=Permanent+Marker&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/style.css">
     <title>Document</title>
@@ -226,7 +233,38 @@
         </div>
     </section>
 
+    <section class="promociones">
+        <div class="promociones-box">
+            <div class="prom">
+                <h6>HOTEL CALIOPE</h6>
+                <h5>PROMOCIONES</h5>
+                <p>¡Vive la experiencia Calíope con nuestras promociones exclusivas!
+                    Disfruta de noches inolvidables con descuentos únicos, beneficios especiales y sorpresas diseñadas para ti.<br><br>
+                    🌟 Relájate más, paga menos.<br>
+                    🌴 Tu escape perfecto, ahora al mejor precio.<br><br>
+                    ¡No dejes pasar esta oportunidad!</p>
+            </div>
+            <div class="prom-white">
+                <img class="img-prom" src="../static/img/florida/florida2.jpg" alt="">
+                <h4>Oferta 1</h4>
+                <H6> 23€/Noche</H6>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim et laudantium accusamus veniam </p>
+            </div>
+            <div class="prom-white">
+                <img class="img-prom" src="../static/img/florida/florida2.jpg" alt="">
+                <h4>Oferta 2</h4>
+                <H6> 53€/Noche</H6>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim et laudantium accusamus veniam </p>
+            </div>
+        </div>
 
+    </section>
+
+    <section class="opinions">
+        <div class="opiniones-box">
+            
+        </div>
+    </section>
 
 
 
@@ -257,7 +295,7 @@
         <div class="footer-box">
             <!-- Sección: Sobre el Hotel -->
             <div class="footer-sec">
-                <h1>Sobre el hotel</h1>
+                <h1>SOBRE ELS HOTELS</h1>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.</p>
                 <a href="../vista/index.php"><img class="img-footer" src="../static/img/logo_blanco.png" alt=""></a>
                 <div class="language-selector">
@@ -271,7 +309,7 @@
 
             <!-- Sección: Links -->
             <div class="footer-sec">
-                <h1>Links</h1>
+                <h1>LINKS</h1>
                 <div class="links-footer">
                     <a href="#">Sobre nosotros</a>
                     <a href="#">Servicios</a>
@@ -281,7 +319,7 @@
 
             <!-- Sección: Contacto y Redes Sociales -->
             <div class="footer-sec">
-                <h1>Dónde nos encontramos</h1>
+                <h1>DÓNDE NOS ENCONTRAMOS</h1>
                 <div class="sec-tres">
                     <p>Calle xxx 99999 <br> Lorem ipsum, España</p>
                     <span class="contact-info">
