@@ -15,9 +15,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-
 // CARRUSEL PRINCIPAL
-
 let currentIndex = 0;
 const backgrounds = document.querySelectorAll('.carousel-background'); // Selecciona todas las imágenes de fondo
 
@@ -33,29 +31,41 @@ function changeBackground() {
     backgrounds[currentIndex].style.opacity = 1;
 }
 
-// Iniciar el carrusel con un intervalo de 5 segundos
+// Iniciar el carrusel con un intervalo de 3.5 segundos
 function startBackgroundCarousel() {
-    setInterval(changeBackground, 3500); // Cambiar cada 5 segundos
+    setInterval(changeBackground, 3500); // Cambiar cada 3.5 segundos
 }
 
 // Iniciar el carrusel de fondo cuando la página cargue
 window.onload = startBackgroundCarousel;
 
-
 // SCROLL EFECTO
 document.addEventListener('DOMContentLoaded', () => {
-    const mainSection = document.querySelector('.main-main');
+    const opinions = document.querySelectorAll('.opinion'); // Todas las opiniones
+    const dots = document.querySelectorAll('.dot');        // Todos los puntos
 
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                mainSection.classList.add('visible');
-                observer.unobserve(mainSection); // Deja de observar después de activar la animación
+    let opinionIndex = 0; // Índice actual de la opinión
+
+    // Función para mostrar la opinión activa
+    function showOpinion(index) {
+        opinions.forEach((opinion, i) => {
+            opinion.classList.remove('active'); // Remover la clase activa de todas las opiniones
+            dots[i].classList.remove('active'); // Remover la clase activa de todos los puntos
+            if (i === index) {
+                opinion.classList.add('active'); // Añadir la clase activa a la opinión actual
+                dots[i].classList.add('active'); // Añadir la clase activa al punto actual
             }
         });
-    }, {
-        threshold: 0.4  // Se activa cuando el 30% del elemento es visible
+    }
+
+    // Evento para cada punto
+    dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+            opinionIndex = i; // Actualizar el índice al que corresponde el punto
+            showOpinion(opinionIndex);
+        });
     });
 
-    observer.observe(mainSection);
+    // Inicializa la primera opinión como activa
+    showOpinion(opinionIndex);
 });

@@ -239,9 +239,9 @@
                 <h6>HOTEL CALIOPE</h6>
                 <h5>PROMOCIONES</h5>
                 <p>¡Vive la experiencia Calíope con nuestras promociones exclusivas!
-                    Disfruta de noches inolvidables con descuentos únicos, beneficios especiales y sorpresas diseñadas para ti.<br><br>
-                    🌟 Relájate más, paga menos.<br>
-                    🌴 Tu escape perfecto, ahora al mejor precio.<br><br>
+                    Disfruta de noches inolvidables con descuentos únicos, beneficios especiales y sorpresas diseñadas para ti.<br><br><br>
+                    🌟 Relájate más, paga menos.<br><br>
+                    🌴 Tu escape perfecto, ahora al mejor precio.<br><br><br>
                     ¡No dejes pasar esta oportunidad!</p>
             </div>
             <div class="prom-white">
@@ -260,13 +260,44 @@
 
     </section>
 
-    <section class="opinions">
+    <!--------------------------------OPINIONES------------------------>
+
+    <section class="opiniones">
         <div class="opiniones-box">
-            
+            <h1>REVIEWS</h1>
+            <div class="opiniones-carousel">
+                <!-- Cada opinión -->
+                <div class="opinion active">
+                    <p>"Excelente servicio, volveré sin dudarlo. ¡Gracias, Hotel Calíope!"</p>
+                    <span>- Juan Pérez</span>
+                </div>
+                <div class="opinion">
+                    <p>"Un lugar increíble, perfecto para desconectar y relajarse."</p>
+                    <span>- María López</span>
+                </div>
+                <div class="opinion">
+                    <p>"Atención de primera clase, instalaciones impecables."</p>
+                    <span>- Luis Rodríguez</span>
+                </div>
+            </div>
+            <!-- Botones de control -->
+            <div class="carousel-dots">
+                <button class="dot active" data-index="0"></button>
+                <button class="dot" data-index="1"></button>
+                <button class="dot" data-index="2"></button>
+            </div>
         </div>
     </section>
 
 
+    <section class="descubrir">
+        <div class="descubrir-box">
+            <div class="descubrir-sub"></div>
+            <div class="descubrir-sub"></div>
+            <div class="descubrir-sub"></div>
+            <div class="descubrir-sub"></div>
+        </div>
+    </section>
 
 
 
@@ -295,7 +326,7 @@
         <div class="footer-box">
             <!-- Sección: Sobre el Hotel -->
             <div class="footer-sec">
-                <h1>SOBRE ELS HOTELS</h1>
+                <h1>SOBRE LOS HOTELS</h1>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.</p>
                 <a href="../vista/index.php"><img class="img-footer" src="../static/img/logo_blanco.png" alt=""></a>
                 <div class="language-selector">
