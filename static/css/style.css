@@ -697,65 +697,75 @@ button:hover {
     transform-origin: left;
 }
 
-.ben-gen{
-   
+.ben-gen {
     height: max-content;
-    width: 100% ;
+    width: 100%;
 }
 
-.ben-box{
+.ben-box {
     margin: auto;
-    
-    height: 100%;
-    width: 60%;
+    width: 100%;  /* Asegúrate de que ocupe todo el ancho disponible */
+    max-width: 1200px;  /* O un valor adecuado para tu diseño */
 }
 
-.ben-txt{
-    
+.ben-txt {
     width: 100%;
     text-align: left;
     height: 16%;
 }
 
-.ben-txt h1{
+.ben-txt h1 {
     font-family: "Luxurious Roman", serif;
     font-weight: 400;
     font-style: normal;
     font-size: 40px;
     width: 88%;
- 
-
-
 }
 
 .ben-ben {
     width: 100%;
     display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
+    flex-wrap: wrap;  /* Permite que los elementos se ajusten */
+    gap: 10px;
+    justify-content: flex-start;  /* Alinea los elementos en fila */
 }
 
 .ben-sub {
     background-color: beige;
-    height: 50%;
-    margin: auto;
-    flex-basis: 30%; /* Esto puede ayudar a mantener los elementos en una fila */
+    height: 300px;  /* Altura fija */
+    margin: 10px;
+    width: calc(33.33% - 30px);  /* Ajusta el tamaño para respetar el gap */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;  /* Distribuye los elementos dentro */
+    padding: 10px;
+    overflow: hidden;
+    box-sizing: border-box;  /* Incluye el padding dentro de las dimensiones de la caja */
 }
 
-
-.ben-sub i{
-    font-size: 70px;
+.ben-sub i {
+    font-size: 50px;  /* Tamaño fijo del ícono */
+    margin: 10% 0% 8% 5%; /* Añade espacio debajo del ícono */
 }
 
-.ben-sub h1{
+.ben-sub h1 {
     font-family: "Luxurious Roman", serif;
     font-weight: 400;
     font-style: normal;
     font-size: 30px;
-
-    text-align: left;
-
+    margin: 5% 0% 5% 5%; /* Añade espacio debajo del ícono */
 }
+
+.ben-sub p {
+    font-size: 14px;
+    margin: 0% 4% 10% 5%; /* Añade espacio debajo del ícono */
+    flex-grow: 1;
+    overflow: hidden;  /* Evita el desbordamiento */
+    text-overflow: ellipsis;  /* Añade '...' si el texto es demasiado largo */
+    margin-bottom: 0; /* Asegura que no haya espacio extra en la parte inferior */
+}
+
+
 
 
 
