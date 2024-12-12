@@ -105,3 +105,27 @@ var marker = L.marker([42.879, -8]).addTo(map);
 var marker = L.marker([26, -80.2]).addTo(map);
 var marker = L.marker([34, -118.2]).addTo(map);
 var marker = L.marker([41.7214, 2.936]).addTo(map);
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Seleccionar todas las cajas de beneficios
+    const benSubElements = document.querySelectorAll('.ben-sub');
+    
+    // Crear un observer para detectar cuando los elementos entren en el viewport
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Cuando el elemento es visible, agregar una clase para animarlo
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target); // Deja de observar el elemento después de que se ha mostrado
+            }
+        });
+    }, {
+        threshold: 0.5 // Activar cuando el 50% del elemento sea visible
+    });
+    
+    // Comenzar a observar cada caja de beneficio
+    benSubElements.forEach(benSub => {
+        observer.observe(benSub);
+    });
+});

@@ -697,6 +697,7 @@ button:hover {
     transform-origin: left;
 }
 
+/*-------------------------------BENEFICIOS-----------------------------*/
 .ben-gen {
     height: max-content;
     width: 100%;
@@ -704,8 +705,8 @@ button:hover {
 
 .ben-box {
     margin: auto;
-    width: 100%;  /* Asegúrate de que ocupe todo el ancho disponible */
-    max-width: 1200px;  /* O un valor adecuado para tu diseño */
+    width: 100%;
+    max-width: 1200px;  /* Asegúrate de que ocupe todo el ancho disponible */
 }
 
 .ben-txt {
@@ -731,9 +732,10 @@ button:hover {
 }
 
 .ben-sub {
-    background-color: beige;
+    background-color: rgba(11, 49, 107, 0.735);
     height: 300px;  /* Altura fija */
     margin: 10px;
+    color: white;
     width: calc(33.33% - 30px);  /* Ajusta el tamaño para respetar el gap */
     display: flex;
     flex-direction: column;
@@ -741,6 +743,14 @@ button:hover {
     padding: 10px;
     overflow: hidden;
     box-sizing: border-box;  /* Incluye el padding dentro de las dimensiones de la caja */
+    opacity: 0; /* Hacer los elementos invisibles inicialmente */
+    transform: translateY(50px); /* Los mueve hacia abajo */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Efecto de transición */
+}
+
+.ben-sub.visible {
+    opacity: 1; /* Se hace visible cuando entra en el viewport */
+    transform: translateY(0); /* Se mueve a la posición original */
 }
 
 .ben-sub i {
@@ -763,7 +773,23 @@ button:hover {
     overflow: hidden;  /* Evita el desbordamiento */
     text-overflow: ellipsis;  /* Añade '...' si el texto es demasiado largo */
     margin-bottom: 0; /* Asegura que no haya espacio extra en la parte inferior */
+    line-height: 1.5;
 }
+
+/* Ajustes Responsivos */
+@media (max-width: 768px) {
+    .ben-sub {
+        width: calc(50% - 30px); /* Dos columnas en pantallas medianas */
+    }
+}
+
+@media (max-width: 480px) {
+    .ben-sub {
+        width: 100%;  /* Una columna en pantallas pequeñas */
+    }
+}
+
+
 
 
 
@@ -810,7 +836,7 @@ button:hover {
     font-size: 20px;
    
     margin: 0;
-    letter-spacing: 5px;
+    letter-spacing: 4px;
     width: max-content;
 }
 
@@ -1058,12 +1084,12 @@ button:hover {
 .mapa{
     height: 800px;
     width: 100%;
-    border: 2px solid red;
+  
     margin-bottom: 10px;
 }
 
 .mapa-box{
-    border: 2px solid rgb(0, 42, 255);
+   
     width: 60%;
     height: 100%;
     margin: auto;
@@ -1073,11 +1099,11 @@ button:hover {
     font-family: "Cormorant Garamond", serif;
     text-align: center;
     font-size: 40px;
-    border: 2px solid red;
+    
 }
 
 .mapa-box p{
-    border: 2px solid red;
+   
     width: 60%;
     margin: 0 auto;
     font-size: 20px;
@@ -1090,6 +1116,158 @@ button:hover {
 }
 
 
+/*-----------------------------------CONTACTE-------------------------------*/
+.contacto{
+   
+    height: 700px;
+    width: 100%;
+    position: relative; /* Necesario para posicionar la superposición */
+    background-image: url('../img/florida/florida3.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    z-index: 1;
+    overflow: hidden;
+    
+}
+
+.contacto::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Ajusta el color y la opacidad */
+    z-index: -1; /* Asegúrate de que esté detrás del contenido */
+}
+
+
+.contacto-box{
+    width: 50%;
+    height: max-content;
+    
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 20px;
+   
+   
+    border-radius: 10px;
+}
+
+
+.contacto-sub{
+    text-align: center;
+    height: 75%;
+    width: 50%;
+   
+}
+
+.contacto-sub h3{
+    font-family: "Luxurious Roman";
+    text-align: left;
+    margin: 10% 0;
+    font-size: 40px;
+    
+}
+
+.contacto-sub p{
+    margin-top: 0;
+    text-align: left;
+
+    font-size: 20px;
+    
+}
+
+
+
+
+
+
+/* Caja del formulario */
+.newsletter-sub {
+    background-color: rgba(231, 240, 255, 0.921);
+    border-radius: 8px;
+ 
+    padding: 30px;
+    margin: auto;
+    width: 80%;
+    height: 100%;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra ligera */
+}
+
+/* Título del formulario */
+.news-title h1 {
+    font-family: 'Luxurious Roman', serif;
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #0b316b; /* Azul oscuro */
+}
+
+.news-title p {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #555; /* Gris */
+    margin-bottom: 20px;
+}
+
+/* Formulario */
+.news-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacio entre campos */
+}
+
+/* Campos de entrada */
+.news-content input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Botón */
+.news-content button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #0b316b; /* Azul oscuro */
+    color: white;
+    border: none;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.news-content button:hover {
+    background-color: #083065; /* Azul más oscuro al pasar el ratón */
+}
+
+/* Pie del formulario */
+.news-footer p {
+    font-size: 14px;
+    color: #555;
+    margin-top: 20px;
+}
+
+.news-footer a {
+    color: #0b316b;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.news-footer a:hover {
+    text-decoration: underline;
+}
 
 
 
