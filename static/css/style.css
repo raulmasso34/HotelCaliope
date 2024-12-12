@@ -1149,14 +1149,14 @@ button:hover {
 
 .contacto-box{
     width: 50%;
-    height: 100%;
-    border: 2px solid rgb(5, 14, 116);
+    height: max-content;
+    
     text-align: center;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     padding: 20px;
-
+   
    
     border-radius: 10px;
 }
@@ -1164,9 +1164,9 @@ button:hover {
 
 .contacto-sub{
     text-align: center;
-    height: 70%;
+    height: 75%;
     width: 50%;
-    border: 2px solid red;
+   
 }
 
 .contacto-sub h3{
@@ -1194,10 +1194,11 @@ button:hover {
 .newsletter-sub {
     background-color: rgba(231, 240, 255, 0.921);
     border-radius: 8px;
-    border: 2px solid red;
+ 
     padding: 30px;
-    margin-top: 2%;
-    width: 100%;
+    margin: auto;
+    width: 80%;
+    height: 100%;
     text-align: center;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra ligera */
 }
