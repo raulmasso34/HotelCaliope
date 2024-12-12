@@ -60,6 +60,74 @@ document.addEventListener('DOMContentLoaded', () => {
     observer.observe(mainSection);
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const mainSection = document.querySelector('.dispo');
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                mainSection.classList.add('visible');
+                observer.unobserve(mainSection); // Deja de observar después de activar la animación
+            }
+        });
+    }, {
+        threshold: 0.4  // Se activa cuando el 30% del elemento es visible
+    });
+
+    observer.observe(mainSection);
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const mainSection = document.querySelector('.servicios');
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                mainSection.classList.add('visible');
+                observer.unobserve(mainSection); // Deja de observar después de activar la animación
+            }
+        });
+    }, {
+        threshold: 0.4  // Se activa cuando el 30% del elemento es visible
+    });
+
+    observer.observe(mainSection);
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const mainSection = document.querySelector('.ofertas');
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                mainSection.classList.add('visible');
+                observer.unobserve(mainSection); // Deja de observar después de activar la animación
+            }
+        });
+    }, {
+        threshold: 0.4  // Se activa cuando el 30% del elemento es visible
+    });
+
+    observer.observe(mainSection);
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const mainSection = document.querySelector('.contacto');
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                mainSection.classList.add('visible');
+                observer.unobserve(mainSection); // Deja de observar después de activar la animación
+            }
+        });
+    }, {
+        threshold: 0.4  // Se activa cuando el 30% del elemento es visible
+    });
+
+    observer.observe(mainSection);
+});
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const opinions = document.querySelectorAll('.opinion'); // Todas las opiniones
@@ -90,6 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializa la primera opinión como activa
     showOpinion(opinionIndex);
 });
+
+
 
 
 var map = L.map('map').setView([41.545, 1.8], 2.499);

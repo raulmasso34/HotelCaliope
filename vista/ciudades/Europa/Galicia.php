@@ -11,17 +11,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../static/css/style.css">
-
-    <link rel="stylesheet" href="../../../static/styles/general.css">
-    <link rel="stylesheet" href="../../../static/styles/ciudades/california.css">
-    <script src="../../../../static/js/index/personas.js"></script>
+    <link rel="stylesheet" href="../../../static/css/ciudades/galicia.css">
+   <!--  <script src="../../../static/js/main.js"></script> -->
     <script src="../../../../static/js/calendario.js"></script>
-    <script src="../../../static/js/ciudades/california.js"></script>
+    <script src="../../../static/js/ciudades/galicia.js"></script>
     <script src="../../../../static/js/index/carrusel_index2.js"></script>
     <title>Galicia</title>
 </head>
 <body>
-    <header class="main-header">
+<header class="main-header">
     <div class="carousel">
         <img class="carousel-background" src="../../../static/img/florida/florida3.jpg" alt="Fondo 1">
         <img class="carousel-background" src="../../../static/img/florida/florida4.jpg" alt="Fondo 2">
@@ -53,7 +51,7 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 
         </section>
         <section class="main-center">
@@ -91,36 +89,60 @@
     
           
         </section>
-    </header>
-<div class="general-box">
+</header>
 
-<div class="left-cali">
-<strong>
-    <h1>CALIFORNIA, <br>UNA EXPERIENCIA INOLVIDABLE</h1>
-</strong>
-        
-    <div class="contenido-desc">
-           
-        <p>
-            En Hoteles Caliope, ofrecemos una experiencia inigualable porque sabemos que cada detalle cuenta. Nos enorgullece brindar instalaciones de primer nivel, diseño sofisticado y una atmósfera acogedora que invita a la relajación. Nuestros hoteles están ubicados en destinos exclusivos, con vistas impresionantes y servicios personalizados. Nuestro equipo de profesionales apasionados está listo para atenderte, asegurándose de que disfrutes de una experiencia llena de comodidad y lujo. ¡En Hoteles Caliope, transformamos tu viaje en un momento inolvidable!
-        </p>
-    </div>
+<section class="main-main">
+        <div class="main-box">
+            <div class="main-box-box">
+                <div class="stars-main">
+                    <span style="font-size: 20px;  color: rgb(230, 182, 11);">
+                    <i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star "></i>
+                    </span>
+                </div>
+                <div class="main-title">
+                    <h3>LOREM IST AME TUU </h3>
+                    <h1>Lorem ipsum dolor </h1>
+                </div>
+                <div class="main-txt">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem adipisci soluta alias voluptatem facere? Vitae iure ratione saepe quos blanditiis fugiat molestias, maxime reprehenderit harum. Quod molestiae consectetur perferendis deserunt.</p>
 
-</div>
-<div class="right-cali">
-    <div class="carousel">
-        <div class="carousel-images">
-            <img src="../../../static/img/california/california.jpg" alt="Foto 1">
-            <img src="../../../static/img/california/california.jpg" alt="Foto 2">
-            <img src="../../../static/img/california/california.jpg" alt="Foto 3">
-           s
+                    <div class="main-botones">
+                        <button>VER MAS</button>
+                        <button>Reservar</button>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="main-box-right">
+                <div class="img-left">
+                    <img class="img-main" src="../../../static/img/florida/florida1.jpg" alt="">
+                </div>
+                <div class="img-right">
+                    <img class="img-main" src="../../../static/img/florida/florida3.jpg" alt="">
+                </div>
+                    
+            </div>
         </div>
-    </div>
-</div>
+</section>
 
-</div>
 
-    <footer class="main-footer">
+<section class="dispo">
+
+</section>
+
+<section class="servicios">
+
+</section>
+
+<section class="ofertas">
+
+</section>
+
+<section class="contacto">
+
+</section>
+
+<footer class="main-footer">
         <div class="footer-box">
             <!-- Sección: Sobre el Hotel -->
             <div class="footer-sec">

@@ -1,73 +1,63 @@
-.general-box{
-    height: 500px;
-    width: 70%;
-   
-    margin: 2% auto;
-    text-align: center;
+
+.general-box {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: stretch;
-    flex-wrap: wrap;
-    
-}
-
-
-.general-box p{
-    font-size: 25px;
-    margin-left: 5%;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+  }
   
-    margin-right: 5%;
-}
-.contenido-desc{
+  .left-cali {
+    width: 45%;
+  }
   
-    text-align: justify;
-    font-family: "Arial";
-    
-    width: 90%;
-}
-
-.left-cali{
-    width: 50%;
-    height: 100%;
-
-    margin: 0 0 0 0;
-}
-.left-cali h1{
-    font-family: "Patrick Hand", cursive;
-    font-weight: 400;
-    font-style: normal;
-    
-    margin: 0;
-}
-
-.right-cali{
-    width: 50%;
-    text-align: center;
-   
-    height: 100%;
-    margin: 0 0 0 0 ;
-}
-
-.carousel {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+  .right-cali {
+    width: 45%;
     position: relative;
-    
-}
+  }
   
-.carousel-images {
-    display: flex;
+  .carousel {
+    position: relative;
     width: 100%;
-    transition: transform 0.7s ease-in-out;
-}
-
-.carousel-images img {
-    width:100%;
+    overflow: hidden;
+  }
   
-    flex-shrink: 0;
-}
+  .carousel-images {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .carousel-images img {
+    width: 100%;
+    height: auto;
+  }
+  
+  button {
+    position: absolute;
+    top: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 18px;
+  }
+  
+  .prev {
+    left: 10px;
+    transform: translateY(-50%);
+  }
+  
+  .next {
+    right: 10px;
+    transform: translateY(-50%);
+  }
+  
+  button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  
+
 
 
 /*-------------------------------------------CONTENIDO-----------------------------*/
