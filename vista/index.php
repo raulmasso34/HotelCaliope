@@ -60,7 +60,7 @@
                             </div>
                         </div>
                     </div>
-                <a href="#">Ofertas</a>
+                <a href="../vista/ofertas/ofertas.php">Ofertas</a>
             </div>
         
 

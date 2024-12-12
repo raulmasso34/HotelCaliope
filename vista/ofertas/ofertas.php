@@ -26,7 +26,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../static/css/style.css">
+        <link rel="stylesheet" href="../../static/css/style.css">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
         crossorigin=""/>
@@ -38,14 +38,14 @@
     <body>
         <header class="main-header">
             <div class="carousel">
-                <img class="carousel-background" src="../static/img/florida/florida3.jpg" alt="Fondo 1">
-                <img class="carousel-background" src="../static/img/florida/florida4.jpg" alt="Fondo 2">
-                <img class="carousel-background" src="../static/img/florida/florida5.jpg" alt="Fondo 3">
+                <img class="carousel-background" src="../../static/img/habitaciones/hab1.jpg" alt="Fondo 1">
+                <img class="carousel-background" src="../../static/img/habitaciones/hab3.jpg" alt="Fondo 2">
+                <img class="carousel-background" src="../../static/img/habitaciones/hab2.jpg" alt="Fondo 3">
             </div>
         
             <section class="main-up">
                 <div class="main-up-left">
-                    <img src="../static/img/logo.png" alt="Imagen secundaria">
+                    <img src="../../static/img/logo.png" alt="Imagen secundaria">
                 </div>
                 <div class="main-up-right">
                     <div class="links">
@@ -109,7 +109,261 @@
             
             </section>
         </header>
+        <section>
 
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+        <footer class="main-footer">
+        <div class="footer-box">
+            <!-- Sección: Sobre el Hotel -->
+            <div class="footer-sec">
+                <h1>SOBRE LOS HOTELS</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.</p>
+                <a href="../vista/index.php"><img class="img-footer" src="../static/img/logo_blanco.png" alt=""></a>
+                <div class="language-selector">
+                <select id="language-select" onchange="changeLanguage()">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                </select>
+                </div>
+            </div>
+
+            <!-- Sección: Links -->
+            <div class="footer-sec">
+                <h1>LINKS</h1>
+                <div class="links-footer">
+                    <a href="#">Sobre nosotros</a>
+                    <a href="#">Servicios</a>
+                    <a href="#">Hoteles</a>
+                </div>
+            </div>
+
+            <!-- Sección: Contacto y Redes Sociales -->
+            <div class="footer-sec">
+                <h1>DÓNDE NOS ENCONTRAMOS</h1>
+                <div class="sec-tres">
+                    <p>Calle xxx 99999 <br> Lorem ipsum, España</p>
+                    <span class="contact-info">
+                        <i class="fa-solid fa-phone"></i> 999 999 999
+                    </span>
+                    <span class="contact-info">
+                        <i class="fa-solid fa-envelope"></i> hotelcalope@gmail.com
+                    </span>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="privacidad">
+            <p>Lorem ipsum dolor sit ame</p>
+        </div>
+    </footer>
+
+    <!-----------------------------------SCRIPTS---------------------------->
+    <script src="../../static/js/main.js"></script>
     
     </body>
 </html>
