@@ -41,8 +41,8 @@
             </div>
             <div class="main-up-right">
                 <div class="links">
-                    <a href="#">Sobre nosotros</a>
-                    <a href="#">Servicios</a>
+                    <a href="#">Habitaciones</a>
+                    
                     <div class="dropdown">
                         <a href="#" class="dropbtn">Hoteles</a>
                         <div class="dropdown-content">
@@ -60,6 +60,7 @@
                             </div>
                         </div>
                     </div>
+                    <a href="#">Galerias</a>
                 <a href="../vista/ofertas/ofertas.php">Ofertas</a>
             </div>
         
