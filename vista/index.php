@@ -41,7 +41,7 @@
             </div>
             <div class="main-up-right">
                 <div class="links">
-                    <a href="#">Habitaciones</a>
+                    <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
                     
                     <div class="dropdown">
                         <a href="#" class="dropbtn">Hoteles</a>
