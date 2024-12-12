@@ -10,6 +10,9 @@
 <html lang="en">
     <head>
 
+        <!--ESTILOS-->
+        <link rel="stylesheet" href="../../static/css/ofertas.css">
+
         <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -109,8 +112,12 @@
             
             </section>
         </header>
-        <section>
 
+        <section>
+            <div class="oferta-desc">
+                <h1>Ofertas</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sequi voluptatem ullam earum cumque rerum aspernatur enim dolor nam! Cum quae temporibus eos molestiae suscipit! Excepturi fugit modi consequatur maxime.</p>
+            </div>
         </section>
 
 
@@ -310,7 +317,7 @@
 
 
 
-        
+
 
         <footer class="main-footer">
         <div class="footer-box">

@@ -1,0 +1,24 @@
+.oferta-desc{
+    height: 400px;
+
+    width: 50%;
+    margin: auto;
+    text-align: justify;
+}
+
+.oferta-desc h1{
+    font-size: 40px;
+    font-family: "Oswald", sans-serif;
+   
+    letter-spacing: 5px;
+    width: max-content;
+   
+}
+
+
+.oferta-desc p{
+    width: 100%;
+    margin: auto;
+    font-size: 20px;
+    text-align: justify;
+}
