@@ -338,11 +338,22 @@
             </div>
             <div class="contacto-sub">
                 <div class="newsletter-sub">
-                    
+                    <div class="news-title">
+                        <h1>Inicia Sesión</h1>
+                        <p>Accede a tu cuenta para disfrutar de beneficios exclusivos.</p>
+                    </div>
+                    <form class="news-content">
+                        <input type="text" placeholder="Usuario o correo electrónico" required>
+                        <input type="password" placeholder="Contraseña" required>
+                        <button type="submit">Iniciar Sesión</button>
+                    </form>
+                    <div class="news-footer">
+                        <p>¿No tienes cuenta? <a href="#">Regístrate aquí</a></p>
+                    </div>
                 </div>
-                
             </div>
         </div>
+
 
     </section>
 

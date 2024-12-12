@@ -1118,7 +1118,7 @@ button:hover {
 
 /*-----------------------------------CONTACTE-------------------------------*/
 .contacto{
-    border: 2px solid red;
+   
     height: 700px;
     width: 100%;
     position: relative; /* Necesario para posicionar la superposición */
@@ -1150,6 +1150,7 @@ button:hover {
 .contacto-box{
     width: 50%;
     height: 100%;
+    border: 2px solid rgb(5, 14, 116);
     text-align: center;
     display: flex;
     flex-direction: row;
@@ -1162,9 +1163,10 @@ button:hover {
 
 
 .contacto-sub{
-    
-    height: 100%;
+    text-align: center;
+    height: 70%;
     width: 50%;
+    border: 2px solid red;
 }
 
 .contacto-sub h3{
@@ -1183,13 +1185,88 @@ button:hover {
     
 }
 
-.newsletter-sub{
+
+
+
+
+
+/* Caja del formulario */
+.newsletter-sub {
     background-color: rgba(231, 240, 255, 0.921);
-    width: 80%;
-    height: 100%;
-    margin: auto;
+    border-radius: 8px;
+    border: 2px solid red;
+    padding: 30px;
+    margin-top: 2%;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra ligera */
 }
 
+/* Título del formulario */
+.news-title h1 {
+    font-family: 'Luxurious Roman', serif;
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #0b316b; /* Azul oscuro */
+}
+
+.news-title p {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #555; /* Gris */
+    margin-bottom: 20px;
+}
+
+/* Formulario */
+.news-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacio entre campos */
+}
+
+/* Campos de entrada */
+.news-content input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Botón */
+.news-content button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #0b316b; /* Azul oscuro */
+    color: white;
+    border: none;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.news-content button:hover {
+    background-color: #083065; /* Azul más oscuro al pasar el ratón */
+}
+
+/* Pie del formulario */
+.news-footer p {
+    font-size: 14px;
+    color: #555;
+    margin-top: 20px;
+}
+
+.news-footer a {
+    color: #0b316b;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.news-footer a:hover {
+    text-decoration: underline;
+}
 
 
 
