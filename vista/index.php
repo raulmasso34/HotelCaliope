@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    echo "Hello World";  // Verifica que el archivo PHP se está ejecutando.
+
 
     <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
