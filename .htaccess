@@ -1,2 +1,2 @@
 RewriteEngine On
-RewriteRule ^$ /Vista/Inicio/index.php [L]
+RewriteRule ^$ /Vista/index.php [L]
