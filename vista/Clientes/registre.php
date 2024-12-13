@@ -15,7 +15,7 @@
         </div>
         
         <!-- Formulario de Registro -->
-        <form action="/HotelCaliope/HotelCaliope-2/Controller/Users/RegistreController.php" method="POST">
+        <form action="../../controller/clients/RegistreController.php" method="POST">
             <div class="registro-form-row">
                 <div class="registro-form-group">
                     <label for="nom">Nombre:</label>

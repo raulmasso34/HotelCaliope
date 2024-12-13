@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../Configuracion/Database.php';
+require_once __DIR__ . '/../../config/Database.php';
 
 
 
@@ -30,7 +30,7 @@ class RegistreModel {
         $hashedPassword = password_hash($this->password, PASSWORD_BCRYPT);
 
         // Bind de parámetros
-        $stmt->bind_param("sssssssss", 
+        $stmt->bind_param("ssssisssi", 
             $this->nom, 
             $this->cognom, 
             $this->dni, 

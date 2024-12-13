@@ -20,7 +20,7 @@ error_reporting(E_ALL);
         </div>
         
         <!-- Formulario de Login -->
-        <form method="POST" action="../../Controller/Users/LoginController.php">
+        <form method="POST" action="../../controller/clients/LoginController.php">
             <label for="Usuari">Usuario:</label>
             <input type="text" name="Usuari" id="Usuari" required>
 

@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-require_once __DIR__ . '/../../Modelo/UsersModel/RegistreModel.php';
+require_once __DIR__ . '/../../modelo/clientesModelo/RegistreModel.php';
 
 echo "Llegué al controlador correctamente.";
 
@@ -34,7 +34,7 @@ class RegistreController {
 
         if ($this->registreModel->registrar()) {
             // Redirige a la página de inicio de sesión
-            header("Location: ../../Vista/InicioSesion/registre.php"); // Cambia esta ruta por la correcta
+            header("Location: ../../vista/Clientes/registre.php"); // Cambia esta ruta por la correcta
             exit(); // Asegúrate de llamar a exit() para detener la ejecución del script
         } else {
             return "Error al registrar el usuario.";
