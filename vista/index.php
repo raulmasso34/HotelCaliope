@@ -343,13 +343,20 @@
                         <h1>Inicia Sesión</h1>
                         <p>Accede a tu cuenta para disfrutar de beneficios exclusivos.</p>
                     </div>
-                    <form class="news-content">
-                        <input type="text" placeholder="Usuario o correo electrónico" required>
-                        <input type="password" placeholder="Contraseña" required>
-                        <button type="submit">Iniciar Sesión</button>
+                    <form class="news-content  method="POST" action="../controller/clients/LoginController.php">
+                    <label for="Usuari">Usuario:</label>
+                        <input type="text" name="Usuari" id="Usuari" required>
+
+                        <label for="DNI">DNI:</label>
+                        <input type="text" name="DNI" id="DNI" required>
+
+                        <label for="Password">Contraseña:</label>
+                        <input type="password" name="Password" id="Password" required>
+
+                        <button class="login-btn" type="submit">Iniciar sesión</button>
                     </form>
                     <div class="news-footer">
-                        <p>¿No tienes cuenta? <a href="#">Regístrate aquí</a></p>
+                        <p>¿No tienes cuenta? <a href="../vista/Clientes/registre.php">Regístrate aquí</a></p>
                     </div>
                 </div>
             </div>

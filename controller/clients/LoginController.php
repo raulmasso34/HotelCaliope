@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../Configuracion/Database.php';  // Asegúrate de que la ruta sea correcta
+require_once __DIR__ . '/../../config/Database.php';  // Asegúrate de que la ruta sea correcta
 require_once __DIR__ . '/../../modelo/clientesModelo/LoginModel.php';  // Asegúrate de que la ruta sea correcta
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
