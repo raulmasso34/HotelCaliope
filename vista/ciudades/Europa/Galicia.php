@@ -157,6 +157,50 @@
 </section>
 
 <section class="servicios">
+    <table>
+        <tr>
+            <td>
+                <p>Parking</p>
+                <i class="fa-solid fa-square-parking"></i>
+            </td>
+            <td>
+                <p>Piscina</p>
+                <i class="fa-solid fa-water-ladder"></i>
+            </td>
+            <td>
+                <p>Wifi Gratis</p>
+                <i class="fa-solid fa-wifi"></i>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Servicio Habitaciones</p>
+                <i class="fa-solid fa-bell-concierge"></i>
+            </td>
+            <td>
+                <p>Cafeteria</p>
+                <i class="fa-solid fa-mug-saucer"></i>
+            </td>
+            <td>
+                <p>Lavadora</p>
+                <i class="fa-solid fa-jug-detergent"></i>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Samart TV</p>
+                <i class="fa-solid fa-tv"></i>
+            </td>
+            <td>
+                <p>Climatizacion Individual</p>
+                <i class="fa-solid fa-fan"></i>
+            </td>
+            <td>
+                <p>Campo de Futbol</p>
+                <i class="fa-regular fa-futbol"></i>
+            </td>
+        </tr>
+    </table>
 
 </section>
 
