@@ -157,7 +157,10 @@
 </section>
 
 <section class="servicios">
-    <table>
+    <h1>SERVICIOS</h1>
+   
+       
+    <table class="tabla-servicios">
         <tr>
             <td>
                 <p>Parking</p>
