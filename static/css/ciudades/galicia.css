@@ -307,7 +307,7 @@
   display: flex; /* Organiza los <tr> como flexibles */
   flex-direction: column; /* Organiza las filas en columna */
   flex-wrap: wrap; /* Permite ajustar si es necesario */
-  width: 60%; /* Ocupa el 70% del ancho */
+  width: 65%; /* Ocupa el 70% del ancho */
   margin: 0 auto; /* Centrado horizontal */
   text-align: center; /* Centra el contenido textual */
   gap: 10px; /* Espacio entre filas si es necesario */
@@ -333,12 +333,13 @@
 
 .tabla-servicios td p {
   font-size: 20px; /* Tamaño del ícono */
-  margin: 0; /* Elimina márgenes adicionales del párrafo */
+  margin: 0 0 0 0; /* Elimina márgenes adicionales del párrafo */
 }
 
 .tabla-servicios i {
   font-size: 40px; /* Tamaño del ícono */
   color: #333; /* Color del ícono */
+  margin: 0 50px 0 0; /* Elimina márgenes adicionales del párrafo */
 }
 
 
