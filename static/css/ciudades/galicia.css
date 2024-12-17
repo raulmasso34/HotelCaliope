@@ -343,3 +343,113 @@
 }
 
 
+
+/* OFERTAS */
+
+.ofertas {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+  width: 100%;
+  margin: 5% auto;
+  padding: 50px 20px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.ofertas.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Contenedor de los carruseles */
+.carousels-container-ofertas {
+  display: flex;
+  justify-content: center;
+  gap: 40px;  /* Aumenta el espacio entre los carruseles */
+  margin-top: 40px;
+}
+
+/* Estilo individual de cada carrusel */
+.carousels-ofertas {
+  width: 600px;  /* Aumenta el tamaño de cada carrusel */
+  height: 600px;  /* Hacemos que el carrusel sea cuadrado */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
+              0 9px 46px 8px rgba(0, 0, 0, 0.12), 
+              0 11px 15px -7px rgba(0, 0, 0, 0.2);
+  overflow: hidden;  /* Asegura que no haya desbordes */
+  border-radius: 10px;  /* Esquinas redondeadas */
+}
+
+.carousels-ofertas h2 {
+  margin-top: 20px;  /* Espacio encima del título */
+  font-size: 1.6em;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.carousels-ofertas p {
+  font-size: 1em;
+  color: #666;
+  margin-top: 10px;
+  padding: 0 20px;  /* Agrega relleno a los lados */
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* Estilo de la imagen */
+.carousels-ofertas img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* Asegura que la imagen cubra todo el contenedor */
+  transition: opacity 1s ease-out;  /* Para un cambio suave de imagen */
+}
+
+/* Estilo de los botones */
+button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  cursor: pointer;
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  z-index: 1;  /* Asegura que los botones estén por encima de las imágenes */
+}
+
+button .arrow-ofertas {
+  width: 12px;
+  height: 12px;
+  border: solid #fff;
+  border-width: 2px 2px 0 0;
+  display: inline-block;
+  transition: transform 0.3s ease-out;
+  outline: none;
+}
+
+/* Flechas normales */
+.left-btn-ofertas .arrow-ofertas {
+  transform: rotate(225deg);  /* Flecha hacia la izquierda */
+}
+
+.right-btn-ofertas .arrow-ofertas {
+  transform: rotate(-315deg);  /* Flecha hacia la derecha */
+}
+
+.left-btn-ofertas {
+  left: 10px;
+}
+
+.right-btn-ofertas {
+  right: 10px;
+}
+
