@@ -455,3 +455,42 @@ button .arrow-ofertas {
   right: 10px;
 }
 
+/*MAPA*/
+
+.mapa-galicia{
+  height: 800px;
+  width: 100%;
+
+  margin-bottom: 10px;
+}
+.mapa-galicia.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.mapa-box{
+ 
+  width: 60%;
+  height: 100%;
+  margin: auto;
+}
+
+.mapa-box h2{
+  font-family: "Cormorant Garamond", serif;
+  text-align: center;
+  font-size: 40px;
+  
+}
+
+.mapa-box p{
+ 
+  width: 60%;
+  margin: 0 auto;
+  font-size: 20px;
+  color: black;
+
+}
+
+#map { height: 70%; 
+  margin-top: 2%;
+
+}

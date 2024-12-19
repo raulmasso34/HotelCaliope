@@ -19,9 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../static/css/style.css">
     <link rel="stylesheet" href="../../../static/css/ciudades/galicia.css">
-    <script src="../../../../static/js/calendario.js"></script>
-    <script src="../../../static/js/ciudades/galicia.js"></script>
-    <script src="../../../static/js/ciudades/carrousel.js"></script>
+    
     <title>Galicia</title>
 </head>
 <body>
@@ -238,8 +236,12 @@
   </div>
 </section>
 
-<section class="contacto">
-
+<section class="mapa-galicia">
+<div class="mapa-box">
+            <h2>MAPA INTERCATIVO</h2>
+            <p>Descubre en este mapa interactivo todas las áreas donde puedes encontrarnos. Explora nuestras ubicaciones estratégicas, diseñadas para ofrecerte experiencias únicas y memorables en cada destino. ¡Planea tu próxima aventura con nosotros!</p>
+            <div id="map"></div>
+        </div>
 </section>
 
 <footer class="main-footer">
@@ -288,15 +290,14 @@
             </div>
         </div>
         <div class="privacidad">
-        <div class="mapa-box">
-            <h2>MAPA INTERCATIVO</h2>
-            <p>Descubre en este mapa interactivo todas las áreas donde puedes encontrarnos. Explora nuestras ubicaciones estratégicas, diseñadas para ofrecerte experiencias únicas y memorables en cada destino. ¡Planea tu próxima aventura con nosotros!</p>
-            <div id="map"></div>
-        </div>
+            
         </div>
     </footer>
 
     <!-----------------------------------SCRIPTS---------------------------->
     <script src="../static/js/main.js"></script>
+    <script src="../../../../static/js/calendario.js"></script>
+    <script src="../../../static/js/ciudades/galicia.js"></script>
+    <script src="../../../static/js/ciudades/carrousel.js"></script>
 </body>
 </html>

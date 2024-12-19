@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Observador de la visibilidad de las secciones
-    const sections = ['.main-main', '.dispo', '.servicios', '.ofertas', '.contacto'];
+    const sections = ['.main-main', '.dispo', '.servicios', '.ofertas', '.mapa-galicia'];
     sections.forEach(sectionSelector => {
         const section = document.querySelector(sectionSelector);
         if (section) {
