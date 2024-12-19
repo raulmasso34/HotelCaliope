@@ -35,6 +35,7 @@
         <img class="carousel-background" src="../static/img/florida/florida5.jpg" alt="Fondo 3">
     </div>
        
+    
         <section class="main-up">
             <div class="main-up-left">
                 <img src="../static/img/logo.png" alt="Imagen secundaria">
@@ -60,7 +61,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="../vista/galeria/galeria.php">Galerias</a>
+                    <a href="../vista/galeria/galeria.php">Galeria</a>
                 <a href="../vista/ofertas/ofertas.php">Ofertas</a>
                 <a href="../vista/Contacto/contacto.php">Contacto</a>
             </div>
