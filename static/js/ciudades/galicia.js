@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Observador de la visibilidad de las secciones
-    const sections = ['.main-main', '.dispo', '.servicios', '.ofertas', '.contacto'];
+    const sections = ['.main-main', '.dispo', '.servicios', '.ofertas', '.mapa-galicia'];
     sections.forEach(sectionSelector => {
         const section = document.querySelector(sectionSelector);
         if (section) {
@@ -69,3 +69,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     setInterval(changeBackground, 3500);
 });
+
+
+var map = L.map('map').setView([41.545, 1.8], 2.499);
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+var marker = L.marker([42.74, 1.1]).addTo(map);
+var marker = L.marker([40.70, -73.9]).addTo(map);
+var marker = L.marker([42.879, -8]).addTo(map);
+var marker = L.marker([26, -80.2]).addTo(map);
+var marker = L.marker([34, -118.2]).addTo(map);
+var marker = L.marker([41.7214, 2.936]).addTo(map);
