@@ -456,41 +456,58 @@ button .arrow-ofertas {
 }
 
 /*MAPA*/
-
-.mapa-galicia{
+/* Sección del mapa de Galicia */
+.mapa-galicia {
   height: 800px;
   width: 100%;
-
   margin-bottom: 10px;
+  opacity: 0; /* Por defecto, oculto */
+  transform: translateY(50px); /* Movido hacia abajo */
+  transition: opacity 1.5s ease-out, transform 1.5s ease-out; /* Transición suave */
 }
+
+/* Cuando la sección es visible */
 .mapa-galicia.visible {
   opacity: 1;
   transform: translateY(0);
 }
-.mapa-box{
- 
-  width: 60%;
+
+/* Contenedor del mapa */
+.mapa-box-galicia {
+  width: 60%; /* Ajustamos el tamaño de la caja */
   height: 100%;
   margin: auto;
-}
-
-.mapa-box h2{
-  font-family: "Cormorant Garamond", serif;
   text-align: center;
+}
+
+/* Título del mapa */
+.mapa-box-galicia h2 {
+  font-family: "Cormorant Garamond", serif;
   font-size: 40px;
-  
+  margin-bottom: 20px;
+  color: #333; /* Un tono más suave para el título */
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  text-align: center; /* Alineamos el título al centro */
+  word-wrap: break-word; /* Rompe las palabras largas si es necesario */
 }
 
-.mapa-box p{
- 
-  width: 60%;
-  margin: 0 auto;
+/* Párrafo de texto */
+.mapa-box-galicia p {
+  width: 100%; /* Hace que el párrafo ocupe todo el ancho disponible */
+  margin: 0 auto 20px; /* Añade margen inferior */
   font-size: 20px;
-  color: black;
-
+  color: #666; /* Color gris suave */
+  line-height: 1.5; /* Mejora la legibilidad */
+  text-align: justify; /* Justifica el texto para que se lea a lo largo */
+  padding: 0 10px; /* Añade algo de relleno a los lados para que el texto no toque los bordes */
 }
 
-#map { height: 70%; 
+/* Estilo del mapa */
+#map {
+  height: 70%; 
+  width: 100%; /* Asegura que el mapa ocupe el 100% del contenedor */
   margin-top: 2%;
-
+  border: 1px solid #ddd; /* Bordes suaves */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
