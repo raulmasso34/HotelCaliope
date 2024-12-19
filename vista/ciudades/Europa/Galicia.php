@@ -157,11 +157,85 @@
 </section>
 
 <section class="servicios">
+    <h1>SERVICIOS</h1>
+   
+       
+    <table class="tabla-servicios">
+        <tr>
+            <td>
+                <p>Parking</p>
+                <i class="fa-solid fa-square-parking"></i>
+            </td>
+            <td>
+                <p>Piscina</p>
+                <i class="fa-solid fa-water-ladder"></i>
+            </td>
+            <td>
+                <p>Wifi Gratis</p>
+                <i class="fa-solid fa-wifi"></i>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Servicio Habitaciones</p>
+                <i class="fa-solid fa-bell-concierge"></i>
+            </td>
+            <td>
+                <p>Cafeteria</p>
+                <i class="fa-solid fa-mug-saucer"></i>
+            </td>
+            <td>
+                <p>Lavadora</p>
+                <i class="fa-solid fa-jug-detergent"></i>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Samart TV</p>
+                <i class="fa-solid fa-tv"></i>
+            </td>
+            <td>
+                <p>Climatizacion Individual</p>
+                <i class="fa-solid fa-fan"></i>
+            </td>
+            <td>
+                <p>Campo de Futbol</p>
+                <i class="fa-regular fa-futbol"></i>
+            </td>
+        </tr>
+    </table>
 
 </section>
 
 <section class="ofertas">
+<h1>OFERTAS</h1>
+  <div class="carousels-container-ofertas">
+    <!-- Primer carrusel -->
+    <div class="carousels-ofertas">
+      <button class="left-btn-ofertas" id="left-btn1-ofertas"><i class="arrow-ofertas"></i></button>
+      <img id="carousel1-ofertas" src="" alt="">
+      <button class="right-btn-ofertas" id="right-btn1-ofertas"><i class="arrow-ofertas"></i></button>
+      <h2>Habitaciones</h2>
+      <p>Descubre nuestras cómodas habitaciones con increíbles vistas.</p>
+    </div>
+    
+    <!-- Segundo carrusel -->
+    <div class="carousels-ofertas">
+      <button class="left-btn-ofertas" id="left-btn2-ofertas"><i class="arrow-ofertas"></i></button>
+      <img id="carousel2-ofertas" src="" alt="">
+      <button class="right-btn-ofertas" id="right-btn2-ofertas"><i class="arrow-ofertas"></i></button>
+      <h2>Actividades</h2>
+      <p>Explora las actividades que ofrecemos para disfrutar al máximo.</p>
+    </div>
 
+    <div class="carousels-ofertas">
+      <button class="left-btn-ofertas" id="left-btn3-ofertas"><i class="arrow-ofertas"></i></button>
+      <img id="carousel3-ofertas" src="" alt="">
+      <button class="right-btn-ofertas" id="right-btn3-ofertas"><i class="arrow-ofertas"></i></button>
+      <h2>SERVICIOS</h2>
+      <p>Explora los servicios que ofrecemos para disfrutar al máximo.</p>
+    </div>
+  </div>
 </section>
 
 <section class="contacto">
