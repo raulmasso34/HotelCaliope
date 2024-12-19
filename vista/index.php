@@ -367,26 +367,6 @@
     </section>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <footer class="main-footer">
         <div class="footer-box">
             <!-- Sección: Sobre el Hotel -->

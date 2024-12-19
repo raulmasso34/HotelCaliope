@@ -288,7 +288,11 @@
             </div>
         </div>
         <div class="privacidad">
-            
+        <div class="mapa-box">
+            <h2>MAPA INTERCATIVO</h2>
+            <p>Descubre en este mapa interactivo todas las áreas donde puedes encontrarnos. Explora nuestras ubicaciones estratégicas, diseñadas para ofrecerte experiencias únicas y memorables en cada destino. ¡Planea tu próxima aventura con nosotros!</p>
+            <div id="map"></div>
+        </div>
         </div>
     </footer>
 
