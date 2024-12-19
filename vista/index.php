@@ -62,6 +62,7 @@
                     </div>
                     <a href="../vista/galeria/galeria.php">Galerias</a>
                 <a href="../vista/ofertas/ofertas.php">Ofertas</a>
+                <a href="../vista/Contacto/contacto.php">Contacto</a>
             </div>
         
 
