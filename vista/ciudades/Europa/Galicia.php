@@ -50,7 +50,7 @@
                     <h4>USA</h4>
                     <a href="#">Florida</a>
                     <a href="#">California</a>
-                    <a href="#">Nueva York</a>
+                    <a href="../USA/NuevaYork.php">Nueva York</a>
                 </div>
             </div>
         </div>
