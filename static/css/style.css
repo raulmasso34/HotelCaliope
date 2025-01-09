@@ -1467,5 +1467,42 @@ button:hover {
     .footer-sec {
         width: 100%;
         margin-bottom: 30px;
-    }
+    }    
 }
+/*---------------------POLITICA-------------------*/
+.privacy-banner {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .privacy-banner a {
+    color: #1e90ff;
+    text-decoration: underline;
+  }
+  
+  .privacy-banner button {
+    background-color: #1e90ff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .privacy-banner button:hover {
+    background-color: #0c6ac1;
+  }
+  
