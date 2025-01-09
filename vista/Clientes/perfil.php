@@ -86,7 +86,9 @@ $db->closeConnection();
         <div class="edit-profile">
             <a href="editProfile.php" class="edit-link">Editar perfil</a>
         </div>
-        <div class="perfil-salir"> <a href="">Volver a la pantalla principal</a></div>
+        <div class="perfil-salir"> 
+            <a href="">Volver a la pantalla principal</a>
+        </div>
     </div>
 </div>
 
