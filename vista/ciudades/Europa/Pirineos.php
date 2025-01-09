@@ -18,7 +18,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../static/css/style.css">
-    <link rel="stylesheet" href="../../../static/css/ciudades/newyork.css">
+    <link rel="stylesheet" href="../../../static/css/ciudades/pirineos.css">
     
     <title>PIRINEOS</title>
 </head>
@@ -300,7 +300,7 @@
     <!-----------------------------------SCRIPTS---------------------------->
     <script src="../static/js/main.js"></script>
     <script src="../../../../static/js/calendario.js"></script>
-    <script src="../../../static/js/ciudades/newyork.js"></script>
+    <script src="../../../static/js/ciudades/pirineos.js"></script>
     <script src="../../../static/js/ciudades/carrousel.js"></script>
 </body>
 </html>
