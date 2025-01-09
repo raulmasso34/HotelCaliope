@@ -18,9 +18,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../static/css/style.css">
-    <link rel="stylesheet" href="../../../static/css/ciudades/pirineos.css">
+    <link rel="stylesheet" href="../../../static/css/ciudades/california.css">
     
-    <title>PIRINEOS</title>
+    <title>CALIFORNIA</title>
 </head>
 <body>
 <header class="main-header">
@@ -45,12 +45,12 @@
                     <h4>Europa</h4>
                     <a href="../Europa/Galicia.php">Galicia</a>
                     <a href="../Europa/Tossa.php">Tossa de Mar</a>
+                    <a href="../Europa/Pirineos.php">Pirineos</a>
                 </div>
                 <div class="dropdown-section">
                     <h4>USA</h4>
                     <a href="../USA/NuevaYork.php">NuevaYork</a>
                     <a href="../USA/Florida.php">Florida</a>
-                    <a href="../USA/California.php">California</a>
                    
                 </div>
             </div>
@@ -300,7 +300,7 @@
     <!-----------------------------------SCRIPTS---------------------------->
     <script src="../static/js/main.js"></script>
     <script src="../../../../static/js/calendario.js"></script>
-    <script src="../../../static/js/ciudades/pirineos.js"></script>
+    <script src="../../../static/js/ciudades/california.js"></script>
     <script src="../../../static/js/ciudades/carrousel.js"></script>
 </body>
 </html>
