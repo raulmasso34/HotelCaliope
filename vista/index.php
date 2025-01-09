@@ -50,20 +50,21 @@
                             <div class="dropdown-section">
                                 <h4>Europa</h4>
                                 <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
-                                <a href="#">Tossa de Mar</a>
-                                <a href="#">Pirineos</a>
+                                <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                                <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
                             </div>
                             <div class="dropdown-section">
                                 <h4>USA</h4>
-                                <a href="#">Florida</a>
-                                <a href="#">California</a>
-                                <a href="#">Nueva York</a>
+                                <a href="../vista/ciudades/USA/Florida.php">Florida</a>
+                                <a href="../vista/ciudades/USA/California.php">California</a>
+                                <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
                             </div>
                         </div>
                     </div>
                     <a href="../vista/galeria/galeria.php">Galeria</a>
                 <a href="../vista/ofertas/ofertas.php">Ofertas</a>
                 <a href="../vista/Contacto/contacto.php">Contacto</a>
+                <a class="icon-perfil" href="../vista/Clientes/perfil.php"><i class="fa-regular fa-user fa-2xl"></i></a>
             </div>
         
 

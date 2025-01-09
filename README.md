@@ -16,6 +16,7 @@ Para comprobar que la conexion a la base de datos funciona correctamente, tienes
 - En la parte de descripcion de index.php, añadir carrusel con fotos de distintos lugares.✅
 - Poner en para buscar habitacions lo siguiente: fecha llegada, fecha salida, ciudad,tipo(elegir entre habitacion y actividad).(si el usuario elige habitacion le       aparecera el tipo de habitacion, si elige actividad le tiene que salir cuantas personas son).
 
+- POLTICAS DE PRIVACIDAD 
 
 
 
