@@ -16,18 +16,26 @@ window.addEventListener('scroll', () => {
 });
 
 
-//PRIVACIDAD
+  
 document.addEventListener("DOMContentLoaded", function () {
     const banner = document.getElementById("privacy-banner");
     const acceptButton = document.getElementById("accept-btn");
   
-    acceptButton.addEventListener("click", function () {
-      banner.style.display = "none"; // Oculta el banner cuando se hace clic en "Aceptar"
-    });
+    // Verifica si el usuario ya aceptó la política
+    if (localStorage.getItem("privacyAccepted") === "true") {
+      banner.style.display = "none";  // Oculta el banner si ya aceptó
+    }
   
-    // Si deseas que el banner siempre se muestre en cada carga, no guardes un estado. 
-    // Si quieres guardar la preferencia, puedes usar cookies o localStorage:
-    // localStorage.setItem("privacyAccepted", "true");
+    acceptButton.addEventListener("click", function () {
+      banner.style.opacity = '0';  // Comienza el desvanecimiento
+      banner.style.visibility = 'hidden';
+      setTimeout(() => {
+        banner.style.display = 'none';  // Finalmente quita el banner
+      }, 600);
+      
+      // Guarda la preferencia del usuario
+      localStorage.setItem("privacyAccepted", "true");
+    });
 });
   
 

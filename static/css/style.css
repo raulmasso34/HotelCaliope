@@ -1473,36 +1473,41 @@ button:hover {
 .privacy-banner {
     position: fixed;
     bottom: 20px;
-    right: 20px;
-    background-color: rgba(0, 0, 0, 0.8);
+    left: 20px; /* Cambiado para que se muestre a la izquierda */
+    background-color: rgba(0, 0, 0, 0.9); /* Fondo ligeramente más oscuro */
     color: #fff;
-    padding: 15px 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px 15px; /* Más compacto */
+    border-radius: 12px; /* Bordes más redondeados para un efecto más moderno */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra más sutil */
     font-family: Arial, sans-serif;
-    font-size: 14px;
+    font-size: 15px; /* Texto un poco más pequeño */
+    width: 350px; /* Ancho reducido */
     z-index: 1000;
     display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+    flex-direction: column; /* Los elementos estarán en columna */
+    align-items: flex-start;
+    gap: 8px;
+    transition: opacity 0.6s ease, visibility 10s ease; /* Transición para opacidad y visibilidad */
+    opacity: 1;
+    visibility: visible;
+}
   
-  .privacy-banner a {
+.privacy-banner a {
     color: #1e90ff;
     text-decoration: underline;
-  }
+}
   
-  .privacy-banner button {
-    background-color: #1e90ff;
+.privacy-banner button {
+    background: none;
+    
     color: white;
     border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
+    padding: 6px 10px; /* Botón más compacto */
+    border-radius: 8px; /* Botón más redondeado */
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  
-  .privacy-banner button:hover {
-    background-color: #0c6ac1;
-  }
+}
+
+
+
   
