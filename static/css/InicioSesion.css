@@ -367,6 +367,25 @@ body {
     margin: 20px 0;
 }
 
+.perfil-salir {
+    text-align: center; /* Centra el contenido dentro del contenedor */
+    margin-top: 20px;   /* Agrega un margen superior para separación */
+}
+
+.perfil-salir a {
+    color: red;         
+    text-decoration: none; /* Elimina el subrayado del enlace */
+    font-size: 16px;     /* Puedes ajustar el tamaño de la fuente si lo deseas */
+    padding: 5px;       /* Agrega un poco de espacio alrededor del enlace */
+    background-color: #fff; /* Fondo blanco (opcional) */
+    border-radius: 5px;     /* Borde redondeado (opcional) */
+}
+
+.perfil-salir a:hover {
+    transform: translateY(-2px);            /* Cambia el texto a blanco cuando se pasa el mouse */
+}
+
+
 /* Estilo para dispositivos móviles (opcional) */
 @media screen and (max-width: 768px) {
     .profile-container {

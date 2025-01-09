@@ -31,9 +31,16 @@ if ($profile === null) {
     exit();
 }
 
+// Obtener las reservas del usuario
+$reservations = $perfilModel->getReservations($profile['Id_Cliente']);
+
+if ($reservations === null) {
+    $reservations = [];  // Si no hay reservas, inicializa el array vacío
+}
+
 // Cerrar la conexión
 $db->closeConnection();
 
-// Incluir la vista del perfil
-require_once __DIR__ . '/../../vista/Clientes/perfil.php';
+// Incluir la vista del perfil y pasar las variables al archivo
+include __DIR__ . '/../../vista/Clientes/perfil.php';  // Cambiar require_once a include
 ?>
