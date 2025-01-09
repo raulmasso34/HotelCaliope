@@ -110,9 +110,9 @@
             <div class="galeriaGen">
                 <h1>GALICIA</h1>
                 <div class="galeriaGen2">
-                    <img class="gal" src="../../static/img/california/california.jpg" alt="">
-                    <img class="gal" src="../../static/img/california/california.jpg" alt="">
-                    <img class="gal" src="../../static/img/california/california.jpg" alt="">
+                    <img class="gal" src="../../static/img/Galicia/galicia1.jpg" alt="">
+                    <img class="gal" src="../../static/img/Galicia/galicia2.jpg" alt="">
+                    <img class="gal" src="../../static/img/Galicia/galicia3.jpg" alt="">
                     <img class="gal" src="../../static/img/california/california.jpg" alt="">
                     <img class="gal" src="../../static/img/california/california.jpg" alt="">
                     <img class="gal" src="../../static/img/california/california.jpg" alt="">
@@ -121,8 +121,8 @@
             <div class="galeriaGen">
                 <h1>TOSSA DE MAR</h1>
             <div class="galeriaGen2">
-                    <img class="gal" src="../../static/img/california/california.jpg" alt="">
-                    <img class="gal" src="../../static/img/california/california.jpg" alt="">
+                    <img class="gal" src="../../static/img/tortossa/tortossa.jpg" alt="">
+                    <img class="gal" src="../../static/img/tortossa/tossa6.jpg" alt="">
                     <img class="gal" src="../../static/img/california/california.jpg" alt="">
                     <img class="gal" src="../../static/img/california/california.jpg" alt="">
                     <img class="gal" src="../../static/img/california/california.jpg" alt="">
@@ -143,9 +143,9 @@
             <div class="galeriaGen">
                 <h1>FLORIDA</h1>
             <div class="galeriaGen2">
-                    <img class="gal" src="../../static/img/california/california.jpg" alt="">
-                    <img class="gal" src="../../static/img/california/california.jpg" alt="">
-                    <img class="gal" src="../../static/img/california/california.jpg" alt="">
+                    <img class="gal" src="../../static/img/florida/florida5.jpg" alt="">
+                    <img class="gal" src="../../static/img/florida/florida.jpg"alt="">
+                    <img class="gal" src="../../static/img/florida/florida2.jpg" alt="">
                     <img class="gal" src="../../static/img/california/california.jpg" alt="">
                     <img class="gal" src="../../static/img/california/california.jpg" alt="">
                     <img class="gal" src="../../static/img/california/california.jpg" alt="">
@@ -165,8 +165,8 @@
             <div class="galeriaGen">
                 <h1>NEW YORK</h1>
             <div class="galeriaGen2">
-                    <img class="gal" src="../../static/img/california/california.jpg" alt="">
-                    <img class="gal" src="../../static/img/california/california.jpg" alt="">
+                    <img class="gal" src="../../static/img/ny/ny1.jpg" alt="">
+                    <img class="gal" src="../../static/img/ny/ny.jpeg" alt="">
                     <img class="gal" src="../../static/img/california/california.jpg" alt="">
                     <img class="gal" src="../../static/img/california/california.jpg" alt="">
                     <img class="gal" src="../../static/img/california/california.jpg" alt="">
