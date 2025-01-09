@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-var map = L.map('map').setView([42.74, 1.1], 13.499);
+var map = L.map('map').setView([26, -80.2], 13.499);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 100,

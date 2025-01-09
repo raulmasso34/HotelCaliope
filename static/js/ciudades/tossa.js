@@ -71,11 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-var map = L.map('map').setView([42.74, 1.1], 13.499);
+var map = L.map('map').setView([41.7214, 2.936], 13.499);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 100,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-var marker = L.marker([42.74, 1.1]).addTo(map);
+var marker = L.marker([41.7214, 2.936]).addTo(map);

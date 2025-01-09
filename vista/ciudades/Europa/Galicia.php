@@ -43,13 +43,13 @@
             <div class="dropdown-content">
                 <div class="dropdown-section">
                     <h4>Europa</h4>
-                    <a href="#">Tossa de Mar</a>
-                    <a href="#">Pirineos</a>
+                    <a href="../Europa/Tossa.php">Tossa de Mar</a>
+                    <a href="../Europa/Pirineos.php">Pirineos</a>
                 </div>
                 <div class="dropdown-section">
                     <h4>USA</h4>
-                    <a href="#">Florida</a>
-                    <a href="#">California</a>
+                    <a href="../USA/Florida.php">Florida</a>
+                    <a href="../USA/California.php">California</a>
                     <a href="../USA/NuevaYork.php">Nueva York</a>
                 </div>
             </div>
