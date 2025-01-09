@@ -1,4 +1,6 @@
 <?php
+session_start();  // Iniciar sesión al principio
+
 require_once __DIR__ . '/../../config/Database.php';  // Asegúrate de que la ruta sea correcta
 require_once __DIR__ . '/../../modelo/clientesModelo/LoginModel.php';  // Asegúrate de que la ruta sea correcta
 require_once __DIR__ . '/../../modelo/clientesModelo/PerfilModelo.php';  // Incluir el modelo de perfil
@@ -30,11 +32,10 @@ class LoginController {
 
             if ($user) {
                 // Si el usuario existe y la contraseña es correcta, establecer sesión y redirigir al perfil
-                session_start();  // Iniciar sesión
                 $_SESSION['user_id'] = $user['Id_Client'];  // Guardar el ID del usuario en la sesión
                 $_SESSION['username'] = $user['Usuari'];  // Guardar el nombre de usuario en la sesión
-                header("Location: /perfil");  // Redirigir al perfil
-                exit;
+                header("Location: ../../vista/index.php");  // Redirigir al perfil (usando ruta absoluta o correcta)
+                exit;  // Asegúrate de que el flujo se detenga después de la redirección
             } else {
                 // Si las credenciales son incorrectas
                 echo "Usuario o contraseña incorrectos.";
@@ -44,10 +45,9 @@ class LoginController {
 
     public function showProfile() {
         // Verificar si el usuario ha iniciado sesión
-        session_start();
         if (!isset($_SESSION['user_id'])) {
             // Si no está autenticado, redirigir a la página de login
-            header("Location: /login");
+            header("Location: ../../vista/Clientes/login.php");  // Asegúrate de que la ruta sea correcta
             exit;
         }
 
@@ -57,19 +57,29 @@ class LoginController {
 
         if ($userProfile) {
             // Mostrar la vista del perfil con los datos del usuario
-            include_once __DIR__ . '/../../vista/perfil.php';  // Cargar la vista del perfil
+            include_once __DIR__ . '/../../vista/Clientes/perfil.php';  // Cargar la vista del perfil
         } else {
             echo "No se pudo cargar el perfil.";
         }
     }
-
+    // Método de logout
     public function logout() {
-        // Cerrar la sesión del usuario
-        session_start();
+        // Eliminar las variables de sesión
         session_unset();
+
+        // Destruir la sesión
         session_destroy();
-        header("Location: /login");  // Redirigir al login
+
+        // Redirigir a la página de login
+        header("Location: ../../vista/index.php");  // Cambia la ruta si es necesario
         exit;
     }
 }
+
+// Verificar si la acción solicitada es logout
+if (isset($_GET['action']) && $_GET['action'] == 'logout') {
+    $controller = new LoginController();
+    $controller->logout();  // Llamar al método de logout
+}
 ?>
+s

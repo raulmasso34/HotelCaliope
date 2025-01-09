@@ -4,7 +4,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
 // Verificar si el usuario está autenticado
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");  // Si no está autenticado, redirigir a login
@@ -42,17 +41,25 @@ $db->closeConnection();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil de Usuario</title>
+    <link rel="stylesheet" href="../../static/css/InicioSesion.css"> <!-- Añade el enlace a tu archivo CSS -->
 </head>
 <body>
-    <h1>Perfil de <?php echo htmlspecialchars($profile['Nom']) . " " . htmlspecialchars($profile['Cognom']); ?></h1>
-    <p><strong>Nombre de usuario:</strong> <?php echo htmlspecialchars($profile['Usuari']); ?></p>
-    <p><strong>DNI:</strong> <?php echo htmlspecialchars($profile['DNI']); ?></p>
-    <p><strong>Email:</strong> <?php echo htmlspecialchars($profile['CorreuElectronic']); ?></p>
-    <p><strong>Teléfono:</strong> <?php echo htmlspecialchars($profile['Telefon']); ?></p>
-    <p><strong>Ciudad:</strong> <?php echo htmlspecialchars($profile['Ciudad']); ?></p>
-    <p><strong>Código Postal:</strong> <?php echo htmlspecialchars($profile['CodigoPostal']); ?></p>
+    <div class="profile-container">
+        <h1 class="profile-title">Perfil de <?php echo htmlspecialchars($profile['Nom']) . " " . htmlspecialchars($profile['Cognom']); ?></h1>
+        
+        <div class="profile-info">
+            <p><strong>Nombre de usuario:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['Usuari']); ?></span></p>
+            <p><strong>DNI:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['DNI']); ?></span></p>
+            <p><strong>Email:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['CorreuElectronic']); ?></span></p>
+            <p><strong>Teléfono:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['Telefon']); ?></span></p>
+            <p><strong>Ciudad:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['Ciudad']); ?></span></p>
+            <p><strong>Código Postal:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['CodigoPostal']); ?></span></p>
+        </div>
 
-    <!-- Si quieres agregar opciones de edición -->
-    <a href="editarPerfil.php">Editar perfil</a>
+        <!-- Enlace para editar el perfil -->
+        <div class="edit-profile">
+            <a href="editarPerfil.php" class="edit-link">Editar perfil</a>
+        </div>
+    </div>
 </body>
 </html>

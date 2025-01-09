@@ -71,7 +71,8 @@
                     <div class="dropdown-perfil-content">
                         <a href="../vista/Clientes/login.php">Iniciar sesión</a>
                         <a href="../vista/Clientes/perfil.php">Perfil</a>
-                        <a href="../vista/Clientes/logout.php">Cerrar Sesión</a>
+                        <a href="..//controller/clients/LoginController.php?action=logout">Cerrar sesión</a>
+
                     </div>
                 </div>
 

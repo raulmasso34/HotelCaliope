@@ -215,3 +215,74 @@ body {
     color: #003F53;
 }
 
+
+/*-----------------PERFIL---------------------*/
+
+.profile-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Título principal */
+.profile-title {
+    text-align: center;
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+/* Información del perfil */
+.profile-info {
+    margin-bottom: 20px;
+}
+
+/* Estilo para los párrafos de la información */
+.profile-info p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+/* Detalles de la información (como el nombre de usuario, email, etc.) */
+.profile-detail {
+    font-weight: bold;
+    color: #555;
+}
+
+/* Enlace para editar el perfil */
+.edit-profile {
+    text-align: center;
+}
+
+.edit-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1.1em;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-link:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para dispositivos móviles (opcional) */
+@media screen and (max-width: 768px) {
+    .profile-container {
+        padding: 20px;
+    }
+    .profile-title {
+        font-size: 1.5em;
+    }
+    .profile-info p {
+        font-size: 1em;
+    }
+}

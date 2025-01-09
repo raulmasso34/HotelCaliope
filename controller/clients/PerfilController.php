@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 require_once __DIR__ . '/../../config/Database.php';  // Incluir la configuración de la base de datos
-require_once __DIR__ . '/../../modelo/clientesModelo/PerfilModel.php';  // Incluir el modelo del perfil
+require_once __DIR__ . '/../../modelo/clientesModelo/PerfilModelo.php';  // Incluir el modelo del perfil
 
 // Crear la conexión a la base de datos
 $db = new Database();
