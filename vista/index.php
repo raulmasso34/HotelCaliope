@@ -64,7 +64,20 @@
                     <a href="../vista/galeria/galeria.php">Galeria</a>
                 <a href="../vista/ofertas/ofertas.php">Ofertas</a>
                 <a href="../vista/Contacto/contacto.php">Contacto</a>
-                <a class="icon-perfil" href="../vista/Clientes/perfil.php"><i class="fa-regular fa-user fa-2xl"></i></a>
+                <div class="dropdown-perfil">
+                    <a class="icon-perfil" href="javascript:void(0);">
+                        <i class="fa-regular fa-user fa-2xl"></i> <!-- Icono de usuario -->
+                    </a>
+                    <div class="dropdown-perfil-content">
+                        <a href="../vista/Clientes/login.php">Iniciar sesión</a>
+                        <a href="../vista/Clientes/perfil.php">Perfil</a>
+                        <a href="../vista/Clientes/logout.php">Cerrar Sesión</a>
+                    </div>
+                </div>
+
+
+
+
             </div>
         
 

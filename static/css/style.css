@@ -195,11 +195,58 @@ h4 {
 
 
 /*ICONO LOGIN PERFIL*/
+/* Estilos para el icono de perfil */
+.icon-perfil {
+    cursor: pointer;
+    display: inline-block;
+  
 
-.icon-perfil{
-    
-    margin-left: 12%;
 }
+
+/* Estilos para el contenedor del desplegable */
+.dropdown-perfil {
+    position: relative;
+    display: inline-block;
+}
+
+/* Estilos para el menú desplegable */
+.dropdown-perfil-content {
+    display: none;  /* Inicialmente oculto */
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);  /* Fondo oscuro semi-transparente */
+    color: #fff;  /* Color de texto blanco */
+    min-width: 160px;
+    border-radius: 8px;
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;  /* Transición suave de aparición */
+}
+
+/* Estilos para los enlaces del menú */
+.dropdown-perfil-content a {
+    color: #fff;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+}
+
+/* Cambiar el color de fondo de los enlaces cuando el ratón pasa sobre ellos */
+.dropdown-perfil-content a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    color: white;
+}
+
+/* Mostrar el menú cuando se pasa el ratón sobre el contenedor */
+.dropdown-perfil:hover .dropdown-perfil-content {
+    display: block;
+    opacity: 1;
+}
+
+
+
+
 
 
 

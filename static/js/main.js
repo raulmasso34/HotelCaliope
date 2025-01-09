@@ -39,6 +39,29 @@ document.addEventListener("DOMContentLoaded", function () {
 });
   
 
+//PERFIL
+
+/// Función para alternar el menú desplegable "dropdown-perfil"
+function toggleDropPerfil() {
+    var dropdownContent = document.querySelector(".dropdown-perfil-content");
+    dropdownContent.classList.toggle("show");
+}
+
+// Cerrar el menú si el usuario hace clic fuera de él
+window.onclick = function(event) {
+    if (!event.target.matches('.icon-perfil') && !event.target.matches('.dropdown-perfil-content') && !event.target.matches('.dropdown-perfil')) {
+        var dropdowns = document.getElementsByClassName("dropdown-perfil-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+}
+
+
+
 
 // CARRUSEL PRINCIPAL
 
