@@ -64,6 +64,7 @@
                     <a href="../vista/galeria/galeria.php">Galeria</a>
                 <a href="../vista/ofertas/ofertas.php">Ofertas</a>
                 <a href="../vista/Contacto/contacto.php">Contacto</a>
+                <a class="icon-perfil" href="../vista/Clientes/perfil.php"><i class="fa-regular fa-user fa-2xl"></i></a>
             </div>
         
 
@@ -418,7 +419,7 @@
             <p>Lorem ipsum dolor sit ame</p>
         </div>
         <div id="privacy-banner" class="privacy-banner">
-            <p>Este sitio web utiliza cookies para garantizar que obtengas la mejor experiencia. Consulta nuestra <a href="#">Política de Privacidad</a>.</p>
+            <p>Este sitio web utiliza cookies para garantizar que obtengas la mejor experiencia. Consulta nuestra <a href="../vista/politicas/privacidad.php">Política de Privacidad</a>.</p>
             <button id="accept-btn">Aceptar</button>
         </div>
 
