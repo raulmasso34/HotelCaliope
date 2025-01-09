@@ -46,22 +46,49 @@ $db->closeConnection();
     <link rel="stylesheet" href="../../static/css/InicioSesion.css"> <!-- Añade el enlace a tu archivo CSS -->
 </head>
 <body>
-        <div class="profile-container">
-            <h1 class="profile-title">Perfil de <?php echo htmlspecialchars($profile['Nom']) . " " . htmlspecialchars($profile['Cognom']); ?></h1>
-            
-            <div class="profile-info">
-                <p><strong>Nombre de usuario:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['Usuari']); ?></span></p>
-                <p><strong>DNI:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['DNI']); ?></span></p>
-                <p><strong>Email:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['CorreuElectronic']); ?></span></p>
-                <p><strong>Teléfono:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['Telefon']); ?></span></p>
-                <p><strong>Ciudad:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['Ciudad']); ?></span></p>
-                <p><strong>Código Postal:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['CodigoPostal']); ?></span></p>
-            </div>
-
-            <!-- Enlace para editar el perfil -->
-            <div class="edit-profile">
-                <a href="editarPerfil.php" class="edit-link">Editar perfil</a>
-            </div>
+    <div class="profile-container">
+        <h1 class="profile-title">Perfil de <?php echo htmlspecialchars($profile['Nom']) . " " . htmlspecialchars($profile['Cognom']); ?></h1>
+        
+        <div class="profile-info">
+            <p><strong>Nombre de usuario:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['Usuari']); ?></span></p>
+            <p><strong>DNI:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['DNI']); ?></span></p>
+            <p><strong>Email:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['CorreuElectronic']); ?></span></p>
+            <p><strong>Teléfono:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['Telefon']); ?></span></p>
+            <p><strong>Ciudad:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['Ciudad']); ?></span></p>
+            <p><strong>Código Postal:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['CodigoPostal']); ?></span></p>
         </div>
+
+        <!-- Mostrar las reservas -->
+        <div class="reservas-info">
+        <h2>Reservas:</h2>
+            <?php
+            if (isset($reservations) && !empty($reservations)) {
+                echo "<table>";
+                echo "<tr><th>Actividad</th><th>Habitación</th><th>Hotel</th><th>Tarifa</th><th>Precio Total</th></tr>";
+
+                foreach ($reservations as $reservation) {
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($reservation['Id_Actividad']) . "</td>";
+                    echo "<td>" . htmlspecialchars($reservation['Id_Habitacion']) . "</td>";
+                    echo "<td>" . htmlspecialchars($reservation['Id_Hotel']) . "</td>";
+                    echo "<td>" . htmlspecialchars($reservation['Precio_Habitacion']) . "</td>";
+                    echo "<td>" . htmlspecialchars($reservation['Precio_Total']) . "</td>";
+                    echo "</tr>";
+                }
+                echo "</table>";
+            } else {
+                echo "<p>No tienes reservas.</p>";
+            }
+            ?>
+        </div>
+
+        <!-- Enlace para editar el perfil -->
+        <div class="edit-profile">
+            <a href="editProfile.php" class="edit-link">Editar perfil</a>
+        </div>
+        <div class="perfil-salir"> <a href="">Volver a la pantalla principal</a></div>
+    </div>
+</div>
+
 </body>
 </html>

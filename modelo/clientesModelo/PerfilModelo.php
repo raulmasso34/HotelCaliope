@@ -25,5 +25,27 @@ class PerfilModel {
         }
         return null;  // Si hay algún error con la consulta
     }
+
+
+
+
+    // Método para obtener las reservas del cliente por su ID
+    public function getReservations($clientId) {
+        $sql = "SELECT * FROM Reservas WHERE Id_Cliente = ?";
+        if ($stmt = $this->conn->prepare($sql)) {
+            $stmt->bind_param("i", $clientId);  // Usamos 'i' para indicar que el parámetro es un entero
+            $stmt->execute();  // Ejecutar la consulta
+            $result = $stmt->get_result();
+
+            // Si se encontraron reservas
+            $reservations = [];
+            while ($reservation = $result->fetch_assoc()) {
+                $reservations[] = $reservation;  // Añadir la reserva al array
+            }
+            return $reservations;  // Retornar el array de reservas
+        }
+        return null;  // Si hubo un error con la consulta
+    }
+
 }
 ?>
