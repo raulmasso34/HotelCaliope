@@ -17,6 +17,8 @@ require_once __DIR__ . '/../../modelo/clientesModelo/PerfilModelo.php';  // Incl
 $db = new Database();
 $conn = $db->getConnection();
 
+
+
 // Crear una instancia del modelo PerfilModel
 $perfilModel = new PerfilModel($conn);
 
@@ -44,22 +46,22 @@ $db->closeConnection();
     <link rel="stylesheet" href="../../static/css/InicioSesion.css"> <!-- Añade el enlace a tu archivo CSS -->
 </head>
 <body>
-    <div class="profile-container">
-        <h1 class="profile-title">Perfil de <?php echo htmlspecialchars($profile['Nom']) . " " . htmlspecialchars($profile['Cognom']); ?></h1>
-        
-        <div class="profile-info">
-            <p><strong>Nombre de usuario:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['Usuari']); ?></span></p>
-            <p><strong>DNI:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['DNI']); ?></span></p>
-            <p><strong>Email:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['CorreuElectronic']); ?></span></p>
-            <p><strong>Teléfono:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['Telefon']); ?></span></p>
-            <p><strong>Ciudad:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['Ciudad']); ?></span></p>
-            <p><strong>Código Postal:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['CodigoPostal']); ?></span></p>
-        </div>
+        <div class="profile-container">
+            <h1 class="profile-title">Perfil de <?php echo htmlspecialchars($profile['Nom']) . " " . htmlspecialchars($profile['Cognom']); ?></h1>
+            
+            <div class="profile-info">
+                <p><strong>Nombre de usuario:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['Usuari']); ?></span></p>
+                <p><strong>DNI:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['DNI']); ?></span></p>
+                <p><strong>Email:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['CorreuElectronic']); ?></span></p>
+                <p><strong>Teléfono:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['Telefon']); ?></span></p>
+                <p><strong>Ciudad:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['Ciudad']); ?></span></p>
+                <p><strong>Código Postal:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['CodigoPostal']); ?></span></p>
+            </div>
 
-        <!-- Enlace para editar el perfil -->
-        <div class="edit-profile">
-            <a href="editarPerfil.php" class="edit-link">Editar perfil</a>
+            <!-- Enlace para editar el perfil -->
+            <div class="edit-profile">
+                <a href="editarPerfil.php" class="edit-link">Editar perfil</a>
+            </div>
         </div>
-    </div>
 </body>
 </html>

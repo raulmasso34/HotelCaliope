@@ -21,6 +21,7 @@ class LoginController {
         $this->perfilModel = new PerfilModel($this->conn);  // Crear una instancia del modelo de perfil
     }
 
+    // Función de login
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $username = $_POST['Usuari'];  // Obtener el nombre de usuario del formulario
@@ -38,11 +39,13 @@ class LoginController {
                 exit;  // Asegúrate de que el flujo se detenga después de la redirección
             } else {
                 // Si las credenciales son incorrectas
-                echo "Usuario o contraseña incorrectos.";
+                header("Location: ../../vista/Clientes/login.php?error=Usuario o contraseña incorrectos");
+                exit;
             }
         }
     }
 
+    // Mostrar perfil
     public function showProfile() {
         // Verificar si el usuario ha iniciado sesión
         if (!isset($_SESSION['user_id'])) {
@@ -62,6 +65,7 @@ class LoginController {
             echo "No se pudo cargar el perfil.";
         }
     }
+
     // Método de logout
     public function logout() {
         // Eliminar las variables de sesión
@@ -81,5 +85,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     $controller = new LoginController();
     $controller->logout();  // Llamar al método de logout
 }
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $controller = new LoginController();
+    $controller->login();  // Llamar al método de login
+}
 ?>
-s

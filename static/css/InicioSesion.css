@@ -216,62 +216,155 @@ body {
 }
 
 
-/*-----------------PERFIL---------------------*/
+/*----------------- PERFIL ---------------------*/
 
 .profile-container {
     max-width: 900px;
     margin: 50px auto;
-    padding: 30px;
+    padding: 40px;
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra más suave para un toque de elegancia */
+    font-family: 'Helvetica Neue', sans-serif;
+    color: #333;
 }
 
 /* Título principal */
 .profile-title {
     text-align: center;
-    color: #333;
-    font-size: 2em;
+    color: #2c3e50;
+    font-size: 2.5em;
+    font-weight: 600;
     margin-bottom: 20px;
+    letter-spacing: 1px;
 }
 
 /* Información del perfil */
 .profile-info {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 /* Estilo para los párrafos de la información */
 .profile-info p {
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin: 10px 0;
+    font-size: 1.15em;
+    line-height: 1.8;
+    margin: 12px 0;
+    color: #7f8c8d;
 }
 
 /* Detalles de la información (como el nombre de usuario, email, etc.) */
 .profile-detail {
-    font-weight: bold;
-    color: #555;
+    font-weight: 600;
+    color: #34495e;  /* Color más oscuro para los detalles */
 }
 
-/* Enlace para editar el perfil */
+/* Sección de contacto e información importante */
+.profile-section {
+    margin-top: 30px;
+    padding: 25px;
+    background-color: #f4f4f4; /* Fondo suave para separar secciones */
+    border-radius: 10px;
+}
+
+.profile-section h4 {
+    font-size: 1.3em;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+/* Estilo para los enlaces del perfil (como editar, etc.) */
 .edit-profile {
     text-align: center;
+    margin-top: 40px;
 }
 
 .edit-link {
     display: inline-block;
     margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
+    padding: 15px 30px;
+    background-color: #2980b9;  /* Azul sofisticado */
     color: #fff;
     font-size: 1.1em;
     text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .edit-link:hover {
-    background-color: #0056b3;
+    background-color: #3498db;
+    transform: translateY(-2px);  /* Efecto sutil de elevación */
+}
+
+.edit-link:active {
+    transform: translateY(0);
+}
+
+/* Estilos para los botones de acciones */
+.profile-actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.profile-actions button {
+    padding: 12px 24px;
+    margin: 5px;
+    background-color: #27ae60; /* Verde sutil, adecuado para un ambiente relajante */
+    color: white;
+    border: none;
+    font-size: 1.1em;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.profile-actions button:hover {
+    background-color: #2ecc71;
+}
+
+.profile-actions button:focus {
+    outline: none;
+}
+
+/* Estilo para la foto de perfil */
+.profile-photo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.profile-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+.profile-photo-container p {
+    color: #7f8c8d;
+    font-size: 1.1em;
+    margin-top: 10px;
+}
+
+/* Detalles del perfil del cliente */
+.profile-detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.profile-detail-row div {
+    width: 48%;
+}
+
+/* Separador entre los detalles */
+.separator {
+    height: 1px;
+    background-color: #ecf0f1;
+    margin: 20px 0;
 }
 
 /* Estilo para dispositivos móviles (opcional) */

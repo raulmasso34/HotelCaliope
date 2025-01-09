@@ -2,8 +2,8 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -33,18 +33,16 @@ error_reporting(E_ALL);
             <button class="login-btn" type="submit">Iniciar sesión</button>
         </form>
 
-    
-    </form>
-        <div class="register-link">
-            <p>¿No tienes cuenta? <a href="registre.php">Regístrate aquí</a></p>
-        </div>
-
         <!-- Mostrar mensaje de error si existe -->
         <?php if (isset($_GET['error'])): ?>
             <div class="error-message">
                 <?php echo htmlspecialchars($_GET['error']); ?>
             </div>
         <?php endif; ?>
+        
+        <div class="register-link">
+            <p>¿No tienes cuenta? <a href="registre.php">Regístrate aquí</a></p>
+        </div>
     </div>
 </body>
 </html>

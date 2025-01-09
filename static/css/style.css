@@ -220,6 +220,7 @@ h4 {
     margin-top: 8px;
     opacity: 0;
     transition: opacity 0.2s ease-in-out;  /* Transición suave de aparición */
+    z-index: 1;  /* Asegura que el menú quede por encima de otros elementos */
 }
 
 /* Estilos para los enlaces del menú */
@@ -229,6 +230,7 @@ h4 {
     text-decoration: none;
     display: block;
     font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Línea divisoria entre los elementos */
 }
 
 /* Cambiar el color de fondo de los enlaces cuando el ratón pasa sobre ellos */
@@ -243,6 +245,23 @@ h4 {
     display: block;
     opacity: 1;
 }
+
+/* Opcional: Añadir una animación al ícono de usuario */
+.icon-perfil {
+    font-size: 24px;  /* Tamaño del icono */
+    color: #fff;
+    transition: transform 0.3s ease;  /* Transición suave para el icono */
+}
+
+
+
+/* Estilo para el enlace de "Cerrar sesión" al pasar el ratón */
+.dropdown-perfil-content .logout-link:hover {
+    background-color: rgba(255, 0, 0, 0.2); /* Fondo rojo suave para el cierre de sesión */
+    color: red;
+    border-radius: 5px;
+}
+
 
 
 

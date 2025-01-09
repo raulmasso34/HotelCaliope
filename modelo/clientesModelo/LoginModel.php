@@ -1,10 +1,5 @@
 <?php
-require_once __DIR__ . '/../../config/Database.php';  // Asegúrate de que la ruta sea correcta
-session_start();  // Iniciar sesión para acceder a la sesión
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+require_once __DIR__ . '/../../config/Database.php';  // Incluir la configuración de la base de datos
 
 class LoginModel {
     private $conn;
@@ -13,6 +8,7 @@ class LoginModel {
         $this->conn = $db;  // Establecer la conexión a la base de datos
     }
 
+    // Función de autenticación
     public function authenticate($username, $password, $dni) {
         // Validar que los campos no estén vacíos
         if (empty($username) || empty($password) || empty($dni)) {
