@@ -48,12 +48,12 @@
         
             <section class="main-up">
                 <div class="main-up-left">
-                   <a href="../index.php"><img src="../../static/img/logo.png" alt="Imagen secundaria"></a> 
+                    <img src="../../static/img/logo.png" alt="Imagen secundaria">
                 </div>
                 <div class="main-up-right">
                     <div class="links">
-                        <a href="#">Sobre nosotros</a>
-                        <a href="#">Servicios</a>
+                        <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                        
                         <div class="dropdown">
                             <a href="#" class="dropbtn">Hoteles</a>
                             <div class="dropdown-content">
@@ -71,7 +71,9 @@
                                 </div>
                             </div>
                         </div>
-                    <a href="../ofertas/ofertas.php">Ofertas</a>
+                        <a href="../vista/galeria/galeria.php">Galeria</a>
+                    <a href="../vista/ofertas/ofertas.php">Ofertas</a>
+                    <a href="../vista/Contacto/contacto.php">Contacto</a>
                 </div>
             
 

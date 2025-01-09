@@ -1,40 +1,101 @@
-body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
+/* Estilos globales */
+* {
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
-  color: #333;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
 }
 
-header {
-  background-color: #1e90ff;
-  color: white;
-  padding: 15px 20px;
-  text-align: center;
-}
-
-h1 {
-  margin: 0;
-  font-size: 24px;
-}
-
-main {
+/* Fondo y colores principales */
+body {
+ 
+  background-color: #0A1D3C; /* Azul oscuro elegante */
+  color: #F0F8FF; /* Blanco suave */
+  line-height: 1.6;
   padding: 20px;
-  background: white;
-  margin: 20px;
+  margin: 0 20%;
+}
+
+/* Contenedor principal */
+.container {
+  margin: 30%;
+
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: #1C3A5B; /* Azul más fuerte */
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-section {
-  margin-bottom: 20px;
-}
-
-footer {
+/* Título de la Política de Privacidad */
+h1 {
   text-align: center;
-  padding: 10px;
-  background: #1e90ff;
-  color: white;
-  font-size: 14px;
+  font-size: 3rem;
+  
+  color: #FFD700; /* Dorado */
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+/* Sección de texto */
+h2 {
+  font-size: 2rem;
+  color: #FFD700;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+p {
+  font-size: 1.1rem;
+  color: #D1E1F2; /* Azul claro suave */
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+/* Estilo de los enlaces */
+a {
+  color: #FFD700; /* Dorado */
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #F5C000; /* Dorado más brillante al pasar el ratón */
+}
+
+/* Estilo de los botones */
+button {
+  background-color: #FFD700; /* Dorado */
+  color: #0A1D3C;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 30px;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #F5C000;
+}
+
+/* Estilo de la lista de secciones */
+ul {
+  list-style: none;
+  padding-left: 20px;
+}
+
+ul li {
+  margin-bottom: 10px;
+}
+
+ul li::before {
+  content: '•';
+  color: #FFD700; /* Dorado */
+  font-size: 1.5rem;
+  margin-right: 10px;
 }
