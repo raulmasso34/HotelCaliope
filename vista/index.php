@@ -101,7 +101,8 @@
                 <div class="form-reservas">
                 
                 <div class="formulario">
-                    <form action="../controller/reserva/reservaController.php" method="post" class="reservation-form">
+                    <form action="../controller/reserva/reservaController.php" method="get" class="reservation-form">
+                        <!-- Selección de Lugar -->                  <form action="../controller/reserva/reservaController.php" method="get" class="reservation-form">
                         <!-- Selección de Lugar -->
                         <div class="form-group">
                             <label for="location">Lugar</label>
@@ -134,7 +135,7 @@
                             <label for="habitacion_id">Habitación</label>
                             <select id="habitacion_id" name="habitacion_id" required>
                                 <?php foreach ($habitacionesDisponibles as $habitacion): ?>
-                                    <option value="<?php echo $habitacion['Id_Habitacion']; ?>">
+                                    <option value="<?php echo $habitacion['Id_Habitaciones']; ?>">
                                         Habitación <?php echo htmlspecialchars($habitacion['Numero_Habitacion']) . " - " . htmlspecialchars($habitacion['Tipo']) . " - Capacidad: " . $habitacion['Capacidad'] . " - Precio: $" . $habitacion['Precio']; ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -145,6 +146,49 @@
                         <button type="submit">Reservar</button>
                     </form>
                 </div>
+                        <div class="form-group">
+                            <label for="location">Lugar</label>
+                            <select id="location" name="location" required>
+                                <option value="1">España</option>
+                                <option value="2">EEUU</option>
+                            </select>
+                        </div>
+
+                        <!-- Fecha de Check-in -->
+                        <div class="form-group">
+                            <label for="checkin">Fecha de Check-in</label>
+                            <input type="date" id="checkin" name="checkin" required>
+                        </div>
+
+                        <!-- Fecha de Check-out -->
+                        <div class="form-group">
+                            <label for="checkout">Fecha de Check-out</label>
+                            <input type="date" id="checkout" name="checkout" required>
+                        </div>
+
+                        <!-- Número de Personas -->
+                        <div class="form-group">
+                            <label for="guests">Número de Personas</label>
+                            <input type="number" id="guests" name="guests" min="1" required>
+                        </div>
+
+                        <!-- Selección de Habitación -->
+                        <div class="form-group">
+                            <label for="habitacion_id">Habitación</label>
+                            <select id="habitacion_id" name="habitacion_id" required>
+                                <?php foreach ($habitacionesDisponibles as $habitacion): ?>
+                                    <option value="<?php echo $habitacion['Id_Habitaciones']; ?>">
+                                        Habitación <?php echo htmlspecialchars($habitacion['Numero_Habitacion']) . " - " . htmlspecialchars($habitacion['Tipo']) . " - Capacidad: " . $habitacion['Capacidad'] . " - Precio: $" . $habitacion['Precio']; ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <!-- Botón de Reservar -->
+                        <button type="submit">Reservar</button>
+                    </form>
+                </div>
+
             </div>
     
           

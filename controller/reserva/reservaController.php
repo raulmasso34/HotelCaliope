@@ -1,25 +1,46 @@
 <?php
-require_once __DIR__ . '/../../config/Database.php';  // Asegúrate de que la ruta sea correcta
-require_once __DIR__ . '/../../modelo/reservas/ReservaModel.php';  // Asegúrate de que la ruta sea correcta
+require_once __DIR__ . '/../../config/Database.php'; 
+require_once __DIR__ . '/../../modelo/habitaciones/habitacionModel.php';  
+require_once __DIR__ . '/../../modelo/hotel/hotelModel.php';  
 
-session_start();
-$db = new Database();
-$conn = $db->getConnection();
-$reservaModel = new ReservaModel($conn);
+class ReservaController {
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $clienteId = $_SESSION['user_id'];
-    $habitacionId = $_POST['habitacion_id'];  // Puedes generar dinámicamente desde las disponibles
-    $checkin = $_POST['checkin'];
-    $checkout = $_POST['checkout'];
-    $precioTotal = $_POST['precio_total'];  // Calculado según lógica previa
+    private $habitacionModel;
+    private $hotelModel;
 
-    if ($reservaModel->crearReserva($clienteId, $habitacionId, $checkin, $checkout, $precioTotal)) {
-        echo "Reserva realizada con éxito.";
-    } else {
-        echo "Error al realizar la reserva.";
+    public function __construct() {
+        $db = new Database();
+        $this->habitacionModel = new HabitacionModel($db->getConnection());
+        $this->hotelModel = new HotelModel($db->getConnection());
+    }
+
+    // Función para realizar la reserva
+    public function reservar() {
+        // Recibir los datos del formulario
+        $location = isset($_GET['location']) ? $_GET['location'] : null;
+        $checkin = isset($_GET['checkin']) ? $_GET['checkin'] : null;
+        $checkout = isset($_GET['checkout']) ? $_GET['checkout'] : null;
+        $guests = isset($_GET['guests']) ? $_GET['guests'] : null;
+        $habitacion_id = isset($_GET['habitacion_id']) ? $_GET['habitacion_id'] : null;
+
+        // Validar los datos recibidos (aquí puedes agregar más validaciones si es necesario)
+        if ($location && $checkin && $checkout && $guests && $habitacion_id) {
+
+            // Obtener las habitaciones disponibles con los parámetros
+            $habitacionesDisponibles = $this->habitacionModel->obtenerHabitacionesDisponiblesFiltradas($location, $checkin, $checkout, $guests, $habitacion_id);
+
+            // Obtener los hoteles disponibles según la ubicación
+            $hotelesDisponibles = $this->hotelModel->obtenerHotelesPorUbicacion($location);
+
+            // Pasar los datos a la vista de resultados
+            include __DIR__ . '/../../vista/resultados/resultados.php';  // Redirigir a la vista con los resultados
+
+        } else {
+            echo "Faltan datos para realizar la reserva.";
+        }
     }
 }
 
-$conn->close();
-?>
+// Crear el controlador y ejecutar el método de reserva
+$reservaController = new ReservaController();
+$reservaController->reservar();
