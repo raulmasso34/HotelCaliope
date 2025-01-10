@@ -100,94 +100,66 @@
             <div class="center-down">
                 <div class="form-reservas">
                 
-                <div class="formulario">
-                    <form action="../controller/reserva/reservaController.php" method="get" class="reservation-form">
-                        <!-- Selección de Lugar -->                  <form action="../controller/reserva/reservaController.php" method="get" class="reservation-form">
-                        <!-- Selección de Lugar -->
-                        <div class="form-group">
-                            <label for="location">Lugar</label>
-                            <select id="location" name="location" required>
-                                <option value="1">España</option>
-                                <option value="2">EEUU</option>
-                            </select>
-                        </div>
+                    <div class="formulario">
+                        <form action="../controller/reserva/reservaController.php" method="post" class="reservation-form">
+                            <!-- Selección de Lugar (País) -->
+                            <div class="form-group">
+                                <label for="location">Lugar</label>
+                                <select id="location" name="location" required>
+                                    <?php
+                                    if (!empty($paises)) {
+                                        foreach ($paises as $pais) {
+                                            echo "<option value='" . $pais['Id_Pais'] . "'>" . htmlspecialchars($pais['Pais']) . "</option>";
+                                        }
+                                    } else {
+                                        echo "<option>No hay países disponibles</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
 
-                        <!-- Fecha de Check-in -->
-                        <div class="form-group">
-                            <label for="checkin">Fecha de Check-in</label>
-                            <input type="date" id="checkin" name="checkin" required>
-                        </div>
+                            <!-- Fecha de Check-in -->
+                            <div class="form-group">
+                                <label for="checkin">Fecha de Check-in</label>
+                                <input type="date" id="checkin" name="checkin" required>
+                            </div>
 
-                        <!-- Fecha de Check-out -->
-                        <div class="form-group">
-                            <label for="checkout">Fecha de Check-out</label>
-                            <input type="date" id="checkout" name="checkout" required>
-                        </div>
+                            <!-- Fecha de Check-out -->
+                            <div class="form-group">
+                                <label for="checkout">Fecha de Check-out</label>
+                                <input type="date" id="checkout" name="checkout" required>
+                            </div>
 
-                        <!-- Número de Personas -->
-                        <div class="form-group">
-                            <label for="guests">Número de Personas</label>
-                            <input type="number" id="guests" name="guests" min="1" required>
-                        </div>
+                            <!-- Número de Personas -->
+                            <div class="form-group">
+                                <label for="guests">Número de Personas</label>
+                                <input type="number" id="guests" name="guests" min="1" required>
+                            </div>
 
-                        <!-- Selección de Habitación -->
-                        <div class="form-group">
-                            <label for="habitacion_id">Habitación</label>
-                            <select id="habitacion_id" name="habitacion_id" required>
-                                <?php foreach ($habitacionesDisponibles as $habitacion): ?>
-                                    <option value="<?php echo $habitacion['Id_Habitaciones']; ?>">
-                                        Habitación <?php echo htmlspecialchars($habitacion['Numero_Habitacion']) . " - " . htmlspecialchars($habitacion['Tipo']) . " - Capacidad: " . $habitacion['Capacidad'] . " - Precio: $" . $habitacion['Precio']; ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+                            <!-- Selección de Habitación -->
+                            <div class="form-group">
+                                <label for="habitacion_id">Habitación</label>
+                                <select id="habitacion_id" name="habitacion_id" required>
+                                    <?php
+                                    if (!empty($habitacionesDisponibles)) {
+                                        foreach ($habitacionesDisponibles as $habitacion) {
+                                            echo "<option value='" . $habitacion['Id_Habitaciones'] . "'>" .
+                                                "Habitación " . htmlspecialchars($habitacion['Numero_Habitacion']) . " - " .
+                                                htmlspecialchars($habitacion['Tipo']) . " - Precio: $" . htmlspecialchars($habitacion['Precio']) . "</option>";
+                                        }
+                                    } else {
+                                        echo "<option>No hay habitaciones disponibles</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
 
-                        <!-- Botón de Reservar -->
-                        <button type="submit">Reservar</button>
-                    </form>
-                </div>
-                        <div class="form-group">
-                            <label for="location">Lugar</label>
-                            <select id="location" name="location" required>
-                                <option value="1">España</option>
-                                <option value="2">EEUU</option>
-                            </select>
-                        </div>
+                            <!-- Botón de Reservar -->
+                            <button type="submit">Reservar</button>
+                        </form>
+                    </div>
 
-                        <!-- Fecha de Check-in -->
-                        <div class="form-group">
-                            <label for="checkin">Fecha de Check-in</label>
-                            <input type="date" id="checkin" name="checkin" required>
-                        </div>
 
-                        <!-- Fecha de Check-out -->
-                        <div class="form-group">
-                            <label for="checkout">Fecha de Check-out</label>
-                            <input type="date" id="checkout" name="checkout" required>
-                        </div>
-
-                        <!-- Número de Personas -->
-                        <div class="form-group">
-                            <label for="guests">Número de Personas</label>
-                            <input type="number" id="guests" name="guests" min="1" required>
-                        </div>
-
-                        <!-- Selección de Habitación -->
-                        <div class="form-group">
-                            <label for="habitacion_id">Habitación</label>
-                            <select id="habitacion_id" name="habitacion_id" required>
-                                <?php foreach ($habitacionesDisponibles as $habitacion): ?>
-                                    <option value="<?php echo $habitacion['Id_Habitaciones']; ?>">
-                                        Habitación <?php echo htmlspecialchars($habitacion['Numero_Habitacion']) . " - " . htmlspecialchars($habitacion['Tipo']) . " - Capacidad: " . $habitacion['Capacidad'] . " - Precio: $" . $habitacion['Precio']; ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
-                        <!-- Botón de Reservar -->
-                        <button type="submit">Reservar</button>
-                    </form>
-                </div>
 
             </div>
     

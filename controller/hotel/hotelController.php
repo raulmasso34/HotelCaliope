@@ -14,7 +14,7 @@ class HotelController {
     // Función para obtener los hoteles filtrados por ubicación
     public function obtenerHoteles($location) {
         // Obtener los hoteles disponibles por ubicación
-        return $this->hotelModel->obtenerHotelesPorUbicacion($location);
+        return $this->hotelModel->obtenerHotelesPorPais($location);
     }
 }
 ?>
