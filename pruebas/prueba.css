@@ -1,0 +1,75 @@
+body {
+    font-family: 'Garamond', serif;
+    background: linear-gradient(to right, #ece9e6, #ffffff);
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #7b1113;
+}
+
+.reservation-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    flex: 1;
+}
+
+label {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+input[type="text"], input[type="date"], input[type="number"] {
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    background: #7b1113;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #591010;
+}
+
+@media (max-width: 768px) {
+    .reservation-form {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-group {
+        margin-right: 0;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+}
