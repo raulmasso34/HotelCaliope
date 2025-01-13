@@ -1,28 +1,25 @@
 <?php
+require_once __DIR__ . '/../../config/Database.php';
+
 class ReservaModel {
     private $conn;
 
-    public function __construct($db) {
-        $this->conn = $db;
+    public function __construct() {
+        $database = new Database();
+        $this->conn = $database->getConnection();
     }
 
-    // Insertar una nueva reserva en la base de datos
-    public function insertarReserva($id_cliente, $id_actividad, $id_habitacion, $id_hotel, $id_tarifa, $precio_habitacion, $precio_total, $checkin, $checkout, $numero_personas) {
-        // Preparamos la consulta de inserción
-        $sql = "INSERT INTO Reservas (Id_Cliente, Id_Actividad, Id_Habitacion, Id_Hotel, Id_Tarifa, Precio_Habitacion, Precio_Total, Checkin, Checkout, Numero_Personas) 
+    public function crearReserva($clienteId, $paisId, $habitacionId, $checkin, $checkout, $guests, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal) {
+        $checkin = date('Y-m-d', strtotime($checkin));
+        $checkout = date('Y-m-d', strtotime($checkout));
+
+        $sql = "INSERT INTO reservas (Id_Cliente, Id_Pais, Id_Habitacion, Fecha_Checkin, Fecha_Checkout, Numero_Personas, Precio_Habitacion, Precio_Actividad, Precio_Tarifa, Precio_Total) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("iiissiiii", $clienteId, $paisId, $habitacionId, $checkin, $checkout, $guests, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal);
 
-        // Vinculamos los parámetros
-        $stmt->bind_param("iiiiidssii", $id_cliente, $id_actividad, $id_habitacion, $id_hotel, $id_tarifa, $precio_habitacion, $precio_total, $checkin, $checkout, $numero_personas);
-
-        // Ejecutamos la consulta y verificamos si fue exitosa
-        if ($stmt->execute()) {
-            return $this->conn->insert_id;  // Devuelve el ID de la reserva insertada
-        } else {
-            return false;
-        }
+        return $stmt->execute();
     }
 }
 ?>

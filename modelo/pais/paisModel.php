@@ -1,28 +1,23 @@
 <?php
+require_once __DIR__ . '/../../config/Database.php';
 
-require_once __DIR__ . '/../../config/Database.php'; 
-
-class PaisModel {
+class PaisesModel {
     private $conn;
 
-    public function __construct($db) {
-        $this->conn = $db;
+    public function __construct() {
+        $database = new Database();
+        $this->conn = $database->getConnection();
     }
 
-    // Obtener todos los países
+    // Obtener todos los países de la base de datos
     public function obtenerPaises() {
-        $sql = "SELECT * FROM Pais";
-        $result = $this->conn->query($sql);
+        $sql = "SELECT * FROM Pais";  // Asumimos que tienes una tabla 'paises' con al menos 'Id_Pais' y 'Nombre'
 
-        // Depuración: Verificar si la consulta devuelve resultados
-        if ($result) {
-            $paises = $result->fetch_all(MYSQLI_ASSOC);
-            return $paises;
-        } else {
-            // Si la consulta falla, muestra el error
-            die("Error en la consulta SQL: " . $this->conn->error);
-        }
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC); // Devuelve un array asociativo
     }
 }
-
 ?>
