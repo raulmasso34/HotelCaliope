@@ -13,7 +13,7 @@ class ReservaModel {
         $checkin = date('Y-m-d', strtotime($checkin));
         $checkout = date('Y-m-d', strtotime($checkout));
 
-        $sql = "INSERT INTO reservas (Id_Cliente, Id_Pais, Id_Habitacion, Fecha_Checkin, Fecha_Checkout, Numero_Personas, Precio_Habitacion, Precio_Actividad, Precio_Tarifa, Precio_Total) 
+        $sql = "INSERT INTO Reservas (Id_Cliente, Id_Pais, Id_Habitacion, Fecha_Checkin, Fecha_Checkout, Numero_Personas, Precio_Habitacion, Precio_Actividad, Precio_Tarifa, Precio_Total) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($sql);

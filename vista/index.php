@@ -5,8 +5,14 @@ require_once __DIR__ . '/../controller/reserva/reservaController.php';
 // Crear una instancia del controlador
 $reservaController = new ReservaController();
 
-// Obtener los países desde la base de datos
+// Obtener los países desde la base de datos (ya lo tienes hecho)
 $paises = $reservaController->obtenerPaises();
+
+// Obtener las habitaciones disponibles si ya se ha seleccionado un país
+$habitaciones = [];
+if (isset($_POST['location'])) {
+    $habitaciones = $reservaController->obtenerHabitaciones($_POST['location']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -133,14 +139,24 @@ $paises = $reservaController->obtenerPaises();
                             <label for="guests">Número de Personas</label>
                             <input type="number" id="guests" name="guests" min="1" required>
                         </div>
-                        <div class="form-group">
-                            <label for="habitacion_id">Habitación</label>
-                            <select id="habitacion_id" name="habitacion_id" required>
-                                <?php foreach ($habitaciones as $habitacion): ?>
-                                    <option value="<?php echo $habitacion['Id_Habitaciones']; ?>"><?php echo $habitacion['Tipo']; ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+                        <?php if (!empty($habitaciones)): ?>
+                            <div class="form-group">
+                                <label for="habitacion_id">Habitación</label>
+                                <select id="habitacion_id" name="habitacion_id" required>
+                                    <option value="">Selecciona una habitación</option>
+                                    <?php
+                                    // Mostrar habitaciones disponibles
+                                    foreach ($habitaciones as $habitacion) {
+                                        echo "<option value='" . $habitacion['Id_Habitaciones'] . "'>" .
+                                            "Habitación " . htmlspecialchars($habitacion['Numero_Habitacion']) . " - " .
+                                            htmlspecialchars($habitacion['Tipo']) . " - Precio: $" . htmlspecialchars($habitacion['Precio']) . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        <?php else: ?>
+                            <p>No hay habitaciones disponibles en este país.</p>
+                        <?php endif; ?>
                         <button type="submit">Reservar</button>
                     </form>
                     </div>
