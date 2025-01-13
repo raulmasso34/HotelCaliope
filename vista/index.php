@@ -5,14 +5,8 @@ require_once __DIR__ . '/../controller/reserva/reservaController.php';
 // Crear una instancia del controlador
 $reservaController = new ReservaController();
 
-// Obtener los países desde la base de datos (ya lo tienes hecho)
+// Obtener los países desde la base de datos
 $paises = $reservaController->obtenerPaises();
-
-// Obtener las habitaciones disponibles si ya se ha seleccionado un país
-$habitaciones = [];
-if (isset($_POST['location'])) {
-    $habitaciones = $reservaController->obtenerHabitaciones($_POST['location']);
-}
 ?>
 
 <!DOCTYPE html>
@@ -115,10 +109,10 @@ if (isset($_POST['location'])) {
                 </div>
             </div>
             <div class="center-down">
-                <div class="form-reservas">
-                
-                    <div class="formulario">
+            <div class="form-reservas">
+                <div class="reservation-form">
                     <form action="../controller/reserva/reservaController.php" method="post">
+                        <!-- Campo de selección de lugar -->
                         <div class="form-group">
                             <label for="location">Lugar</label>
                             <select id="location" name="location" required>
@@ -127,44 +121,32 @@ if (isset($_POST['location'])) {
                                 <?php endforeach; ?>
                             </select>
                         </div>
+
+                        <!-- Campo de fecha de check-in -->
                         <div class="form-group">
                             <label for="checkin">Fecha de Check-in</label>
                             <input type="date" id="checkin" name="checkin" required>
                         </div>
+
+                        <!-- Campo de fecha de check-out -->
                         <div class="form-group">
                             <label for="checkout">Fecha de Check-out</label>
                             <input type="date" id="checkout" name="checkout" required>
                         </div>
+
+                        <!-- Campo de número de personas -->
                         <div class="form-group">
                             <label for="guests">Número de Personas</label>
                             <input type="number" id="guests" name="guests" min="1" required>
                         </div>
-                        <?php if (!empty($habitaciones)): ?>
-                            <div class="form-group">
-                                <label for="habitacion_id">Habitación</label>
-                                <select id="habitacion_id" name="habitacion_id" required>
-                                    <option value="">Selecciona una habitación</option>
-                                    <?php
-                                    // Mostrar habitaciones disponibles
-                                    foreach ($habitaciones as $habitacion) {
-                                        echo "<option value='" . $habitacion['Id_Habitaciones'] . "'>" .
-                                            "Habitación " . htmlspecialchars($habitacion['Numero_Habitacion']) . " - " .
-                                            htmlspecialchars($habitacion['Tipo']) . " - Precio: $" . htmlspecialchars($habitacion['Precio']) . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        <?php else: ?>
-                            <p>No hay habitaciones disponibles en este país.</p>
-                        <?php endif; ?>
+
+
+                        <!-- Botón para enviar el formulario -->
                         <button type="submit">Reservar</button>
                     </form>
-                    </div>
-
-
-
+                </div>
             </div>
-    
+
           
         </section>
     </header>
