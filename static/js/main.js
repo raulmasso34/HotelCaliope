@@ -62,7 +62,6 @@ window.onclick = function(event) {
 
 
 
-
 // CARRUSEL PRINCIPAL
 
 let currentIndex = 0;

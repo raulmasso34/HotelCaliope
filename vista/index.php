@@ -109,41 +109,42 @@ $paises = $reservaController->obtenerPaises();
                 </div>
             </div>
             <div class="center-down">
-            <div class="form-reservas">
-                <div class="reservation-form">
-                    <form action="../controller/reserva/reservaController.php" method="post">
-                        <!-- Campo de selección de lugar -->
-                        <div class="form-group">
-                            <label for="location">Lugar</label>
-                            <select id="location" name="location" required>
-                                <?php foreach ($paises as $pais): ?>
-                                    <option value="<?php echo $pais['Id_Pais']; ?>"><?php echo $pais['Pais']; ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+                <div class="form-reservas">
+                            <div class="reservation-form">
+                                <form id="reservationForm" action="../vista/reservas.php" method="post">
+                                    <!-- Campo de selección de lugar -->
+                                    <div class="form-group">
+                                        <label for="location">Lugar</label>
+                                        <select id="location" name="location" required>
+                                            <?php foreach ($paises as $pais): ?>
+                                                <option value="<?php echo $pais['Id_Pais']; ?>"><?php echo $pais['Pais']; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
 
-                        <!-- Campo de fecha de check-in -->
-                        <div class="form-group">
-                            <label for="checkin">Fecha de Check-in</label>
-                            <input type="date" id="checkin" name="checkin" required>
-                        </div>
+                                    <!-- Campo de fecha de check-in -->
+                                    <div class="form-group">
+                                        <label for="checkin">Fecha de Check-in</label>
+                                        <input type="date" id="checkin" name="checkin" required>
+                                    </div>
 
-                        <!-- Campo de fecha de check-out -->
-                        <div class="form-group">
-                            <label for="checkout">Fecha de Check-out</label>
-                            <input type="date" id="checkout" name="checkout" required>
-                        </div>
+                                    <!-- Campo de fecha de check-out -->
+                                    <div class="form-group">
+                                        <label for="checkout">Fecha de Check-out</label>
+                                        <input type="date" id="checkout" name="checkout" required>
+                                    </div>
 
-                        <!-- Campo de número de personas -->
-                        <div class="form-group">
-                            <label for="guests">Número de Personas</label>
-                            <input type="number" id="guests" name="guests" min="1" required>
-                        </div>
+                                    <!-- Campo de número de personas -->
+                                    <div class="form-group">
+                                        <label for="guests">Número de Personas</label>
+                                        <input type="number" id="guests" name="guests" min="1" required>
+                                    </div>
 
-
-                        <!-- Botón para enviar el formulario -->
-                        <button type="submit">Reservar</button>
-                    </form>
+                                    <!-- Botón para enviar el formulario -->
+                                    <button type="submit" id="submitBtn">Reservar</button>
+                                </form>
+                            </div>
+                    
                 </div>
             </div>
 

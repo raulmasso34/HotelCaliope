@@ -2,6 +2,9 @@
 require_once __DIR__ . '/../../modelo/reservas/ReservaModel.php';
 require_once __DIR__ . '/../../modelo/habitaciones/habitacionModel.php';
 require_once __DIR__ . '/../../modelo/pais/paisModel.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 class ReservaController {
 
@@ -12,21 +15,7 @@ class ReservaController {
     }
 
     // Método para obtener las habitaciones disponibles para un país específico
-    public function obtenerHabitaciones($paisId) {
-        $habitacionesModel = new HabitacionesModel();
-    
-        // Depurar el paisId recibido
-        echo "Pais seleccionado: " . $paisId . "<br>";
-        
-        // Llamada al modelo para obtener las habitaciones disponibles
-        $habitaciones = $habitacionesModel->obtenerHabitacionesDisponibles($paisId);
-        
-        // Depuración: Verificar qué datos están siendo devueltos por el modelo
-        echo "Habitaciones obtenidas:<br>";
-        var_dump($habitaciones);  // Verifica que las habitaciones son correctas
-        
-        return $habitaciones;  // Devuelve las habitaciones disponibles para el país
-    }
+   
     
 
     // Método para crear una reserva
@@ -54,7 +43,7 @@ class ReservaController {
 
         // Redirigir a la página correspondiente dependiendo del resultado
         if ($result) {
-            header("Location: ../vista/confirmacion_reserva.php");
+            header("Location: ../../vista/reservas.php");
             exit();
         } else {
             header("Location: ../vista/error_reserva.php");
@@ -62,4 +51,6 @@ class ReservaController {
         }
     }
 }
+
+
 ?>
