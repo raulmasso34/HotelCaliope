@@ -2,28 +2,30 @@
 session_start();
 
 // Limpiar las variables de sesión si el usuario ha vuelto al formulario
-if (isset($_GET['reset']) && $_GET['reset'] == 'true') {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['reset']) && $_GET['reset'] == 'true') {
     unset($_SESSION['location']);
     unset($_SESSION['checkin']);
     unset($_SESSION['checkout']);
-    unset($_SESSION['Numero_Personas']);  // Cambiado de 'guests' a 'numero_personas'
+    unset($_SESSION['guests']);  // Cambié 'guests' a 'numero_personas'
+    unset($_SESSION['habitacionId']);  // También puedes borrar cualquier otro dato relevante
 }
 
-// Incluir el controlador
-require_once __DIR__ . '/../controller/reserva/reservaController.php';
-
-// Si el formulario ha sido enviado
+// Al enviar el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Guardar los datos del formulario en la sesión
     $_SESSION['location'] = $_POST['location'];
     $_SESSION['checkin'] = $_POST['checkin'];
     $_SESSION['checkout'] = $_POST['checkout'];
-    $_SESSION['numero_personas'] = $_POST['numero_personas'];  // Cambiado de 'guests' a 'numero_personas'
+    $_SESSION['guests'] = $_POST['numero_personas'];  // Guardamos el valor de 'numero_personas' en la sesión
+    $_SESSION['habitacionId'] = $_POST['habitacionId'];  // Si también quieres almacenar el Id de la habitación seleccionada
 
     // Redirigir a la página de reservas para mostrar los detalles del hotel
     header('Location: ../vista/reservas.php');
     exit();
 }
+
+// Incluir el controlador
+require_once __DIR__ . '/../controller/reserva/reservaController.php';
 
 // Crear una instancia del controlador
 $reservaController = new ReservaController();
