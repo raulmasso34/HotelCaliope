@@ -1,3 +1,4 @@
+/* Estilo básico para la página */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -21,8 +22,10 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    justify-content: center;
 }
 
+/* Estilo para cada tarjeta de hotel */
 .hotel {
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -31,13 +34,17 @@ h1 {
     max-width: 600px;
     border-radius: 8px;
     overflow: hidden;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Añadido el efecto de sombra */
+    text-decoration: none; /* Eliminamos el subrayado del enlace */
 }
 
+/* Efecto cuando el usuario pasa el ratón sobre la tarjeta */
 .hotel:hover {
-    transform: translateY(-10px);
+    transform: translateY(-10px); /* Eleva la tarjeta */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al pasar el ratón */
 }
 
+/* Estilo para la imagen del hotel */
 .hotel-image img {
     width: 200px;
     height: 200px;
@@ -45,6 +52,7 @@ h1 {
     border-right: 2px solid #ddd;
 }
 
+/* Información del hotel (nombre, ciudad, estrellas, etc.) */
 .hotel-info {
     padding: 20px;
     flex: 1;
@@ -52,7 +60,8 @@ h1 {
 
 .hotel-info h2 {
     margin-top: 0;
-    color: #007BFF;
+    color: #007BFF; /* Color azul para el nombre */
+    font-size: 1.6em;
 }
 
 .hotel-info p {
@@ -62,4 +71,10 @@ h1 {
 
 .hotel-info strong {
     color: #333;
+}
+
+/* Estilo de los botones de los hoteles al pasar el ratón */
+a:hover .hotel {
+    cursor: pointer; /* Cambia el cursor a mano */
+    opacity: 0.9; /* Ligera opacidad para el efecto */
 }

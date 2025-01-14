@@ -1,6 +1,29 @@
 <?php
 session_start();
+
+// Limpiar las variables de sesión si el usuario ha vuelto al formulario
+if (isset($_GET['reset']) && $_GET['reset'] == 'true') {
+    unset($_SESSION['location']);
+    unset($_SESSION['checkin']);
+    unset($_SESSION['checkout']);
+    unset($_SESSION['Numero_Personas']);  // Cambiado de 'guests' a 'numero_personas'
+}
+
+// Incluir el controlador
 require_once __DIR__ . '/../controller/reserva/reservaController.php';
+
+// Si el formulario ha sido enviado
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Guardar los datos del formulario en la sesión
+    $_SESSION['location'] = $_POST['location'];
+    $_SESSION['checkin'] = $_POST['checkin'];
+    $_SESSION['checkout'] = $_POST['checkout'];
+    $_SESSION['numero_personas'] = $_POST['numero_personas'];  // Cambiado de 'guests' a 'numero_personas'
+
+    // Redirigir a la página de reservas para mostrar los detalles del hotel
+    header('Location: ../vista/reservas.php');
+    exit();
+}
 
 // Crear una instancia del controlador
 $reservaController = new ReservaController();
@@ -8,7 +31,6 @@ $reservaController = new ReservaController();
 // Obtener los países desde la base de datos
 $paises = $reservaController->obtenerPaises();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -136,9 +158,10 @@ $paises = $reservaController->obtenerPaises();
 
                                     <!-- Campo de número de personas -->
                                     <div class="form-group">
-                                        <label for="guests">Número de Personas</label>
-                                        <input type="number" id="guests" name="guests" min="1" required>
+                                        <label for="numero_personas">Número de Personas</label>
+                                        <input type="number" id="numero_personas" name="numero_personas" min="1" value="<?php echo isset($_SESSION['numero_personas']) ? $_SESSION['numero_personas'] : ''; ?>" required>
                                     </div>
+
 
                                     <!-- Botón para enviar el formulario -->
                                     <button type="submit" id="submitBtn">Reservar</button>

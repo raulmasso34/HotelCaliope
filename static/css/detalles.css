@@ -1,0 +1,143 @@
+/* Estilo básico para la página de detalles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: #007BFF;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Estilo para los detalles del hotel */
+.hotel-details {
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 50px;
+    padding: 20px;
+}
+
+.hotel-details .hotel-image {
+    max-height: 300px;
+    overflow: hidden;
+}
+
+.hotel-details img {
+    width: 100%;
+    object-fit: cover;
+    height: 300px; /* Ajusta la altura de la imagen */
+    border-radius: 8px;
+}
+
+.hotel-info {
+    padding: 20px;
+}
+
+.hotel-info p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #555;
+}
+
+.hotel-info h2 {
+    color: #007BFF;
+    font-size: 2em;
+    margin-top: 0;
+}
+
+/* Estilo para las habitaciones */
+.habitaciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.habitacion {
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+}
+
+.habitacion:hover {
+    transform: translateY(-10px); /* Efecto al pasar el ratón */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.habitacion img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.habitacion-info {
+    padding: 20px;
+}
+
+.habitacion-info h3 {
+    margin-top: 0;
+    color: #007BFF;
+    font-size: 1.5em;
+}
+
+.habitacion-info p {
+    color: #555;
+    line-height: 1.6;
+}
+
+.habitacion-info strong {
+    color: #333;
+}
+
+/* Estilo para la imagen de la habitación */
+.habitacion-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Botón de volver */
+.button-back {
+    display: inline-block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.2em;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.button-back:hover {
+    background-color: #0056b3;
+    cursor: pointer;
+}
