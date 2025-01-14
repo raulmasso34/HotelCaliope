@@ -1,67 +1,55 @@
 <?php
-require_once __DIR__ . '/../../modelo/reservas/ReservaModel.php';
-require_once __DIR__ . '/../../modelo/habitaciones/habitacionModel.php';
-require_once __DIR__ . '/../../modelo/pais/paisModel.php';
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
+// Cambié la ruta para que sea la correcta según la ubicación real del archivo
+require_once __DIR__ . '/../../modelo/reservas/ReservaModel.php'; 
+ // Ajusta la ruta si es necesario
+ ini_set('display_errors', 1);
+ ini_set('display_startup_errors', 1);
+ error_reporting(E_ALL);
+ 
 class ReservaController {
 
-    // Método para obtener todos los países
-    public function obtenerPaises() {
-        $paisesModel = new PaisesModel();
-        return $paisesModel->obtenerPaises();  // Devuelve todos los países
-    }
+    private $reservaModel;
 
+    public function __construct() {
+        // Inicializa el modelo de reservas
+        $this->reservaModel = new ReservaModel();
+    }
+    public function obtenerPaises() {
+        $paises = $this->reservaModel->obtenerPaises(); // Llamar al modelo para obtener los países
+        return $paises;
+    }
     // Método para crear una reserva
     public function crearReserva() {
-        // Verificar que los datos del formulario están disponibles
-        if (isset($_POST['habitacionId'], $_POST['clienteId'], $_POST['paisId'], $_POST['checkin'], $_POST['checkout'], $_POST['guests'])) {
-            // Obtener los datos del formulario
-            $clienteId = $_POST['clienteId'];
-            $paisId = $_POST['paisId'];
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Recuperar los datos del formulario
             $habitacionId = $_POST['habitacionId'];
+            $clienteId = $_POST['clienteId'];
+            $hotelId = $_POST['hotelId'];
             $checkin = $_POST['checkin'];
             $checkout = $_POST['checkout'];
             $guests = $_POST['guests'];
+            $paisId = $_POST['paisId'];
 
-            // Instanciar los modelos
-            $reservaModel = new ReservaModel();
-            $habitacionesModel = new HabitacionesModel();
+            // Calcular el precio total (Este es un ejemplo, dependiendo de tu lógica de negocio)
+            $habitacion = $this->reservaModel->obtenerHabitacionPorId($habitacionId);
+            $precioTotal = $habitacion['Precio'] * $guests;
 
-            // Obtener los detalles de la habitación seleccionada
-            $habitacion = $habitacionesModel->obtenerHabitacionPorId($habitacionId);
-            $precioHabitacion = $habitacion['Precio'];  // Asegúrate de que esta columna existe en tu base de datos
+            // Crear la reserva
+            $reservaId = $this->reservaModel->agregarReserva($clienteId, $habitacionId, $hotelId, $checkin, $checkout, $guests, $precioTotal);
 
-            // Para los precios de actividades y tarifas, deberías obtenerlos de las tablas correspondientes
-            // Si tienes actividades o tarifas asociadas, obtén los precios aquí, como en el ejemplo anterior
-            $precioActividad = 50; // Este valor debe venir de la base de datos, si es necesario
-            $precioTarifa = 30;    // Este valor también debe venir de la base de datos, si es necesario
-
-            // Calcular el precio total
-            $precioTotal = $precioHabitacion + ($precioActividad * $guests) + ($precioTarifa * $guests); // Asegúrate de aplicar el cálculo correcto para el número de huéspedes
-
-            // Crear la reserva llamando al método del modelo
-            $result = $reservaModel->crearReserva(
-                $clienteId, $paisId, $habitacionId, $checkin, $checkout, $guests, 
-                $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal
-            );
-
-            // Redirigir a la página correspondiente dependiendo del resultado
-            if ($result) {
-                header("Location: ../../vista/reservas.php");
-                exit();
+            if ($reservaId) {
+                // Redirigir a la página de confirmación o donde se requiera
+                header("Location: ../../vista/confirmacion_reserva.php?id=" . $reservaId);
+                exit;
             } else {
-                // Si hay un error, redirigir a una página de error
-                header("Location: ../../vista/error_reserva.php");
-                exit();
+                // Mostrar un mensaje de error si no se puede crear la reserva
+                echo "Hubo un error al crear la reserva.";
             }
-        } else {
-            // Si falta algún dato, redirigir a una página de error
-            header("Location: ../../vista/error_reserva.php");
-            exit();
         }
     }
 }
+
+// Instanciamos el controlador y ejecutamos la acción
+$reservaController = new ReservaController();
+$reservaController->crearReserva();
 ?>

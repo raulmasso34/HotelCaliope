@@ -1,5 +1,8 @@
 <?php
 session_start();  // Asegúrate de que la sesión esté iniciada
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 // Verificar si hay datos de reserva en la sesión
 if (isset($_SESSION['location'], $_SESSION['checkin'], $_SESSION['checkout'], $_SESSION['guests'], $_SESSION['habitacionId'])) {
@@ -8,9 +11,7 @@ if (isset($_SESSION['location'], $_SESSION['checkin'], $_SESSION['checkout'], $_
     echo "Fecha de Check-in: " . $_SESSION['checkin'] . "<br>";
     echo "Fecha de Check-out: " . $_SESSION['checkout'] . "<br>";
     echo "Número de personas: " . $_SESSION['guests'] . "<br>";
-    // Mostrar la habitación seleccionada
-    echo "Habitación seleccionada: " . $_SESSION['habitacionId'] . "<br>";
-} 
+}
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../vista/Clientes/login.php');
@@ -67,7 +68,6 @@ $database->closeConnection();
     <p><strong>Fecha de Check-in:</strong> <?php echo htmlspecialchars($_SESSION['checkin']); ?></p>
     <p><strong>Fecha de Check-out:</strong> <?php echo htmlspecialchars($_SESSION['checkout']); ?></p>
     <p><strong>Número de personas:</strong> <?php echo htmlspecialchars($_SESSION['guests']); ?></p>
-    <p><strong>Habitación seleccionada:</strong> <?php echo htmlspecialchars($_SESSION['habitacionId']); ?></p>
 
     <h2>Habitaciones Disponibles en el Hotel</h2>
     <div class="habitaciones">
@@ -88,7 +88,7 @@ $database->closeConnection();
                         <p><strong>Precio:</strong> <?php echo htmlspecialchars($habitacion['Precio']); ?> €</p>
                         <p><strong>Descripción:</strong> <?php echo htmlspecialchars($habitacion['Descripcion'] ?? 'Descripción no disponible'); ?></p>
 
-                        <form action="../controlador/reservas/ReservaController.php" method="POST">
+                        <form action="/HotelCaliope/HotelCaliope-2/controller/reserva/reservaController.php" method="POST">
                             <input type="hidden" name="habitacionId" value="<?php echo $habitacion['Id_Habitaciones']; ?>">
                             <input type="hidden" name="clienteId" value="<?php echo $_SESSION['user_id']; ?>">
                             <input type="hidden" name="hotelId" value="<?php echo $hotelId; ?>">
@@ -107,4 +107,3 @@ $database->closeConnection();
     </div>
 </body>
 </html>
-

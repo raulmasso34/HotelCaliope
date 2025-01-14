@@ -6,8 +6,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['reset']) && $_GET['rese
     unset($_SESSION['location']);
     unset($_SESSION['checkin']);
     unset($_SESSION['checkout']);
-    unset($_SESSION['guests']);  // Cambié 'guests' a 'numero_personas'
-    unset($_SESSION['habitacionId']);  // También puedes borrar cualquier otro dato relevante
+    unset($_SESSION['guests']);
+    unset($_SESSION['habitacionId']);
 }
 
 // Al enviar el formulario
@@ -16,8 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['location'] = $_POST['location'];
     $_SESSION['checkin'] = $_POST['checkin'];
     $_SESSION['checkout'] = $_POST['checkout'];
-    $_SESSION['guests'] = $_POST['numero_personas'];  // Guardamos el valor de 'numero_personas' en la sesión
-    $_SESSION['habitacionId'] = $_POST['habitacionId'];  // Si también quieres almacenar el Id de la habitación seleccionada
+    $_SESSION['guests'] = $_POST['numero_personas'];
+    $_SESSION['habitacionId'] = $_POST['habitacionId'];
 
     // Redirigir a la página de reservas para mostrar los detalles del hotel
     header('Location: ../vista/reservas.php');
@@ -32,7 +32,9 @@ $reservaController = new ReservaController();
 
 // Obtener los países desde la base de datos
 $paises = $reservaController->obtenerPaises();
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
