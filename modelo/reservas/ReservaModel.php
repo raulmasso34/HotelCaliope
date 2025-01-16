@@ -33,23 +33,51 @@ class ReservaModel {
     }
 
     public function insertarReserva($hotelId, $clienteId, $checkin, $checkout, $guests, $paisId, $actividadId, $habitacionId = null, $tarifaId = null, $precioHabitacion = null, $precioActividad = null, $precioTarifa = null, $precioTotal = null) {
-        // Asegúrate de que las fechas se pasen en formato correcto (YYYY-MM-DD)
-        $query = "INSERT INTO Reservas (Id_Hotel, Id_Cliente, Checkin, Checkout, Numero_Personas, Id_Pais, Id_Actividad, Id_Habitacion, Id_Tarifa, Precio_Habitacion, Precio_Actividad, Precio_Tarifa, Precio_Total) 
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
-        $stmt = $this->conn->prepare($query);
-        if (!$stmt) {
-            die('Error en la preparación de la consulta: ' . $this->conn->error);
-        }
-
-        // Usa "s" para las fechas (strings) y "i" para los enteros
-        $stmt->bind_param("iisssiiiddd", $hotelId, $clienteId, $checkin, $checkout, $guests, $paisId, $actividadId, $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal);
-        
-        if ($stmt->execute()) {
-            return $this->conn->insert_id;
-        } else {
-            echo "Error al insertar la reserva: " . $stmt->error;
+        try {
+            // Prepare la consulta SQL
+            $query = "INSERT INTO Reservas (Id_Hotel, Id_Cliente, Checkin, Checkout, Numero_Personas, Id_Pais, Id_Actividad, Id_Habitacion, Id_Tarifa, Precio_Habitacion, Precio_Actividad, Precio_Tarifa, Precio_Total) 
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            
+            // Preparar el statement
+            $stmt = $this->conn->prepare($query);
+            
+            if (!$stmt) {
+                throw new Exception('Error en la preparación de la consulta: ' . $this->conn->error);
+            }
+    
+            // Vincular los parámetros
+            $stmt->bind_param("iisssiiiddd", $hotelId, $clienteId, $checkin, $checkout, $guests, $paisId, $actividadId, $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal);
+    
+            // Ejecutar la consulta
+            if ($stmt->execute()) {
+                $stmt->close();
+                return $this->conn->insert_id;  // Devuelve el ID de la nueva reserva
+            } else {
+                throw new Exception('Error al ejecutar la consulta: ' . $stmt->error);
+            }
+        } catch (Exception $e) {
+            error_log("Error al insertar la reserva: " . $e->getMessage());
             return null;
+        }
+    }
+    public function actualizarReservaConPago($reservaId, $idPago) {
+        try {
+            $query = "UPDATE Reservas 
+                      SET Estado = 'Pagado', Id_Pago = ? 
+                      WHERE Id_Reserva = ?";
+            
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("ii", $idPago, $reservaId);
+            
+            if ($stmt->execute()) {
+                $stmt->close();
+                return true;
+            } else {
+                throw new Exception('Error al actualizar la reserva con el pago: ' . $stmt->error);
+            }
+        } catch (Exception $e) {
+            error_log("Error al actualizar la reserva con el pago: " . $e->getMessage());
+            return false;
         }
     }
 
