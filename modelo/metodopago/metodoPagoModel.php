@@ -19,19 +19,29 @@ class MetodoPagoModel {
         $stmt->execute();
 
         $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);  // Devuelve todos los métodos de pago disponibles como un array
+        if ($result->num_rows > 0) {
+            return $result->fetch_all(MYSQLI_ASSOC);  // Devuelve todos los métodos de pago disponibles como un array
+        } else {
+            return [];  // Devuelve un array vacío si no hay resultados
+        }
     }
 
+    // Obtener los métodos de pago asociados a un cliente (suponiendo que tienes una relación en tu DB)
     public function obtenerMetodosPagoPorCliente($clienteId) {
-        $sql = "SELECT * FROM MetodoPago WHERE Id_Cliente = ?";
+        // Si tienes una tabla intermedia entre cliente y métodos de pago, ajusta aquí.
+        $sql = "SELECT * FROM MetodoPago WHERE Id_Cliente = ? AND Activo = 1"; // Solo activos
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $clienteId);  // Parametro cliente
         $stmt->execute();
         
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);  // Devuelve los métodos de pago asociados al cliente
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            return $result->fetch_all(MYSQLI_ASSOC);  // Devuelve los métodos de pago asociados al cliente
+        } else {
+            return [];  // Devuelve un array vacío si no hay resultados
+        }
     }
     
-
     // Obtener un método de pago por su ID
     public function obtenerMetodoPagoPorId($metodoPagoId) {
         $sql = "SELECT * FROM MetodoPago WHERE Id_MetodoPago = ?";
@@ -43,7 +53,7 @@ class MetodoPagoModel {
         return $result->fetch_assoc();  // Devuelve los detalles del método de pago
     }
 
-    // Agregar un nuevo método de pago (Si es necesario)
+    // Agregar un nuevo método de pago
     public function agregarMetodoPago($tipo, $descripcion, $activo) {
         $sql = "INSERT INTO MetodoPago (Tipo, Descripcion, Activo) VALUES (?, ?, ?)";
         $stmt = $this->conn->prepare($sql);

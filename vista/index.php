@@ -28,11 +28,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once __DIR__ . '/../controller/reserva/reservaController.php';
 
 // Crear una instancia del controlador
-$reservaController = new ReservaController();
+$controller = new ReservaController();
 
-// Obtener los países desde la base de datos
-$paises = $reservaController->obtenerPaises();
+// Verificar si la instancia se ha creado correctamente
+if ($controller !== null) {
+    // Obtener los países a través del controlador
+    $paises = $controller->obtenerPaises();
 
+    // Verificar si se han obtenido los países y hacer algo con ellos
+    
+} 
 ?>
 
 <!DOCTYPE html>

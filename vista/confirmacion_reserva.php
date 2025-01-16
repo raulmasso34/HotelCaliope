@@ -1,8 +1,13 @@
 <?php
-session_start();
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// Conexión a la base de datos
+include '../config/Database.php';
+$database = new Database();
+$db = $database->getConnection();
+
+// Obtener los métodos de pago desde la base de datos
+$queryMetodosPago = $db->prepare("SELECT * FROM MetodoPago WHERE Activo = 1");
+$queryMetodosPago->execute();
+$metodosPago = $queryMetodosPago->get_result()->fetch_all(MYSQLI_ASSOC);
 
 // Verificar que los datos necesarios fueron enviados desde detalles.php
 if (isset($_POST['habitacionId'], $_POST['clienteId'], $_POST['hotelId'], $_POST['checkin'], $_POST['checkout'], $_POST['guests'], $_POST['paisId'])) {
@@ -25,11 +30,6 @@ if (isset($_POST['habitacionId'], $_POST['clienteId'], $_POST['hotelId'], $_POST
     echo "Faltan algunos datos necesarios. Por favor, vuelve a la página de detalles.";
     exit;
 }
-
-// Conexión a la base de datos
-include '../config/Database.php';
-$database = new Database();
-$db = $database->getConnection();
 
 // Obtener detalles del hotel
 $queryHotel = $db->prepare("SELECT * FROM Hotel WHERE Id_Hotel = ?");
@@ -58,59 +58,64 @@ echo "<p><strong>Habitación seleccionada:</strong> " . htmlspecialchars($habita
 echo "<p><strong>Precio:</strong> " . htmlspecialchars($habitacionDetails['Precio']) . " €</p>";
 echo "<p><strong>Descripción:</strong> " . htmlspecialchars($habitacionDetails['Descripcion'] ?? 'Descripción no disponible') . "</p>";
 
-// Mostrar la selección de actividad y el formulario para el pago
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Confirmación de Reserva</title>
     <link rel="stylesheet" href="./../static/css/confirmacion_reserva.css">
 </head>
 <body>
-<form action="../controller/reserva/reservaController.php" method="POST">
-    <!-- Detalles de la reserva -->
-    <input type="hidden" name="habitacionId" value="<?php echo $habitacionId; ?>">
-    <input type="hidden" name="clienteId" value="<?php echo $clienteId; ?>">
-    <input type="hidden" name="hotelId" value="<?php echo $hotelId; ?>">
-    <input type="hidden" name="checkin" value="<?php echo $checkin; ?>">
-    <input type="hidden" name="checkout" value="<?php echo $checkout; ?>">
-    <input type="hidden" name="guests" value="<?php echo $guests; ?>">
-    <input type="hidden" name="paisId" value="<?php echo $paisId; ?>">
+    <form action="../vista/pagos.php" method="POST">
+        <!-- Detalles de la reserva -->
+        <input type="hidden" name="habitacionId" value="<?php echo $habitacionId; ?>">
+        <input type="hidden" name="clienteId" value="<?php echo $clienteId; ?>">
+        <input type="hidden" name="hotelId" value="<?php echo $hotelId; ?>">
+        <input type="hidden" name="checkin" value="<?php echo $checkin; ?>">
+        <input type="hidden" name="checkout" value="<?php echo $checkout; ?>">
+        <input type="hidden" name="guests" value="<?php echo $guests; ?>">
+        <input type="hidden" name="paisId" value="<?php echo $paisId; ?>">
 
-   <!-- Selección de actividad (opcional) -->
-   <label for="actividad">Selecciona una actividad (opcional):</label>
-    <select name="actividad" id="actividad">
-        <option value="">Ninguna actividad</option> <!-- Opción sin actividad -->
-        <?php 
-        // Verificar si hay actividades disponibles
-        if (!empty($actividades)): ?>
-            <?php foreach ($actividades as $actividad): ?>
-                <!-- Verificar si el campo 'Nombre' existe y no es nulo -->
-                <option value="<?php echo htmlspecialchars($actividad['Id_Actividades']); ?>">
+        <!-- Selección de actividad (opcional) -->
+        <label for="actividadId">Selecciona una actividad (opcional):</label>
+        <select name="actividadId" id="actividadId">
+            <option value="">Ninguna actividad</option>
+            <?php 
+            if (!empty($actividades)):
+                foreach ($actividades as $actividad):
+            ?>
+                <option value="<?php echo $actividad['Id_Actividades']; ?>">
                     <?php echo htmlspecialchars($actividad['Nombre'] ?: 'Sin nombre disponible'); ?>
                 </option>
+            <?php 
+                endforeach;
+            endif;
+            ?>
+        </select>
 
-            <?php endforeach; ?>
-        <?php else: ?>
-            <!-- Mostrar mensaje si no hay actividades disponibles -->
-            <option value="">No hay actividades disponibles</option>
-        <?php endif; ?>
-    </select>
-    <!-- Selección del método de pago -->
-    <label for="metodo_pago">Selecciona un método de pago:</label>
-    <select name="metodo_pago" id="metodo_pago" required>
-        <option value="tarjeta">Tarjeta de Crédito</option>
-        <option value="paypal">PayPal</option>
-        <!-- Agregar más métodos de pago si es necesario -->
-    </select>
+        <!-- Selección del método de pago desde la base de datos -->
+        <label for="metodo_pago">Selecciona un método de pago:</label>
+        <select name="metodo_pago" id="metodo_pago" required>
+            <?php
+            // Mostrar los métodos de pago obtenidos de la base de datos
+            if (!empty($metodosPago)):
+                foreach ($metodosPago as $metodo):
+            ?>
+                <option value="<?php echo $metodo['Id_MetodoPago']; ?>">
+                    <?php echo htmlspecialchars($metodo['Tipo']); ?>
+                </option>
+            <?php
+                endforeach;
+            else:
+            ?>
+                <option value="">No hay métodos de pago disponibles</option>
+            <?php endif; ?>
+        </select>
 
-    <button type="submit">Confirmar Reserva y Pagar</button>
-</form>
-
+        <button type="submit">Confirmar Reserva y Pagar</button>
+    </form>
 </body>
 </html>
-
-
