@@ -88,7 +88,7 @@ $database->closeConnection();
                         <p><strong>Precio:</strong> <?php echo htmlspecialchars($habitacion['Precio']); ?> €</p>
                         <p><strong>Descripción:</strong> <?php echo htmlspecialchars($habitacion['Descripcion'] ?? 'Descripción no disponible'); ?></p>
 
-                        <form action="/HotelCaliope/HotelCaliope-2/controller/reserva/reservaController.php" method="POST">
+                        <form action="../vista/confirmacion_reserva.php" method="POST">
                             <input type="hidden" name="habitacionId" value="<?php echo $habitacion['Id_Habitaciones']; ?>">
                             <input type="hidden" name="clienteId" value="<?php echo $_SESSION['user_id']; ?>">
                             <input type="hidden" name="hotelId" value="<?php echo $hotelId; ?>">
