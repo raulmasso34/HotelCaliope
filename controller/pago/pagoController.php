@@ -8,109 +8,79 @@ require_once __DIR__ . '/../../config/Database.php';
 
 session_start();
 
-// Verificar si los datos de la reserva están en la sesión
-if (!isset($_SESSION['Reservas'])) {
-    echo "Error: No se ha recibido la reserva. Intenta nuevamente.";
-    exit;
-}
-
-// Verificar si la clase PagoModel está cargada
-if (!class_exists('PagoModel')) {
-    echo "Error: No se pudo cargar la clase PagoModel.";
-    exit;
-}
-
-// Recuperar los datos de la reserva desde la sesión
-$reserva = $_SESSION['Reservas'];
-
-// Recuperar los datos de la reserva desde la sesión
-$reserva = $_SESSION['Reservas'];
-
-// Comprobar si cada campo está presente en la reserva y asignarlo
-$habitacionId = isset($reserva['habitacionId']) ? $reserva['habitacionId'] : null;
-$clienteId = isset($reserva['clienteId']) ? $reserva['clienteId'] : null;
-$hotelId = isset($reserva['hotelId']) ? $reserva['hotelId'] : null;
-$checkin = isset($reserva['checkin']) ? $reserva['checkin'] : null;
-$checkout = isset($reserva['checkout']) ? $reserva['checkout'] : null;
-$guests = isset($reserva['guests']) ? $reserva['guests'] : null;
-$paisId = isset($reserva['paisId']) ? $reserva['paisId'] : null;
-$actividadId = isset($reserva['actividadId']) ? $reserva['actividadId'] : null;
-$metodoPagoId = isset($reserva['metodo_pago']) ? $reserva['metodo_pago'] : null;
-
-// Asignar valores de los precios (puedes ajustarlos según los datos reales)
-$precioHabitacion = isset($reserva['precioHabitacion']) ? $reserva['precioHabitacion'] : 0;
-$precioActividad = isset($reserva['precioActividad']) ? $reserva['precioActividad'] : 0;
-$precioTarifa = isset($reserva['precioTarifa']) ? $reserva['precioTarifa'] : 0;
-
-// Calcular el precio total sumando los precios de la habitación, actividad y tarifa
-$precioTotal = $precioHabitacion + $precioActividad + $precioTarifa;
-
-// Asegurarse de que si el Id_Reserva no está en la sesión, se inserte
-if (!isset($_SESSION['Reservas']['Id_Reserva'])) {
-    // Si no existe el Id_Reserva, insertamos la reserva en la base de datos
-    $ReservaModel = new ReservaModel($db);
-    $reservaId = $ReservaModel->insertarReserva(
-        $hotelId, 
-        $clienteId, 
-        $checkin, 
-        $checkout, 
-        $guests, 
-        $paisId, 
-        $actividadId, 
-        $habitacionId, 
-        $tarifaId = null, // Si no se tiene valor para tarifaId, pasa null
-        $precioHabitacion,
-        $precioActividad,
-        $precioTarifa,
-        $precioTotal // Pasa el precio total calculado aquí
-    );
-    
-    if ($reservaId !== null) {
-        // Guardamos el Id_Reserva en la sesión
-        $_SESSION['Reservas']['Id_Reserva'] = $reservaId;
-    } else {
-        echo "Error al insertar la reserva.";
-        exit;
-    }
-} else {
-    // Si ya existe, usamos el Id_Reserva de la sesión
-    $reservaId = $_SESSION['Reservas']['Id_Reserva'];
-}
-
-// Establecer la conexión a la base de datos
-$database = new Database();
-$db = $database->getConnection();
-
-// Asegurarse de que si el Id_Reserva no está en la sesión, se inserte
-if (!isset($_SESSION['Reservas']['Id_Reserva'])) {
-    // Si no existe el Id_Reserva, insertamos la reserva en la base de datos
-    $ReservaModel = new ReservaModel($db);
-    $reservaId = $ReservaModel->insertarReserva($hotelId, $clienteId, $checkin, $checkout, $guests, $paisId, $actividadId);
-    
-    if ($reservaId !== null) {
-        // Guardamos el Id_Reserva en la sesión
-        $_SESSION['Reservas']['Id_Reserva'] = $reservaId;
-    } else {
-        echo "Error al insertar la reserva.";
-        exit;
-    }
-} else {
-    // Si ya existe, usamos el Id_Reserva de la sesión
-    $reservaId = $_SESSION['Reservas']['Id_Reserva'];
-}
-
-// Si la solicitud es POST, procesar el pago
+// Verificar si la solicitud es POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Recuperar los datos de la tarjeta desde el formulario
-    $numeroTarjeta = isset($_POST['numero_tarjeta']) ? $_POST['numero_tarjeta'] : '';
-    $cvv = isset($_POST['cvv']) ? $_POST['cvv'] : '';
-    $fechaExpiracion = isset($_POST['fecha_expiracion']) ? $_POST['fecha_expiracion'] : '';
+    // Verificar si los datos de la reserva están en la sesión
+    if (!isset($_SESSION['Reservas'])) {
+        echo "Error: No se ha recibido la reserva. Intenta nuevamente.";
+        exit;
+    }
+
+    // Recuperar los datos de la reserva desde la sesión
+    $reserva = $_SESSION['Reservas'];
+
+    // Comprobar si cada campo está presente en la reserva y asignarlo
+    $habitacionId = $reserva['habitacionId'] ?? null;
+    $clienteId = $reserva['clienteId'] ?? null;
+    $hotelId = $reserva['hotelId'] ?? null;
+    $checkin = $_POST['checkin'] ?? null;
+    $checkout = $_POST['checkout'] ?? null;
+    $guests = $reserva['guests'] ?? null;
+    $paisId = $reserva['paisId'] ?? null;
+    $actividadId = $reserva['actividadId'] ?? null;
+    $metodoPagoId = $reserva['metodo_pago'] ?? null;
+
+    // Depuración: Verifica si checkin está recibiendo correctamente
+    if (empty($checkin)) {
+        echo "Error: No se ha recibido la fecha de Checkin.";
+        exit;
+    }
+
+    // Establecer la conexión a la base de datos
+    $database = new Database();
+    $db = $database->getConnection();
+
+    // Asegurarse de que si el Id_Reserva no está en la sesión, se inserte
+    if (!isset($_SESSION['Reservas']['Id_Reserva'])) {
+        // Si no existe el Id_Reserva, insertamos la reserva en la base de datos
+        $ReservaModel = new ReservaModel($db);
+        $tarifaId = null; // O valor correspondiente
+        $precioHabitacion = 100; // Ejemplo, ajusta según tus necesidades
+        $precioActividad = 50; // Ejemplo, ajusta según tus necesidades
+        $precioTarifa = 20; // Ejemplo, ajusta según tus necesidades
+        $precioTotal = $precioHabitacion + $precioActividad + $precioTarifa;
+        $NumeroPersonas = $guests; // O el valor correspondiente
+
+        // Insertamos la reserva y obtenemos el ID de la reserva
+        $reservaId = $ReservaModel->insertarReserva($hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal, $NumeroPersonas);
+        
+        if ($reservaId !== null) {
+            // Guardamos el Id_Reserva en la sesión
+            $_SESSION['Reservas']['Id_Reserva'] = $reservaId;
+        } else {
+            echo "Error al insertar la reserva.";
+            exit;
+        }
+    } else {
+        // Si ya existe, usamos el Id_Reserva de la sesión
+        $reservaId = $_SESSION['Reservas']['Id_Reserva'];
+    }
+
+    // Procesar el pago
+    $numeroTarjeta = $_POST['numero_tarjeta'] ?? '';
+    $cvv = $_POST['cvv'] ?? '';
+    $fechaExpiracion = $_POST['fecha_expiracion'] ?? '';
 
     // Validación simple de los datos de la tarjeta
     if (empty($numeroTarjeta) || empty($cvv) || empty($fechaExpiracion)) {
         echo "Por favor, completa todos los campos de pago.";
         exit;
     }
+    if (empty($checkin) || !preg_match("/\d{4}-\d{2}-\d{2}/", $checkin)) {
+        echo "La fecha de check-in no es válida.";
+        exit;
+    }
+    
 
     // Aquí es donde se simula el procesamiento del pago (en un caso real, se integraría con una API de pago)
     $pagoExitoso = true; // Simulando que el pago fue exitoso
@@ -127,6 +97,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         echo "Error al procesar el pago.";
     }
-    
 }
 ?>

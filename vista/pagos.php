@@ -1,24 +1,28 @@
 <?php
 session_start();
+echo "<pre>";
+print_r($_POST);
+echo "</pre>";
 
-// Verificar si los datos de la reserva están en la sesión
-if (!isset($_SESSION['Reservas'])) {
-    echo "Error: No se ha recibido la reserva. Intenta nuevamente.";
+echo "<pre>";
+print_r($_SESSION['Reservas']);
+echo "</pre>";
+
+// Verificar si la reserva está en la sesión
+if (isset($_SESSION['Reservas'])) {
+    $reserva = $_SESSION['Reservas'];
+
+    // Recuperar los datos de la reserva
+    $habitacionId = $reserva['habitacionId'] ?? 'No disponible';
+    $clienteId = $reserva['clienteId'] ?? 'No disponible';
+    $hotelId = $reserva['hotelId'] ?? 'No disponible';
+    $checkin = $reserva['checkin'] ?? 'No disponible';
+    $checkout = $reserva['checkout'] ?? 'No disponible';
+    $guests = $reserva['guests'] ?? 'No disponible';
+} else {
+    echo "Error: No se ha recibido la reserva en la sesión.";
     exit;
 }
-
-// Recuperar los datos de la reserva desde la sesión
-$reserva = $_SESSION['Reservas'];
-
-$habitacionId = $reserva['habitacionId'];
-$clienteId = $reserva['clienteId'];
-$hotelId = $reserva['hotelId'];
-$checkin = $reserva['checkin'];
-$checkout = $reserva['checkout'];
-$guests = $reserva['guests'];
-$paisId = $reserva['paisId'];
-$actividadId = $reserva['actividadId'];
-$metodoPagoId = $reserva['metodo_pago'];
 ?>
 
 <!DOCTYPE html>
@@ -56,9 +60,6 @@ $metodoPagoId = $reserva['metodo_pago'];
         <input type="hidden" name="checkin" value="<?php echo htmlspecialchars($checkin); ?>">
         <input type="hidden" name="checkout" value="<?php echo htmlspecialchars($checkout); ?>">
         <input type="hidden" name="guests" value="<?php echo htmlspecialchars($guests); ?>">
-        <input type="hidden" name="paisId" value="<?php echo htmlspecialchars($paisId); ?>">
-        <input type="hidden" name="actividadId" value="<?php echo htmlspecialchars($actividadId); ?>">
-        <input type="hidden" name="metodo_pago" value="<?php echo htmlspecialchars($metodoPagoId); ?>">
 
         <button type="submit">Confirmar y Pagar</button>
     </form>

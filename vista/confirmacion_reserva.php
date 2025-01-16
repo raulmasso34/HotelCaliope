@@ -3,60 +3,67 @@
 include '../config/Database.php';
 $database = new Database();
 $db = $database->getConnection();
+session_start();
 
-// Obtener los métodos de pago desde la base de datos
+// Verificar si hay un usuario autenticado y obtener el ID de usuario
+$user_id = $_SESSION['user_id'] ?? null; // Asegúrate de que el ID del usuario esté en la sesión
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Recuperar los datos del formulario
+    $habitacionId = $_POST['habitacionId'] ?? null;
+    $clienteId = $user_id; // ID del usuario desde la sesión
+    $hotelId = $_POST['hotelId'] ?? null;
+    $checkin = $_POST['checkin'] ?? null;
+    $checkout = $_POST['checkout'] ?? null;
+    $guests = $_POST['guests'] ?? null;
+    $paisId = $_POST['paisId'] ?? null;
+    $actividadId = $_POST['actividadId'] ?? null;
+    $metodoPagoId = $_POST['metodo_pago'] ?? null;
+
+    // Guardar los datos de la reserva en la sesión
+    $_SESSION['Reservas'] = [
+        'habitacionId' => $habitacionId,
+        'clienteId' => $clienteId,
+        'hotelId' => $hotelId,
+        'checkin' => $checkin,
+        'checkout' => $checkout,
+        'guests' => $guests,
+        'paisId' => $paisId,
+        'actividadId' => $actividadId,
+        'metodo_pago' => $metodoPagoId
+    ];
+
+    // Verificar si se han guardado correctamente los datos
+    echo "<pre>";
+    print_r($_SESSION['Reservas']);
+    echo "</pre>";
+}
+
+// Obtener los métodos de pago disponibles
 $queryMetodosPago = $db->prepare("SELECT * FROM MetodoPago WHERE Activo = 1");
 $queryMetodosPago->execute();
 $metodosPago = $queryMetodosPago->get_result()->fetch_all(MYSQLI_ASSOC);
 
-// Verificar que los datos necesarios fueron enviados desde detalles.php
-if (isset($_POST['habitacionId'], $_POST['clienteId'], $_POST['hotelId'], $_POST['checkin'], $_POST['checkout'], $_POST['guests'], $_POST['paisId'])) {
-    // Obtener los detalles de la reserva
-    $habitacionId = $_POST['habitacionId'];
-    $clienteId = $_POST['clienteId'];
-    $hotelId = $_POST['hotelId'];
-    $checkin = $_POST['checkin'];
-    $checkout = $_POST['checkout'];
-    $guests = $_POST['guests'];
-    $paisId = $_POST['paisId'];
-
-    // Mostrar los detalles de la reserva
-    echo "<h1>Confirmar Reserva</h1>";
-    echo "<p><strong>Ubicación seleccionada:</strong> " . htmlspecialchars($paisId) . "</p>";
-    echo "<p><strong>Fecha de Check-in:</strong> " . htmlspecialchars($checkin) . "</p>";
-    echo "<p><strong>Fecha de Check-out:</strong> " . htmlspecialchars($checkout) . "</p>";
-    echo "<p><strong>Número de personas:</strong> " . htmlspecialchars($guests) . "</p>";
-} else {
-    echo "Faltan algunos datos necesarios. Por favor, vuelve a la página de detalles.";
-    exit;
-}
-
-// Obtener detalles del hotel
+// Obtener los detalles del hotel
 $queryHotel = $db->prepare("SELECT * FROM Hotel WHERE Id_Hotel = ?");
-$queryHotel->bind_param("i", $hotelId);
+$queryHotel->bind_param("i", $_POST['hotelId']);
 $queryHotel->execute();
 $hotelDetails = $queryHotel->get_result()->fetch_assoc();
 
-// Obtener detalles de la habitación seleccionada
+// Obtener los detalles de la habitación seleccionada
 $queryHabitacion = $db->prepare("SELECT * FROM Habitaciones WHERE Id_Habitaciones = ?");
-$queryHabitacion->bind_param("i", $habitacionId);
+$queryHabitacion->bind_param("i", $_POST['habitacionId']);
 $queryHabitacion->execute();
 $habitacionDetails = $queryHabitacion->get_result()->fetch_assoc();
 
-// Obtener actividades disponibles
+// Obtener las actividades disponibles en el hotel
 $queryActividades = $db->prepare("SELECT * FROM Actividades WHERE Id_Hotel = ?");
-$queryActividades->bind_param("i", $hotelId);
+$queryActividades->bind_param("i", $_POST['hotelId']);
 $queryActividades->execute();
 $actividades = $queryActividades->get_result()->fetch_all(MYSQLI_ASSOC);
 
-// Cerrar la conexión
+// Cerrar la conexión a la base de datos
 $database->closeConnection();
-
-// Mostrar los detalles del hotel y la habitación seleccionada
-echo "<h2>Detalles del Hotel: " . htmlspecialchars($hotelDetails['Nombre']) . "</h2>";
-echo "<p><strong>Habitación seleccionada:</strong> " . htmlspecialchars($habitacionDetails['Tipo']) . "</p>";
-echo "<p><strong>Precio:</strong> " . htmlspecialchars($habitacionDetails['Precio']) . " €</p>";
-echo "<p><strong>Descripción:</strong> " . htmlspecialchars($habitacionDetails['Descripcion'] ?? 'Descripción no disponible') . "</p>";
 
 ?>
 
@@ -69,6 +76,19 @@ echo "<p><strong>Descripción:</strong> " . htmlspecialchars($habitacionDetails[
     <link rel="stylesheet" href="./../static/css/confirmacion_reserva.css">
 </head>
 <body>
+    <h1>Confirmar Reserva</h1>
+
+    <p><strong>Ubicación seleccionada:</strong> <?php echo htmlspecialchars($paisId); ?></p>
+    <p><strong>Fecha de Check-in:</strong> <?php echo htmlspecialchars($checkin); ?></p>
+    <p><strong>Fecha de Check-out:</strong> <?php echo htmlspecialchars($checkout); ?></p>
+    <p><strong>Número de personas:</strong> <?php echo htmlspecialchars($guests); ?></p>
+
+    <h2>Detalles del Hotel: <?php echo htmlspecialchars($hotelDetails['Nombre']); ?></h2>
+    <p><strong>Habitación seleccionada:</strong> <?php echo htmlspecialchars($habitacionDetails['Tipo']); ?></p>
+    <p><strong>Precio:</strong> <?php echo htmlspecialchars($habitacionDetails['Precio']); ?> €</p>
+    <p><strong>Descripción:</strong> <?php echo htmlspecialchars($habitacionDetails['Descripcion'] ?? 'Descripción no disponible'); ?></p>
+
+    <!-- Formulario de pago -->
     <form action="../vista/pagos.php" method="POST">
         <!-- Detalles de la reserva -->
         <input type="hidden" name="habitacionId" value="<?php echo $habitacionId; ?>">
@@ -100,7 +120,6 @@ echo "<p><strong>Descripción:</strong> " . htmlspecialchars($habitacionDetails[
         <label for="metodo_pago">Selecciona un método de pago:</label>
         <select name="metodo_pago" id="metodo_pago" required>
             <?php
-            // Mostrar los métodos de pago obtenidos de la base de datos
             if (!empty($metodosPago)):
                 foreach ($metodosPago as $metodo):
             ?>
