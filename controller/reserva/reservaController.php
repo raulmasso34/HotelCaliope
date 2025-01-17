@@ -1,11 +1,13 @@
 <?php
 // Asegúrate de que la ruta del modelo es correcta
 require_once __DIR__ . '/../../modelo/reservas/ReservaModel.php';
+require_once __DIR__ . '/../../modelo/hotel/hotelModel.php';
 require_once __DIR__ . '/../../config/Database.php'; 
 
 class ReservaController {
     
     private $reservaModel;
+    private $hotelModel;
 
     public function __construct() {
         // Crear la conexión a la base de datos
@@ -14,11 +16,19 @@ class ReservaController {
 
         // Crear una instancia del modelo
         $this->reservaModel = new ReservaModel($db);
+        $this->hotelModel = new HotelModel($db);
     }
     public function obtenerPaises() {
         // Llamamos al método obtenerPaises() del modelo
         return $this->reservaModel->obtenerPaises();
     }
+
+    public function obtenerHotelesPorPais($location) {
+        return $this->hotelModel->obtenerHotelesPorPais($location);
+    }
+
+    // Obtener países desde el modelo
+    
 
     // Crear una nueva reserva
     public function crearReserva($hotelId, $clienteId, $checkin, $checkout, $guests, $paisId, $actividadId, $habitacionId = null, $tarifaId = null, $precioHabitacion = null, $precioActividad = null, $precioTarifa = null, $precioTotal = null) {

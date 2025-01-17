@@ -1,12 +1,6 @@
 <?php
 session_start();
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
 
-echo "<pre>";
-print_r($_SESSION['Reservas']);
-echo "</pre>";
 
 // Verificar si la reserva está en la sesión
 if (isset($_SESSION['Reservas'])) {
