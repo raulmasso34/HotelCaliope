@@ -18,6 +18,7 @@ class ReservaController {
         $this->reservaModel = new ReservaModel($db);
         $this->hotelModel = new HotelModel($db);
     }
+
     public function obtenerPaises() {
         // Llamamos al método obtenerPaises() del modelo
         return $this->reservaModel->obtenerPaises();
@@ -26,9 +27,6 @@ class ReservaController {
     public function obtenerHotelesPorPais($location) {
         return $this->hotelModel->obtenerHotelesPorPais($location);
     }
-
-    // Obtener países desde el modelo
-    
 
     // Crear una nueva reserva
     public function crearReserva($hotelId, $clienteId, $checkin, $checkout, $guests, $paisId, $actividadId, $habitacionId = null, $tarifaId = null, $precioHabitacion = null, $precioActividad = null, $precioTarifa = null, $precioTotal = null) {
@@ -46,7 +44,6 @@ class ReservaController {
         $reserva = $this->reservaModel->obtenerReservaPorId($reservaId);
         
         if ($reserva) {
-            // Puedes retornar la reserva a la vista o mostrar los datos aquí
             echo "Reserva encontrada: " . json_encode($reserva);
         } else {
             echo "Reserva no encontrada.";
@@ -106,6 +103,34 @@ class ReservaController {
         } else {
             echo "No hay métodos de pago disponibles para este cliente.";
         }
+    }
+
+    // Obtener detalles del hotel por su ID
+    public function obtenerDetallesHotel($hotelId) {
+        return $this->hotelModel->obtenerHotelPorId($hotelId);
+    }
+
+    // Obtener detalles de la habitación por su ID
+    public function obtenerDetallesHabitacion($habitacionId) {
+        return $this->reservaModel->obtenerHabitacionPorId($habitacionId);
+    }
+
+    // Obtener métodos de pago disponibles
+    public function obtenerMetodosPagoDisponibles() {
+        return $this->reservaModel->obtenerMetodosPagoActivos();
+    }
+
+    // Consolidar detalles de la reserva para mostrar la confirmación
+    public function obtenerDetallesReserva($hotelId, $habitacionId) {
+        $detallesHotel = $this->obtenerDetallesHotel($hotelId);
+        $detallesHabitacion = $this->obtenerDetallesHabitacion($habitacionId);
+        $metodosPago = $this->obtenerMetodosPagoDisponibles();
+
+        return [
+            'hotel' => $detallesHotel,
+            'habitacion' => $detallesHabitacion,
+            'metodosPago' => $metodosPago
+        ];
     }
 }
 ?>

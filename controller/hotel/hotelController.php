@@ -19,8 +19,8 @@ class HotelController {
     }
 
     public function mostrarDetallesHotel($hotelId) {
-        $hotelDetails = $this->reservaModel->obtenerHotelPorId($hotelId);
-        $habitaciones = $this->reservaModel->obtenerHabitacionPorHotelId($hotelId);
+      //  $hotelDetails = $this->reservaModel->obtenerHotelPorId($hotelId);
+     // $habitaciones = $this->reservaModel->obtenerHabitacionPorHotelId($hotelId);
 
         include '../vista/detalles_hotel.php';
     }

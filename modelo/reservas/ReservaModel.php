@@ -32,6 +32,31 @@ class ReservaModel {
         }
     }
 
+    public function obtenerMetodosPago() {
+        $query = $this->conn->prepare("SELECT * FROM MetodoPago WHERE Activo = 1");
+        $query->execute();
+        return $query->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function obtenerDetallesHotel($hotelId) {
+        $query = $this->conn->prepare("SELECT * FROM Hotel WHERE Id_Hotel = ?");
+        $query->bind_param("i", $hotelId);
+        $query->execute();
+        return $query->get_result()->fetch_assoc();
+    }
+    public function obtenerDetallesHabitacion($habitacionId) {
+        $query = $this->conn->prepare("SELECT * FROM Habitaciones WHERE Id_Habitaciones = ?");
+        $query->bind_param("i", $habitacionId);
+        $query->execute();
+        return $query->get_result()->fetch_assoc();
+    }
+    public function obtenerActividades($hotelId) {
+        $query = $this->conn->prepare("SELECT * FROM Actividades WHERE Id_Hotel = ?");
+        $query->bind_param("i", $hotelId);
+        $query->execute();
+        return $query->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function insertarReserva($hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal, $NumeroPersonas) {
         $query = "INSERT INTO Reservas (Id_Hotel, Id_Cliente, Checkin, Checkout, Id_Pais, Id_Actividad, Id_Habitacion, Id_Tarifa, Precio_Habitacion, Precio_Actividad, Precio_Tarifa, Precio_Total, Numero_Personas) 
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -85,6 +110,22 @@ class ReservaModel {
             return false;
         }
     }
+
+    public function obtenerMetodosPagoActivos() {
+        try {
+            $sql = "SELECT * FROM MetodoPago WHERE Activo = 1";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $metodosPago = $result->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+            return $metodosPago;
+        } catch (Exception $e) {
+            error_log("Error al obtener métodos de pago activos: " . $e->getMessage());
+            return null;
+        }
+    }
+    
 
     public function obtenerHabitacionPorId($habitacionId) {
         try {

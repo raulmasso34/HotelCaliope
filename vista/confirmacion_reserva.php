@@ -4,6 +4,11 @@ include '../config/Database.php';
 $database = new Database();
 $db = $database->getConnection();
 session_start();
+require_once __DIR__ . '/../controller/reserva/reservaController.php';
+$reservaController = new ReservaController();
+
+$hotelDetails = $reservaController->obtenerDetallesHotel($_POST['hotelId'] ?? null);
+$habitacionDetails = $reservaController->obtenerDetallesHabitacion($_POST['habitacionId'] ?? null);
 
 // Verificar si hay un usuario autenticado y obtener el ID de usuario
 $user_id = $_SESSION['user_id'] ?? null; // Asegúrate de que el ID del usuario esté en la sesión
@@ -39,28 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "</pre>";
 }
 
-// Obtener los métodos de pago disponibles
-$queryMetodosPago = $db->prepare("SELECT * FROM MetodoPago WHERE Activo = 1");
-$queryMetodosPago->execute();
-$metodosPago = $queryMetodosPago->get_result()->fetch_all(MYSQLI_ASSOC);
-
-// Obtener los detalles del hotel
-$queryHotel = $db->prepare("SELECT * FROM Hotel WHERE Id_Hotel = ?");
-$queryHotel->bind_param("i", $_POST['hotelId']);
-$queryHotel->execute();
-$hotelDetails = $queryHotel->get_result()->fetch_assoc();
-
-// Obtener los detalles de la habitación seleccionada
-$queryHabitacion = $db->prepare("SELECT * FROM Habitaciones WHERE Id_Habitaciones = ?");
-$queryHabitacion->bind_param("i", $_POST['habitacionId']);
-$queryHabitacion->execute();
-$habitacionDetails = $queryHabitacion->get_result()->fetch_assoc();
-
-// Obtener las actividades disponibles en el hotel
-$queryActividades = $db->prepare("SELECT * FROM Actividades WHERE Id_Hotel = ?");
-$queryActividades->bind_param("i", $_POST['hotelId']);
-$queryActividades->execute();
-$actividades = $queryActividades->get_result()->fetch_all(MYSQLI_ASSOC);
 
 // Cerrar la conexión a la base de datos
 $database->closeConnection();
