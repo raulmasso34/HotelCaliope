@@ -32,6 +32,31 @@ class HotelModel {
         return $result->fetch_assoc();
     }
 
+    public function obtenerHabitaciones($hotelId) {
+        // Definir la consulta SQL
+        $query = "SELECT * FROM Habitaciones WHERE Id_Hotel = ?";  // Usar "?" en lugar de ":hotelId"
+    
+        // Preparar la consulta
+        $stmt = $this->conn->prepare($query);
+    
+        // Limpiar los datos de entrada
+        $hotelId = htmlspecialchars(strip_tags($hotelId));
+    
+        // Enlazar el parámetro
+        $stmt->bind_param("i", $hotelId); // "i" significa entero
+    
+        // Ejecutar la consulta
+        $stmt->execute();
+        $result = $stmt->get_result();  // Obtener el resultado de la consulta
+    
+        // Si hay resultados, los devuelve como un array asociativo
+        if ($result->num_rows > 0) {
+            return $result->fetch_all(MYSQLI_ASSOC);  // Devuelve todas las habitaciones del hotel
+        } else {
+            return null;  // Si no se encuentran habitaciones, retorna null
+        }
+    }
+
     // Si necesitas más funciones, puedes agregarlas aquí, por ejemplo:
     // - obtenerHotelesPorEstrellas($estrellas)
 }

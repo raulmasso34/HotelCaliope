@@ -44,17 +44,27 @@ class ReservaModel {
         $query->execute();
         return $query->get_result()->fetch_assoc();
     }
+
     public function obtenerDetallesHabitacion($habitacionId) {
         $query = $this->conn->prepare("SELECT * FROM Habitaciones WHERE Id_Habitaciones = ?");
         $query->bind_param("i", $habitacionId);
         $query->execute();
         return $query->get_result()->fetch_assoc();
     }
+
     public function obtenerActividades($hotelId) {
         $query = $this->conn->prepare("SELECT * FROM Actividades WHERE Id_Hotel = ?");
         $query->bind_param("i", $hotelId);
         $query->execute();
         return $query->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function obtenerDetalles($hotelId) {
+        $query = "SELECT * FROM Hotel WHERE Id_Hotel = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $hotelId);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
     }
 
     public function insertarReserva($hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal, $NumeroPersonas) {
@@ -89,7 +99,7 @@ class ReservaModel {
             die("Error en la ejecución de la consulta: " . $stmt->error);
         }
     }
-    
+
     public function actualizarReservaConPago($reservaId, $idPago) {
         try {
             $query = "UPDATE Reservas 
@@ -111,21 +121,24 @@ class ReservaModel {
         }
     }
 
-    public function obtenerMetodosPagoActivos() {
-        try {
-            $sql = "SELECT * FROM MetodoPago WHERE Activo = 1";
-            $stmt = $this->conn->prepare($sql);
+   
+        public function obtenerMetodosPagoDisponibles() {
+            $query = "SELECT * FROM MetodoPago WHERE Activo = 1";
+            $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            $result = $stmt->get_result();
-            $metodosPago = $result->fetch_all(MYSQLI_ASSOC);
-            $stmt->close();
-            return $metodosPago;
-        } catch (Exception $e) {
-            error_log("Error al obtener métodos de pago activos: " . $e->getMessage());
-            return null;
+            
+            // Usando MySQLi en lugar de PDO
+            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         }
-    }
+
     
+    public function obtenerHabitaciones($hotelId) {
+        $query = "SELECT * FROM Habitaciones WHERE Id_Hotel = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $hotelId);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
 
     public function obtenerHabitacionPorId($habitacionId) {
         try {
@@ -142,6 +155,13 @@ class ReservaModel {
             error_log("Error al obtener habitación: " . $e->getMessage());
             return null;
         }
+    }
+
+    public function obtenerHabitacionesPorHotel($hotelId) {
+        $query = $this->conn->prepare("SELECT * FROM Habitaciones WHERE Id_Hotel = ?");
+        $query->bind_param("i", $hotelId);
+        $query->execute();
+        return $query->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
     public function obtenerReservaPorId($reservaId) {
