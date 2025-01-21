@@ -44,6 +44,7 @@ class LoginController {
             }
         }
     }
+    
 
     // Mostrar perfil
     public function showProfile() {

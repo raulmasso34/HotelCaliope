@@ -409,7 +409,7 @@ body {
 
 /* Añadir un toque de lujo con un efecto de gradiente suave en el fondo de la página */
 body {
-    background: linear-gradient(135deg, #445787, #89979e); /* Gradiente azul suave */
+    background: linear-gradient(135deg, #12173a, #1f5e7e); /* Gradiente azul suave */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 

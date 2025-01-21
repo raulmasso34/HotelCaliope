@@ -39,7 +39,25 @@ document.addEventListener("DOMContentLoaded", function () {
 });
   
 
-//PERFIL
+//menu hamburguesa
+
+// JavaScript para mostrar/ocultar el menú hamburguesa
+// Toggle the mobile menu when the menu-toggle is clicked
+document.getElementById('menu-toggle').addEventListener('click', function() {
+    document.querySelector('.mobile-menu').classList.toggle('active');
+    this.classList.toggle('open'); // Agregar la clase 'open' para animar las barras del menú
+});
+
+// Toggle the dropdown menu inside mobile menu
+document.querySelectorAll('.dropdown-mobile > a').forEach(item => {
+    item.addEventListener('click', function(e) {
+        const dropdownContent = item.nextElementSibling; // Contenido del dropdown
+        dropdownContent.classList.toggle('open'); // Activar o desactivar el dropdown
+        e.preventDefault(); // Evitar el comportamiento predeterminado de los enlaces
+    });
+});
+
+
 
 /// Función para alternar el menú desplegable "dropdown-perfil"
 function toggleDropPerfil() {

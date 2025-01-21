@@ -71,17 +71,18 @@ if ($controller !== null) {
 </head>
 <body>
     <header class="main-header">
-    <div class="carousel">
-        <img class="carousel-background" src="../static/img/florida/florida3.jpg" alt="Fondo 1">
-        <img class="carousel-background" src="../static/img/florida/florida4.jpg" alt="Fondo 2">
-        <img class="carousel-background" src="../static/img/florida/florida5.jpg" alt="Fondo 3">
-    </div>
-       
-    
+
+        <div class="carousel">
+            <img class="carousel-background" src="../static/img/florida/florida3.jpg" alt="Fondo 1">
+            <img class="carousel-background" src="../static/img/florida/florida4.jpg" alt="Fondo 2">
+            <img class="carousel-background" src="../static/img/florida/florida5.jpg" alt="Fondo 3">
+        </div>
+        
         <section class="main-up">
             <div class="main-up-left">
                 <img src="../static/img/logo.png" alt="Imagen secundaria">
             </div>
+
             <div class="main-up-right">
                 <div class="links">
                     <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
@@ -103,36 +104,70 @@ if ($controller !== null) {
                             </div>
                         </div>
                     </div>
-                    <a href="../vista/galeria/galeria.php">Galeria</a>
-                <a href="../vista/ofertas/ofertas.php">Ofertas</a>
-                <a href="../vista/Contacto/contacto.php">Contacto</a>
-                <div class="dropdown-perfil">
-                    <a class="icon-perfil" href="javascript:void(0);">
-                        <i class="fa-regular fa-user fa-2xl"></i> <!-- Icono de usuario -->
-                    </a>
-                    <div class="dropdown-perfil-content">
-                        <a href="../vista/Clientes/login.php">Iniciar sesión</a>
-                        <a href="../vista/Clientes/perfil.php">Perfil</a>
-                        
-                        <a href="..//controller/clients/LoginController.php?action=logout">Cerrar sesión</a>
 
+                    <a href="../vista/galeria/galeria.php">Galería</a>
+                    <a href="../vista/ofertas/ofertas.php">Ofertas</a>
+                    <a href="../vista/Contacto/contacto.php">Contacto</a>
+                    
+                    <div class="dropdown-perfil">
+                        <a class="icon-perfil" href="javascript:void(0);">
+                            <i class="fa-regular fa-user fa-2xl"></i> <!-- Icono de usuario -->
+                        </a>
+                        <div class="dropdown-perfil-content">
+                            <a href="../vista/Clientes/login.php">Iniciar sesión</a>
+                            <a href="../vista/Clientes/perfil.php">Perfil</a>
+                            <a href="..//controller/clients/LoginController.php?action=logout">Cerrar sesión</a>
+                        </div>
                     </div>
                 </div>
-
-
-
-
             </div>
-        
+
+            <!-- Menú hamburguesa (solo visible en pantallas pequeñas) -->
+            <div id="menu-toggle" class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+
+            <!-- Menú desplegable -->
+            <div class="mobile-menu">
+                <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                <a href="../vista/galeria/galeria.php">Galería</a>
+                <a href="../vista/ofertas/ofertas.php">Ofertas</a>
+                <a href="../vista/Contacto/contacto.php">Contacto</a>
+                <a href="../vista/Clientes/login.php">Iniciar sesión</a>
+                <a href="../vista/Clientes/perfil.php">Perfil</a>
+                
+                <!-- Enlace para Hoteles con dropdown -->
+                <div class="dropdown-mobile">
+                    <a href="#" class="dropbtn">Hoteles</a>
+                    <div class="dropdown-content-mobile">
+                        <div class="dropdown-section">
+                            <h4>Europa</h4>
+                            <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                            <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                            <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>USA</h4>
+                            <a href="../vista/ciudades/USA/Florida.php">Florida</a>
+                            <a href="../vista/ciudades/USA/California.php">California</a>
+                            <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
         </section>
+
+
         <section class="main-center">
             <div class="center-up">
                 <div class="center-up-up">
-                <span style="font-size: 20px;  color: rgb(230, 182, 11);">
-                <i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star "></i>
-                </span>
-               
+                    <span style="font-size: 20px; color: rgb(230, 182, 11);">
+                        <i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star "></i>
+                    </span>
                 </div>
                 <div class="center-up-down">
                     <h5>Lorem ipsum dolor sit amet.</h5>
@@ -141,46 +176,42 @@ if ($controller !== null) {
             </div>
             <div class="center-down">
                 <div class="form-reservas">
-                            <div class="reservation-form">
-                                <form id="reservationForm" action="../vista/reservas.php" method="post">
-                                    <!-- Campo de selección de lugar -->
-                                    <div class="form-group">
-                                        <label for="location">Lugar</label>
-                                        <select id="location" name="location" required>
-                                            <?php foreach ($paises as $pais): ?>
-                                                <option value="<?php echo $pais['Id_Pais']; ?>"><?php echo $pais['Pais']; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-
-                                    <!-- Campo de fecha de check-in -->
-                                    <div class="form-group">
-                                        <label for="checkin">Fecha de Check-in</label>
-                                        <input type="date" id="checkin" name="checkin" required>
-                                    </div>
-
-                                    <!-- Campo de fecha de check-out -->
-                                    <div class="form-group">
-                                        <label for="checkout">Fecha de Check-out</label>
-                                        <input type="date" id="checkout" name="checkout" required>
-                                    </div>
-
-                                    <!-- Campo de número de personas -->
-                                    <div class="form-group">
-                                        <label for="numero_personas">Número de Personas</label>
-                                        <input type="number" id="numero_personas" name="numero_personas" min="1" value="<?php echo isset($_SESSION['numero_personas']) ? $_SESSION['numero_personas'] : ''; ?>" required>
-                                    </div>
-
-
-                                    <!-- Botón para enviar el formulario -->
-                                    <button type="submit" id="submitBtn">Reservar</button>
-                                </form>
+                    <div class="reservation-form">
+                        <form id="reservationForm" action="../vista/reservas.php" method="post">
+                            <!-- Campo de selección de lugar -->
+                            <div class="form-group">
+                                <label for="location">Lugar</label>
+                                <select id="location" name="location" required>
+                                    <?php foreach ($paises as $pais): ?>
+                                        <option value="<?php echo $pais['Id_Pais']; ?>"><?php echo $pais['Pais']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
-                    
+
+                            <!-- Campo de fecha de check-in -->
+                            <div class="form-group">
+                                <label for="checkin">Fecha de Check-in</label>
+                                <input type="date" id="checkin" name="checkin" min="<?= date('Y-m-d'); ?>" required>
+                            </div>
+
+                            <!-- Campo de fecha de check-out -->
+                            <div class="form-group">
+                                <label for="checkout">Fecha de Check-out</label>
+                                <input type="date" id="checkout" name="checkout" min="<?= date('Y-m-d'); ?>" required>
+                            </div>
+
+                            <!-- Campo de número de personas -->
+                            <div class="form-group">
+                                <label for="numero_personas">Número de Personas</label>
+                                <input type="number" id="numero_personas" name="numero_personas" min="1" value="<?php echo isset($_SESSION['numero_personas']) ? $_SESSION['numero_personas'] : ''; ?>" required>
+                            </div>
+
+                            <!-- Botón para enviar el formulario -->
+                            <button type="submit" id="submitBtn">Reservar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-
-          
         </section>
     </header>
 
@@ -425,8 +456,8 @@ if ($controller !== null) {
                         <h1>Inicia Sesión</h1>
                         <p>Accede a tu cuenta para disfrutar de beneficios exclusivos.</p>
                     </div>
-                    <form class="news-content  method="POST" action="../controller/clients/LoginController.php">
-                    <label for="Usuari">Usuario:</label>
+                    <form class="news-content" method="POST" action="../controller/clients/LoginController.php">
+                        <label for="Usuari">Usuario:</label>
                         <input type="text" name="Usuari" id="Usuari" required>
 
                         <label for="DNI">DNI:</label>
@@ -505,5 +536,6 @@ if ($controller !== null) {
 
     <!-----------------------------------SCRIPTS---------------------------->
     <script src="../static/js/main.js"></script>
+    <script src="../static/js/calendario.js"></script>
 </body>
 </html>
