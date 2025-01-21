@@ -101,6 +101,19 @@ class ReservaController {
         }
     }
 
+    public function showReservationDetails($reservationId) {
+        $reservation = $this->reservaModel->getReservationDetails($reservationId);
+    
+        if ($reservation) {
+            // Extraer las variables del array y pasarla a la vista
+            extract($reservation);
+            include '../vista/info_reserva.php';  // Usa la ruta correcta
+        } else {
+            echo "No se ha encontrado la reserva.";
+        }
+    }
+    
+
     // Obtener métodos de pago de un cliente
     public function obtenerMetodosPago($idCliente) {
         $metodosPago = $this->reservaModel->obtenerMetodosPagoPorCliente($idCliente);

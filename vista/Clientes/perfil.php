@@ -69,7 +69,7 @@ $db->closeConnection();
 
                 foreach ($visibleReservations as $reservation) {
                     echo "<div class='reservation-button'>";
-                    echo "<a href='detalles_reserva.php?id=" . urlencode($reservation['Id_Reserva']) . "' class='btn-reserva'>";
+                    echo "<a href='../info_reserva.php?id=" . urlencode($reservation['Id_Reserva']) . "' class='btn-reserva'>";
                     echo "Hotel: " . htmlspecialchars($reservation['Nombre']);
                     echo "</a>";
                     echo "</div>";
@@ -79,7 +79,7 @@ $db->closeConnection();
                     echo "<div id='more-reservations' class='hidden-reservations'>";
                     foreach ($hiddenReservations as $reservation) {
                         echo "<div class='reservation-button'>";
-                        echo "<a href='detalles_reserva.php?id=" . urlencode($reservation['Id_Reserva']) . "' class='btn-reserva'>";
+                        echo "<a href='../info_reserva.php?id=" . urlencode($reservation['Id_Reserva']) . "' class='btn-reserva'>";
                         echo "Hotel: " . htmlspecialchars($reservation['Nombre']);
                         echo "</a>";
                         echo "</div>";

@@ -100,6 +100,31 @@ class ReservaModel {
         }
     }
 
+    public function getReservationDetails($reservationId) {
+        // Consulta SQL con el marcador de posición "?"
+        $query = "SELECT * FROM Reservas WHERE Id_Reserva = ?";
+    
+        // Preparar la consulta
+        $stmt = $this->conn->prepare($query);
+    
+        // Vincular el parámetro, asegurándote de que $reservationId es un entero
+        $stmt->bind_param("i", $reservationId);
+    
+        // Ejecutar la consulta
+        $stmt->execute();
+    
+        // Obtener los resultados
+        $result = $stmt->get_result();
+    
+        // Verificar si hay resultados
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();  // Retorna la primera fila de la consulta
+        } else {
+            return null;  // No se encontraron resultados
+        }
+    }
+    
+
     public function actualizarReservaConPago($reservaId, $idPago) {
         try {
             $query = "UPDATE Reservas 
