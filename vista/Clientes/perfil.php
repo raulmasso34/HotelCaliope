@@ -27,6 +27,7 @@ $userId = $_SESSION['user_id'];  // Recuperamos el ID del usuario que inició se
 
 // Obtener el perfil del usuario
 $profile = $perfilModel->getProfile($userId);
+$reservations = $perfilModel->getReservations($userId);
 
 if ($profile === null) {
     echo "Error al obtener el perfil.";
@@ -60,22 +61,33 @@ $db->closeConnection();
 
         <!-- Mostrar las reservas -->
         <div class="reservas-info">
-        <h2>Reservas:</h2>
+            <h2>Reservas:</h2>
             <?php
             if (isset($reservations) && !empty($reservations)) {
-                echo "<table>";
-                echo "<tr><th>Actividad</th><th>Habitación</th><th>Hotel</th><th>Tarifa</th><th>Precio Total</th></tr>";
+                $visibleReservations = array_slice($reservations, 0, 3);
+                $hiddenReservations = array_slice($reservations, 3);
 
-                foreach ($reservations as $reservation) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($reservation['Id_Actividad']) . "</td>";
-                    echo "<td>" . htmlspecialchars($reservation['Id_Habitacion']) . "</td>";
-                    echo "<td>" . htmlspecialchars($reservation['Id_Hotel']) . "</td>";
-                    echo "<td>" . htmlspecialchars($reservation['Precio_Habitacion']) . "</td>";
-                    echo "<td>" . htmlspecialchars($reservation['Precio_Total']) . "</td>";
-                    echo "</tr>";
+                foreach ($visibleReservations as $reservation) {
+                    echo "<div class='reservation-button'>";
+                    echo "<a href='detalles_reserva.php?id=" . urlencode($reservation['Id_Reserva']) . "' class='btn-reserva'>";
+                    echo "Hotel: " . htmlspecialchars($reservation['Nombre']);
+                    echo "</a>";
+                    echo "</div>";
                 }
-                echo "</table>";
+
+                if (!empty($hiddenReservations)) {
+                    echo "<div id='more-reservations' class='hidden-reservations'>";
+                    foreach ($hiddenReservations as $reservation) {
+                        echo "<div class='reservation-button'>";
+                        echo "<a href='detalles_reserva.php?id=" . urlencode($reservation['Id_Reserva']) . "' class='btn-reserva'>";
+                        echo "Hotel: " . htmlspecialchars($reservation['Nombre']);
+                        echo "</a>";
+                        echo "</div>";
+                    }
+                    echo "</div>";
+                    echo "<button id='show-more' class='toggle-reservations-btn'>Ver más reservas</button>";
+                    echo "<button id='show-less' class='toggle-reservations-btn' style='display: none;'>Ocultar</button>";
+                }
             } else {
                 echo "<p>No tienes reservas.</p>";
             }
@@ -92,5 +104,7 @@ $db->closeConnection();
     </div>
 </div>
 
+
+<script src="../../static/js/perfil/pefil.js"></script>
 </body>
 </html>
