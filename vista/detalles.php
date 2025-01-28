@@ -7,10 +7,6 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/../controller/reserva/reservaController.php';
 $reservaController = new ReservaController();
 
-
-
-
-
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../vista/Clientes/login.php');
     exit;
@@ -26,11 +22,17 @@ $hotelId = $_GET['hotelId'];
 $hotelDetails = $reservaController->obtenerDetallesHotel($hotelId);
 $habitaciones = $reservaController->obtenerHabitacionesPorHotel($hotelId);
 
-
 if (!$hotelDetails) {
     echo "Detalles del hotel no disponibles.";
     exit;
 }
+
+// Convertir las fechas a formato legible
+$checkinDate = new DateTime($_SESSION['checkin']);
+$checkoutDate = new DateTime($_SESSION['checkout']);
+
+$checkinFormatted = $checkinDate->format('d/m/Y');
+$checkoutFormatted = $checkoutDate->format('d/m/Y');
 ?>
 
 <!DOCTYPE html>
@@ -44,8 +46,8 @@ if (!$hotelDetails) {
 <body>
     <h1>Detalles de la Reserva</h1>
     <p><strong>Ubicación seleccionada:</strong> <?php echo htmlspecialchars($_SESSION['location']); ?></p>
-    <p><strong>Fecha de Check-in:</strong> <?php echo htmlspecialchars($_SESSION['checkin']); ?></p>
-    <p><strong>Fecha de Check-out:</strong> <?php echo htmlspecialchars($_SESSION['checkout']); ?></p>
+    <p><strong>Fecha de Check-in:</strong> <?php echo htmlspecialchars($checkinFormatted); ?></p>
+    <p><strong>Fecha de Check-out:</strong> <?php echo htmlspecialchars($checkoutFormatted); ?></p>
     <p><strong>Número de personas:</strong> <?php echo htmlspecialchars($_SESSION['guests']); ?></p>
 
     <h2>Habitaciones Disponibles en el Hotel</h2>

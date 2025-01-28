@@ -1,12 +1,15 @@
 <?php
 require_once __DIR__ . '/../../modelo/reservas/ReservaModel.php';
 require_once __DIR__ . '/../../modelo/hotel/hotelModel.php';
+require_once __DIR__ . '/../../modelo/pais/paisModel.php';
 require_once __DIR__ . '/../../config/Database.php'; 
 
 class ReservaController {
 
     private $reservaModel;
     private $hotelModel;
+    private $paisModel;
+
 
     public function __construct() {
         // Crear la conexión a la base de datos
@@ -16,6 +19,7 @@ class ReservaController {
         // Crear una instancia del modelo
         $this->reservaModel = new ReservaModel($db);
         $this->hotelModel = new HotelModel($db);
+        $this->paisModel = new PaisesModel($db);
     }
 
     public function obtenerPaises() {
@@ -128,9 +132,16 @@ class ReservaController {
 
     // Obtener detalles del hotel por su ID
     public function obtenerDetallesHotel($hotelId) {
-        return $this->hotelModel->obtenerHotelPorId($hotelId);
+        // Usar el método obtenerDetallesHotel del modelo HotelModel para obtener todos los detalles
+        $hotelDetails = $this->hotelModel->obtenerDetallesHotel($hotelId);
+        
+        if ($hotelDetails) {
+            return $hotelDetails; // Devuelve todos los detalles del hotel
+        } else {
+            return null; // Si no se encuentra el hotel
+        }
     }
-
+    
     // Obtener detalles de la habitación por su ID
     public function obtenerDetallesHabitacion($habitacionId) {
         return $this->reservaModel->obtenerHabitacionPorId($habitacionId);
@@ -153,5 +164,15 @@ class ReservaController {
             'metodosPago' => $metodosPago
         ];
     }
+
+    public function obtenerNombrePais($paisId) {
+        return $this->paisModel->obtenerNombrePais($paisId);
+    }
+
+
+   
+
+    
+    
 }
 ?>

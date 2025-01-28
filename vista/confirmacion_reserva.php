@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Llamamos al método obtenerActividadesPorHotel solo después de que hotelId esté definido
     $actividades = $reservaController->obtenerActividadesPorHotel($hotelId);
     $metodosPago = $reservaController->obtenerMetodosPagoDisponibles();
+    $paisNombre = $reservaController->obtenerNombrePais($paisId);
 
     // Guardar los datos de la reserva en la sesión
     $_SESSION['Reservas'] = [
@@ -45,9 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
 
     // Verificar si se han guardado correctamente los datos
-    echo "<pre>";
-    print_r($_SESSION['Reservas']);
-    echo "</pre>";
+   
 }
 
 // Cerrar la conexión a la base de datos
@@ -65,7 +64,15 @@ $database->closeConnection();
 <body>
     <h1>Confirmar Reserva</h1>
 
-    <p><strong>Ubicación seleccionada:</strong> <?php echo htmlspecialchars($paisId); ?></p>
+    <p><strong>Ubicación seleccionada:</strong> 
+    <?php 
+    if ($paisNombre) {
+        echo htmlspecialchars($paisNombre);  // Muestra el nombre del país
+    } else {
+        echo "País no disponible";  // En caso de que no se encuentre el país
+    }
+    ?>
+    </p>
     <p><strong>Fecha de Check-in:</strong> <?php echo htmlspecialchars($checkin); ?></p>
     <p><strong>Fecha de Check-out:</strong> <?php echo htmlspecialchars($checkout); ?></p>
     <p><strong>Número de personas:</strong> <?php echo htmlspecialchars($guests); ?></p>

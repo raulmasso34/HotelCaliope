@@ -26,6 +26,20 @@ class PerfilModel {
         return null;  // Si hay algún error con la consulta
     }
 
+    public function obtenerDetallesCliente($clienteId) {
+        $query = "SELECT Nom, Cognom FROM Clients WHERE Id_Client = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $clienteId); // 'i' para indicar que el parámetro es un entero
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Verificar si se obtuvo el cliente
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc(); // Retorna los detalles como un arreglo asociativo
+        } else {
+            return null; // Si no se encuentra el cliente
+        }
+    }
 
 
 

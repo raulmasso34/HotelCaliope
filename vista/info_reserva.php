@@ -77,39 +77,72 @@ if (isset($_GET['id'])) {
 <body>
     <h1>DETALLES DE LA RESERVA</h1>
     <table class="details-table">
-    <tr>
-        <th>Campo</th>
-        <th>Detalle</th>
-    </tr>
-    <tr>
-        <td>Cliente</td>
-        <td><?php echo htmlspecialchars($reserva['Nombre_Cliente']); ?></td>
-    </tr>
-    <tr>
-        <td>Hotel</td>
-        <td><?php echo htmlspecialchars($reserva['Nombre_Hotel']); ?></td>
-    </tr>
-    <tr>
-        <td>Habitación</td>
-        <td><?php echo htmlspecialchars($reserva['Tipo_Habitacion']); ?></td>
-    </tr>
-    <tr>
-        <td>Actividad</td>
-        <td><?php echo htmlspecialchars($reserva['Nombre_Actividad'] ?? 'N/A'); ?></td>
-    </tr>
-    <tr>
-    <td>País</td>
-    <td><?php echo htmlspecialchars($reserva['Nombre_Pais'] ?? 'N/A'); ?></td>
-</tr>
-    <tr>
-        <td>Precio Total</td>
-        <td>$<?php echo htmlspecialchars($reserva['Precio_Total']); ?></td>
-    </tr>
-</table>
+        <tr>
+            <th>Campo</th>
+            <th>Detalle</th>
+        </tr>
+        <tr>
+            <td>Cliente</td>
+            <td><?php echo htmlspecialchars($reserva['Nombre_Cliente']); ?></td>
+        </tr>
+        <tr>
+            <td>Hotel</td>
+            <td><?php echo htmlspecialchars($reserva['Nombre_Hotel']); ?></td>
+        </tr>
+        <tr>
+            <td>Habitación</td>
+            <td><?php echo htmlspecialchars($reserva['Tipo_Habitacion']); ?></td>
+        </tr>
+        <tr>
+            <td>Actividad</td>
+            <td><?php echo htmlspecialchars($reserva['Nombre_Actividad'] ?? 'N/A'); ?></td>
+        </tr>
+        <tr>
+            <td>País</td>
+            <td><?php echo htmlspecialchars($reserva['Nombre_Pais'] ?? 'N/A'); ?></td>
+        </tr>
+        <tr>
+            <td>Precio Total</td>
+            <td>$<?php echo htmlspecialchars($reserva['Precio_Total']); ?></td>
+        </tr>
+        <!-- Mostrar la fecha de Check-in -->
+        <tr>
+            <td>Fecha de Check-in</td>
+            <td>
+                <?php
+                // Verificar si la fecha de Check-in está disponible y formatearla
+                $checkin = $reserva['Checkin'] ?? 'No disponible';
+                if ($checkin !== 'No disponible') {
+                    $checkinDate = new DateTime($checkin);
+                    echo $checkinDate->format('d/m/Y');
+                } else {
+                    echo $checkin;
+                }
+                ?>
+            </td>
+        </tr>
+        <!-- Mostrar la fecha de Check-out -->
+        <tr>
+            <td>Fecha de Check-out</td>
+            <td>
+                <?php
+                // Verificar si la fecha de Check-out está disponible y formatearla
+                $checkout = $reserva['Checkout'] ?? 'No disponible';
+                if ($checkout !== 'No disponible') {
+                    $checkoutDate = new DateTime($checkout);
+                    echo $checkoutDate->format('d/m/Y');
+                } else {
+                    echo $checkout;
+                }
+                ?>
+            </td>
+        </tr>
+    </table>
     
-    <a href="../vista/Clientes/perfil.php">Volver atras</a>
+    <a href="../vista/Clientes/perfil.php">Volver atrás</a>
 </body>
 </html>
+
 
 <?php
 // Cerrar conexión

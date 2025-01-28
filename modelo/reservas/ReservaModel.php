@@ -253,6 +253,8 @@ class ReservaModel {
         $stmt->execute();
     }
 
+    
+
     public function obtenerReservaPorId($reservaId) {
         try {
             $sql = "SELECT * FROM Reservas WHERE Id_Reserva = ?";
