@@ -1,51 +1,117 @@
 <?php
+session_start();
+include '../config/Database.php';
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-include '../config/Database.php';
 $database = new Database();
-$db = $database->getConnection(); 
+$db = $database->getConnection();
 
-require_once __DIR__ . '/../controller/reserva/reservaController.php';
+// Verifica si el usuario ha iniciado sesión
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../vista/Clientes/login.php');
+    exit;
+}
 
-$reservaController = new ReservaController();
 
 
+if (isset($_GET['id'])) {
+    $id_reserva = intval($_GET['id']); // Sanitiza el parámetro recibido
+
+    // Consulta para obtener los detalles de la reserva
+    $sql = "SELECT 
+            r.Id_Reserva, 
+            c.Nom AS Nombre_Cliente, 
+            h.Nombre AS Nombre_Hotel, 
+            ha.Tipo AS Tipo_Habitacion, 
+            a.Nombre AS Nombre_Actividad, 
+            p.Pais AS Nombre_Pais, 
+            r.Precio_Habitacion, 
+            r.Precio_Actividad, 
+            r.Precio_Tarifa, 
+            r.Precio_Total, 
+            r.Checkin, 
+            r.Checkout, 
+            r.Numero_Personas
+        FROM Reservas r
+        LEFT JOIN Clients c ON r.Id_Cliente = c.Id_Client
+        LEFT JOIN Hotel h ON r.Id_Hotel = h.Id_Hotel
+        LEFT JOIN Habitaciones ha ON r.Id_Habitacion = ha.Id_Habitaciones
+        LEFT JOIN Actividades a ON r.Id_Actividad = a.Id_Actividades
+        LEFT JOIN Pais p ON r.Id_Pais = p.Id_Pais
+        WHERE r.Id_Reserva = ?";
+
+    $stmt = $db->prepare($sql);
+    if (!$stmt) {
+        die("Error en la preparación de la consulta: " . $db->error);
+    }
+
+    $stmt->bind_param("i", $id_reserva); // Vincula el parámetro
+    if (!$stmt->execute()) {
+        die("Error en la ejecución de la consulta: " . $stmt->error);
+    }
+
+    $resultado = $stmt->get_result();
+
+    // Verifica si se encontró la reserva
+    if ($resultado->num_rows > 0) {
+        $reserva = $resultado->fetch_assoc();
+    } else {
+        echo "<p>La reserva no se encontró. Por favor, verifica el ID.</p>";
+        exit;
+    }
+} else {
+    echo "<p>ID de reserva no proporcionado.</p>";
+    exit;
+}
 ?>
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles de la Reserva</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Asegúrate de tener tus estilos CSS -->
+    <link rel="stylesheet" href="../static/css/info_reserva.css">
 </head>
 <body>
-    <div class="reservation-details">
-        <h1>Detalles de la Reserva</h1>
-
-        <!-- Verificamos si hay reserva para mostrar -->
-        <?php if (isset($Id_Reserva)): ?>
-            <p><strong>ID Reserva:</strong> <?php echo htmlspecialchars($Id_Reserva); ?></p>
-            <p><strong>ID Cliente:</strong> <?php echo htmlspecialchars($Id_Cliente); ?></p>
-            <p><strong>ID Actividad:</strong> <?php echo htmlspecialchars($Id_Actividad); ?></p>
-            <p><strong>ID Habitación:</strong> <?php echo htmlspecialchars($Id_Habitacion); ?></p>
-            <p><strong>ID Hotel:</strong> <?php echo htmlspecialchars($Id_Hotel); ?></p>
-            <p><strong>Check-in:</strong> <?php echo htmlspecialchars($Checkin); ?></p>
-            <p><strong>Check-out:</strong> <?php echo htmlspecialchars($Checkout); ?></p>
-            <p><strong>Número de Personas:</strong> <?php echo htmlspecialchars($Numero_Personas); ?></p>
-            <p><strong>Precio Total:</strong> <?php echo htmlspecialchars($Precio_Total); ?></p>
-        <?php else: ?>
-            <p>No se encontraron detalles para esta reserva.</p>
-        <?php endif; ?>
-
-        <div class="back-link">
-            <a href="reservas.php">Volver a las reservas</a>
-        </div>
-    </div>
+    <h1>DETALLES DE LA RESERVA</h1>
+    <table class="details-table">
+    <tr>
+        <th>Campo</th>
+        <th>Detalle</th>
+    </tr>
+    <tr>
+        <td>Cliente</td>
+        <td><?php echo htmlspecialchars($reserva['Nombre_Cliente']); ?></td>
+    </tr>
+    <tr>
+        <td>Hotel</td>
+        <td><?php echo htmlspecialchars($reserva['Nombre_Hotel']); ?></td>
+    </tr>
+    <tr>
+        <td>Habitación</td>
+        <td><?php echo htmlspecialchars($reserva['Tipo_Habitacion']); ?></td>
+    </tr>
+    <tr>
+        <td>Actividad</td>
+        <td><?php echo htmlspecialchars($reserva['Nombre_Actividad'] ?? 'N/A'); ?></td>
+    </tr>
+    <tr>
+    <td>País</td>
+    <td><?php echo htmlspecialchars($reserva['Nombre_Pais'] ?? 'N/A'); ?></td>
+</tr>
+    <tr>
+        <td>Precio Total</td>
+        <td>$<?php echo htmlspecialchars($reserva['Precio_Total']); ?></td>
+    </tr>
+</table>
+    
+    <a href="../vista/Clientes/perfil.php">Volver atras</a>
 </body>
 </html>
 
+<?php
+// Cerrar conexión
+$db->close();
+?>

@@ -26,6 +26,7 @@ $hotelId = $_GET['hotelId'];
 $hotelDetails = $reservaController->obtenerDetallesHotel($hotelId);
 $habitaciones = $reservaController->obtenerHabitacionesPorHotel($hotelId);
 
+
 if (!$hotelDetails) {
     echo "Detalles del hotel no disponibles.";
     exit;

@@ -61,9 +61,10 @@ class ReservaController {
 
     // Obtener habitaciones por hotel
     public function obtenerHabitacionesPorHotel($hotelId) {
+        // Aquí estamos delegando la responsabilidad de obtener las habitaciones al modelo
         return $this->hotelModel->obtenerHabitaciones($hotelId);
     }
-
+    
     // Verificar si una reserva ya existe
     public function verificarReservaExistente($idReserva) {
         $existe = $this->reservaModel->reservaExistente($idReserva);
