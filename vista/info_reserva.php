@@ -25,6 +25,7 @@ if (isset($_GET['id'])) {
             c.Nom AS Nombre_Cliente, 
             h.Nombre AS Nombre_Hotel, 
             ha.Tipo AS Tipo_Habitacion, 
+            ha.Numero_Habitacion AS Numero_Habitacion,  -- Aquí agregamos el campo Numero de Habitacion
             a.Nombre AS Nombre_Actividad, 
             p.Pais AS Nombre_Pais, 
             r.Precio_Habitacion, 
@@ -92,6 +93,10 @@ if (isset($_GET['id'])) {
         <tr>
             <td>Habitación</td>
             <td><?php echo htmlspecialchars($reserva['Tipo_Habitacion']); ?></td>
+        </tr>
+        <tr>
+            <td>Número de Habitación</td>
+            <td><?php echo htmlspecialchars($reserva['Numero_Habitacion'] ); ?></td>
         </tr>
         <tr>
             <td>Actividad</td>

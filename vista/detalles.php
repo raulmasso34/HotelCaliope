@@ -52,8 +52,12 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
 
     <h2>Habitaciones Disponibles en el Hotel</h2>
     <div class="habitaciones">
-        <?php if (!empty($habitaciones)): ?>
-            <?php foreach ($habitaciones as $habitacion): ?>
+    <?php if (!empty($habitaciones)): ?>
+        <!-- Depuración para ver qué habitaciones se están obteniendo -->
+    
+
+        <?php foreach ($habitaciones as $habitacion): ?>
+            <?php if ($habitacion['Estado'] === 'Disponible'): ?> <!-- Solo mostramos habitaciones disponibles -->
                 <div class="habitacion">
                     <div class="habitacion-imagen">
                         <?php
@@ -80,10 +84,13 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
                         </form>
                     </div>
                 </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>No hay habitaciones disponibles en este hotel.</p>
-        <?php endif; ?>
-    </div>
+            <?php endif; ?> <!-- Fin del filtro por Estado -->
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>No hay habitaciones disponibles en este hotel.</p>
+    <?php endif; ?>
+</div>
+
+<script src="../static/js/detalles.js"></script>
 </body>
 </html>

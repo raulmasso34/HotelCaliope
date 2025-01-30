@@ -68,15 +68,23 @@ class ReservaModel {
     }
 
     public function insertarReserva($hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal, $NumeroPersonas) {
+        // Verifica si se ha seleccionado una actividad
+        if (empty($actividadId)) {
+            // Si no hay actividad, asigna 0 al precio de actividad
+            $actividadId = NULL;
+            $precioActividad = 0;
+        }
+        $precioTotal = $precioHabitacion + $precioActividad + $precioTarifa;
+    
         // Primero, realizamos la inserción de la reserva
         $query = "INSERT INTO Reservas (Id_Hotel, Id_Cliente, Checkin, Checkout, Id_Pais, Id_Actividad, Id_Habitacion, Id_Tarifa, Precio_Habitacion, Precio_Actividad, Precio_Tarifa, Precio_Total, Numero_Personas) 
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
+    
         $stmt = $this->conn->prepare($query);
         if ($stmt === false) {
             die('Error preparing statement: ' . $this->conn->error);
         }
-        
+    
         // Usamos 's' para los campos de tipo string como checkin y checkout
         $stmt->bind_param("iissiiiiddddd", 
             $hotelId, 
@@ -93,7 +101,7 @@ class ReservaModel {
             $precioTotal,
             $NumeroPersonas
         );
-        
+    
         if ($stmt->execute()) {
             // Una vez que la reserva se ha realizado, obtenemos la ID de la reserva insertada
             $reservaId = $this->conn->insert_id;
@@ -102,12 +110,12 @@ class ReservaModel {
             $queryUpdate = "UPDATE Habitaciones 
                             SET Fecha_Disponibilidad_Inicio = ?, Fecha_Disponibilidad_Fin = ?, Disponibilidad = 0, Estado = 'Reservada' 
                             WHERE Id_Habitaciones = ? AND (Fecha_Disponibilidad_Inicio IS NULL OR Fecha_Disponibilidad_Fin IS NULL)";
-            
+    
             $stmtUpdate = $this->conn->prepare($queryUpdate);
             if ($stmtUpdate === false) {
                 die('Error preparing update statement: ' . $this->conn->error);
             }
-            
+    
             // Para el caso de que no existan fechas, asignamos las fechas de la reserva.
             // Usamos 's' para las fechas (tipo string) y 'i' para el ID de la habitación.
             $stmtUpdate->bind_param("ssi", 
@@ -115,7 +123,7 @@ class ReservaModel {
                 $checkout, // Fecha de fin de disponibilidad (Checkout)
                 $habitacionId // ID de la habitación
             );
-            
+    
             if ($stmtUpdate->execute()) {
                 return $reservaId;  // Devuelve la ID de la reserva si todo fue exitoso
             } else {
@@ -125,6 +133,7 @@ class ReservaModel {
             die("Error en la ejecución de la consulta de reserva: " . $stmt->error);
         }
     }
+    
 
     public function getReservationDetails($reservationId) {
         // Consulta SQL con el marcador de posición "?"
@@ -209,16 +218,14 @@ class ReservaModel {
     }
 
     public function obtenerHabitacionesPorHotel($hotelId) {
-        // Fecha actual para comprobar las reservas pasadas
         $fechaActual = date('Y-m-d');
-        $checkin = $_SESSION['checkin'];  // Obtener la fecha de checkin desde la sesión
-        $checkout = $_SESSION['checkout']; // Obtener la fecha de checkout desde la sesión
-        
-        // Consulta para obtener solo las habitaciones disponibles
+        $checkin = $_SESSION['checkin'];  
+        $checkout = $_SESSION['checkout']; 
+    
         $query = "SELECT * FROM Habitaciones 
                   WHERE Id_Hotel = ? 
                   AND Estado = 'Disponible' 
-                  AND (Fecha_Disponibilidad_Fin IS NULL OR Fecha_Disponibilidad_Fin >= ?)
+                  AND (Fecha_Disponibilidad_Fin IS NULL OR Fecha_Disponibilidad_Fin >= ?) 
                   AND (Fecha_Disponibilidad_Inicio IS NULL OR Fecha_Disponibilidad_Inicio <= ?) 
                   AND NOT EXISTS (
                       SELECT 1 FROM Reservas 
@@ -242,6 +249,7 @@ class ReservaModel {
     
         return $habitaciones;
     }
+    
     
     public function actualizarEstadoHabitacionReservada($habitacionId) {
         // Actualiza el estado de la habitación a 'Reservada'
