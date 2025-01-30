@@ -96,7 +96,8 @@ if ($controller !== null) {
 
                 <div class="main-up-right">
                     <div class="links">
-                        <a href="../../index.php">Home</a>
+                       
+                        <a href="../index.php">Home</a>
                         <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
                         
                         <div class="dropdown">
@@ -116,9 +117,7 @@ if ($controller !== null) {
                                 </div>
                             </div>
                         </div>
-
                         <a href="../../vista/galeria/galeria.php">Galería</a>
-                        <a href="../../vista/ofertas/ofertas.php">Ofertas</a>
                         <a href="../../vista/Contacto/contacto.php">Contacto</a>
                         
                         <div class="dropdown-perfil">

@@ -1,0 +1,94 @@
+/* Estilo general del contenedor */
+.contacto-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Título del formulario */
+.form-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 2rem;
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Estilo de los campos de formulario */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+/* Focus en los campos de input y textarea */
+.input-field:focus {
+    border-color: #b49d6a;
+    box-shadow: 0 0 8px rgba(180, 157, 106, 0.3);
+    outline: none;
+}
+
+/* Estilo del campo select */
+.form-select {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    margin-top: 5px;
+    transition: border-color 0.3s ease;
+}
+
+/* Estilo del botón de enviar */
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    background-color: #b49d6a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #9a8734;
+}
+
+/* Estilo del pie de página */
+.footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footer-link {
+    color: #b49d6a;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}

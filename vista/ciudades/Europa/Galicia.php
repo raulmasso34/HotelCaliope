@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Incluir el controlador
-require_once __DIR__ . '/../controller/reserva/reservaController.php';
+require_once __DIR__ . '../../../../controller/reserva/reservaController.php';
 
 // Crear una instancia del controlador
 $controller = new ReservaController();
