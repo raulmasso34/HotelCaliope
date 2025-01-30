@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Regístrate</title>
     <link rel="stylesheet" href="../../static/css/InicioSesion.css">
+    <link rel="shortcut icon" href="../../static/img/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="registro-container">

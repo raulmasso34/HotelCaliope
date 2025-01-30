@@ -99,6 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      crossorigin=""></script>
     <title>Document</title>
     <link rel="stylesheet" href="../../static/css/contacto/contacto.css">
+    <link rel="shortcut icon" href="../../static/img/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 
 

@@ -35,7 +35,7 @@ if ($controller !== null) {
     // Obtener los países a través del controlador
     $paises = $controller->obtenerPaises();
 
-    // Verificar si se han obtenido los países y hacer algo con ellos
+    // Verificar si se han obtenido los países y hacer algo con ellos<link rel="shortcut icon" href="../../../static/img/favicon_io/favicon.ico" type="image/x-icon">
     
 } 
 ?>
@@ -61,7 +61,7 @@ if ($controller !== null) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../static/css/style.css">
     <link rel="stylesheet" href="../../../static/css/ciudades/pirineos.css">
-    
+    <link rel="shortcut icon" href="../../../static/img/favicon_io/favicon.ico" type="image/x-icon">
     <title>PIRINEOS</title>
 </head>
 <body>

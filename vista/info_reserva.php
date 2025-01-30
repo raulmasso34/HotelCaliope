@@ -74,6 +74,7 @@ if (isset($_GET['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles de la Reserva</title>
     <link rel="stylesheet" href="../static/css/info_reserva.css">
+    <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <h1>DETALLES DE LA RESERVA</h1>

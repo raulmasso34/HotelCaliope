@@ -42,6 +42,7 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles del Hotel</title>
     <link rel="stylesheet" href="../static/css/detalles.css">
+    <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <h1>Detalles de la Reserva</h1>

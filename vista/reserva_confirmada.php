@@ -35,7 +35,8 @@ if (isset($_SESSION['Reservas'])) {
 <head>
     <meta charset="UTF-8">
     <title>Reserva Confirmada</title>
-    <link rel="stylesheet" href="../static/css/resrerva_confimada.css"> <!-- Enlazamos al archivo CSS -->
+    <link rel="stylesheet" href="../static/css/resrerva_confimada.css">
+    <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="container">

@@ -74,6 +74,7 @@ $database->closeConnection();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hoteles Disponibles</title>
     <link rel="stylesheet" href="../static/css/reserva.css">
+    <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="container">

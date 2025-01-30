@@ -17,6 +17,7 @@ unset($_SESSION['reserva_error']);  // Limpiar el mensaje después de mostrarlo
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error en la Reserva</title>
+    <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <h1>Error al realizar la reserva</h1>

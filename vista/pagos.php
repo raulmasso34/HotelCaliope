@@ -33,6 +33,7 @@ $hotelDetails = $reservaController->obtenerDetallesHotel($hotelId);
     <meta charset="UTF-8">
     <title>Pagar Reserva</title>
     <link rel="stylesheet" href="../static/css/pagos.css">
+    <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <h1>Pagar Reserva</h1>
