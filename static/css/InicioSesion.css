@@ -270,19 +270,6 @@ body {
     letter-spacing: 1px;
 }
 
-.reservas-info table {
-    width: 100%;
-    color: white;
-    border-collapse: collapse;
-    margin-bottom: 40px;
-}
-
-.reservas-info th, .reservas-info td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 2px solid #444;  /* Borde suave */
-}
-
 .reservas-info th {
     background-color: #2c2c2c;
     color: #9297ad;  
@@ -344,6 +331,108 @@ body {
 .perfil-salir a:hover {
    color: #f98686;  /* Rojo más oscuro */
 }
+
+
+/*-------------------RESEVAS----------------------------------*/
+
+/* Estilo para la sección de reservas */
+.reservas-info {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f0f4f7; /* Un tono suave y elegante para el fondo */
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Sombra sutil para profundidad */
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Título de la sección de reservas */
+.reservas-info h2 {
+    font-size: 28px;
+    color: #2c3e50; /* Azul oscuro elegante */
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 2px; /* Espaciado entre letras */
+}
+
+/* Contenedor de cada botón de reserva */
+.reservation-button {
+    margin: 20px 0;
+    text-align: center;
+}
+
+/* Estilo de los botones de reserva */
+.btn-reserva {
+    display: inline-block;
+    padding: 18px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #1f6f8b; /* Azul oscuro pero vibrante */
+    border-radius: 12px;
+    text-decoration: none;
+    text-transform: uppercase; /* Texto en mayúsculas */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra suave */
+    border: 2px solid #bdc3c7; /* Borde plata suave */
+    transition: all 0.3s ease;
+    font-family: 'Verdana', sans-serif;
+}
+
+/* Efecto al pasar el ratón sobre el botón */
+.btn-reserva:hover {
+    background-color: #4f9db8; /* Azul más claro al pasar el ratón */
+    transform: translateY(-3px); /* Elevación */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    border-color: #95a5a6; /* Cambio en el borde a un plata más suave */
+}
+
+/* Efecto de foco (al hacer click) */
+.btn-reserva:focus {
+    outline: none;
+    box-shadow: 0 0 10px #3498db; /* Efecto azul al hacer foco */
+}
+
+/* Si no hay reservas, mostrar mensaje centrado */
+.reservas-info p {
+    text-align: center;
+    font-size: 18px;
+    color: #7f8c8d; /* Gris suave */
+    font-family: 'Georgia', serif;
+}
+
+/* Contorno de los botones cuando están en foco o hover */
+.reservation-button a {
+    border: none; /* Eliminar bordes innecesarios */
+}
+
+/* Añadir un toque de lujo con un efecto de gradiente suave en el fondo de la página */
+body {
+    background: linear-gradient(135deg, #12173a, #1f5e7e); /* Gradiente azul suave */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hidden-reservations {
+    display: none;
+}
+
+.toggle-reservations-btn {
+    padding: 10px 20px;
+    margin: 15px 0;
+    background: linear-gradient(45deg, #00aaff, #004466);
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-reservations-btn:hover {
+    background: linear-gradient(45deg, #0078b4, #002c43);
+}
+
 
 
 /* Estilo para dispositivos móviles (opcional) */

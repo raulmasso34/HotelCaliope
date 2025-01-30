@@ -37,7 +37,6 @@ require_once __DIR__ . '/../controller/reserva/reservaController.php';
 // Crear una instancia del controlador
 $reservaController = new ReservaController();
 
-// Obtener los países desde la base de datos
 $paises = $reservaController->obtenerPaises();
 
 
@@ -50,32 +49,23 @@ if (!$location) {
     exit;
 }
 
-// Conexión a la base de datos
+// Obtener los hoteles disponibles para la ubicación seleccionada
+$hoteles = $reservaController->obtenerHotelesPorPais($location);
+// Obtener la ubicación seleccionada de la sesión
+$location = $_SESSION['location'] ?? null;  // Se obtiene la ubicación de la sesión
 
-
-
-// Inicializar la variable $hoteles
-$hoteles = [];
-
-// Obtener hoteles del país seleccionado
-$query = $db->prepare("SELECT * FROM Hotel WHERE Id_Pais = ?");
-$query->bind_param("i", $location);  // Usar bind_param para valores seguros
-$query->execute();
-$result = $query->get_result();
-
-// Verificar si se encontraron hoteles
-if ($result->num_rows > 0) {
-    // Si se encuentran resultados, asignar los hoteles a la variable $hoteles
-    $hoteles = $result->fetch_all(MYSQLI_ASSOC);
-} else {
-    echo "No se encontraron hoteles disponibles en la ubicación seleccionada.";
-    // También podemos asignar un array vacío a $hoteles para evitar problemas en el foreach
-    $hoteles = [];
+// Validar que haya una ubicación seleccionada
+if (!$location) {
+    echo "No se ha seleccionado una ubicación.";
+    exit;
 }
 
-// Cerrar la conexión después de usarla
 $database->closeConnection();
+
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="es">

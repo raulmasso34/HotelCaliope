@@ -9,15 +9,30 @@ class HotelModel {
         $this->conn = $db;
     }
 
-    // Obtener los hoteles disponibles por país
-    public function obtenerHotelesPorPais($paisId) {
-        $sql = "SELECT * FROM Hotel WHERE Id_Pais = ?";
+    public function obtenerDetallesHotel($hotelId) {
+        $sql = "SELECT * FROM Hotel WHERE Id_Hotel = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $paisId);  // Usamos bind_param para evitar inyección SQL
+        $stmt->bind_param("i", $hotelId);
         $stmt->execute();
         $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc(); // Retorna el arreglo de resultados
+        } else {
+            return null; // Si no hay resultados, retorna null
+        }
+    }
+    
+    
 
-        // Devuelve todos los hoteles en formato de arreglo asociativo
+    
+   
+    public function obtenerHotelesPorPais($location) {
+        $query = $this->conn->prepare("SELECT * FROM Hotel WHERE Id_Pais = ?");
+        $query->bind_param("i", $location);
+        $query->execute();
+        $result = $query->get_result();
+
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
@@ -31,6 +46,31 @@ class HotelModel {
 
         // Devuelve el hotel si existe
         return $result->fetch_assoc();
+    }
+
+    public function obtenerHabitaciones($hotelId) {
+        // Definir la consulta SQL
+        $query = "SELECT * FROM Habitaciones WHERE Id_Hotel = ?";  // Usar "?" en lugar de ":hotelId"
+    
+        // Preparar la consulta
+        $stmt = $this->conn->prepare($query);
+    
+        // Limpiar los datos de entrada
+        $hotelId = htmlspecialchars(strip_tags($hotelId));
+    
+        // Enlazar el parámetro
+        $stmt->bind_param("i", $hotelId); // "i" significa entero
+    
+        // Ejecutar la consulta
+        $stmt->execute();
+        $result = $stmt->get_result();  // Obtener el resultado de la consulta
+    
+        // Si hay resultados, los devuelve como un array asociativo
+        if ($result->num_rows > 0) {
+            return $result->fetch_all(MYSQLI_ASSOC);  // Devuelve todas las habitaciones del hotel
+        } else {
+            return null;  // Si no se encuentran habitaciones, retorna null
+        }
     }
 
     // Si necesitas más funciones, puedes agregarlas aquí, por ejemplo:

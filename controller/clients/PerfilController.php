@@ -1,5 +1,7 @@
 <?php
 session_start();  // Iniciar sesión para acceder a la sesión
+
+// Mostrar errores si es necesario
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -10,8 +12,9 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-require_once __DIR__ . '/../../config/Database.php';  // Incluir la configuración de la base de datos
-require_once __DIR__ . '/../../modelo/clientesModelo/PerfilModelo.php';  // Incluir el modelo del perfil
+// Incluir la configuración de la base de datos y el modelo
+require_once __DIR__ . '/../../config/Database.php';
+require_once __DIR__ . '/../../modelo/clientesModelo/PerfilModelo.php';
 
 // Crear la conexión a la base de datos
 $db = new Database();
@@ -31,16 +34,17 @@ if ($profile === null) {
     exit();
 }
 
-// Obtener las reservas del usuario
-$reservations = $perfilModel->getReservations($profile['Id_Cliente']);
+// Obtener las reservas del usuario usando el método getReservations
+$reservations = $perfilModel->getReservations($userId);
 
+// Si no hay reservas, inicializamos el array vacío
 if ($reservations === null) {
-    $reservations = [];  // Si no hay reservas, inicializa el array vacío
+    $reservations = [];
 }
 
 // Cerrar la conexión
 $db->closeConnection();
 
-// Incluir la vista del perfil y pasar las variables al archivo
-include __DIR__ . '/../../vista/Clientes/perfil.php';  // Cambiar require_once a include
+// Pasar las variables a la vista para su visualización
+include __DIR__ . '/../../vista/Clientes/perfil.php';  // Cambiar 'require' por 'include' para cargar la vista
 ?>

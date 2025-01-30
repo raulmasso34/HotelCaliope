@@ -4,21 +4,33 @@ include '../config/Database.php';
 $database = new Database();
 $db = $database->getConnection();
 session_start();
+require_once __DIR__ . '/../controller/reserva/reservaController.php';
+$reservaController = new ReservaController();
 
-// Verificar si hay un usuario autenticado y obtener el ID de usuario
-$user_id = $_SESSION['user_id'] ?? null; // Asegúrate de que el ID del usuario esté en la sesión
+// Usamos correctamente el objeto reservaController
+$user_id = $_SESSION['user_id'] ?? null; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Recuperar los datos del formulario
     $habitacionId = $_POST['habitacionId'] ?? null;
     $clienteId = $user_id; // ID del usuario desde la sesión
-    $hotelId = $_POST['hotelId'] ?? null;
+    $hotelId = $_POST['hotelId'] ?? null;  // Asegurarse de que el hotelId se obtiene
     $checkin = $_POST['checkin'] ?? null;
     $checkout = $_POST['checkout'] ?? null;
     $guests = $_POST['guests'] ?? null;
     $paisId = $_POST['paisId'] ?? null;
     $actividadId = $_POST['actividadId'] ?? null;
     $metodoPagoId = $_POST['metodo_pago'] ?? null;
+
+    // Llamamos al método obtenerDetallesHotel usando el hotelId
+    $hotelDetails = $reservaController->obtenerDetallesHotel($hotelId);
+    // Llamamos al método obtenerDetallesHabitacion usando el habitacionId
+    $habitacionDetails = $reservaController->obtenerDetallesHabitacion($habitacionId);
+
+    // Llamamos al método obtenerActividadesPorHotel solo después de que hotelId esté definido
+    $actividades = $reservaController->obtenerActividadesPorHotel($hotelId);
+    $metodosPago = $reservaController->obtenerMetodosPagoDisponibles();
+    $paisNombre = $reservaController->obtenerNombrePais($paisId);
 
     // Guardar los datos de la reserva en la sesión
     $_SESSION['Reservas'] = [
@@ -34,37 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
 
     // Verificar si se han guardado correctamente los datos
-    echo "<pre>";
-    print_r($_SESSION['Reservas']);
-    echo "</pre>";
+   
 }
-
-// Obtener los métodos de pago disponibles
-$queryMetodosPago = $db->prepare("SELECT * FROM MetodoPago WHERE Activo = 1");
-$queryMetodosPago->execute();
-$metodosPago = $queryMetodosPago->get_result()->fetch_all(MYSQLI_ASSOC);
-
-// Obtener los detalles del hotel
-$queryHotel = $db->prepare("SELECT * FROM Hotel WHERE Id_Hotel = ?");
-$queryHotel->bind_param("i", $_POST['hotelId']);
-$queryHotel->execute();
-$hotelDetails = $queryHotel->get_result()->fetch_assoc();
-
-// Obtener los detalles de la habitación seleccionada
-$queryHabitacion = $db->prepare("SELECT * FROM Habitaciones WHERE Id_Habitaciones = ?");
-$queryHabitacion->bind_param("i", $_POST['habitacionId']);
-$queryHabitacion->execute();
-$habitacionDetails = $queryHabitacion->get_result()->fetch_assoc();
-
-// Obtener las actividades disponibles en el hotel
-$queryActividades = $db->prepare("SELECT * FROM Actividades WHERE Id_Hotel = ?");
-$queryActividades->bind_param("i", $_POST['hotelId']);
-$queryActividades->execute();
-$actividades = $queryActividades->get_result()->fetch_all(MYSQLI_ASSOC);
 
 // Cerrar la conexión a la base de datos
 $database->closeConnection();
-
 ?>
 
 <!DOCTYPE html>
@@ -78,7 +64,15 @@ $database->closeConnection();
 <body>
     <h1>Confirmar Reserva</h1>
 
-    <p><strong>Ubicación seleccionada:</strong> <?php echo htmlspecialchars($paisId); ?></p>
+    <p><strong>Ubicación seleccionada:</strong> 
+    <?php 
+    if ($paisNombre) {
+        echo htmlspecialchars($paisNombre);  // Muestra el nombre del país
+    } else {
+        echo "País no disponible";  // En caso de que no se encuentre el país
+    }
+    ?>
+    </p>
     <p><strong>Fecha de Check-in:</strong> <?php echo htmlspecialchars($checkin); ?></p>
     <p><strong>Fecha de Check-out:</strong> <?php echo htmlspecialchars($checkout); ?></p>
     <p><strong>Número de personas:</strong> <?php echo htmlspecialchars($guests); ?></p>
@@ -119,17 +113,13 @@ $database->closeConnection();
         <!-- Selección del método de pago desde la base de datos -->
         <label for="metodo_pago">Selecciona un método de pago:</label>
         <select name="metodo_pago" id="metodo_pago" required>
-            <?php
-            if (!empty($metodosPago)):
-                foreach ($metodosPago as $metodo):
-            ?>
-                <option value="<?php echo $metodo['Id_MetodoPago']; ?>">
-                    <?php echo htmlspecialchars($metodo['Tipo']); ?>
-                </option>
-            <?php
-                endforeach;
-            else:
-            ?>
+            <?php if (!empty($metodosPago)): ?>
+                <?php foreach ($metodosPago as $metodo): ?>
+                    <option value="<?php echo $metodo['Id_MetodoPago']; ?>">
+                        <?php echo htmlspecialchars($metodo['Tipo']); ?>
+                    </option>
+                <?php endforeach; ?>
+            <?php else: ?>
                 <option value="">No hay métodos de pago disponibles</option>
             <?php endif; ?>
         </select>

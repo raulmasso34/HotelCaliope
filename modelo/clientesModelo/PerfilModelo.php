@@ -26,17 +26,37 @@ class PerfilModel {
         return null;  // Si hay algún error con la consulta
     }
 
+    public function obtenerDetallesCliente($clienteId) {
+        $query = "SELECT Nom, Cognom FROM Clients WHERE Id_Client = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $clienteId); // 'i' para indicar que el parámetro es un entero
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Verificar si se obtuvo el cliente
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc(); // Retorna los detalles como un arreglo asociativo
+        } else {
+            return null; // Si no se encuentra el cliente
+        }
+    }
 
 
 
     // Método para obtener las reservas del cliente por su ID
     public function getReservations($clientId) {
-        $sql = "SELECT * FROM Reservas WHERE Id_Cliente = ?";
+        $sql = "
+            SELECT r.*, h.Nombre 
+            FROM Reservas r
+            JOIN Hotel h ON r.Id_Hotel = h.Id_Hotel
+            WHERE r.Id_Cliente = ?
+        ";
+    
         if ($stmt = $this->conn->prepare($sql)) {
             $stmt->bind_param("i", $clientId);  // Usamos 'i' para indicar que el parámetro es un entero
             $stmt->execute();  // Ejecutar la consulta
             $result = $stmt->get_result();
-
+    
             // Si se encontraron reservas
             $reservations = [];
             while ($reservation = $result->fetch_assoc()) {
@@ -46,6 +66,7 @@ class PerfilModel {
         }
         return null;  // Si hubo un error con la consulta
     }
+    
 
 }
 ?>

@@ -1,12 +1,12 @@
 <?php
 session_start();
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
 
-echo "<pre>";
-print_r($_SESSION['Reservas']);
-echo "</pre>";
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+require_once __DIR__ . '/../controller/reserva/reservaController.php';
+$reservaController = new ReservaController();
 
 // Verificar si la reserva está en la sesión
 if (isset($_SESSION['Reservas'])) {
@@ -23,6 +23,8 @@ if (isset($_SESSION['Reservas'])) {
     echo "Error: No se ha recibido la reserva en la sesión.";
     exit;
 }
+
+$hotelDetails = $reservaController->obtenerDetallesHotel($hotelId);
 ?>
 
 <!DOCTYPE html>
@@ -36,11 +38,11 @@ if (isset($_SESSION['Reservas'])) {
     <h1>Pagar Reserva</h1>
 
     <!-- Mostrar los detalles de la reserva -->
-    <p><strong>Hotel:</strong> <?php echo htmlspecialchars($hotelId); ?></p>
+    <p><strong>Hotel:</strong> <?php echo htmlspecialchars($hotelDetails['Nombre']); ?></p> <!-- Asumiendo que 'Nombre' es un campo del array -->
     <p><strong>Habitación:</strong> <?php echo htmlspecialchars($habitacionId); ?></p>
     <p><strong>Check-in:</strong> <?php echo htmlspecialchars($checkin); ?></p>
     <p><strong>Check-out:</strong> <?php echo htmlspecialchars($checkout); ?></p>
-    <p><strong>Invitados:</strong> <?php echo htmlspecialchars($guests); ?></p>
+    <p><strong>Personas:</strong> <?php echo htmlspecialchars($guests); ?></p>
 
     <!-- Formulario de pago -->
     <form action="../controller/pago/pagoController.php" method="POST">

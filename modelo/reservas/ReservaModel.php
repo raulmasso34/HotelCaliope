@@ -32,7 +32,43 @@ class ReservaModel {
         }
     }
 
+    public function obtenerMetodosPago() {
+        $query = $this->conn->prepare("SELECT * FROM MetodoPago WHERE Activo = 1");
+        $query->execute();
+        return $query->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function obtenerDetallesHotel($hotelId) {
+        $query = $this->conn->prepare("SELECT * FROM Hotel WHERE Id_Hotel = ?");
+        $query->bind_param("i", $hotelId);
+        $query->execute();
+        return $query->get_result()->fetch_assoc();
+    }
+
+    public function obtenerDetallesHabitacion($habitacionId) {
+        $query = $this->conn->prepare("SELECT * FROM Habitaciones WHERE Id_Habitaciones = ?");
+        $query->bind_param("i", $habitacionId);
+        $query->execute();
+        return $query->get_result()->fetch_assoc();
+    }
+
+    public function obtenerActividades($hotelId) {
+        $query = $this->conn->prepare("SELECT * FROM Actividades WHERE Id_Hotel = ?");
+        $query->bind_param("i", $hotelId);
+        $query->execute();
+        return $query->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function obtenerDetalles($hotelId) {
+        $query = "SELECT * FROM Hotel WHERE Id_Hotel = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $hotelId);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
     public function insertarReserva($hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal, $NumeroPersonas) {
+        // Primero, realizamos la inserción de la reserva
         $query = "INSERT INTO Reservas (Id_Hotel, Id_Cliente, Checkin, Checkout, Id_Pais, Id_Actividad, Id_Habitacion, Id_Tarifa, Precio_Habitacion, Precio_Actividad, Precio_Tarifa, Precio_Total, Numero_Personas) 
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
@@ -41,12 +77,12 @@ class ReservaModel {
             die('Error preparing statement: ' . $this->conn->error);
         }
         
-        // Use 's' for string fields like checkin and checkout
+        // Usamos 's' para los campos de tipo string como checkin y checkout
         $stmt->bind_param("iissiiiiddddd", 
             $hotelId, 
             $clienteId, 
-            $checkin, 
-            $checkout, 
+            $checkin,  // Esta es una fecha, tipo 's'
+            $checkout, // Esta es una fecha, tipo 's'
             $paisId, 
             $actividadId, 
             $habitacionId, 
@@ -59,12 +95,62 @@ class ReservaModel {
         );
         
         if ($stmt->execute()) {
-            return $this->conn->insert_id;
+            // Una vez que la reserva se ha realizado, obtenemos la ID de la reserva insertada
+            $reservaId = $this->conn->insert_id;
+    
+            // Actualizamos la disponibilidad de la habitación y el estado a 'Reservada'
+            $queryUpdate = "UPDATE Habitaciones 
+                            SET Fecha_Disponibilidad_Inicio = ?, Fecha_Disponibilidad_Fin = ?, Disponibilidad = 0, Estado = 'Reservada' 
+                            WHERE Id_Habitaciones = ? AND (Fecha_Disponibilidad_Inicio IS NULL OR Fecha_Disponibilidad_Fin IS NULL)";
+            
+            $stmtUpdate = $this->conn->prepare($queryUpdate);
+            if ($stmtUpdate === false) {
+                die('Error preparing update statement: ' . $this->conn->error);
+            }
+            
+            // Para el caso de que no existan fechas, asignamos las fechas de la reserva.
+            // Usamos 's' para las fechas (tipo string) y 'i' para el ID de la habitación.
+            $stmtUpdate->bind_param("ssi", 
+                $checkin,  // Fecha de inicio de disponibilidad (Checkin)
+                $checkout, // Fecha de fin de disponibilidad (Checkout)
+                $habitacionId // ID de la habitación
+            );
+            
+            if ($stmtUpdate->execute()) {
+                return $reservaId;  // Devuelve la ID de la reserva si todo fue exitoso
+            } else {
+                die("Error en la actualización de disponibilidad y estado: " . $stmtUpdate->error);
+            }
         } else {
-            die("Error en la ejecución de la consulta: " . $stmt->error);
+            die("Error en la ejecución de la consulta de reserva: " . $stmt->error);
+        }
+    }
+
+    public function getReservationDetails($reservationId) {
+        // Consulta SQL con el marcador de posición "?"
+        $query = "SELECT * FROM Reservas WHERE Id_Reserva = ?";
+    
+        // Preparar la consulta
+        $stmt = $this->conn->prepare($query);
+    
+        // Vincular el parámetro, asegurándote de que $reservationId es un entero
+        $stmt->bind_param("i", $reservationId);
+    
+        // Ejecutar la consulta
+        $stmt->execute();
+    
+        // Obtener los resultados
+        $result = $stmt->get_result();
+    
+        // Verificar si hay resultados
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();  // Retorna la primera fila de la consulta
+        } else {
+            return null;  // No se encontraron resultados
         }
     }
     
+
     public function actualizarReservaConPago($reservaId, $idPago) {
         try {
             $query = "UPDATE Reservas 
@@ -86,6 +172,25 @@ class ReservaModel {
         }
     }
 
+   
+        public function obtenerMetodosPagoDisponibles() {
+            $query = "SELECT * FROM MetodoPago WHERE Activo = 1";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            
+            // Usando MySQLi en lugar de PDO
+            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        }
+
+    
+    public function obtenerHabitaciones($hotelId) {
+        $query = "SELECT * FROM Habitaciones WHERE Id_Hotel = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $hotelId);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function obtenerHabitacionPorId($habitacionId) {
         try {
             $sql = "SELECT * FROM Habitaciones WHERE Id_Habitaciones = ?";  
@@ -102,6 +207,53 @@ class ReservaModel {
             return null;
         }
     }
+
+    public function obtenerHabitacionesPorHotel($hotelId) {
+        // Fecha actual para comprobar las reservas pasadas
+        $fechaActual = date('Y-m-d');
+        $checkin = $_SESSION['checkin'];  // Obtener la fecha de checkin desde la sesión
+        $checkout = $_SESSION['checkout']; // Obtener la fecha de checkout desde la sesión
+        
+        // Consulta para obtener solo las habitaciones disponibles
+        $query = "SELECT * FROM Habitaciones 
+                  WHERE Id_Hotel = ? 
+                  AND Estado = 'Disponible' 
+                  AND (Fecha_Disponibilidad_Fin IS NULL OR Fecha_Disponibilidad_Fin >= ?)
+                  AND (Fecha_Disponibilidad_Inicio IS NULL OR Fecha_Disponibilidad_Inicio <= ?) 
+                  AND NOT EXISTS (
+                      SELECT 1 FROM Reservas 
+                      WHERE Reservas.Id_Habitacion = Habitaciones.Id_Habitaciones
+                      AND (
+                          (Reservas.Checkin BETWEEN ? AND ?) 
+                          OR (Reservas.Checkout BETWEEN ? AND ?)
+                          OR (Reservas.Checkin <= ? AND Reservas.Checkout >= ?)
+                      )
+                  )"; 
+    
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("issssss", $hotelId, $fechaActual, $fechaActual, $checkin, $checkout, $checkin, $checkout, $checkin, $checkout);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $habitaciones = [];
+        while ($row = $result->fetch_assoc()) {
+            $habitaciones[] = $row;
+        }
+    
+        return $habitaciones;
+    }
+    
+    public function actualizarEstadoHabitacionReservada($habitacionId) {
+        // Actualiza el estado de la habitación a 'Reservada'
+        $query = "UPDATE Habitaciones 
+                  SET Estado = 'Reservada' 
+                  WHERE Id_Habitaciones = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $habitacionId);
+        $stmt->execute();
+    }
+
+    
 
     public function obtenerReservaPorId($reservaId) {
         try {
@@ -217,5 +369,6 @@ class ReservaModel {
             return null;
         }
     }
+   
 }
 ?>

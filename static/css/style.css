@@ -192,9 +192,78 @@ h4 {
     transform: scale(1.1); /* Ligero aumento */
 }
 
+/* Menú hamburguesa (solo visible en pantallas pequeñas) */
+/* Estilo para el menú hamburguesa */
+.menu-toggle {
+    display: none; /* Ocultamos el menú hamburguesa en pantallas grandes */
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px; /* Ancho más estrecho para el menú hamburguesa */
+    height: 20px; /* Reducimos la altura para hacerlo más compacto */
+}
+
+.menu-toggle .bar {
+    height: 3px; /* Reducimos el grosor de las barras */
+    background-color: #333;
+    border-radius: 5px;
+}
+
+/* El menú principal debe ser visible solo en pantallas grandes */
+.main-up-right {
+    display: flex;
+    gap: 20px;
+}
+
+/* Menú móvil (por defecto oculto) */
+.mobile-menu {
+    display: none; /* Ocultar el menú por defecto */
+    flex-direction: column;
+    position: absolute;
+    top: 100px; /* Ajusta la posición según el diseño */
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 10;
+}
 
 
-/*ICONO LOGIN PERFIL*/
+/* Menú hamburguesa visible en pantallas pequeñas */
+@media (max-width: 768px) {
+    /* Mostrar el icono del menú hamburguesa */
+    .menu-toggle {
+        display: flex;
+    }
+
+    /* Ocultar el menú principal */
+    .main-up-right {
+        display: none;
+    }
+
+    /* Mostrar el menú móvil cuando se activa */
+    .mobile-menu.active {
+        display: flex;
+    }
+
+    /* Enlaces dentro del menú hamburguesa */
+    .mobile-menu a {
+        font-size: 18px;
+        padding: 10px 0;
+        text-decoration: none;
+        color: #333;
+    }
+
+    /* Estilo para los enlaces al pasar el mouse */
+    .mobile-menu a:hover {
+        color: #000;
+        background-color: #f4f4f4;
+    }
+}
+
+
+/*------------------------------------------------ICONO LOGIN PERFIL*----------------------------------------------------/
 /* Estilos para el icono de perfil */
 .icon-perfil {
     cursor: pointer;
@@ -264,13 +333,7 @@ h4 {
 
 
 
-
-
-
-
-
-
-/*---------------------------CENTRO IMG-------------------*/
+/*------------------------------------------------------CENTRO IMG-------------------------------------------------*/
 
 
 .main-center{
@@ -322,81 +385,128 @@ h4 {
     font-style: italic;
 }
 
-/*-----------BOTONes RESERVA----------*/
+/*-----------------------------------------BOTONes RESERVA-----------------------------------------------------------*/
 
-.center-down{
-    
+.center-down {
     height: 50%;
     width: 100%;
-
 }
 
-
-
-/* Estilo del formulario de reserva */
-/* Estilo general para el formulario */
+/* Contenedor de la reserva */
 .reservation-form {
     max-width: 100%;
     margin: 0 auto;
-    padding: 20px;
-    background-color: #5a5a5aa9;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 25px;
+    background: linear-gradient(145deg, #d1d7e0, #ffffff);
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), inset 0 2px 4px rgba(255, 255, 255, 0.1);
     overflow: hidden;
 }
 
-/* Contenedor del formulario */
+/* Diseño del formulario */
 form {
     display: flex;
-    justify-content: space-between; /* Espacio entre los elementos */
-    flex-wrap: wrap; /* Permite que los elementos se ajusten a la siguiente línea si no caben */
-    gap: 20px; /* Espacio entre los campos */
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-/* Agrupar los campos del formulario en columnas horizontales */
+/* Campos del formulario */
 .form-group {
-    flex: 1 1 18%; /* Cada campo ocupa un 18% del ancho total, ajustándose al contenedor */
+    flex: 1 1 18%;
     display: flex;
     flex-direction: column;
 }
 
 label {
     margin-bottom: 8px;
-    color: #F4F4F4;
+    color: #2a3d66;
     font-weight: bold;
+    font-size: 1.1rem;
 }
 
-/* Estilo de los campos de entrada */
+/* Estilo de entrada y selección */
 input, select {
-    padding: 10px;
+    padding: 16px;
     font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #F4F4F4;
+    border: 1px solid #cfd6e0;
+    border-radius: 8px;
+    background-color: #f7f9fc;
     color: #333;
     width: 100%;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
 }
 
-input[type="date"] {
-    background-color: #fff;
+input:focus, select:focus {
+    border-color: #5a8ecf;
+    box-shadow: 0 0 8px rgba(90, 142, 207, 0.3);
 }
+
+/* Estilo básico para el campo de fecha */
+input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    padding: 14px 16px;
+    font-size: 1rem;
+    border: 2px solid #cfd6e0;
+    border-radius: 10px;
+    background: linear-gradient(to bottom right, #eaf1fc, #ffffff);
+    color: #333;
+    width: 100%;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Estilo para el calendario desplegable */
+input[type="date"]::-webkit-calendar-picker-indicator {
+   
+    background-size: contain;
+    border: none;
+    cursor: pointer;
+    opacity: 0.7;
+    
+    transition: opacity 0.3s;
+}
+
+input[type="date"]:hover::-webkit-calendar-picker-indicator {
+    opacity: 1;
+}
+
+/* Efecto de foco */
+input[type="date"]:focus {
+    border-color: #5a8ecf;
+    box-shadow: 0 0 12px rgba(90, 142, 207, 0.4);
+    background: linear-gradient(to bottom right, #f7faff, #ffffff);
+}
+
 
 /* Botón */
 button {
     width: 100%;
     padding: 14px;
-    background-color: #F4F4F4;
-    color: #1C3A5B;
+    background: linear-gradient(135deg, #5a8ecf, #345c8c);
+    color: #ffffff;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 1.1rem;
-    transition: background-color 0.3s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background 0.3s ease, transform 0.2s ease;
     margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
-    background-color: #BDC3C7;
+    background: linear-gradient(135deg, #345c8c, #5a8ecf);
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsividad para pantallas pequeñas */
@@ -417,7 +527,7 @@ button:hover {
     }
 }
 
-/*-----------------------------------------------------MAIN---------------------------------------*/
+/*-----------------------------------------------------------MAIN--------------------------------------------------------*/
 
 .main-main{
     opacity: 0; 
@@ -580,7 +690,199 @@ button:hover {
     width: 100%;
 }
 
-/*------------------------------NUESTROS HOTELES-------------------------------*/
+/* General responsiveness */
+* {
+    box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+    .main-main {
+        height: auto;
+        margin: 5% auto;
+        width: 90%;
+    }
+
+    .main-box {
+        flex-direction: column; /* Stack items vertically */
+        width: 100%;
+    }
+
+    .main-box-box {
+        width: 100%; /* Full width on smaller screens */
+        margin: auto;
+        flex-direction: column; /* Stack items vertically */
+    }
+
+    .stars-main {
+        width: 50%; /* Adjust size on smaller screens */
+    }
+
+    .main-title h1 {
+        font-size: 50px; /* Reduce font size for better fit */
+    }
+
+    .main-title h3 {
+        font-size: 20px; /* Reduce size */
+    }
+
+    .main-txt {
+        width: 90%; /* Adjust width to fit content */
+    }
+
+    .main-txt p {
+        font-size: 18px; /* Adjust font size */
+    }
+
+    .main-botones {
+        flex-direction: column; /* Stack buttons vertically */
+        margin-top: 5%;
+    }
+
+    .main-botones button {
+        width: 100%; /* Full width buttons */
+        margin: 10px 0; /* Add spacing between buttons */
+    }
+
+    .main-box-right {
+        flex-direction: column; /* Stack items vertically */
+        width: 100%;
+        height: auto;
+    }
+
+    .img-left, .img-right {
+        width: 80%; /* Adjust image size */
+        height: auto; /* Maintain aspect ratio */
+        margin: auto;
+        margin-bottom: 20%;
+        position: relative;
+        top: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-main {
+        height: auto;
+        margin: 5% auto;
+        width: 100%;
+    }
+
+    .main-box {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .main-box-box {
+        width: 100%;
+        margin: auto;
+        flex-direction: column;
+    }
+
+    .stars-main {
+        width: 70%;
+    }
+
+    .main-title h1 {
+        font-size: 40px; /* Decrease font size for mobile */
+    }
+
+    .main-title h3 {
+        font-size: 18px; /* Decrease font size */
+    }
+
+    .main-txt {
+        width: 90%;
+        margin: 5% auto;
+    }
+
+    .main-txt p {
+        font-size: 16px; /* Decrease font size for readability */
+    }
+
+    .main-botones {
+        flex-direction: column;
+        margin-top: 5%;
+    }
+
+    .main-botones button {
+        width: 100%;
+        margin: 10px 0; /* Increase margin for spacing */
+    }
+
+    .main-box-right {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+    }
+
+    .img-left, .img-right {
+        width: 80%; /* Make images smaller */
+        height: auto; /* Maintain aspect ratio */
+        margin-bottom: 20%;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-main {
+        width: 100%;
+        margin: 3% auto;
+    }
+
+    .main-box {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .main-box-box {
+        width: 100%;
+        margin: auto;
+        flex-direction: column;
+    }
+
+    .stars-main {
+        width: 80%; /* Adjust for mobile */
+    }
+
+    .main-title h1 {
+        font-size: 30px; /* Much smaller font size */
+    }
+
+    .main-title h3 {
+        font-size: 16px;
+    }
+
+    .main-txt {
+        width: 90%;
+        margin: 5% auto;
+    }
+
+    .main-txt p {
+        font-size: 14px;
+    }
+
+    .main-botones {
+        flex-direction: column;
+        margin-top: 5%;
+    }
+
+    .main-botones button {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .main-box-right {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+    }
+
+    .img-left, .img-right {
+        width: 100%; /* Full width for images */
+        height: auto;
+        margin-bottom: 20%;
+    }
+}
+
+/*-----------------------------------------------------NUESTROS HOTELES------------------------------------------------*/
 
 .hoteles-nu{
     text-align: center;
@@ -736,7 +1038,203 @@ button:hover {
     transform-origin: left;
 }
 
-/*-------------------------------BENEFICIOS-----------------------------*/
+
+/* General responsiveness */
+* {
+    box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+    .hoteles-nu {
+        height: auto;
+        margin-top: 0;
+        padding: 2%;
+    }
+
+    .hoteles-txt h1 {
+        font-size: 40px;
+    }
+
+    .hoteles-txt p {
+        width: 90%; /* Ajusta el ancho a 90% */
+        margin: 0 auto; /* Centra el texto con márgenes */
+        font-size: 18px;
+    }
+
+    .hoteles-box {
+        flex-direction: column;
+        width: 90%; /* Ajusta el ancho a 90% */
+        height: auto;
+        margin: 0 auto; /* Centra el contenedor con márgenes */
+    }
+
+    .hoteles-nu-gen {
+        width: 90%; /* Ajusta el ancho a 90% */
+        margin: 0 auto; /* Centra el contenedor */
+        margin-bottom: 20px;
+    }
+
+    .sub-hoteles-nu {
+        width: 90%; /* Ajusta el ancho a 90% */
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .sub-hoteles-nu img {
+        width: 100%;
+        height: auto;
+    }
+
+    .sub-hoteles-nu h1 {
+        font-size: 30px;
+    }
+
+    .sub-hoteles-nu p {
+        font-size: 16px;
+        width: 90%; /* Ajusta el ancho a 90% */
+        margin: 5% auto; /* Añade márgenes para espaciado */
+    }
+
+    .hoteles-boton {
+        flex-direction: column;
+        width: 90%; /* Ajusta el ancho a 90% */
+        margin: 0 auto; /* Centra los botones */
+    }
+
+    .hoteles-boton button {
+        width: 90%; /* Ajusta el ancho de los botones */
+        margin: 10px 0;
+        padding: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hoteles-nu {
+        padding: 5%;
+        height: auto;
+    }
+
+    .hoteles-txt h1 {
+        font-size: 35px;
+    }
+
+    .hoteles-txt p {
+        width: 90%; /* Ajusta el ancho a 90% */
+        margin: 0 auto;
+        font-size: 16px;
+    }
+
+    .hoteles-box {
+        flex-direction: column;
+        width: 90%; /* Ajusta el ancho a 90% */
+        height: auto;
+        margin: 0 auto; /* Centra el contenedor */
+    }
+
+    .hoteles-nu-gen {
+        width: 90%; /* Ajusta el ancho a 90% */
+        margin: 0 auto;
+        margin-bottom: 15px;
+    }
+
+    .sub-hoteles-nu {
+        width: 90%; /* Ajusta el ancho a 90% */
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .sub-hoteles-nu img {
+        width: 100%;
+        height: auto;
+    }
+
+    .sub-hoteles-nu h1 {
+        font-size: 28px;
+    }
+
+    .sub-hoteles-nu p {
+        font-size: 14px;
+        width: 90%; /* Ajusta el ancho a 90% */
+        margin: 5% auto;
+    }
+
+    .hoteles-boton {
+        flex-direction: column;
+        width: 90%; /* Ajusta el ancho a 90% */
+        margin: 0 auto;
+    }
+
+    .hoteles-boton button {
+        width: 90%; /* Ajusta el ancho de los botones */
+        margin: 10px 0;
+        padding: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hoteles-nu {
+        padding: 5%;
+        height: auto;
+    }
+
+    .hoteles-txt h1 {
+        font-size: 30px;
+    }
+
+    .hoteles-txt p {
+        width: 90%; /* Ajusta el ancho a 90% */
+        margin: 0 auto;
+        font-size: 14px;
+    }
+
+    .hoteles-box {
+        flex-direction: column;
+        width: 90%; /* Ajusta el ancho a 90% */
+        margin: 0 auto; /* Centra el contenedor */
+        height: auto;
+    }
+
+    .hoteles-nu-gen {
+        width: 90%; /* Ajusta el ancho a 90% */
+        margin: 0 auto;
+        margin-bottom: 15px;
+    }
+
+    .sub-hoteles-nu {
+        width: 90%; /* Ajusta el ancho a 90% */
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .sub-hoteles-nu img {
+        width: 100%;
+        height: auto;
+    }
+
+    .sub-hoteles-nu h1 {
+        font-size: 25px;
+    }
+
+    .sub-hoteles-nu p {
+        font-size: 12px;
+        width: 90%; /* Ajusta el ancho a 90% */
+        margin: 5% auto;
+    }
+
+    .hoteles-boton {
+        flex-direction: column;
+        width: 90%; /* Ajusta el ancho a 90% */
+        margin: 0 auto;
+    }
+
+    .hoteles-boton button {
+        width: 90%; /* Ajusta el ancho de los botones */
+        margin: 10px 0;
+        padding: 14px;
+    }
+}
+
+/*-----------------------------------------------------BENEFICIOS--------------------------------------------------------*/
 .ben-gen {
     height: max-content;
     width: 100%;
@@ -815,16 +1313,135 @@ button:hover {
     line-height: 1.5;
 }
 
-/* Ajustes Responsivos */
-@media (max-width: 768px) {
+/* General responsive behavior */
+* {
+    box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+    .ben-gen {
+        height: auto;
+        padding: 2%; /* Añadir algo de padding para evitar que los elementos se peguen a los bordes */
+    }
+
+    .ben-box {
+        width: 90%; /* Ajustamos el ancho para no ocupar todo el espacio */
+        margin: 0 auto; /* Centrado de la caja */
+        max-width: 1200px; /* Límite máximo de ancho */
+    }
+
+    .ben-txt h1 {
+        font-size: 35px; /* Ajustamos el tamaño del título para pantallas más pequeñas */
+    }
+
+    .ben-ben {
+        width: 100%;
+        flex-wrap: wrap;  /* Permite que los elementos se ajusten */
+        gap: 15px; /* Mayor espacio entre los elementos */
+        justify-content: flex-start;
+    }
+
     .ben-sub {
-        width: calc(50% - 30px); /* Dos columnas en pantallas medianas */
+        width: calc(50% - 15px); /* Reducimos el tamaño para que haya 2 elementos por fila */
+        height: auto;  /* Hacemos que la altura sea automática */
+        padding: 15px; /* Aumentamos el padding para mejorar la estética */
+    }
+
+    .ben-sub i {
+        font-size: 45px; /* Reducimos el tamaño del ícono para pantallas más pequeñas */
+    }
+
+    .ben-sub h1 {
+        font-size: 28px; /* Reducimos el tamaño del título */
+    }
+
+    .ben-sub p {
+        font-size: 14px;
+        margin: 0% 0% 10% 0%; /* Ajustamos los márgenes */
+        line-height: 1.6; /* Ajustamos el interlineado para mayor legibilidad */
+    }
+}
+
+@media (max-width: 768px) {
+    .ben-gen {
+        padding: 5%; /* Añadimos más espacio a los lados */
+    }
+
+    .ben-box {
+        width: 90%; /* Ajustamos el ancho para no ocupar todo el espacio */
+        margin: 0 auto; /* Centrado de la caja */
+        max-width: 1000px;
+    }
+
+    .ben-txt h1 {
+        font-size: 30px; /* Ajustamos el tamaño del título */
+    }
+
+    .ben-ben {
+        flex-direction: column; /* Cambiamos la dirección de los elementos a columna */
+        width: 100%;
+        gap: 20px; /* Aumentamos el espacio entre los elementos */
+    }
+
+    .ben-sub {
+        width: 100%; /* Cada sub elemento ocupará el 100% */
+        height: auto;
+        padding: 20px; /* Añadimos más padding */
+    }
+
+    .ben-sub i {
+        font-size: 40px; /* Ajustamos el tamaño del ícono */
+    }
+
+    .ben-sub h1 {
+        font-size: 25px; /* Ajustamos el tamaño del título */
+    }
+
+    .ben-sub p {
+        font-size: 14px;
+        margin: 0% 0% 10% 0%;
+        line-height: 1.7;
     }
 }
 
 @media (max-width: 480px) {
+    .ben-gen {
+        padding: 5%;
+    }
+
+    .ben-box {
+        width: 90%;
+        margin: 0 auto;
+        max-width: 800px;
+    }
+
+    .ben-txt h1 {
+        font-size: 24px; /* Ajustamos aún más el tamaño del título */
+    }
+
+    .ben-ben {
+        flex-direction: column; /* Colocamos los elementos en columna */
+        gap: 20px;
+    }
+
     .ben-sub {
-        width: 100%;  /* Una columna en pantallas pequeñas */
+        width: 100%; /* Cada sub elemento ocupará el 100% */
+        height: auto;
+        padding: 10px; /* Ajustamos el padding */
+    }
+
+    .ben-sub i {
+        font-size: 35px; /* Ajustamos el tamaño del ícono */
+    }
+
+    .ben-sub h1 {
+        font-size: 20px; /* Ajustamos el tamaño del título */
+    }
+
+    .ben-sub p {
+        font-size: 12px;
+        margin: 0% 0% 10% 0%;
+        line-height: 1.8;
     }
 }
 
@@ -832,13 +1449,7 @@ button:hover {
 
 
 
-
-
-
-
-
-
-/*---------------------------------------PROMOCIONES------------------------------------*/
+/*----------------------------------------------------PROMOCIONES--------------------------------------------------------*/
 
 
 .promociones{
@@ -950,7 +1561,9 @@ button:hover {
 
     
 }
-/*--------------------------------------OPINIONES--------------------------------------*/
+
+
+/*------------------------------------------------OPINIONES-----------------------------------------------------------*/
 
 .opiniones {
     position: relative; /* Necesario para posicionar la superposición */
@@ -1061,7 +1674,7 @@ button:hover {
     color: white;
 }
 
-/*-----------------------------------DESCUBRIR----------------------------*/
+/*--------------------------------------------------------DESCUBRIR------------------------------------------------------*/
 
 .descubrir{
     border: 2px solid #c5d0e671;
@@ -1118,7 +1731,7 @@ button:hover {
 }
 
 
-/*---------------------------------MAPA----------------------------*/
+/*-----------------------------------------------------------------MAPA---------------------------------------------------*/
 
 .mapa{
     height: 800px;
@@ -1154,8 +1767,52 @@ button:hover {
 
 }
 
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+    .mapa-box {
+        width: 80%;  /* Slightly reduce the width on medium screens */
+    }
+    .mapa-box h2 {
+        font-size: 35px; /* Reduce font size */
+    }
+    .mapa-box p {
+        font-size: 18px; /* Adjust paragraph font size */
+    }
+    #map {
+        height: 60%; /* Adjust map height */
+    }
+}
 
-/*-----------------------------------CONTACTE-------------------------------*/
+@media (max-width: 768px) {
+    .mapa-box {
+        width: 90%;  /* Further reduce the width on smaller screens */
+    }
+    .mapa-box h2 {
+        font-size: 30px; /* Adjust title font size */
+    }
+    .mapa-box p {
+        font-size: 16px; /* Adjust paragraph font size */
+    }
+    #map {
+        height: 50%; /* Adjust map height */
+    }
+}
+
+@media (max-width: 480px) {
+    .mapa-box {
+        width: 100%;  /* Take full width on very small screens */
+    }
+    .mapa-box h2 {
+        font-size: 25px; /* Adjust title font size */
+    }
+    .mapa-box p {
+        font-size: 14px; /* Adjust paragraph font size */
+    }
+    #map {
+        height: 45%; /* Adjust map height */
+    }
+}
+/*-------------------------------------------------CONTACTE------------------------------------------------------------*/
 .contacto{
    
     height: 700px;
@@ -1317,48 +1974,7 @@ button:hover {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*-----------------------------FOOTER-----------------------------------------------*/
+/*-----------------------------------------------------------FOOTER-----------------------------------------------------*/
 
 .main-footer {
     background-color: #333;
@@ -1508,7 +2124,8 @@ button:hover {
         margin-bottom: 30px;
     }    
 }
-/*---------------------POLITICA-------------------*/
+
+/*------------------------------------------------------POLITICA--------------------------------------------------------*/
 .privacy-banner {
     position: fixed;
     bottom: 20px;
