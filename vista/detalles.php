@@ -27,7 +27,7 @@ if (!$hotelDetails) {
     exit;
 }
 
-// Convertir las fechas a formato legible
+
 $checkinDate = new DateTime($_SESSION['checkin']);
 $checkoutDate = new DateTime($_SESSION['checkout']);
 
