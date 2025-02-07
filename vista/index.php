@@ -43,33 +43,28 @@ if ($controller !== null) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
-    <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Permanent+Marker&family=Shadows+Into+Light&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Patrick+Hand&family=Permanent+Marker&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-     crossorigin=""/>
-     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
+    
     <title>Hoteles Caliope</title>
     <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
+
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:wght@200..1000&family=Old+Standard+TT:wght@400;700&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="../static/css/style.css">
+
+    <!-- Scripts -->
+    <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
+
 <body>
     <header class="main-header">
 
@@ -178,38 +173,43 @@ if ($controller !== null) {
             <div class="center-down">
                 <div class="form-reservas">
                     <div class="reservation-form">
-                        <form id="reservationForm" action="../vista/reservas.php" method="post">
-                            <!-- Campo de selección de lugar -->
-                            <div class="form-group">
-                                <label for="location">Lugar</label>
-                                <select id="location" name="location" required>
-                                    <?php foreach ($paises as $pais): ?>
-                                        <option value="<?php echo $pais['Id_Pais']; ?>"><?php echo $pais['Pais']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
+                    <form id="reservationForm" action="../vista/reservas.php" method="post" class="container p-4 bg-light rounded shadow">
+                        <!-- Campo de selección de lugar -->
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Lugar</label>
+                            <select id="location" name="location" class="form-select" required>
+                                <?php foreach ($paises as $pais): ?>
+                                    <option value="<?php echo $pais['Id_Pais']; ?>">
+                                        <?php echo $pais['Pais']; ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
 
-                            <!-- Campo de fecha de check-in -->
-                            <div class="form-group">
-                                <label for="checkin">Fecha de Check-in</label>
-                                <input type="date" id="checkin" name="checkin" min="<?= date('Y-m-d'); ?>" required>
-                            </div>
+                        <!-- Campo de fecha de check-in -->
+                        <div class="mb-3">
+                            <label for="checkin" class="form-label">Fecha de Check-in</label>
+                            <input type="date" id="checkin" name="checkin" class="form-control" min="<?= date('Y-m-d'); ?>" required>
+                        </div>
 
-                            <!-- Campo de fecha de check-out -->
-                            <div class="form-group">
-                                <label for="checkout">Fecha de Check-out</label>
-                                <input type="date" id="checkout" name="checkout" min="<?= date('Y-m-d'); ?>" required>
-                            </div>
+                        <!-- Campo de fecha de check-out -->
+                        <div class="mb-3">
+                            <label for="checkout" class="form-label">Fecha de Check-out</label>
+                            <input type="date" id="checkout" name="checkout" class="form-control" min="<?= date('Y-m-d'); ?>" required>
+                        </div>
 
-                            <!-- Campo de número de personas -->
-                            <div class="form-group">
-                                <label for="numero_personas">Número de Personas</label>
-                                <input type="number" id="numero_personas" name="numero_personas" min="1" value="<?php echo isset($_SESSION['numero_personas']) ? $_SESSION['numero_personas'] : ''; ?>" required>
-                            </div>
+                        <!-- Campo de número de personas -->
+                        <div class="mb-3">
+                            <label for="numero_personas" class="form-label">Número de Personas</label>
+                            <input type="number" id="numero_personas" name="numero_personas" class="form-control" min="1" value="<?php echo isset($_SESSION['numero_personas']) ? $_SESSION['numero_personas'] : ''; ?>" required>
+                        </div>
 
-                            <!-- Botón para enviar el formulario -->
-                            <button type="submit" id="submitBtn">Reservar</button>
-                        </form>
+                        <!-- Botón para enviar el formulario -->
+                        <div class="d-grid">
+                            <button type="submit" id="submitBtn" class="btn btn-primary">Reservar</button>
+                        </div>
+                    </form>
+
                     </div>
                 </div>
             </div>

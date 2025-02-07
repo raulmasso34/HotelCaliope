@@ -1,139 +1,32 @@
-/* Reset para eliminar márgenes y bordes por defecto */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Cuerpo de la página */
 body {
-    font-family: 'Georgia', serif;
-    background-color: #f1f7fc; /* Fondo claro azulado */
+    background-color: #f5f5f5;
     color: #333;
-    line-height: 1.6;
-    padding: 30px;
+    font-size: 18px;
 }
-
-/* Contenedor principal */
+.card {
+    background: linear-gradient(135deg, #7a96e2, #0a25ba);
+    color: white;
+    border-radius: 20px;
+    padding: 40px;
+}
 h1 {
-    text-align: center;
-    font-size: 3rem;
-    color: #2a4d75; /* Azul marino suave */
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 40px;
+    color: #ffffff;
+    font-size: 32px;
 }
-
-/* Detalles de la reserva */
-p {
-    font-size: 1.2rem;
-    color: #5d6f89; /* Azul grisáceo suave */
-    margin-bottom: 15px;
-    text-align: center;
-    font-weight: bold;
-}
-
-/* Estilo de los inputs */
-input[type="text"],
-input[type="month"] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 10px 0;
-    border: 2px solid #2a4d75; /* Azul marino */
-    border-radius: 10px;
-    font-size: 1.1rem;
-    background-color: #e8f1fa; /* Azul muy suave */
-    color: #333;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Inputs con el foco */
-input[type="text"]:focus,
-input[type="month"]:focus {
-    border-color: #5a99bd; /* Azul más brillante */
-    outline: none;
-    box-shadow: 0 0 15px rgba(90, 155, 189, 0.6); /* Azul brillante */
-}
-
-/* Estilo del formulario */
-form {
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-/* Botón de confirmación y pago */
-button[type="submit"] {
-    background-color: #5a99bd; /* Azul suave y brillante */
-    color: #fff;
-    font-size: 1.2rem;
-    padding: 12px 20px;
+.btn-primary {
+    background-color: #00065f;
     border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 20px;
+    padding: 15px;
 }
-
-button[type="submit"]:hover {
-    background-color: #3a7ea2; /* Azul más oscuro */
-    transform: scale(1.05);
+.btn-primary:hover {
+    background-color: #000520;
 }
-
-/* Efecto para inputs */
-input[type="text"],
-input[type="month"] {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-input[type="text"]:focus,
-input[type="month"]:focus {
-    transform: scale(1.02);
-}
-
-/* Detalles adicionales del formulario */
 label {
-    font-size: 1.1rem;
-    color: #2a4d75; /* Azul marino */
+    font-size: 20px;
     font-weight: bold;
-    margin-bottom: 8px;
-    display: block;
 }
-
-/* Contenedor de los detalles de la reserva */
-.details-container {
-    background-color: #f8f9fc; /* Fondo gris azulado suave */
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.details-container p {
-    color: #333;
-    font-size: 1.1rem;
-    margin-bottom: 12px;
-}
-
-/* Diseño para móviles */
-@media (max-width: 768px) {
-    h1 {
-        font-size: 2.5rem;
-    }
-
-    .form-container {
-        padding: 20px;
-    }
-
-    input[type="text"],
-    input[type="month"] {
-        font-size: 1rem;
-    }
-
-    button[type="submit"] {
-        font-size: 1.1rem;
-    }
+.form-control {
+    font-size: 18px;
+    padding: 12px;
 }

@@ -29,32 +29,34 @@ if (isset($_SESSION['Reservas'])) {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Reserva Confirmada</title>
-    <link rel="stylesheet" href="../static/css/resrerva_confimada.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
 </head>
-<body>
-    <div class="container">
-        <h1>¡Reserva Confirmada!</h1>
-        <p>Gracias por tu pago. Tu reserva ha sido realizada con éxito.</p>
-        
-        <div class="details">
-            <h2>Detalles de la Reserva</h2>
-            <!-- Mostrar el nombre del hotel -->
-            <p><strong>Hotel:</strong> <?php echo htmlspecialchars($hotelDetails['Nombre']); ?></p> <!-- Asegúrate de que 'Nombre' exista en el array -->
-            <p><strong>Habitación:</strong> <?php echo htmlspecialchars($habitacionId); ?></p>
-            <p><strong>Cliente ID:</strong> <?php echo htmlspecialchars($clienteId); ?></p>
-            <p><strong>Check-in:</strong> <?php echo htmlspecialchars($checkin); ?></p>
-            <p><strong>Check-out:</strong> <?php echo htmlspecialchars($checkout); ?></p>
-            <p><strong>Invitados:</strong> <?php echo htmlspecialchars($guests); ?></p>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="card shadow-lg p-4 text-center mx-auto" style="max-width: 600px;">
+            <h1 class="text-success">¡Reserva Confirmada!</h1>
+            <p class="lead">Gracias por tu pago. Tu reserva ha sido realizada con éxito.</p>
+            
+            <div class="mt-4 text-start">
+                <h2 class="h5 border-bottom pb-2">Detalles de la Reserva</h2>
+                <p><strong>Hotel:</strong> <?php echo htmlspecialchars($hotelDetails['Nombre']); ?></p>
+                <p><strong>Habitación:</strong> <?php echo htmlspecialchars($habitacionId); ?></p>
+                <p><strong>Cliente ID:</strong> <?php echo htmlspecialchars($clienteId); ?></p>
+                <p><strong>Check-in:</strong> <?php echo htmlspecialchars($checkin); ?></p>
+                <p><strong>Check-out:</strong> <?php echo htmlspecialchars($checkout); ?></p>
+                <p><strong>Invitados:</strong> <?php echo htmlspecialchars($guests); ?></p>
+            </div>
+            
+            <a href="../vista/index.php" class="btn btn-primary mt-3">Volver al inicio</a>
         </div>
-
-        <p><a href="../vista/index.php">Volver al inicio</a></p>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
