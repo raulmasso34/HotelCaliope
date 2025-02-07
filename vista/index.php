@@ -58,6 +58,7 @@ if ($controller !== null) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
     <!-- Scripts -->
     <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
@@ -105,14 +106,15 @@ if ($controller !== null) {
                     <a href="../vista/ofertas/ofertas.php">Ofertas</a>
                     <a href="../vista/Contacto/contacto.php">Contacto</a>
                     
+                    <!-- Contenedor del perfil -->
                     <div class="dropdown-perfil">
                         <a class="icon-perfil" href="javascript:void(0);">
-                            <i class="fa-regular fa-user fa-2xl"></i> <!-- Icono de usuario -->
+                            <i class="bi bi-person-circle"></i> <!-- Ícono más elegante y simple -->
                         </a>
                         <div class="dropdown-perfil-content">
                             <a href="../vista/Clientes/login.php">Iniciar sesión</a>
                             <a href="../vista/Clientes/perfil.php">Perfil</a>
-                            <a href="..//controller/clients/LoginController.php?action=logout">Cerrar sesión</a>
+                            <a href="../controller/clients/LoginController.php?action=logout">Cerrar sesión</a>
                         </div>
                     </div>
                 </div>

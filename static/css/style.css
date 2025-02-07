@@ -166,6 +166,7 @@ h4 {
     transform: translateY(0); /* Mantiene la posición del logo al hacer scroll */
 }
 
+
 /* Estilo para main-up-right */
 .main-up-right {
     display: flex;
@@ -213,6 +214,45 @@ h4 {
 .main-up-right {
     display: flex;
     gap: 20px;
+}
+.dropdown-perfil {
+    position: relative;
+    display: inline-block;
+}
+
+.icon-perfil {
+    font-size: 24px;
+    color: #ffffff;
+    transition: color 0.3s ease-in-out;
+}
+
+.icon-perfil:hover {
+    color: #cccccc;
+}
+
+.dropdown-perfil-content {
+    display: none;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    min-width: 160px;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 10px 0;
+    z-index: 1000;
+    transition: all 0.3s ease-in-out;
+}
+
+.dropdown-perfil:hover .dropdown-perfil-content {
+    display: block;
+}
+
+.dropdown-perfil-content a {
+    color: #333;
+    padding: 12px 16px;
+    display: block;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.3s ease-in-out, padding-left 0.3s;
 }
 
 /* Menú móvil (por defecto oculto) */
