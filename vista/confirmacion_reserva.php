@@ -75,15 +75,17 @@ $database->closeConnection();
         <h2 class="mt-4">Detalles del Hotel</h2>
         <p><strong>Hotel:</strong> <?php echo htmlspecialchars($hotelDetails['Nombre']); ?></p>
         <p><strong>Habitación seleccionada:</strong> <?php echo htmlspecialchars($habitacionDetails['Tipo']); ?></p>
-        <p><strong>Precio:</strong> <?php echo htmlspecialchars($habitacionDetails['Precio']); ?> €</p>
+        <p><strong>Precio por noche:</strong> <span id="precioPorNoche"><?php echo htmlspecialchars($habitacionDetails['Precio']); ?></span> €</p>
         <p><strong>Descripción:</strong> <?php echo htmlspecialchars($habitacionDetails['Descripcion'] ?? 'Descripción no disponible'); ?></p>
+
+        <h3 class="mt-3">Precio Total: <span id="precioTotal">Calculando...</span> €</h3>
 
         <form action="../vista/pagos.php" method="POST">
             <input type="hidden" name="habitacionId" value="<?php echo $habitacionId; ?>">
             <input type="hidden" name="clienteId" value="<?php echo $clienteId; ?>">
             <input type="hidden" name="hotelId" value="<?php echo $hotelId; ?>">
-            <input type="hidden" name="checkin" value="<?php echo $checkin; ?>">
-            <input type="hidden" name="checkout" value="<?php echo $checkout; ?>">
+            <input type="hidden" name="checkin" id="checkin" value="<?php echo $checkin; ?>">
+            <input type="hidden" name="checkout" id="checkout" value="<?php echo $checkout; ?>">
             <input type="hidden" name="guests" value="<?php echo $guests; ?>">
             <input type="hidden" name="paisId" value="<?php echo $paisId; ?>">
 
@@ -117,6 +119,11 @@ $database->closeConnection();
             <button type="submit" class="btn btn-primary w-100">Confirmar Reserva y Pagar</button>
         </form>
     </div>
+
+    <script src="../static/js/confirmacion_reservas.js">
+       
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
