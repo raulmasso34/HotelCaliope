@@ -406,7 +406,7 @@ router.get('/deleteo/:id', (req, res) => {
         if (error) {
             throw error;
         } else {
-            res.redirect('/oferta'); // Redirigimos al usuario a la página principal
+            res.redirect('/ofertas'); // Redirigimos al usuario a la página principal
         }
     });
 });
@@ -414,8 +414,8 @@ router.get('/deleteo/:id', (req, res) => {
 
 //ACTIVIDADES
 
-//router.post('/savea', crud.savea)
-//router.post('/updatea', crud.updatea); 
+router.post('/savea', crud.savea)
+router.post('/updatea', crud.updatea); 
 router.get('/actividades', (req, res) => {
     conexion.query(
         `SELECT 
@@ -478,20 +478,20 @@ router.get('/createa', (req, res) => {
 
 
 router.get('/edita/:id', (req, res) => {
-    const Id_Oferta = req.params.id;
-    const queryOferta = 'SELECT * FROM Ofertas WHERE Id_Oferta = ?';
+    const Id_Actividades = req.params.id;
+    const queryActividades = 'SELECT * FROM Actividades WHERE Id_Actividades = ?';
     const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
     const queryHabitacion = 'SELECT Id_Habitaciones,Numero_Habitacion FROM Habitaciones';
-    const queryActividades = 'SELECT Id_Actividades, Actividad FROM Actividades';
+   
 
     // Primera consulta: Obtener la oferta específica
-    conexion.query(queryOferta, [Id_Oferta], (error, ofertaResults) => {
+    conexion.query(queryActividades, [Id_Actividades], (error, actividadesResults) => {
         if (error) {
             console.error('Error al obtener la oferta:', error.message);
             return res.status(500).send('Error en el servidor');
         }
 
-        if (ofertaResults.length === 0) {
+        if (actividadesResults.length === 0) {
             return res.status(404).send('Oferta no encontrada');
         }
 
@@ -510,21 +510,15 @@ router.get('/edita/:id', (req, res) => {
                     return res.status(500).send('Error en el servidor');
                 }
 
-                // Cuarta consulta: Obtener las actividades
-                conexion.query(queryActividades, (error, actividadResults) => {
-                    if (error) {
-                        console.error('Error al obtener las actividades:', error.message);
-                        return res.status(500).send('Error en el servidor');
-                    }
 
                     // Renderizamos la vista con todos los datos
                     res.render('actividades/edita', {
-                        oferta: ofertaResults[0],              // Datos de la oferta
+                        actividades: actividadesResults [0],              // Datos de la oferta
                         hoteles: hotelResults,       // Lista de hoteles
                         habitaciones: habitacionResults, // Lista de habitaciones
-                        actividades: actividadResults   // Lista de actividades
+                          // Lista de actividades
                     });
-                });
+                
             });
         });
     });
@@ -540,6 +534,275 @@ router.get('/deletea/:id', (req, res) => {
             throw error;
         } else {
             res.redirect('/actividades'); // Redirigimos al usuario a la página principal
+        }
+    });
+});
+
+
+//ACTIVIDADES
+
+router.post('/saves', crud.saves)
+router.post('/updates', crud.updates); 
+router.get('/servicio', (req, res) => {
+    conexion.query(
+        `SELECT 
+            s.Id_Servicio, 
+            h.Nombre,
+            s.Servicio,
+            s.Descripcion,
+            s.Precio
+        FROM Servicio s
+        LEFT JOIN Hotel h ON s.Id_Hotel = h.Id_Hotel`,
+        (error, results) => {
+            if (error) {
+                throw error;
+            } else {
+                res.render('servicio/servicio', { results });
+            }
+        }
+    );
+});
+
+
+router.get('/creates', (req, res) => {
+    // Consultas para obtener datos de Hotel, Habitaciones y Actividades
+    const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
+    const queryHabitacion = 'SELECT Id_Habitaciones, Numero_Habitacion FROM Habitaciones';
+    const queryActividades = 'SELECT Id_Actividades, Actividad FROM Actividades';
+
+    // Ejecutar las consultas en paralelo
+    conexion.query(queryHotel, (error, hotelResults) => {
+        if (error) {
+            console.error('Error al obtener los hoteles:', error.message);
+            return res.status(500).send('Error en el servidor');
+        }
+        conexion.query(queryHabitacion, (error, habitacionResults) => {
+            if (error) {
+                console.error('Error al obtener las habitaciones:', error.message);
+                return res.status(500).send('Error en el servidor');
+            }
+            conexion.query(queryActividades, (error, actividadesResults) => {
+                if (error) {
+                    console.error('Error al obtener las actividades:', error.message);
+                    return res.status(500).send('Error en el servidor');
+                }
+
+                // Renderizar la vista con los datos obtenidos
+                res.render('servicio/creates', { 
+                    hoteles: hotelResults, 
+                    habitaciones: habitacionResults, 
+                    actividades: actividadesResults 
+                });
+            });
+        });
+    });
+});
+
+
+router.get('/edits/:id', (req, res) => {
+    const Id_Servicio = req.params.id;
+    const queryServicios = 'SELECT * FROM Servicio WHERE Id_Servicio = ?';
+    const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
+    const queryHabitacion = 'SELECT Id_Habitaciones,Numero_Habitacion FROM Habitaciones';
+   
+
+    // Primera consulta: Obtener la oferta específica
+    conexion.query(queryServicios, [Id_Servicio], (error, serviciosResults) => {
+        if (error) {
+            console.error('Error al obtener la oferta:', error.message);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        if (serviciosResults.length === 0) {
+            return res.status(404).send('Oferta no encontrada');
+        }
+
+
+        // Segunda consulta: Obtener los hoteles
+        conexion.query(queryHotel, (error, hotelResults) => {
+            if (error) {
+                console.error('Error al obtener los hoteles:', error.message);
+                return res.status(500).send('Error en el servidor');
+            }
+
+            // Tercera consulta: Obtener las habitaciones
+            conexion.query(queryHabitacion, (error, habitacionResults) => {
+                if (error) {
+                    console.error('Error al obtener las habitaciones:', error.message);
+                    return res.status(500).send('Error en el servidor');
+                }
+
+
+                    // Renderizamos la vista con todos los datos
+                    res.render('servicio/edits', {
+                        servicio: serviciosResults [0],              // Datos de la oferta
+                        hoteles: hotelResults,       // Lista de hoteles
+                        habitaciones: habitacionResults, // Lista de habitaciones
+                          // Lista de actividades
+                    });
+                
+            });
+        });
+    });
+});
+
+router.get('/deletes/:id', (req, res) => {
+    const id = req.params.id; 
+    conexion.query('DELETE FROM Servicio WHERE Id_Servicio = ?', [id], (error, results) => {
+        if (error) {
+            throw error;
+        } else {
+            res.redirect('/servicio'); // Redirigimos al usuario a la página principal
+        }
+    });
+});
+
+
+//TARIFA
+
+router.post('/savet', crud.savet)
+router.post('/updatet', crud.updatet); 
+router.get('/tarifa', (req, res) => {
+    conexion.query(
+        `SELECT 
+            t.Id_Tarifa, 
+            h.Nombre,
+            hab.Numero_Habitacion,
+            a.Actividad,
+            s.Servicio,
+            t.Tipo_Habitacion,
+            t.Temporada,
+            t.Precio
+        FROM Tarifa t
+        LEFT JOIN Hotel h ON t.Id_Hotel = h.Id_Hotel
+        LEFT JOIN Habitaciones hab ON t.Id_Habitacion = hab.Id_Habitaciones 
+        LEFT JOIN Actividades a ON t.Id_Actividad = a.Id_Actividades
+        LEFT JOIN Servicio s ON t.Id_Servicios = s.Id_Servicio`,
+        (error, results) => {
+            if (error) {
+                throw error;
+            } else {
+                res.render('tarifa/tarifa', { results });
+            }
+        }
+    );
+});
+
+
+router.get('/createt', (req, res) => {
+    // Consultas para obtener datos de Hotel, Habitaciones y Actividades
+    const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
+    const queryHabitacion = 'SELECT Id_Habitaciones, Numero_Habitacion, Tipo FROM Habitaciones';
+    const queryActividades = 'SELECT Id_Actividades, Actividad FROM Actividades';
+    const queryServicios = 'SELECT Id_Servicio,Id_Hotel, Servicio FROM Servicio';
+
+
+    // Ejecutar las consultas en paralelo
+    conexion.query(queryHotel, (error, hotelResults) => {
+        if (error) {
+            console.error('Error al obtener los hoteles:', error.message);
+            return res.status(500).send('Error en el servidor');
+        }
+        conexion.query(queryHabitacion, (error, habitacionResults) => {
+            if (error) {
+                console.error('Error al obtener las habitaciones:', error.message);
+                return res.status(500).send('Error en el servidor');
+            }
+            conexion.query(queryActividades, (error, actividadesResults) => {
+                if (error) {
+                    console.error('Error al obtener las actividades:', error.message);
+                    return res.status(500).send('Error en el servidor');
+                }
+                conexion.query(queryServicios, (error, servicioResults) => {
+                    if (error) {
+                        console.error('Error al obtener las actividades:', error.message);
+                        return res.status(500).send('Error en el servidor');
+                    }
+
+                // Renderizar la vista con los datos obtenidos
+                res.render('tarifa/createt', { 
+                    hoteles: hotelResults, 
+                    habitaciones: habitacionResults, 
+                    actividades: actividadesResults,
+                    servicio: servicioResults 
+                });
+                });
+            });
+        });
+    });
+});
+
+
+router.get('/editt/:id', (req, res) => {
+    const Id_Tarifa = req.params.id;
+    const queryTarifas = 'SELECT * FROM Tarifa WHERE Id_Tarifa = ?';
+    const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
+    const queryHabitacion = 'SELECT Id_Habitaciones, Numero_Habitacion, Tipo FROM Habitaciones';
+    const queryActividad = 'SELECT Id_Actividades, Actividad FROM Actividades';
+    const queryServicios = 'SELECT Id_Servicio, Id_Hotel, Servicio FROM Servicio';
+
+    // Primera consulta: Obtener la tarifa específica
+    conexion.query(queryTarifas, [Id_Tarifa], (error, tarifasResults) => {
+        if (error) {
+            console.error('Error al obtener la tarifa:', error.message);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        if (tarifasResults.length === 0) {
+            return res.status(404).send('Tarifa no encontrada');
+        }
+
+        // Segunda consulta: Obtener los hoteles
+        conexion.query(queryHotel, (error, hotelResults) => {
+            if (error) {
+                console.error('Error al obtener los hoteles:', error.message);
+                return res.status(500).send('Error en el servidor');
+            }
+
+            // Tercera consulta: Obtener las habitaciones con el tipo incluido
+            conexion.query(queryHabitacion, (error, habitacionResults) => {
+                if (error) {
+                    console.error('Error al obtener las habitaciones:', error.message);
+                    return res.status(500).send('Error en el servidor');
+                }
+
+                // Cuarta consulta: Obtener actividades
+                conexion.query(queryActividad, (error, actividadResults) => {
+                    if (error) {
+                        console.error('Error al obtener las actividades:', error.message);
+                        return res.status(500).send('Error en el servidor');
+                    }
+
+                    // Quinta consulta: Obtener servicios
+                    conexion.query(queryServicios, (error, servicioResults) => {
+                        if (error) {
+                            console.error('Error al obtener los servicios:', error.message);
+                            return res.status(500).send('Error en el servidor');
+                        }
+
+                        // Renderizamos la vista con todos los datos
+                        res.render('tarifa/editt', {
+                            tarifa: tarifasResults[0],       // Datos de la tarifa
+                            hoteles: hotelResults,           // Lista de hoteles
+                            habitaciones: habitacionResults, // Lista de habitaciones con tipo
+                            actividades: actividadResults,   // Lista de actividades
+                            servicios: servicioResults       // Lista de servicios
+                        });
+                    });
+                });
+            });
+        });
+    });
+});
+
+
+router.get('/deletet/:id', (req, res) => {
+    const id = req.params.id; 
+    conexion.query('DELETE FROM Tarifa WHERE Id_Tarifa = ?', [id], (error, results) => {
+        if (error) {
+            throw error;
+        } else {
+            res.redirect('/tarifa'); // Redirigimos al usuario a la página principal
         }
     });
 });
