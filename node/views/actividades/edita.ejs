@@ -65,14 +65,6 @@
                   <input type="text" class="form-control" id="Actividad" name="Actividad" tabindex="1" value="<%= actividades.Actividad %>">
                 </div>
                 <div class="mb-3">
-                  <label for="Dia_Inicio" class="form-label">Dia Inicio</label>
-                  <input type="date" class="form-control" id="Dia_Inicio" name="Dia_Inicio" tabindex="1" value="<%= actividades.Dia_Inicio %>">
-                </div>
-                <div class="mb-3">
-                  <label for="Dia_Fin" class="form-label">Dia Fin</label>
-                  <input type="date" class="form-control" id="Dia_Fin" name="Dia_Fin" tabindex="1" value="<%= actividades.Dia_Inicio %>">
-                </div>
-                <div class="mb-3">
                   <label for="Id_Hotel" class="form-label">Hotel</label>
                   <select name="Id_Hotel" id="Id_Hotel" class="form-select">
                     <% hoteles.forEach(hotel => { %>
@@ -82,8 +74,36 @@
                     <% }); %>
                   </select>
                 </div>
+                <div class="mb-3">
+                  <label for="Dia_Inicio" class="form-label">Dia Inicio</label>
+                  <input type="date" class="form-control" id="Dia_Inicio" name="Dia_Inicio" tabindex="1" value="<%= actividades.Dia_Inicio %>">
+                </div>
+                <div class="mb-3">
+                  <label for="Dia_Fin" class="form-label">Dia Fin</label>
+                  <input type="date" class="form-control" id="Dia_Fin" name="Dia_Fin" tabindex="1" value="<%= actividades.Dia_Fin %>">
+                </div>
+                <div class="mb-3">
+                  <label for="Hora_Inicio" class="form-label">Hora Inicio</label>
+                  <input type="time" class="form-control" id="Hora_Inicio" name="Hora_Inicio" tabindex="1" value="<%= actividades.Hora_Inicio %>">
+                </div>
+                <div class="mb-3">
+                  <label for="Hora_Fin" class="form-label">Hora Fin</label>
+                  <input type="time" class="form-control" id="Hora_Fin" name="Hora_Fin" tabindex="1" value="<%= actividades.Hora_Fin %>">
+                </div>
+                <div class="mb-3">
+                  <label for="Capacidad_Maxima" class="form-label">Capacidad Maxima</label>
+                  <input type="number" class="form-control" id="Capacidad_Maxima" name="Capacidad_Maxima" tabindex="1" value="<%= actividades.Capacidad_Maxima %>">
+                </div>
+                <div class="mb-3">
+                  <label for="Ubicacion" class="form-label">Ubicacion</label>
+                  <input type="text" class="form-control" id="Ubicacion" name="Ubicacion" tabindex="1" value="<%= actividades.Ubicacion %>">
+                </div>
+                <div class="mb-3">
+                  <label for="Descripcion" class="form-label">Descripcion</label>
+                  <input type="text" class="form-control" id="Descripcion" name="Descripcion" tabindex="1" value="<%= actividades.Descripcion %>">
+                </div>
                 <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
-                <a href="/habitaciones/" class="btn btn-secondary">Cancelar</a>
+                <a href="/actividades/" class="btn btn-secondary">Cancelar</a>
               </form>
             </div>
           </div>

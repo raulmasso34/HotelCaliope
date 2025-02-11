@@ -281,3 +281,180 @@ exports.savehab = (req, res)=>{
 };
 
 
+ //ACTIVIDADES
+
+ exports.savea = (req, res)=>{
+    const Actividad = req.body.Actividad;
+    const Id_Hotel = req.body.Id_Hotel;
+    const Dia_Inicio = req.body.Dia_Inicio;
+    const Dia_Fin = req.body.Dia_Fin;  
+    const Hora_Inicio = req.body.Hora_Inicio;
+    const Hora_Fin = req.body.Hora_Fin;
+    const Capacidad_Maxima = req.body.Capacidad_Maxima;
+    const Ubicacion = req.body.Ubicacion;
+    const Descripcion = req.body.Descripcion;
+
+   
+    conexion.query('INSERT INTO Actividades SET ?', 
+       {
+       Actividad:Actividad, 
+       Id_Hotel:Id_Hotel,
+       Dia_Inicio:Dia_Inicio,
+       Dia_Fin:Dia_Fin,
+       Hora_Inicio:Hora_Inicio,
+       Hora_Fin:Hora_Fin,
+       Capacidad_Maxima:Capacidad_Maxima,
+       Ubicacion:Ubicacion,
+       Descripcion:Descripcion
+   }, (error, results)=>{
+       if(error){
+           console.log(error);
+       }else{
+           res.redirect('/actividades/');
+       }
+   })
+    //console.log(nom + " - "+cognom+" - "+dni+" - "+correu+" - "+telefon+" - "+usuari+" - "+password+" - "+pais+" - "+ciudad+" - "+codigopostal);
+    console.log(req.body);
+   
+    
+   };
+ exports.updatea = (req, res) => {
+    const id = req.body.Id_Actividades; 
+    const Actividad = req.body.Actividad;
+    const Id_Hotel = req.body.Id_Hotel;
+    const Dia_Inicio = req.body.Dia_Inicio;
+    const Dia_Fin = req.body.Dia_Fin;  
+    const Hora_Inicio = req.body.Hora_Inicio;
+    const Hora_Fin = req.body.Hora_Fin;
+    const Capacidad_Maxima = req.body.Capacidad_Maxima;
+    const Ubicacion = req.body.Ubicacion;
+    const Descripcion = req.body.Descripcion;
+
+    // Aquí ejecutamos la consulta
+    conexion.query(
+        'UPDATE Actividades SET Actividad = ?, Id_Hotel = ?, Dia_Inicio = ?, Dia_Fin = ?, Hora_Inicio = ?, Hora_Fin = ?, Capacidad_Maxima = ?, Ubicacion = ?, Descripcion = ? WHERE Id_Actividades = ?',
+        [Actividad, Id_Hotel,  Dia_Inicio, Dia_Fin, Hora_Inicio, Hora_Fin, Capacidad_Maxima, Ubicacion, Descripcion, id],
+        (error, results) => {
+            if (error) {
+                console.error('Error en la consulta SQL:', error);
+                res.status(500).send('Error en la base de datos');
+            } else {
+                res.redirect('/actividades/');
+            }
+        }
+    );
+};
+
+ //SERVICIO
+
+ exports.saves = (req, res)=>{
+    const Id_Hotel = req.body.Id_Hotel;
+    const Servicio = req.body.Servicio;
+    const Descripcion = req.body.Descripcion;  
+    const Precio = req.body.Precio;
+   
+    conexion.query('INSERT INTO Servicio SET ?', 
+       {
+       Id_Hotel:Id_Hotel,
+       Servicio:Servicio,
+       Descripcion:Descripcion,
+       Precio:Precio
+       
+   }, (error, results)=>{
+       if(error){
+           console.log(error);
+       }else{
+           res.redirect('/servicio/');
+       }
+   })
+    //console.log(nom + " - "+cognom+" - "+dni+" - "+correu+" - "+telefon+" - "+usuari+" - "+password+" - "+pais+" - "+ciudad+" - "+codigopostal);
+    console.log(req.body);
+   
+    
+   };
+ exports.updates = (req, res) => {
+    const id = req.body.Id_Servicio; 
+    const Id_Hotel = req.body.Id_Hotel;
+    const Servicio = req.body.Servicio;
+    const Descripcion = req.body.Descripcion;;  
+    const Precio = req.body.Precio;
+    
+
+    // Aquí ejecutamos la consulta
+    conexion.query(
+        'UPDATE Servicio SET Id_Hotel = ?, Servicio = ?, Descripcion = ?, Precio = ? WHERE Id_Servicio = ?',
+        [Id_Hotel, Servicio, Descripcion, Precio, id],
+        (error, results) => {
+            if (error) {
+                console.error('Error en la consulta SQL:', error);
+                res.status(500).send('Error en la base de datos');
+            } else {
+                res.redirect('/servicio/');
+            }
+        }
+    );
+};
+
+
+//Tarifa
+
+exports.savet = (req, res)=>{
+    const Id_Hotel = req.body.Id_Hotel;
+    const Id_Habitacion = req.body.Id_Habitacion;
+    const Id_Actividad = req.body.Id_Actividad;  
+    const Id_Servicios = req.body.Id_Servicios;
+    const Tipo_Habitacion = req.body.Tipo_Habitacion;
+    const Temporada = req.body.Temporada;
+    const Precio = req.body.Precio;
+
+   
+    conexion.query('INSERT INTO Tarifa SET ?', 
+       {
+       Id_Hotel:Id_Hotel,
+       Id_Habitacion:Id_Habitacion,
+       Id_Actividad:Id_Actividad,
+       Id_Servicios:Id_Servicios,
+       Tipo_Habitacion:Tipo_Habitacion,
+       Temporada:Temporada,
+       Precio:Precio
+       
+   }, (error, results)=>{
+       if(error){
+           console.log(error);
+       }else{
+           res.redirect('/tarifa/');
+       }
+   })
+    //console.log(nom + " - "+cognom+" - "+dni+" - "+correu+" - "+telefon+" - "+usuari+" - "+password+" - "+pais+" - "+ciudad+" - "+codigopostal);
+    console.log(req.body);
+   
+    
+   };
+ exports.updatet = (req, res) => {
+    const id = req.body.Id_Tarifa; 
+    const Id_Hotel = req.body.Id_Hotel;
+    const Id_Habitacion = req.body.Id_Habitacion;
+    const Id_Actividad = req.body.Id_Actividad;  
+    const Id_Servicios = req.body.Id_Servicios;
+    const Tipo_Habitacion = req.body.Tipo_Habitacion;
+    const Temporada = req.body.Temporada;
+    const Precio = req.body.Precio;
+    
+
+    // Aquí ejecutamos la consulta
+    conexion.query(
+        'UPDATE Tarifa SET Id_Hotel = ?, Id_Habitacion = ?,Id_Actividad = ?, Id_Servicios = ?, Tipo_Habitacion = ?, Temporada = ?,Precio = ? WHERE Id_Tarifa = ?',
+        [Id_Hotel, Id_Habitacion, Id_Actividad,Id_Servicios,Tipo_Habitacion,Temporada ,Precio, id],
+        (error, results) => {
+            if (error) {
+                console.error('Error en la consulta SQL:', error);
+                res.status(500).send('Error en la base de datos');
+            } else {
+                res.redirect('/tarifa/');
+            }
+        }
+    );
+};
+
+
+
