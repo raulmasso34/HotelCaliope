@@ -1,4 +1,6 @@
+/* ======================= */
 /* Reglas generales */
+/* ======================= */
 * {
     box-sizing: border-box;
 }
@@ -8,19 +10,20 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
-    background-color: #e9ebef9e; /* Fondo azul claro */
-    height: max-content; /* Altura extra para scroll */
+    height: max-content;
+    background-color: #e9ebef9e;
 }
 
-/* Estilo del header */
+/* ======================= */
+/* Header principal */
+/* ======================= */
 .main-header {
     position: relative;
     width: 100%;
-    height: 100vh; /* Ocupa toda la altura de la ventana */
+    height: 100vh;
     overflow: hidden;
 }
 
-/* Imágenes del carrusel (fondo) */
 .carousel-background {
     position: absolute;
     top: 0;
@@ -28,89 +31,95 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: -1; /* Enviar al fondo */
+    z-index: -1;
     opacity: 0;
-    transition: opacity 0.8s ease-in-out; /* Transición suave entre imágenes */
+    transition: opacity 0.8s ease-in-out;
 }
 
-/* La primera imagen será visible inicialmente */
 .carousel-background:first-child {
     opacity: 1;
 }
 
-/* Contenido sobre el fondo */
 .main-header-content {
     position: relative;
     z-index: 1;
-    /* Otros estilos para el contenido dentro del header */
 }
+
+/* ======================= */
+/* Barra de navegación */
+/* ======================= */
 .main-up {
-    position: fixed; /* Fija la posición en la ventana */
-    top: 0; /* Alinea en la parte superior */
-    left: 50%; /* Centra horizontalmente */
-    transform: translateX(-50%); /* Ajusta la posición por el ancho */
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     height: 115px;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    z-index: 1000; /* Asegura que esté sobre otros elementos */
-    border-top-right-radius: 10px; /* Bordes redondeados */
-    width: 100%; /* Ocupa un 85% del ancho de la ventana */
+    z-index: 1000;
+    width: 100%;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    
 }
+
 .main-up.transparent {
-    background-color: rgba(0, 0, 0, 0); /* Sin fondo */
-    box-shadow: none; /* Sin sombra */
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: none;
 }
 
 .main-up.scrolled {
-    width: 100%;
-    background-color: rgb(255, 255, 255); /* Fondo blanco semi-transparente */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.main-up-left{
+.main-up-left {
     display: flex;
-    margin-left: 8%;
-   
     align-items: center;
-    justify-content: flex-start;
+    margin-left: 8%;
 }
 
+.main-up-left img {
+    max-width: 100%;
+    max-height: 100px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
 
+.main-up.scrolled .main-up-left img {
+    transform: translateY(0);
+}
+
+.main-up-right {
+    display: flex;
+    align-items: center;
+    margin-right: 8%;
+}
+
+/* ======================= */
 /* Estilos del menú */
+/* ======================= */
 .links {
     display: flex;
     gap: 20px;
 }
 
-a {
+.links a {
     text-decoration: none;
-    color: #000;
-    position: relative; /* Necesario para la línea debajo */
+    color: rgb(20, 52, 195);
+    font-weight: bold;
+    font-size: 20px;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
-a::after {
-    content: ''; /* Crea un pseudo-elemento vacío */
-    position: absolute;
-    bottom: 0; /* Ubica la línea justo debajo del texto */
-    left: 0;
-    width: 100%; /* Hace que la línea ocupe todo el ancho del enlace */
-    height: 2px; /* Grosor de la línea */
-    background-color: #000; /* Color de la línea */
-    transform: scaleX(0); /* Inicialmente no visible */
-    transform-origin: bottom right; /* Inicia la animación desde la derecha */
-    transition: transform 0.3s ease; /* Efecto suave al pasar el cursor */
+.links a:hover {
+    color: rgb(3, 1, 39);
+    transform: scale(1.1);
 }
 
-a:hover::after {
-    transform: scaleX(1); /* Al pasar el cursor, la línea se expande */
-    transform-origin: bottom left; /* Cambia el origen de la animación a la izquierda */
-}
-
+/* ======================= */
 /* Estilos del dropdown */
+/* ======================= */
 .dropdown {
     position: relative;
     display: inline-block;
@@ -120,101 +129,40 @@ a:hover::after {
     cursor: pointer;
 }
 
-/* Contenido del dropdown */
 .dropdown-content {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
     min-width: 160px;
-    z-index: 1;
     padding: 10px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
-/* Sección dentro del dropdown */
 .dropdown-section {
     margin-bottom: 10px;
-}
-
-h4 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: bold;
 }
 
 .dropdown-content a {
     padding: 8px 12px;
     display: block;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.3s ease, padding-left 0.3s ease;
 }
 
 .dropdown-content a:hover {
     background-color: #ddd;
+    padding-left: 16px;
 }
 
-/* Estilo para main-up-left */
-.main-up-left img {
-    max-width: 100%;
-    max-height: 100px; /* Limita la altura del logo */
-    object-fit: contain; /* Escala correctamente */
-    transition: transform 0.3s ease;
-}
-.main-up.scrolled .main-up-left img {
-    transform: translateY(0); /* Mantiene la posición del logo al hacer scroll */
-}
-
-
-/* Estilo para main-up-right */
-.main-up-right {
-    display: flex;
-   
-    align-items: center;
-    margin-right: 8%;
-}
-
-.links {
-    display: flex;
-    gap: 20px; /* Espaciado entre los enlaces */
-}
-
-.links a {
-    text-decoration: none;
-    color: rgb(20, 52, 195); /* Color del texto */
-    font-weight: bold;
-    font-size: 20px;
-   /* transition: color 0.1s, transform 0.1s; /* Transiciones */
-}
-
-.links a:hover {
-    color: rgb(3, 1, 39); /* Color al pasar el mouse */
-    transform: scale(1.1); /* Ligero aumento */
-}
-
-/* Menú hamburguesa (solo visible en pantallas pequeñas) */
-/* Estilo para el menú hamburguesa */
-.menu-toggle {
-    display: none; /* Ocultamos el menú hamburguesa en pantallas grandes */
-    cursor: pointer;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 25px; /* Ancho más estrecho para el menú hamburguesa */
-    height: 20px; /* Reducimos la altura para hacerlo más compacto */
-}
-
-.menu-toggle .bar {
-    height: 3px; /* Reducimos el grosor de las barras */
-    background-color: #333;
-    border-radius: 5px;
-}
-
-/* El menú principal debe ser visible solo en pantallas grandes */
-.main-up-right {
-    display: flex;
-    gap: 20px;
-}
+/* ======================= */
+/* Icono de perfil */
+/* ======================= */
 .dropdown-perfil {
     position: relative;
     display: inline-block;
@@ -252,15 +200,34 @@ h4 {
     display: block;
     text-decoration: none;
     font-weight: 500;
-    transition: background 0.3s ease-in-out, padding-left 0.3s;
 }
 
-/* Menú móvil (por defecto oculto) */
+/* ======================= */
+/* Menú hamburguesa */
+/* ======================= */
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 20px;
+}
+
+.menu-toggle .bar {
+    height: 3px;
+    background-color: #333;
+    border-radius: 5px;
+}
+
+/* ======================= */
+/* Menú móvil */
+/* ======================= */
 .mobile-menu {
-    display: none; /* Ocultar el menú por defecto */
+    display: none;
     flex-direction: column;
     position: absolute;
-    top: 100px; /* Ajusta la posición según el diseño */
+    top: 100px;
     left: 0;
     width: 100%;
     background-color: #fff;
@@ -303,126 +270,144 @@ h4 {
 }
 
 
-/*------------------------------------------------ICONO LOGIN PERFIL*----------------------------------------------------/
-/* Estilos para el icono de perfil */
+/* ======================= */
+/* Icono de Perfil */
+/* ======================= */
 .icon-perfil {
     cursor: pointer;
     display: inline-block;
-  
-
+    font-size: 24px;
+    color: #fff;
+    transition: transform 0.3s ease;
 }
 
-/* Estilos para el contenedor del desplegable */
+/* ======================= */
+/* Contenedor del Dropdown */
+/* ======================= */
 .dropdown-perfil {
     position: relative;
     display: inline-block;
 }
 
-/* Estilos para el menú desplegable */
+/* ======================= */
+/* Menú desplegable */
+/* ======================= */
 .dropdown-perfil-content {
-    display: none;  /* Inicialmente oculto */
+    display: none;
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.8);  /* Fondo oscuro semi-transparente */
-    color: #fff;  /* Color de texto blanco */
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
     min-width: 160px;
     border-radius: 8px;
     margin-top: 8px;
     opacity: 0;
-    transition: opacity 0.2s ease-in-out;  /* Transición suave de aparición */
-    z-index: 1;  /* Asegura que el menú quede por encima de otros elementos */
+    transition: opacity 0.2s ease-in-out;
+    z-index: 1;
 }
 
-/* Estilos para los enlaces del menú */
+/* Mostrar el menú al pasar el ratón */
+.dropdown-perfil:hover .dropdown-perfil-content {
+    display: block;
+    opacity: 1;
+}
+
+/* ======================= */
+/* Enlaces dentro del menú */
+/* ======================= */
 .dropdown-perfil-content a {
     color: #fff;
     padding: 10px 15px;
     text-decoration: none;
     display: block;
     font-size: 14px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Línea divisoria entre los elementos */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
-/* Cambiar el color de fondo de los enlaces cuando el ratón pasa sobre ellos */
 .dropdown-perfil-content a:hover {
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 5px;
-    color: white;
 }
 
-/* Mostrar el menú cuando se pasa el ratón sobre el contenedor */
-.dropdown-perfil:hover .dropdown-perfil-content {
-    display: block;
-    opacity: 1;
-}
-
-/* Opcional: Añadir una animación al ícono de usuario */
-.icon-perfil {
-    font-size: 24px;  /* Tamaño del icono */
-    color: #fff;
-    transition: transform 0.3s ease;  /* Transición suave para el icono */
-}
-
-
-
-/* Estilo para el enlace de "Cerrar sesión" al pasar el ratón */
+/* ======================= */
+/* Estilo para "Cerrar sesión" */
+/* ======================= */
 .dropdown-perfil-content .logout-link:hover {
-    background-color: rgba(255, 0, 0, 0.2); /* Fondo rojo suave para el cierre de sesión */
+    background-color: rgba(255, 0, 0, 0.2);
     color: red;
     border-radius: 5px;
 }
 
-
-
 /*------------------------------------------------------CENTRO IMG-------------------------------------------------*/
 
-
-.main-center{
-   
+.main-center {
     z-index: 999;
-    margin: 8% auto;
+    margin: 5% auto;
     display: flex;
-    
-    height: 65%;
+    height: auto;
     width: 80%;
-
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    flex-wrap: nowrap;
-
+    text-align: center;
+    padding: 40px 20px;
 }
 
-.center-up{
-  
-
-    height: 50%;
-    width: 80%;
+.center-up {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    flex-wrap: nowrap;
-
+    text-align: center;
 }
-.center-up-up{
 
-    height: 20%;
+.center-up-up {
+    height: auto;
     margin-top: 2%;
     text-align: center;
-    width: 50%;
+    width: 60%;
 }
-.center-up-down{
-    
-    height: 65%;
- 
-    width: 50%;
+
+.center-up-down {
+    height: auto;
+    width: 60%;
     text-align: center;
 }
-.center-up-down h1{
-    font-size: 40px;
+
+.center-up-down h1 {
+    font-size: 42px;
     font-family: "Cormorant Garamond", serif;
-    font-weight: 600;
+    font-weight: 700;
     font-style: italic;
+    color: #2a3d66;
+    line-height: 1.2;
+}
+
+@media (max-width: 992px) {
+    .main-center {
+        width: 90%;
+        padding: 30px;
+    }
+    .center-up-up, .center-up-down {
+        width: 80%;
+    }
+    .center-up-down h1 {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-center {
+        width: 100%;
+        padding: 20px;
+    }
+    .center-up-up, .center-up-down {
+        width: 90%;
+    }
+    .center-up-down h1 {
+        font-size: 32px;
+    }
 }
 
 /*-----------------------------------------BOTONes RESERVA-----------------------------------------------------------*/
@@ -430,6 +415,9 @@ h4 {
 .center-down {
     height: 50%;
     width: 100%;
+    border: 2px solid red;
+    margin-top: 7%;
+
 }
 
 /* Contenedor de la reserva */
@@ -437,9 +425,9 @@ h4 {
     max-width: 100%;
     margin: 0 auto;
     padding: 25px;
-    background: linear-gradient(145deg, #d1d7e0, #ffffff);
+   background-color: white;
     border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    opacity: 0.97;
     overflow: hidden;
 }
 
@@ -449,6 +437,7 @@ form {
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 20px;
+    opacity: 1;
 }
 
 /* Campos del formulario */
@@ -463,6 +452,7 @@ label {
     color: #2a3d66;
     font-weight: bold;
     font-size: 1.1rem;
+    opacity: 1;
 }
 
 /* Estilo de entrada y selección */

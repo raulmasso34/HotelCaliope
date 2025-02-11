@@ -109,7 +109,8 @@ if ($controller !== null) {
                     <!-- Contenedor del perfil -->
                     <div class="dropdown-perfil">
                         <a class="icon-perfil" href="javascript:void(0);">
-                            <i class="bi bi-person-circle"></i> <!-- Ícono más elegante y simple -->
+                        <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
+                        
                         </a>
                         <div class="dropdown-perfil-content">
                             <a href="../vista/Clientes/login.php">Iniciar sesión</a>
@@ -175,10 +176,10 @@ if ($controller !== null) {
             <div class="center-down">
                 <div class="form-reservas">
                     <div class="reservation-form">
-                    <form id="reservationForm" action="../vista/reservas.php" method="post" class="container p-4 bg-light rounded shadow">
-                        <!-- Campo de selección de lugar -->
-                        <div class="mb-3">
-                            <label for="location" class="form-label">Lugar</label>
+                    <form id="reservationForm" action="../vista/reservas.php" method="post" class="reservation-form">
+                        <!-- Lugar -->
+                        <div class="form-group">
+                            <label for="location"><i class="fa-solid fa-map-marker-alt"></i> Lugar</label>
                             <select id="location" name="location" class="form-select" required>
                                 <?php foreach ($paises as $pais): ?>
                                     <option value="<?php echo $pais['Id_Pais']; ?>">
@@ -188,27 +189,28 @@ if ($controller !== null) {
                             </select>
                         </div>
 
-                        <!-- Campo de fecha de check-in -->
-                        <div class="mb-3">
-                            <label for="checkin" class="form-label">Fecha de Check-in</label>
+                        <!-- Fecha Check-in -->
+                        <div class="form-group">
+                            <label for="checkin"><i class="fa-solid fa-calendar-check"></i> Fecha de Check-in</label>
                             <input type="date" id="checkin" name="checkin" class="form-control" min="<?= date('Y-m-d'); ?>" required>
                         </div>
 
-                        <!-- Campo de fecha de check-out -->
-                        <div class="mb-3">
-                            <label for="checkout" class="form-label">Fecha de Check-out</label>
+                        <!-- Fecha Check-out -->
+                        <div class="form-group">
+                            <label for="checkout"><i class="fa-solid fa-calendar-xmark"></i> Fecha de Check-out</label>
                             <input type="date" id="checkout" name="checkout" class="form-control" min="<?= date('Y-m-d'); ?>" required>
                         </div>
 
-                        <!-- Campo de número de personas -->
-                        <div class="mb-3">
-                            <label for="numero_personas" class="form-label">Número de Personas</label>
-                            <input type="number" id="numero_personas" name="numero_personas" class="form-control" min="1" value="<?php echo isset($_SESSION['numero_personas']) ? $_SESSION['numero_personas'] : ''; ?>" required>
+                        <!-- Número de Personas -->
+                        <div class="form-group">
+                            <label for="numero_personas"><i class="fa-solid fa-users"></i> Número de Personas</label>
+                            <input type="number" id="numero_personas" name="numero_personas" class="form-control" min="1"
+                                value="<?php echo isset($_SESSION['numero_personas']) ? $_SESSION['numero_personas'] : ''; ?>" required>
                         </div>
 
-                        <!-- Botón para enviar el formulario -->
-                        <div class="d-grid">
-                            <button type="submit" id="submitBtn" class="btn btn-primary">Reservar</button>
+                        <!-- Botón de Reservar -->
+                        <div class="form-group">
+                            <button type="submit" id="submitBtn"><i class="fa-solid fa-bed"></i> Reservar</button>
                         </div>
                     </form>
 
