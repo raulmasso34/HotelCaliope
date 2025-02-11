@@ -185,6 +185,13 @@ header {
     padding: 10px 0;
     z-index: 1000;
 }
+.dropdown-perfil-content a {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre el icono y el texto */
+    padding: 10px;
+    font-size: 1rem;
+}
 
 .mobile-menu a {
     color: #2c3e50;
@@ -279,7 +286,7 @@ header {
 
 /* Botón reservar */
 .btn-primary {
-    background: #3c4ac7;
+    background: #161c51;
     border: none;
     font-weight: bold;
     transition: background 0.3s ease-in-out;

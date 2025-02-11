@@ -49,30 +49,52 @@ body {
 /* Barra de navegación */
 /* ======================= */
 .main-up {
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
-    height: 115px;
-    justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    z-index: 1000;
+    justify-content: space-between;
     width: 100%;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    height: 100px;
+    margin: auto;
+    position: fixed; 
+    background-color: transparent; /* Fondo transparente al inicio */
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    z-index: 1000;
 }
 
+/* Logo */
+.main-up-left img {
+    height: 60px;
+}
+
+/* Contenedor de enlaces */
+.main-up-right .links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Enlaces de navegación */
+.links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out;
+    padding: 8px 15px;
+}
+
+.links a:hover {
+    color: #d3ddff; /* Dorado elegante */
+}
 .main-up.transparent {
     background-color: rgba(0, 0, 0, 0);
     box-shadow: none;
 }
 
 .main-up.scrolled {
-    background-color: rgb(255, 255, 255);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra elegante */
 }
-
 .main-up-left {
     display: flex;
     align-items: center;
@@ -80,16 +102,12 @@ body {
 }
 
 .main-up-left img {
-    max-width: 100%;
-    max-height: 100px;
-    object-fit: contain;
-    transition: transform 0.3s ease;
+    height: 60px;
+   
 }
-
 .main-up.scrolled .main-up-left img {
-    transform: translateY(0);
+    height: 60px;
 }
-
 .main-up-right {
     display: flex;
     align-items: center;
@@ -106,7 +124,7 @@ body {
 
 .links a {
     text-decoration: none;
-    color: rgb(20, 52, 195);
+    color: rgb(19, 32, 88);
     font-weight: bold;
     font-size: 20px;
     transition: color 0.3s ease, transform 0.3s ease;
@@ -168,38 +186,67 @@ body {
     display: inline-block;
 }
 
+/* Icono de usuario */
 .icon-perfil {
-    font-size: 24px;
+    font-size: 2.2rem;
     color: #ffffff;
-    transition: color 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out, transform 0.3s ease;
+    cursor: pointer;
 }
 
 .icon-perfil:hover {
     color: #cccccc;
+    transform: scale(1.1);
 }
 
+/* Contenedor del dropdown */
 .dropdown-perfil-content {
     display: none;
     position: absolute;
-    background: rgba(255, 255, 255, 0.95);
-    min-width: 160px;
-    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+    right: 0;
+    top: 90%; /* Reducido para acercarlo al icono */
+    background: #ffffff;
+    min-width: 200px;
+    box-shadow: 0px 10px 30px rgba(6, 3, 85, 0.584);
     border-radius: 12px;
     padding: 10px 0;
     z-index: 1000;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
 }
 
-.dropdown-perfil:hover .dropdown-perfil-content {
+/* Mantener visible cuando el cursor está en el icono o en el menú */
+.dropdown-perfil:hover .dropdown-perfil-content,
+.dropdown-perfil-content:hover {
     display: block;
+    opacity: 1;
+    visibility: visible;
 }
 
+/* Enlaces dentro del dropdown */
 .dropdown-perfil-content a {
     color: #333;
-    padding: 12px 16px;
-    display: block;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
     text-decoration: none;
     font-weight: 500;
+    transition: background 0.3s ease, padding-left 0.3s ease;
+    border-radius: 8px;
+}
+
+/* Iconos en los enlaces */
+.dropdown-perfil-content a i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+    color: #d1d7f2;
+}
+
+/* Efecto al pasar el cursor */
+.dropdown-perfil-content a:hover {
+    background-color: #d3ddff;
+    padding-left: 20px;
 }
 
 /* ======================= */
@@ -295,8 +342,8 @@ body {
 .dropdown-perfil-content {
     display: none;
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: #fff;
+    background-color: rgba(20, 24, 49, 0.8);
+    color: #000000;
     min-width: 160px;
     border-radius: 8px;
     margin-top: 8px;
@@ -415,7 +462,7 @@ body {
 .center-down {
     height: 50%;
     width: 100%;
-    border: 2px solid red;
+
     margin-top: 7%;
 
 }

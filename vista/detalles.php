@@ -44,6 +44,9 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Enlace a Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
     
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="../static/css/detalles.css">
@@ -93,10 +96,17 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
                         
                         </a>
                         <div class="dropdown-perfil-content">
-                            <a href="../vista/Clientes/login.php">Iniciar sesión</a>
-                            <a href="../vista/Clientes/perfil.php">Perfil</a>
-                            <a href="../controller/clients/LoginController.php?action=logout">Cerrar sesión</a>
+                            <a href="../vista/Clientes/login.php">
+                                <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+                            </a>
+                            <a href="../vista/Clientes/perfil.php">
+                                <i class="bi bi-person"></i> Perfil
+                            </a>
+                            <a href="../controller/clients/LoginController.php?action=logout">
+                                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                            </a>
                         </div>
+
                     </div>
                 </div>
             </div>

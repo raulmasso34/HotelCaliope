@@ -60,6 +60,7 @@ if ($controller !== null) {
     <link rel="stylesheet" href="../static/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <!-- Scripts -->
     <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -113,9 +114,15 @@ if ($controller !== null) {
                         
                         </a>
                         <div class="dropdown-perfil-content">
-                            <a href="../vista/Clientes/login.php">Iniciar sesión</a>
-                            <a href="../vista/Clientes/perfil.php">Perfil</a>
-                            <a href="../controller/clients/LoginController.php?action=logout">Cerrar sesión</a>
+                            <a href="../vista/Clientes/login.php">
+                                <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+                            </a>
+                            <a href="../vista/Clientes/perfil.php">
+                                <i class="bi bi-person"></i> Perfil
+                            </a>
+                            <a href="../controller/clients/LoginController.php?action=logout" style="color: red;"> 
+                                <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
+                            </a>
                         </div>
                     </div>
                 </div>
