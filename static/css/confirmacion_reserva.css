@@ -1,218 +1,72 @@
-/* Estilos generales */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
+    background-color: #f5f5f5;
     color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    flex-direction: column;
-}
-
-h1, h2 {
-    text-align: center;
-    color: #2c3e50;
-    margin: 0;
-}
-
-h1 {
-    font-size: 36px;
-    font-weight: 600;
-    margin-top: 30px;
-}
-
-h2 {
-    font-size: 26px;
-    font-weight: 600;
-    color: #2980b9;
-    margin-top: 15px;
-}
-
-/* Contenedor principal */
-.container {
-    width: 80%;
-    max-width: 1200px;
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 10px auto;
-}
-
-/* Detalles de la reserva */
-.details p, .room-details p {
-    font-size: 18px;
-    line-height: 1.8;
-    margin-bottom: 20px;
-    text-align: left;
-    width: 100%;
-    color: #7f8c8d;
-}
-
-/* Formulario */
-form {
-    width: 60%;
-    margin-top: 30px;
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-}
-
-/* Etiquetas de formulario */
-form label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
-    font-size: 16px;
-    color: #2c3e50;
-}
-
-/* Estilos de los selects */
-form select {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
-    background-color: #fafafa;
-    color: #333;
-    transition: border-color 0.3s ease;
-}
-
-/* Estilo cuando el select está en foco */
-form select:focus {
-    border-color: #2980b9;
-    outline: none;
-}
-
-/* Botón de formulario */
-form button {
-    text-align: center;
-    margin: auto;
-    width: 60%;
-    padding: 18px;
-    background-color: #2980b9;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilos al pasar el ratón sobre el botón */
-form button:hover {
-    background-color: #3498db;
-    transform: translateY(-2px);
-}
-
-/* Estilos del botón al hacer clic */
-form button:active {
-    background-color: #2980b9;
-    transform: translateY(0);
-}
-
-/* Contenedor para la selección de actividad y pago */
-.selection {
-    margin-top: 25px;
-}
-
-/* Estilos para los mensajes de error */
-.error-message {
-    color: #e74c3c;
-    font-size: 16px;
-    margin-top: 10px;
-    text-align: center;
-}
-
-/* Agregar más espacio a la página y centrado de todo */
-.container {
-    padding: 40px;
-    box-sizing: border-box;
-}
-
-/* Asegurarse de que los formularios se vean bien en dispositivos móviles */
-@media (max-width: 768px) {
-    .container {
-        width: 90%;
-    }
-}
-
-
-/*------------------------RESERVA CONFIRMADA----------------------------*/
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin: 0;
+    text-align: justify;
 }
 
 .container {
-    text-align: center;
-    background: #ffffff;
-    padding: 20px;
+    background: white;
+    padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 500px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+    max-width: 800px;
+    width: 100%;
+    text-align: justify;
 }
 
-.title {
-    color: #4CAF50;
-    margin-bottom: 15px;
+h1, h2 {
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-.message {
-    font-size: 1.1em;
+.btn-primary {
+    background-color: #444;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    display: block;
+    margin: 20px auto;
+}
+
+.btn-primary:hover {
+    background-color: #222;
+    transform: scale(1.05);
+}
+
+select, input {
+    background-color: #f9f9f9;
     color: #333;
-    margin: 10px 0;
-}
-
-.details {
-    margin-top: 20px;
-    padding: 15px;
     border: 1px solid #ddd;
+    padding: 10px;
     border-radius: 5px;
-    background-color: #fafafa;
-    text-align: left;
+    width: 100%;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease-in-out;
+    text-align: justify;
 }
 
-.detail-item {
-    margin: 5px 0;
+select:focus, input:focus {
+    outline: none;
+    border-color: #888;
 }
 
-.label {
-    font-weight: bold;
-    color: #555;
+.form-group {
+    margin-bottom: 20px;
 }
 
-.button {
-    display: inline-block;
-    margin-top: 20px;
-    text-decoration: none;
-    color: #fff;
-    background-color: #007BFF;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.button:hover {
-    background-color: #0056b3;
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    color: #666;
 }

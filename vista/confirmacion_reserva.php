@@ -60,72 +60,70 @@ $database->closeConnection();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmación de Reserva</title>
     <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="./../static/css/confirmacion_reserva.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/confirmacion_reserva.css">
+    
 </head>
 <body>
-    <h1>Confirmar Reserva</h1>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Confirmar Reserva</h1>
+        <p><strong>Ubicación seleccionada:</strong> <?php echo htmlspecialchars($paisNombre) ?: 'País no disponible'; ?></p>
+        <p><strong>Fecha de Check-in:</strong> <?php echo htmlspecialchars($checkin); ?></p>
+        <p><strong>Fecha de Check-out:</strong> <?php echo htmlspecialchars($checkout); ?></p>
+        <p><strong>Número de personas:</strong> <?php echo htmlspecialchars($guests); ?></p>
 
-    <p><strong>Ubicación seleccionada:</strong> 
-    <?php 
-    if ($paisNombre) {
-        echo htmlspecialchars($paisNombre);  // Muestra el nombre del país
-    } else {
-        echo "País no disponible";  // En caso de que no se encuentre el país
-    }
-    ?>
-    </p>
-    <p><strong>Fecha de Check-in:</strong> <?php echo htmlspecialchars($checkin); ?></p>
-    <p><strong>Fecha de Check-out:</strong> <?php echo htmlspecialchars($checkout); ?></p>
-    <p><strong>Número de personas:</strong> <?php echo htmlspecialchars($guests); ?></p>
+        <h2 class="mt-4">Detalles del Hotel</h2>
+        <p><strong>Hotel:</strong> <?php echo htmlspecialchars($hotelDetails['Nombre']); ?></p>
+        <p><strong>Habitación seleccionada:</strong> <?php echo htmlspecialchars($habitacionDetails['Tipo']); ?></p>
+        <p><strong>Precio por noche:</strong> <span id="precioPorNoche"><?php echo htmlspecialchars($habitacionDetails['Precio']); ?></span> €</p>
+        <p><strong>Descripción:</strong> <?php echo htmlspecialchars($habitacionDetails['Descripcion'] ?? 'Descripción no disponible'); ?></p>
 
-    <h2>Detalles del Hotel: <?php echo htmlspecialchars($hotelDetails['Nombre']); ?></h2>
-    <p><strong>Habitación seleccionada:</strong> <?php echo htmlspecialchars($habitacionDetails['Tipo']); ?></p>
-    <p><strong>Precio:</strong> <?php echo htmlspecialchars($habitacionDetails['Precio']); ?> €</p>
-    <p><strong>Descripción:</strong> <?php echo htmlspecialchars($habitacionDetails['Descripcion'] ?? 'Descripción no disponible'); ?></p>
+        <h3 class="mt-3">Precio Total: <span id="precioTotal">Calculando...</span> €</h3>
 
-    <!-- Formulario de pago -->
-    <form action="../vista/pagos.php" method="POST">
-        <!-- Detalles de la reserva -->
-        <input type="hidden" name="habitacionId" value="<?php echo $habitacionId; ?>">
-        <input type="hidden" name="clienteId" value="<?php echo $clienteId; ?>">
-        <input type="hidden" name="hotelId" value="<?php echo $hotelId; ?>">
-        <input type="hidden" name="checkin" value="<?php echo $checkin; ?>">
-        <input type="hidden" name="checkout" value="<?php echo $checkout; ?>">
-        <input type="hidden" name="guests" value="<?php echo $guests; ?>">
-        <input type="hidden" name="paisId" value="<?php echo $paisId; ?>">
+        <form action="../vista/pagos.php" method="POST">
+            <input type="hidden" name="habitacionId" value="<?php echo $habitacionId; ?>">
+            <input type="hidden" name="clienteId" value="<?php echo $clienteId; ?>">
+            <input type="hidden" name="hotelId" value="<?php echo $hotelId; ?>">
+            <input type="hidden" name="checkin" id="checkin" value="<?php echo $checkin; ?>">
+            <input type="hidden" name="checkout" id="checkout" value="<?php echo $checkout; ?>">
+            <input type="hidden" name="guests" value="<?php echo $guests; ?>">
+            <input type="hidden" name="paisId" value="<?php echo $paisId; ?>">
 
-        <!-- Selección de actividad (opcional) -->
-        <label for="actividadId">Selecciona una actividad (opcional):</label>
-        <select name="actividadId" id="actividadId">
-            <option value="">Ninguna actividad</option>
-            <?php 
-            if (!empty($actividades)):
-                foreach ($actividades as $actividad):
-            ?>
-                <option value="<?php echo $actividad['Id_Actividades']; ?>">
-                    <?php echo htmlspecialchars($actividad['Nombre'] ?: 'Sin nombre disponible'); ?>
-                </option>
-            <?php 
-                endforeach;
-            endif;
-            ?>
-        </select>
+            <div class="mb-3">
+                <label for="actividadId" class="form-label">Selecciona una actividad (opcional):</label>
+                <select class="form-select" name="actividadId" id="actividadId">
+                    <option value="">Ninguna actividad</option>
+                    <?php foreach ($actividades as $actividad): ?>
+                        <option value="<?php echo $actividad['Id_Actividades']; ?>">
+                            <?php echo htmlspecialchars($actividad['Nombre'] ?: 'Sin nombre disponible'); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
-        <!-- Selección del método de pago desde la base de datos -->
-        <label for="metodo_pago">Selecciona un método de pago:</label>
-        <select name="metodo_pago" id="metodo_pago" required>
-            <?php if (!empty($metodosPago)): ?>
-                <?php foreach ($metodosPago as $metodo): ?>
-                    <option value="<?php echo $metodo['Id_MetodoPago']; ?>">
-                        <?php echo htmlspecialchars($metodo['Tipo']); ?>
-                    </option>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <option value="">No hay métodos de pago disponibles</option>
-            <?php endif; ?>
-        </select>
+            <div class="mb-3">
+                <label for="metodo_pago" class="form-label">Selecciona un método de pago:</label>
+                <select class="form-select" name="metodo_pago" id="metodo_pago" required>
+                    <?php if (!empty($metodosPago)): ?>
+                        <?php foreach ($metodosPago as $metodo): ?>
+                            <option value="<?php echo $metodo['Id_MetodoPago']; ?>">
+                                <?php echo htmlspecialchars($metodo['Tipo']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <option value="">No hay métodos de pago disponibles</option>
+                    <?php endif; ?>
+                </select>
+            </div>
 
-        <button type="submit">Confirmar Reserva y Pagar</button>
-    </form>
+            <button type="submit" class="btn btn-primary w-100">Confirmar Reserva y Pagar</button>
+        </form>
+    </div>
+
+    <script src="../static/js/confirmacion_reservas.js">
+       
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

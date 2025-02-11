@@ -65,50 +65,75 @@ $database->closeConnection();
 ?>
 
 
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hoteles Disponibles</title>
+    <title>Hoteles de Lujo</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Estilos personalizados -->
     <link rel="stylesheet" href="../static/css/reserva.css">
+    
+    <!-- Ícono -->
     <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <h1>Hoteles Disponibles</h1>
-        <div class="hotels">
-            <!-- Verificar si hay hoteles disponibles antes de mostrar el contenido -->
+<body class="bg-light text-dark">
+
+    <div class="container my-5">
+        <h1 class="text-center text-uppercase fw-bold mb-5" style="color: #2C3E50; font-size: 2.8rem;">Nuestros Hoteles</h1>
+
+        <div class="row">
             <?php if (count($hoteles) > 0): ?>
                 <?php foreach ($hoteles as $hotel): ?>
-                    <a href="detalles.php?hotelId=<?php echo $hotel['Id_Hotel']; ?>" class="hotel">
-                        <div class="hotel">
-                            <div class="hotel-image">
+                    <div class="col-md-6 col-lg-4">
+                        <a href="detalles.php?hotelId=<?php echo $hotel['Id_Hotel']; ?>" class="text-decoration-none">
+                            <div class="card hotel-card shadow-sm">
+                                <div class="hotel-image">
                                 <?php
-                                $ciudad = strtolower(str_replace(' ', '_', $hotel['Ciudad']));
-                                $imagenPath = "../static/img/{$ciudad}/{$ciudad}.jpg";
-                                if (!file_exists($imagenPath)) {
-                                    $imagenPath = "../static/img/habitaciones/hab1.jpg";
-                                }
-                                ?>
-                                <img src="<?php echo $imagenPath; ?>" alt="<?php echo $hotel['Ciudad']; ?>" />
-                            </div>
+                                    $ciudad = strtolower(str_replace(' ', '_', $hotel['Ciudad'])); // Convierte el nombre a formato carpeta
 
-                            <div class="hotel-info">
-                                <h2><?php echo htmlspecialchars($hotel['Nombre']); ?></h2>
-                                <p><strong>Ciudad:</strong> <?php echo htmlspecialchars($hotel['Ciudad']); ?></p>
-                                <p><strong>Estrellas:</strong> <?php echo htmlspecialchars($hotel['Estrellas']); ?> estrellas</p>
-                                <p><strong>Descripción:</strong> Este es el hotel <?php echo htmlspecialchars($hotel['Nombre']); ?>, ubicado en <?php echo htmlspecialchars($hotel['Ciudad']); ?>.</p>
+                                    // Construye la ruta de la imagen según la ciudad
+                                    $imagenPath = "../static/img/{$ciudad}/{$ciudad}.jpg";
+
+                                    // Si la imagen específica no existe, intenta una imagen por defecto para la ciudad
+                                    if (!file_exists($imagenPath)) {
+                                        $imagenPath = "../static/img/Galicia/galicia1.jpg"; // Imagen general de la ciudad
+                                    }
+
+                                    // Si tampoco existe, usa una imagen de respaldo genérica
+                                    if (!file_exists($imagenPath)) {
+                                        $imagenPath = "../static/img/habitaciones/hab1.jpg"; // Imagen de respaldo
+                                    }
+                                    ?>
+                                    <img src="<?php echo $imagenPath; ?>" alt="<?php echo htmlspecialchars($hotel['Ciudad']); ?>" class="card-img-top">
+
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="card-title" style="color: #B8860B; font-size: 1.8rem;"><?php echo htmlspecialchars($hotel['Nombre']); ?></h2>
+                                    <p class="card-text"><strong>Ubicación:</strong> <?php echo htmlspecialchars($hotel['Ciudad']); ?></p>
+                                    <p class="card-text"><strong>Categoría:</strong> <?php echo htmlspecialchars($hotel['Estrellas']); ?> Estrellas</p>
+                                    <p class="card-text">Un refugio de lujo en <?php echo htmlspecialchars($hotel['Ciudad']); ?>, diseñado para una experiencia inigualable.</p>
+                                    <button class="btn btn-dark w-100">Ver detalles</button>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <p>No se encontraron hoteles disponibles en la ubicación seleccionada.</p>
+                <p class="text-center">No se encontraron hoteles disponibles en la ubicación seleccionada.</p>
             <?php endif; ?>
         </div>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

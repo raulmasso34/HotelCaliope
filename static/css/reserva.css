@@ -1,80 +1,52 @@
-/* Estilo básico para la página */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding-top: 50px;
+    font-family: 'Playfair Display', serif;
+    background-color: #F8F9FA; /* Fondo claro */
+    color: #2C3E50; /* Azul marino oscuro */
 }
 
 h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
+    font-size: 2.8rem;
+    letter-spacing: 1.5px;
+    font-weight: 700;
 }
 
-.hotels {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-
-/* Estilo para cada tarjeta de hotel */
-.hotel {
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    width: 100%;
-    max-width: 600px;
-    border-radius: 8px;
+.hotel-card {
+    background: #FFFFFF;
+    border: 1px solid #B8860B; /* Dorado elegante */
+    border-radius: 15px;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Añadido el efecto de sombra */
-    text-decoration: none; /* Eliminamos el subrayado del enlace */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-/* Efecto cuando el usuario pasa el ratón sobre la tarjeta */
-.hotel:hover {
-    transform: translateY(-10px); /* Eleva la tarjeta */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al pasar el ratón */
+.hotel-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0px 10px 30px rgba(184, 134, 11, 0.3);
 }
 
-/* Estilo para la imagen del hotel */
+.card-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
 .hotel-image img {
-    width: 200px;
-    height: 200px;
+    height: 220px;
     object-fit: cover;
-    border-right: 2px solid #ddd;
+    border-bottom: 3px solid #B8860B;
 }
 
-/* Información del hotel (nombre, ciudad, estrellas, etc.) */
-.hotel-info {
+.card-body {
     padding: 20px;
-    flex: 1;
 }
 
-.hotel-info h2 {
-    margin-top: 0;
-    color: #007BFF; /* Color azul para el nombre */
-    font-size: 1.6em;
+.btn-dark {
+    background-color: #2C3E50;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: background 0.3s, color 0.3s;
 }
 
-.hotel-info p {
-    color: #555;
-    line-height: 1.6;
-}
-
-.hotel-info strong {
-    color: #333;
-}
-
-/* Estilo de los botones de los hoteles al pasar el ratón */
-a:hover .hotel {
-    cursor: pointer; /* Cambia el cursor a mano */
-    opacity: 0.9; /* Ligera opacidad para el efecto */
+.btn-dark:hover {
+    background: #B8860B;
+    color: #fff;
 }

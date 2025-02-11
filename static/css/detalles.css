@@ -1,187 +1,97 @@
-/* Reset básico */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Cuerpo de la página */
+/* Estilos generales */
 body {
-    font-family: 'Garamond', serif; /* Fuente elegante y clásica */
-    background: linear-gradient(to bottom, #e0e9fa, #3c719d); /* Gradiente azul claro */
-    color: #2c3e50;
-    line-height: 1.8;
-    padding: 80px 20px;
-    text-align: center; /* Centrado global */
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
 }
 
 /* Contenedor principal */
 .container {
     max-width: 1200px;
-    margin: 0 auto;
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 50px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    text-align: left; /* Texto a la izquierda dentro del contenedor */
 }
 
-/* Encabezado */
-h1, h2 {
-    font-weight: 900;
-    color: #2c3e50;
-    margin-bottom: 30px;
-    text-transform: uppercase;
-    letter-spacing: 5px;
-    font-size: 50px;
-    text-align: center;
-}
-
-/* Detalles de la reserva */
-h1 {
-    border-bottom: 5px solid #2980b9;
-    padding-bottom: 15px;
-}
-
-/* Estilo de texto general */
-p {
-    font-size: 18px;
-    margin: 20px 0;
-    color: #7f8c8d;
-}
-
-/* Estilo para los detalles de la reserva */
-strong {
-    color: #2980b9; /* Azul destacado */
-    font-weight: bold;
-}
-
-/* Estilo para la sección de habitaciones */
-.habitaciones {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 40px;
-    margin-top: 60px;
-    justify-items: center; /* Centrar las tarjetas de habitaciones */
-}
-
-.habitacion {
-    background-color: #fff;
+/* Tarjeta de detalles */
+.detalles-container {
+    background: #fff;
     border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    max-width: 400px; /* Limitar el tamaño máximo de la tarjeta */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
 }
 
-.habitacion:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.15);
+/* Encabezados */
+h1, h2 {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+/* Tarjetas de habitaciones */
+.habitacion-card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.habitacion-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* Imagen de la habitación */
-.habitacion-imagen {
-    width: 100%;
-    height: 300px;
-    overflow: hidden;
-    border-bottom: 5px solid #2980b9; /* Azul en el borde */
-}
-
-.imagen-habitacion {
-    width: 100%;
-    height: 100%;
+.card-img-top {
+    height: 200px;
     object-fit: cover;
-    transition: transform 0.5s ease-in-out;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 
-.habitacion-imagen:hover .imagen-habitacion {
-    transform: scale(1.1);
-}
-
-/* Información de la habitación */
-.habitacion-info {
-    padding: 30px;
-    background-color: #ecf0f1;
-    border-radius: 0 0 15px 15px;
-    text-align: left;
-}
-
-.habitacion-info h3 {
-    color: #2980b9;
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 15px;
-}
-
-.habitacion-info p {
-    font-size: 16px;
-    color: #34495e;
-    margin-bottom: 25px;
-}
-
-/* Botón de reservar */
-button {
-    padding: 18px 35px;
-    background-color: #2980b9;
-    color: white;
+/* Botón reservar */
+.btn-primary {
+    background: #d4af37;
     border: none;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    background: #b88c23;
+}
+
+/* Botón Ver más */
+.btn-info {
+    background: #34495e;
+    border: none;
+    font-weight: bold;
+}
+
+.btn-info:hover {
+    background: #2c3e50;
+}
+
+/* Modal */
+.modal-content {
+    border-radius: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Carrusel dentro del modal */
+.modal-imagen {
+    height: 300px;
+    object-fit: cover;
     border-radius: 10px;
-    font-size: 20px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    margin: 10px auto;
-    display: block;
 }
 
-button:hover {
-    background-color: #1f6393;
-    transform: translateY(-5px);
+/* Controles del carrusel */
+.carousel-control-prev, .carousel-control-next {
+    filter: invert(100%);
 }
 
-/* Detalles de reserva */
-.details {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-bottom: 60px;
-}
-
-.details p {
-    font-size: 18px;
-    color: #7f8c8d;
-    flex-basis: 48%;
-}
-
-.details p strong {
-    color: #2980b9;
-}
-
-/* Fondo sutil */
-body {
-    background: #e0f7fa;
-}
-
-/* Estilos para la página responsive */
+/* Diseño responsive */
 @media (max-width: 768px) {
-    .habitaciones {
-        grid-template-columns: 1fr;
+    .habitacion-card {
+        margin-bottom: 20px;
     }
 
-    .container {
-        padding: 40px 20px;
-    }
-
-    .habitacion-info h3 {
-        font-size: 24px;
-    }
-
-    button {
-        padding: 15px 30px;
-    }
-
-    .details p {
-        flex-basis: 100%;
+    .modal-imagen {
+        height: 250px;
     }
 }
