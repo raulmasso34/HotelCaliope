@@ -1,47 +1,51 @@
 /* Estilos generales */
 body {
-    background-color: #1a2a41; /* Azul medio-oscuro */
+    background-color: #a3b2c5; /* Azul medio-oscuro */
     color: #ffffff;
     font-family: 'Poppins', sans-serif;
 }
 
 /* Contenedor principal */
 .container {
-    max-width: 700px;
-    background: rgba(255, 255, 255, 0.1);
+    max-width: 40%;
+    background: rgba(0, 0, 0, 0.611);
     backdrop-filter: blur(10px);
     padding: 30px;
     border-radius: 15px;
-    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.83);
 }
 
 /* Títulos */
 h1, h2, h3 {
     text-align: center;
     font-weight: bold;
+        
 }
 
 /* Información de la reserva */
 p {
     font-size: 1.1rem;
     margin-bottom: 10px;
+    margin-top: 3%;
 }
 
 /* Resaltar los datos importantes */
 strong {
-    color: #ffcc00; /* Dorado para un toque de lujo */
+    color: #c7ebece3; 
+    margin-top: 3%;
 }
 
 /* Formularios */
 .form-label {
     font-weight: bold;
+    margin-top: 3%;
 }
 
 /* Selects */
 .form-select {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
+    color: rgb(147, 147, 147);
 }
 
 /* Botón */
@@ -63,7 +67,7 @@ strong {
 #precioTotal {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #ffcc00;
+    color: #ff0000;
 }
 
 /* Responsivo */

@@ -53,6 +53,94 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
 </head>
 <body>
 
+
+    <header>
+    <section class="main-up">
+            <div class="main-up-left">
+                <img src="../static/img/logo.png" alt="Imagen secundaria">
+            </div>
+
+            <div class="main-up-right">
+                <div class="links">
+                    <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                    
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Hoteles</a>
+                        <div class="dropdown-content">
+                            <div class="dropdown-section">
+                                <h4>Europa</h4>
+                                <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                                <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                                <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                            </div>
+                            <div class="dropdown-section">
+                                <h4>USA</h4>
+                                <a href="../vista/ciudades/USA/Florida.php">Florida</a>
+                                <a href="../vista/ciudades/USA/California.php">California</a>
+                                <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="../vista/galeria/galeria.php">Galería</a>
+                    <a href="../vista/ofertas/ofertas.php">Ofertas</a>
+                    <a href="../vista/Contacto/contacto.php">Contacto</a>
+                    
+                    <!-- Contenedor del perfil -->
+                    <div class="dropdown-perfil">
+                        <a class="icon-perfil" href="javascript:void(0);">
+                        <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
+                        
+                        </a>
+                        <div class="dropdown-perfil-content">
+                            <a href="../vista/Clientes/login.php">Iniciar sesión</a>
+                            <a href="../vista/Clientes/perfil.php">Perfil</a>
+                            <a href="../controller/clients/LoginController.php?action=logout">Cerrar sesión</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menú hamburguesa (solo visible en pantallas pequeñas) -->
+            <div id="menu-toggle" class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+
+            <!-- Menú desplegable -->
+            <div class="mobile-menu">
+                <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                <a href="../vista/galeria/galeria.php">Galería</a>
+                <a href="../vista/ofertas/ofertas.php">Ofertas</a>
+                <a href="../vista/Contacto/contacto.php">Contacto</a>
+                <a href="../vista/Clientes/login.php">Iniciar sesión</a>
+                <a href="../vista/Clientes/perfil.php">Perfil</a>
+                
+                <!-- Enlace para Hoteles con dropdown -->
+                <div class="dropdown-mobile">
+                    <a href="#" class="dropbtn">Hoteles</a>
+                    <div class="dropdown-content-mobile">
+                        <div class="dropdown-section">
+                            <h4>Europa</h4>
+                            <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                            <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                            <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>USA</h4>
+                            <a href="../vista/ciudades/USA/Florida.php">Florida</a>
+                            <a href="../vista/ciudades/USA/California.php">California</a>
+                            <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+    </header>
+
     <div class="container my-5">
         <div class="card p-4 shadow-lg detalles-container">
             <h1 class="text-center mb-4">Detalles de la Reserva</h1>
@@ -78,7 +166,7 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
                                 $imagenes = [
                                     "{$basePath}{$tipoHabitacion}.jpg",
                                     "{$basePath}{$tipoHabitacion}2.jpg", // Segunda imagen
-                                    "{$basePath}hab2.jpg" // Imagen por defecto
+                                    "{$basePath}individual1.jpg" // Imagen por defecto
                                 ];
 
                                 // Seleccionar la primera imagen existente
@@ -183,6 +271,3 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
-
