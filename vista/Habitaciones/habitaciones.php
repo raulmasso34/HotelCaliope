@@ -47,124 +47,49 @@ if ($controller !== null) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-<!DOCTYPE html>
-<html lang="en">
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <title>Hoteles Caliope</title>
-        <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
-
-        <!-- Fuentes de Google -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:wght@200..1000&family=Old+Standard+TT:wght@400;700&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
-
-        <!-- CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-        <link rel="stylesheet" href="../../static/css/style.css">
-        <link rel="stylesheet" href="../../static/css/habitaciones/habitaciones.css">
-        <link rel="stylesheet" href="../../static/css/habitaciones/habitaciones.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
+    <title>Hoteles Caliope</title>
+    <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-        <!-- Scripts -->
-        <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    </head>
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:wght@200..1000&family=Old+Standard+TT:wght@400;700&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
 
-    <body>
-        <header class="main-header">
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="../../static/css/habitaciones/habitaciones.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
-            <div class="carousel">
-                <img class="carousel-background" src="../../static/img/florida/florida3.jpg" alt="Fondo 1">
-                <img class="carousel-background" src="../../static/img/florida/florida4.jpg" alt="Fondo 2">
-                <img class="carousel-background" src="../../static/img/florida/florida5.jpg" alt="Fondo 3">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <!-- Scripts -->
+    <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+
+<body>
+    <header class="main-header">
+
+        <div class="carousel">
+            <img class="carousel-background" src="../../static/img/florida/florida3.jpg" alt="Fondo 1">
+            <img class="carousel-background" src="../../static/img/florida/florida4.jpg" alt="Fondo 2">
+            <img class="carousel-background" src="../../static/img/florida/florida5.jpg" alt="Fondo 3">
+        </div>
+        
+        <section class="main-up">
+            <div class="main-up-left">
+                <img src="../../static/img/logo.png" alt="Imagen secundaria">
             </div>
-            
-            <section class="main-up">
-                <div class="main-up-left">
-                    <img src="../static/img/logo.png" alt="Imagen secundaria">
-                </div>
 
-                <div class="main-up-right">
-                    <div class="links">
-                        <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
-                        
-                        <div class="dropdown">
-                            <a href="#" class="dropbtn">Hoteles</a>
-                            <div class="dropdown-content">
-                                <div class="dropdown-section">
-                                    <h4>Europa</h4>
-                                    <a href="../../vista/ciudades/Europa/Galicia.php">Galicia</a>
-                                    <a href="../../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
-                                    <a href="../../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
-                                </div>
-                                <div class="dropdown-section">
-                                    <h4>USA</h4>
-                                    <a href="../../vista/ciudades/USA/Florida.php">Florida</a>
-                                    <a href="../../vista/ciudades/USA/California.php">California</a>
-                                    <a href="../../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <a href="../vista/galeria/galeria.php">Galería</a>
-                        <a href="../vista/ofertas/ofertas.php">Ofertas</a>
-                        <a href="../vista/Contacto/contacto.php">Contacto</a>
-                        
-                        <!-- Contenedor del perfil -->
-                        <div class="dropdown-perfil">
-                            <a class="icon-perfil" href="javascript:void(0);">
-                            <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
-                            
-                            </a>
-                            <div class="dropdown-perfil-content">
-                                <a href="../vista/Clientes/login.php">
-                                    <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
-                                </a>
-                                <a href="../vista/Clientes/perfil.php">
-                                    <i class="bi bi-person"></i> Perfil
-                                </a>
-                                <a href="../controller/clients/LoginController.php?action=logout" style="color: red;"> 
-                                    <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Menú hamburguesa (solo visible en pantallas pequeñas) -->
-                <div id="menu-toggle" class="menu-toggle">
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                </div>
-
-                <!-- Menú desplegable -->
-                <div class="mobile-menu">
-                    <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
-                    <a href="../vista/galeria/galeria.php">Galería</a>
-                    <a href="../vista/ofertas/ofertas.php">Ofertas</a>
-                    <a href="../vista/Contacto/contacto.php">Contacto</a>
-                    <a href="../vista/Clientes/login.php">Iniciar sesión</a>
-                    <a href="../vista/Clientes/perfil.php">Perfil</a>
+            <div class="main-up-right">
+                <div class="links">
+                    <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
                     
-                    <!-- Enlace para Hoteles con dropdown -->
-                    <div class="dropdown-mobile">
+                    <div class="dropdown">
                         <a href="#" class="dropbtn">Hoteles</a>
-                        <div class="dropdown-content-mobile">
+                        <div class="dropdown-content">
                             <div class="dropdown-section">
                                 <h4>Europa</h4>
                                 <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
@@ -179,193 +104,138 @@ if ($controller !== null) {
                             </div>
                         </div>
                     </div>
-                </div>
 
-
-            </section>
-
-
-            <section class="main-center">
-                <div class="center-up">
-                    <div class="center-up-up">
-                        <span style="font-size: 20px; color: rgb(230, 182, 11);">
-                            <i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star "></i>
-                        </span>
-                    </div>
-                    <div class="center-up-down">
-                        <h5>Lorem ipsum dolor sit amet.</h5>
-                        <H1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere, minima.</H1>
-                    </div>
-                </div>
-                <div class="center-down">
-                    <div class="form-reservas">
-                        <div class="reservation-form">
-                        <form id="reservationForm" action="../vista/reservas.php" method="post" class="reservation-form">
-                            <!-- Lugar -->
-                            <div class="form-group">
-                                <label for="location"><i class="fa-solid fa-map-marker-alt"></i> Lugar</label>
-                                <select id="location" name="location" class="form-select" required>
-                                    <?php foreach ($paises as $pais): ?>
-                                        <option value="<?php echo $pais['Id_Pais']; ?>">
-                                            <?php echo $pais['Pais']; ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-
-                            <!-- Fecha Check-in -->
-                            <div class="form-group">
-                                <label for="checkin"><i class="fa-solid fa-calendar-check"></i> Fecha de Check-in</label>
-                                <input type="date" id="checkin" name="checkin" class="form-control" min="<?= date('Y-m-d'); ?>" required>
-                            </div>
-
-                            <!-- Fecha Check-out -->
-                            <div class="form-group">
-                                <label for="checkout"><i class="fa-solid fa-calendar-xmark"></i> Fecha de Check-out</label>
-                                <input type="date" id="checkout" name="checkout" class="form-control" min="<?= date('Y-m-d'); ?>" required>
-                            </div>
-
-                            <!-- Número de Personas -->
-                            <div class="form-group">
-                                <label for="numero_personas"><i class="fa-solid fa-users"></i> Número de Personas</label>
-                                <input type="number" id="numero_personas" name="numero_personas" class="form-control" min="1"
-                                    value="<?php echo isset($_SESSION['numero_personas']) ? $_SESSION['numero_personas'] : ''; ?>" required>
-                            </div>
-
-                            <!-- Botón de Reservar -->
-                            <div class="form-group">
-                                <button type="submit" id="submitBtn"><i class="fa-solid fa-bed"></i> Reservar</button>
-                            </div>
-                        </form>
-
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </header>
-
-        <section id="habitaciones" class="container py-5">
-            <h2 class="text-center mb-4">Nuestras Habitaciones</h2>
-            <div class="row">
-                <!-- Habitación Estándar -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://source.unsplash.com/400x300/?bedroom" class="card-img-top" alt="Habitación Estándar">
-                        <div class="card-body">
-                            <h5 class="card-title">Habitación Estándar</h5>
-                            <p class="card-text">Confort y simplicidad con cama queen, baño privado y Wi-Fi.</p>
-                            <p><strong>Desde $80/noche</strong></p>
-                            <a href="#" class="btn btn-primary">Reservar</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Habitación Deluxe -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://source.unsplash.com/400x300/?hotel" class="card-img-top" alt="Habitación Deluxe">
-                        <div class="card-body">
-                            <h5 class="card-title">Habitación Deluxe</h5>
-                            <p class="card-text">Espaciosa y elegante con balcón privado y minibar.</p>
-                            <p><strong>Desde $120/noche</strong></p>
-                            <a href="#" class="btn btn-primary">Reservar</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Suite Ejecutiva -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="https://source.unsplash.com/400x300/?luxury-room" class="card-img-top" alt="Suite Ejecutiva">
-                        <div class="card-body">
-                            <h5 class="card-title">Suite Ejecutiva</h5>
-                            <p class="card-text">Lujo y exclusividad con jacuzzi y vista panorámica.</p>
-                            <p><strong>Desde $200/noche</strong></p>
-                            <a href="#" class="btn btn-primary">Reservar</a>
+                    <a href="../vista/galeria/galeria.php">Galería</a>
+                    <a href="../vista/ofertas/ofertas.php">Ofertas</a>
+                    <a href="../vista/Contacto/contacto.php">Contacto</a>
+                    
+                    <!-- Contenedor del perfil -->
+                    <div class="dropdown-perfil">
+                        <a class="icon-perfil" href="javascript:void(0);">
+                        <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
+                        
+                        </a>
+                        <div class="dropdown-perfil-content">
+                            <a href="../vista/Clientes/login.php">
+                                <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+                            </a>
+                            <a href="../vista/Clientes/perfil.php">
+                                <i class="bi bi-person"></i> Perfil
+                            </a>
+                            <a href="../controller/clients/LoginController.php?action=logout" style="color: red;"> 
+                                <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Servicios Incluidos -->
-        <section class="bg-light py-5">
-            <div class="container">
-                <h2 class="text-center mb-4">Servicios Incluidos</h2>
-                <div class="row text-center">
-                    <div class="col-md-3"><p>✅ Wi-Fi Gratis</p></div>
-                    <div class="col-md-3"><p>✅ Desayuno Buffet</p></div>
-                    <div class="col-md-3"><p>✅ Servicio a la Habitación</p></div>
-                    <div class="col-md-3"><p>✅ Piscina y Spa</p></div>
-                </div>
+            <!-- Menú hamburguesa (solo visible en pantallas pequeñas) -->
+            <div id="menu-toggle" class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
             </div>
-        </section>
 
-        <!-- Opiniones de Huéspedes -->
-        <section class="container py-5">
-            <h2 class="text-center mb-4">Opiniones de Nuestros Huéspedes</h2>
-            <div id="carouselOpiniones" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <p class="text-center">⭐️⭐️⭐️⭐️⭐️ "Excelente hotel, habitaciones impecables y servicio de lujo." - Juan P.</p>
-                    </div>
-                    <div class="carousel-item">
-                        <p class="text-center">⭐️⭐️⭐️⭐️⭐️ "Las vistas desde la suite ejecutiva son espectaculares. Repetiré sin duda." - Ana G.</p>
-                    </div>
-                    <div class="carousel-item">
-                        <p class="text-center">⭐️⭐️⭐️⭐️⭐️ "Ubicación perfecta y desayuno delicioso." - Carlos M.</p>
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselOpiniones" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselOpiniones" data-bs-slide="next">
-                    <span class="carousel-control-next-icon"></span>
-                </button>
-            </div>
-        </section>
-
-        <!-- Preguntas Frecuentes -->
-        <section class="bg-light py-5">
-            <div class="container">
-                <h2 class="text-center mb-4">Preguntas Frecuentes</h2>
-                <div class="accordion" id="faqAccordion">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                                ¿A qué hora es el check-in y check-out?
-                            </button>
-                        </h2>
-                        <div id="faq1" class="accordion-collapse collapse show">
-                            <div class="accordion-body">
-                                Check-in desde las 3:00 PM, check-out hasta las 12:00 PM.
-                            </div>
+            <!-- Menú desplegable -->
+            <div class="mobile-menu">
+                <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                <a href="../vista/galeria/galeria.php">Galería</a>
+                <a href="../vista/ofertas/ofertas.php">Ofertas</a>
+                <a href="../vista/Contacto/contacto.php">Contacto</a>
+                <a href="../vista/Clientes/login.php">Iniciar sesión</a>
+                <a href="../vista/Clientes/perfil.php">Perfil</a>
+                
+                <!-- Enlace para Hoteles con dropdown -->
+                <div class="dropdown-mobile">
+                    <a href="#" class="dropbtn">Hoteles</a>
+                    <div class="dropdown-content-mobile">
+                        <div class="dropdown-section">
+                            <h4>Europa</h4>
+                            <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                            <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                            <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
                         </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                                ¿Se admiten mascotas?
-                            </button>
-                        </h2>
-                        <div id="faq2" class="accordion-collapse collapse">
-                            <div class="accordion-body">
-                                Sí, en habitaciones seleccionadas con un costo adicional.
-                            </div>
+                        <div class="dropdown-section">
+                            <h4>USA</h4>
+                            <a href="../vista/ciudades/USA/Florida.php">Florida</a>
+                            <a href="../vista/ciudades/USA/California.php">California</a>
+                            <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
                         </div>
                     </div>
                 </div>
             </div>
+
+
         </section>
 
-        <!-- CTA Final -->
-        <div class="text-center py-5">
-            <a href="#" class="btn btn-lg btn-primary">Reservar Ahora</a>
-        </div>
+
+        <section class="main-center">
+            <div class="center-up">
+                <div class="center-up-up">
+                    <span style="font-size: 20px; color: rgb(230, 182, 11);">
+                        <i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star "></i>
+                    </span>
+                </div>
+                <div class="center-up-down">
+                    <h5>Lorem ipsum dolor sit amet.</h5>
+                    <H1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere, minima.</H1>
+                </div>
+            </div>
+            <div class="center-down">
+                <div class="form-reservas">
+                    <div class="reservation-form">
+                    <form id="reservationForm" action="../vista/reservas.php" method="post" class="reservation-form">
+                        <!-- Lugar -->
+                        <div class="form-group">
+                            <label for="location"><i class="fa-solid fa-map-marker-alt"></i> Lugar</label>
+                            <select id="location" name="location" class="form-select" required>
+                                <?php foreach ($paises as $pais): ?>
+                                    <option value="<?php echo $pais['Id_Pais']; ?>">
+                                        <?php echo $pais['Pais']; ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <!-- Fecha Check-in -->
+                        <div class="form-group">
+                            <label for="checkin"><i class="fa-solid fa-calendar-check"></i> Fecha de Check-in</label>
+                            <input type="date" id="checkin" name="checkin" class="form-control" min="<?= date('Y-m-d'); ?>" required>
+                        </div>
+
+                        <!-- Fecha Check-out -->
+                        <div class="form-group">
+                            <label for="checkout"><i class="fa-solid fa-calendar-xmark"></i> Fecha de Check-out</label>
+                            <input type="date" id="checkout" name="checkout" class="form-control" min="<?= date('Y-m-d'); ?>" required>
+                        </div>
+
+                        <!-- Número de Personas -->
+                        <div class="form-group">
+                            <label for="numero_personas"><i class="fa-solid fa-users"></i> Número de Personas</label>
+                            <input type="number" id="numero_personas" name="numero_personas" class="form-control" min="1"
+                                value="<?php echo isset($_SESSION['numero_personas']) ? $_SESSION['numero_personas'] : ''; ?>" required>
+                        </div>
+
+                        <!-- Botón de Reservar -->
+                        <div class="form-group">
+                            <button type="submit" id="submitBtn"><i class="fa-solid fa-bed"></i> Reservar</button>
+                        </div>
+                    </form>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </header>
+    
+        
 
 
 
 
 
-
+    <script src="../../static/js/habitaciones/habitaciones.js"></script>
 
     </body>
 </html>
