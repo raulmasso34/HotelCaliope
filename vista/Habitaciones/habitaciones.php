@@ -229,12 +229,12 @@ if ($controller !== null) {
         </section>
     </header>
     
-        
 
 
 
 
 
+    
     <script src="../../static/js/habitaciones/habitaciones.js"></script>
 
     </body>
