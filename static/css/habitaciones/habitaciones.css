@@ -603,3 +603,144 @@ button:active {
         flex: 1 1 100%; /* Los campos ocuparán todo el ancho disponible */
     }
 }
+
+/* Estilos generales */
+.habitaciones {
+  
+    padding: 50px 0;
+    background-color: #f4f4f4;
+}
+
+.habitaciones h2 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 30px;
+    border: 2px solid red;
+}
+
+.habitaciones h3 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Contenedor general de las habitaciones */
+.swiper-container {
+    position: relative;
+    width: 70%;
+   
+    border: 2px solid red;
+    margin: 0 auto;
+    overflow: hidden;  /* Oculta las habitaciones fuera de la vista */
+}
+
+/* Carrusel de habitaciones, en línea */
+.swiper-wrapper {
+    display: flex;
+    transition: transform 0.5s ease;  /* Desplazamiento suave */
+}
+
+/* Estilo para cada habitación */
+.swiper-slide {
+    flex: 0 0 33.33%; /* 3 habitaciones por fila */
+    padding: 15px; /* Espacio entre las habitaciones */
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: transform 0.5s ease, box-shadow 0.3s ease;
+    /* Espacio entre habitaciones */
+    position: relative;
+}
+
+/* Efecto hover para las habitaciones */
+.swiper-slide:hover {
+    transform: scale(1.05); /* Aumenta el tamaño ligeramente al pasar el mouse */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Sombra más fuerte */
+}
+
+/* Imagen dentro de la tarjeta */
+.habitacion-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+/* Efecto hover en imagen */
+.swiper-slide:hover .habitacion-card img {
+    transform: scale(1.05); /* Aumenta ligeramente la imagen */
+}
+
+/* Información de la habitación */
+.habitacion-info {
+    padding: 15px;
+    text-align: center;
+}
+
+.habitacion-info h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.habitacion-info p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.habitacion-info p strong {
+    font-weight: bold;
+}
+
+/* Estilo de botón */
+.btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Botones de navegación */
+.swiper-button-next,
+.swiper-button-prev {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 24px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.swiper-button-prev {
+    left: 20px;
+}
+
+.swiper-button-next {
+    right: 20px;
+}
+
+/* Efecto hover en los botones de navegación */
+.swiper-button-prev:hover, .swiper-button-next:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+

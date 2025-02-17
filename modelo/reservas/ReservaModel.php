@@ -51,6 +51,12 @@ class ReservaModel {
         $query->execute();
         return $query->get_result()->fetch_assoc();
     }
+    public function obtenerHabitaciones() {
+        $query = $this->conn->prepare("SELECT * FROM Habitaciones");
+        $query->execute();
+        return $query->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+    
 
     public function obtenerActividades($hotelId) {
         $query = $this->conn->prepare("SELECT * FROM Actividades WHERE Id_Hotel = ?");
@@ -192,13 +198,7 @@ class ReservaModel {
         }
 
     
-    public function obtenerHabitaciones($hotelId) {
-        $query = "SELECT * FROM Habitaciones WHERE Id_Hotel = ?";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $hotelId);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
+   
 
     public function obtenerHabitacionPorId($habitacionId) {
         try {

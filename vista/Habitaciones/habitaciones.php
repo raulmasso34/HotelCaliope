@@ -40,6 +40,7 @@ if ($controller !== null) {
     // Verificar si se han obtenido los países y hacer algo con ellos
     
 } 
+$habitaciones = $controller->obtenerHabitaciones() ?? [];
 ?>
 
 <!DOCTYPE html>
@@ -62,11 +63,10 @@ if ($controller !== null) {
     <link rel="stylesheet" href="../../static/css/habitaciones/habitaciones.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
     <!-- Scripts -->
-    <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+   
+    <script src="../../static/js/habitaciones/habitaciones.js"></script>
 </head>
 
 <body>
@@ -229,12 +229,81 @@ if ($controller !== null) {
         </section>
     </header>
     
+    <section class="habitaciones">
+        <div class="container">
+            <h2>Nuestras Habitaciones</h2>
+
+            <?php 
+            $habitacionesPorTipo = [];
+            foreach ($habitaciones as $habitacion) {
+                $tipo = $habitacion['Tipo'];
+                if (!isset($habitacionesPorTipo[$tipo])) {
+                    $habitacionesPorTipo[$tipo] = [];
+                }
+                $habitacionesPorTipo[$tipo][] = $habitacion;
+            }
+            ?>
+
+            <?php foreach ($habitacionesPorTipo as $tipo => $listaHabitaciones): ?>
+                <h3><?php echo $tipo; ?></h3>
+                <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <?php foreach ($listaHabitaciones as $habitacion): ?>
+                        <div class="swiper-slide">
+                            <div class="habitacion-card">
+                                <?php
+                                // Ruta base para las imágenes
+                                $basePath = "../../static/img/habitaciones/";
+
+                                // Obtener el tipo de habitación y convertirlo en minúsculas con guiones bajos
+                                $tipoHabitacion = strtolower(str_replace(' ', '_', $habitacion['Tipo']));
+
+                                // Definir las posibles rutas de imagen
+                                $imagenes = [
+                                    "{$basePath}{$tipoHabitacion}.jpg",  // Primera opción (imagen tipoHabitacion.jpg)
+                                    "{$basePath}{$tipoHabitacion}2.jpg", // Segunda opción (tipoHabitacion2.jpg)
+                                    "{$basePath}individual1.jpg"         // Imagen por defecto
+                                ];
+
+                                // Variable para la imagen a mostrar (se define como una imagen predeterminada)
+                                $imagenPath = "{$basePath}default.jpg";  // Imagen por defecto en caso de que no se encuentren otras
+
+                                // Buscar la primera imagen existente en la lista
+                                foreach ($imagenes as $img) {
+                                    if (file_exists($img)) {
+                                        $imagenPath = $img;
+                                        break;
+                                    }
+                                }
+                                ?>
+
+                                <img src="<?php echo htmlspecialchars($imagenPath); ?>" alt="<?php echo htmlspecialchars($habitacion['Tipo']); ?>" class="card-img-top">
+
+                                <div class="habitacion-info">
+                                    <h3>Habitación <?php echo $habitacion['Numero_Habitacion']; ?> - <?php echo $habitacion['Tipo']; ?></h3>
+                                    <p><?php echo $habitacion['Descripcion']; ?></p>
+                                    <p><strong>Capacidad:</strong> <?php echo $habitacion['Capacidad']; ?> personas</p>
+                                    <p><strong>Precio:</strong> $<?php echo $habitacion['Precio']; ?> por noche</p>
+                                    <p><strong>Disponibilidad:</strong> <?php echo ($habitacion['Disponibilidad'] == 1) ? 'Disponible' : 'Reservada'; ?></p>
+                                    <p><strong>Servicios:</strong> <?php echo $habitacion['Servicios_Adicionales']; ?></p>
+                                    <a href="reservar.php?habitacion_id=<?php echo $habitacion['Id_Habitaciones']; ?>" class="btn">Reservar</a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
 
 
+                    <!-- Botones de navegación -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            <?php endforeach; ?>
+
+        </div>
+    </section>
 
 
-
-    
     <script src="../../static/js/habitaciones/habitaciones.js"></script>
 
     </body>
