@@ -259,7 +259,8 @@ $habitaciones = $controller->obtenerHabitaciones() ?? [];
                             "{$basePath}{$tipoHabitacion}.jpg",
                             "{$basePath}{$tipoHabitacion}1.jpg",   // Primera opción (imagen tipoHabitacion.jpg)
                             "{$basePath}{$tipoHabitacion}2.jpg",
-                            "{$basePath}{$tipoHabitacion}2.jpg", // Segunda opción (tipoHabitacion2.jpg)
+                            "{$basePath}{$tipoHabitacion}3.jpg"
+                            , // Segunda opción (tipoHabitacion2.jpg)
                             "{$basePath}default.jpg"             // Imagen por defecto
                         ];
 
@@ -295,6 +296,36 @@ $habitaciones = $controller->obtenerHabitaciones() ?? [];
             </div>
         </div>
     </section>
+
+
+    <section class="preg-comunes">
+        <div class="container">
+            <h2>Preguntas Frecuentes</h2>
+            
+            <div class="faq">
+                <div class="faq-item">
+                    <button class="faq-question">¿Cómo puedo hacer una reserva?</button>
+                    <div class="faq-answer">
+                        <p>Puede realizar una reserva a través de nuestra página web o llamando directamente al hotel. También puede enviar un correo electrónico con su solicitud.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">¿El desayuno está incluido?</button>
+                    <div class="faq-answer">
+                        <p>Sí, el desayuno está incluido en todas nuestras tarifas, servido de 7:00 AM a 10:00 AM.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">¿Puedo cancelar mi reserva?</button>
+                    <div class="faq-answer">
+                        <p>Las cancelaciones se pueden hacer hasta 48 horas antes de la llegada sin ningún cargo. Pasado ese plazo, se aplicará una tarifa de cancelación.</p>
+                    </div>
+                </div>
+                <!-- Agrega más preguntas aquí -->
+            </div>
+        </div>
+    </section>
+
 
 
 

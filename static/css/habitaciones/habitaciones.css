@@ -744,3 +744,54 @@ button:active {
 }
 
 
+.preg-comunes {
+    padding: 40px 0;
+    background-color: #f9f9f9;
+}
+
+.preg-comunes .container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.faq {
+    display: flex;
+    flex-direction: column;
+}
+
+.faq-item {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.faq-question {
+    width: 100%;
+    padding: 15px;
+    text-align: left;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.faq-question:hover {
+    background-color: #0056b3;
+}
+
+.faq-answer {
+    padding: 15px;
+    display: none;
+    background-color: #f1f1f1;
+    border-top: 1px solid #ddd;
+    border-radius: 0 0 5px 5px;
+}
+
+.faq-answer p {
+    margin: 0;
+}
+
+

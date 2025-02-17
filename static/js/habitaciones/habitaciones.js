@@ -37,3 +37,28 @@ document.addEventListener('DOMContentLoaded', function () {
       container.querySelector('.swiper-button-next').addEventListener('click', moveRight);
   });
 });
+
+
+const faqQuestions = document.querySelectorAll('.faq-question');
+
+faqQuestions.forEach(question => {
+    question.addEventListener('click', function() {
+        const answer = this.nextElementSibling;
+
+        // Si la respuesta está visible, la ocultamos
+        if (answer.style.display === 'block') {
+            answer.style.display = 'none';
+        } else {
+            // Ocultar todas las respuestas antes de mostrar la seleccionada
+            document.querySelectorAll('.faq-answer').forEach(ans => {
+                ans.style.display = 'none';
+            });
+            // Mostrar la respuesta seleccionada
+            answer.style.display = 'block';
+        }
+    });
+});
+
+
+
+
