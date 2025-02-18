@@ -62,6 +62,8 @@ $habitaciones = $controller->obtenerHabitaciones() ?? [];
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link rel="stylesheet" href="../../static/css/habitaciones/habitaciones.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../static/css/style.css">
+
 
 
     <!-- Scripts -->
@@ -290,9 +292,14 @@ $habitaciones = $controller->obtenerHabitaciones() ?? [];
                     <?php endforeach; ?>
                 </div>
 
-                <!-- Botones de navegación -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+                <!-- Botones personalizados con iconos de Bootstrap -->
+                <div class="swiper-button-prev">
+                    <i class="bi bi-chevron-left"></i>
+                </div>
+                <div class="swiper-button-next">
+                    <i class="bi bi-chevron-right"></i>
+                </div>
+
             </div>
         </div>
     </section>
@@ -301,32 +308,97 @@ $habitaciones = $controller->obtenerHabitaciones() ?? [];
     <section class="preg-comunes">
         <div class="container">
             <h2>Preguntas Frecuentes</h2>
-            
+
             <div class="faq">
                 <div class="faq-item">
-                    <button class="faq-question">¿Cómo puedo hacer una reserva?</button>
+                    <button class="faq-question">
+                        ¿Cómo puedo hacer una reserva?
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
                     <div class="faq-answer">
                         <p>Puede realizar una reserva a través de nuestra página web o llamando directamente al hotel. También puede enviar un correo electrónico con su solicitud.</p>
                     </div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question">¿El desayuno está incluido?</button>
+                    <button class="faq-question">
+                        ¿El desayuno está incluido?
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
                     <div class="faq-answer">
                         <p>Sí, el desayuno está incluido en todas nuestras tarifas, servido de 7:00 AM a 10:00 AM.</p>
                     </div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question">¿Puedo cancelar mi reserva?</button>
+                    <button class="faq-question">
+                        ¿Puedo cancelar mi reserva?
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
                     <div class="faq-answer">
                         <p>Las cancelaciones se pueden hacer hasta 48 horas antes de la llegada sin ningún cargo. Pasado ese plazo, se aplicará una tarifa de cancelación.</p>
                     </div>
                 </div>
-                <!-- Agrega más preguntas aquí -->
             </div>
         </div>
     </section>
 
+    <footer class="main-footer">
+        <div class="footer-box">
+            <!-- Sección: Sobre el Hotel -->
+            <div class="footer-sec">
+                <h1>SOBRE LOS HOTELS</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.</p>
+                <a href="../vista/index.php"><img class="img-footer" src="../../static/img/logo_blanco.png" alt=""></a>
+                <div class="language-selector">
+                <select id="language-select" onchange="changeLanguage()">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                </select>
+                </div>
+            </div>
 
+            <!-- Sección: Links -->
+            <div class="footer-sec">
+                <h1>LINKS</h1>
+                <div class="links-footer">
+                    <a href="#">Sobre nosotros</a>
+                    <a href="#">Servicios</a>
+                    <a href="#">Hoteles</a>
+                </div>
+            </div>
+
+            <!-- Sección: Contacto y Redes Sociales -->
+            <div class="footer-sec">
+                <h1>DÓNDE NOS ENCONTRAMOS</h1>
+                <div class="sec-tres">
+                    <p>Calle xxx 99999 <br> Lorem ipsum, España</p>
+                    <span class="contact-info">
+                        <i class="fa-solid fa-phone"></i> 999 999 999
+                    </span>
+                    <span class="contact-info">
+                        <i class="fa-solid fa-envelope"></i> hotelcalope@gmail.com
+                    </span>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="privacidad">
+            <p>Lorem ipsum dolor sit ame</p>
+        </div>
+        <div id="privacy-banner" class="privacy-banner">
+            <p>Este sitio web utiliza cookies para garantizar que obtengas la mejor experiencia. Consulta nuestra <a href="../vista/politicas/privacidad.php">Política de Privacidad</a>.</p>
+            <button id="accept-btn">Aceptar</button>
+        </div>
+
+    </footer>
+
+    <!-----------------------------------SCRIPTS---------------------------->
+    <script src="../static/js/main.js"></script>
+    <script src="../static/js/calendario.js"></script>
 
 
     <script src="../../static/js/habitaciones/habitaciones.js"></script>

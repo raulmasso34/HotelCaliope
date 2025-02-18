@@ -38,26 +38,22 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-
-const faqQuestions = document.querySelectorAll('.faq-question');
-
-faqQuestions.forEach(question => {
+document.querySelectorAll('.faq-question').forEach(question => {
     question.addEventListener('click', function() {
-        const answer = this.nextElementSibling;
+        const parent = this.parentElement;
 
-        // Si la respuesta está visible, la ocultamos
-        if (answer.style.display === 'block') {
-            answer.style.display = 'none';
-        } else {
-            // Ocultar todas las respuestas antes de mostrar la seleccionada
-            document.querySelectorAll('.faq-answer').forEach(ans => {
-                ans.style.display = 'none';
-            });
-            // Mostrar la respuesta seleccionada
-            answer.style.display = 'block';
-        }
+        // Cierra todas las preguntas antes de abrir la seleccionada
+        document.querySelectorAll('.faq-item').forEach(item => {
+            if (item !== parent) {
+                item.classList.remove('active');
+            }
+        });
+
+        // Alternar clase activa
+        parent.classList.toggle('active');
     });
 });
+
 
 
 

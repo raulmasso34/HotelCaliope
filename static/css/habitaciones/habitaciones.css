@@ -615,7 +615,7 @@ button:active {
     text-align: center;
     font-size: 36px;
     margin-bottom: 30px;
-    border: 2px solid red;
+
 }
 
 .habitaciones h3 {
@@ -631,7 +631,7 @@ button:active {
     position: relative;
     width: 70%;
    
-    border: 2px solid red;
+   
     margin: 0 auto;
     overflow: hidden;  /* Oculta las habitaciones fuera de la vista */
 }
@@ -750,7 +750,7 @@ button:active {
 }
 
 .preg-comunes .container {
-    width: 80%;
+    width: 40%;
     margin: 0 auto;
 }
 
@@ -764,6 +764,7 @@ button:active {
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: white;
+    overflow: hidden; /* Para que la animación de max-height funcione correctamente */
 }
 
 .faq-question {
@@ -776,6 +777,7 @@ button:active {
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    transition: background 0.3s ease-in-out;
 }
 
 .faq-question:hover {
@@ -784,14 +786,19 @@ button:active {
 
 .faq-answer {
     padding: 15px;
-    display: none;
     background-color: #f1f1f1;
     border-top: 1px solid #ddd;
-    border-radius: 0 0 5px 5px;
+    
+    max-height: 0; 
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+    padding: 0 15px;
 }
 
-.faq-answer p {
-    margin: 0;
+.faq-item.active .faq-answer {
+    max-height: 150px; /* Ajusta este valor si el contenido de la respuesta es más grande */
+    padding: 15px;
 }
+
 
 
