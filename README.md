@@ -41,3 +41,11 @@ Comando para arreglar lo del commit
 git pull --tags origin main --no-rebase
 
 
+
+
+
+------------------------------------------------MYSQL-----------------------------------------
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminar_reservas`()
+BEGIN
+    DELETE FROM Reservas WHERE Checkout < NOW();
+END
