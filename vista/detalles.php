@@ -164,7 +164,7 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
         <div class="row habitaciones-container">
             <?php if (!empty($habitaciones)): ?>
                 <?php foreach ($habitaciones as $habitacion): ?>
-                    <?php if ($habitacion['Estado'] === 'Disponible'): ?>
+                   
                         <div class="col-md-6 col-lg-4">
                             <div class="card habitacion-card shadow-sm">
                             <div class="habitacion-imagen">
@@ -267,7 +267,7 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
                             </div>
                         </div>
 
-                    <?php endif; ?>
+                   
                 <?php endforeach; ?>
             <?php else: ?>
                 <p class="text-center">No hay habitaciones disponibles en este hotel.</p>

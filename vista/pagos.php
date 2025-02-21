@@ -1,10 +1,12 @@
 <?php
 session_start();
 
+// Configuración de errores
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// Requerir el controlador de reservas
 require_once __DIR__ . '/../controller/reserva/reservaController.php';
 $reservaController = new ReservaController();
 
@@ -24,7 +26,20 @@ if (isset($_SESSION['Reservas'])) {
     exit;
 }
 
-$hotelDetails = $reservaController->obtenerDetallesHotel($hotelId);
+// Obtener los detalles de la habitación, incluyendo el precio
+$habitacionDetails = $reservaController->obtenerDetallesHabitacion($habitacionId);
+// Al crear una reserva, asegúrate de usar el precio actual
+$precioHabitacion = $habitacionDetails['Precio'] ?? 0; // Asegúrate de usar el nombre correcto
+
+// Calcular el número de noches
+$checkinDate = new DateTime($checkin);
+$checkoutDate = new DateTime($checkout);
+$numeroNoches = $checkoutDate->diff($checkinDate)->days;
+
+// Calcular el precio total
+$precioTotal = $precioHabitacion * $numeroNoches;
+
+// Mostrar precio total
 ?>
 
 <!DOCTYPE html>
@@ -40,126 +55,45 @@ $hotelDetails = $reservaController->obtenerDetallesHotel($hotelId);
 
 <header>
     <section class="main-up">
-            <div class="main-up-left">
-               <a href="../vista/index.php"> <img src="../static/img/logo_blanco.png" alt="Imagen secundaria"></a>
-            </div>
+        <div class="main-up-left">
+            <a href="../vista/index.php"> <img src="../static/img/logo_blanco.png" alt="Imagen secundaria"></a>
+        </div>
+        <!-- Resto del código del encabezado -->
+    </section>
+</header>
 
-            <div class="main-up-right">
-                <div class="links">
-                    <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
-                    
-                    <div class="dropdown">
-                        <a href="#" class="dropbtn">Hoteles</a>
-                        <div class="dropdown-content">
-                            <div class="dropdown-section">
-                                <h4>Europa</h4>
-                                <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
-                                <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
-                                <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
-                            </div>
-                            <div class="dropdown-section">
-                                <h4>USA</h4>
-                                <a href="../vista/ciudades/USA/Florida.php">Florida</a>
-                                <a href="../vista/ciudades/USA/California.php">California</a>
-                                <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
-                            </div>
-                        </div>
-                    </div>
+<h1>Pagar Reserva</h1>
 
-                    <a href="../vista/galeria/galeria.php">Galería</a>
-                    <a href="../vista/ofertas/ofertas.php">Ofertas</a>
-                    <a href="../vista/Contacto/contacto.php">Contacto</a>
-                    
-                    <!-- Contenedor del perfil -->
-                    <div class="dropdown-perfil">
-                        <a class="icon-perfil" href="javascript:void(0);">
-                        <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
-                        
-                        </a>
-                        <div class="dropdown-perfil-content">
-                            <a href="../vista/Clientes/login.php">
-                                <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
-                            </a>
-                            <a href="../vista/Clientes/perfil.php">
-                                <i class="bi bi-person"></i> Perfil
-                            </a>
-                            <a href="../controller/clients/LoginController.php?action=logout">
-                                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
-                            </a>
-                        </div>
+<!-- Mostrar los detalles de la reserva -->
+<p><strong>Habitación:</strong> <?php echo htmlspecialchars($habitacionId); ?></p>
+<p><strong>Check-in:</strong> <?php echo htmlspecialchars($checkin); ?></p>
+<p><strong>Check-out:</strong> <?php echo htmlspecialchars($checkout); ?></p>
+<p><strong>Precio de la Habitación:</strong> $<?php echo number_format($precioHabitacion, 2); ?></p>
+<p><strong>Número de Noches:</strong> <?php echo $numeroNoches; ?></p>
+<p><strong>Precio Total:</strong> $<?php echo number_format($precioTotal, 2); ?></p> <!-- Mostrar el precio total -->
 
-                    </div>
-                </div>
-            </div>
+<!-- Formulario de pago -->
+<form id="pagoForm" action="../controller/pago/pagoController.php" method="POST" onsubmit="mostrarPopup(event)">
+    <label for="numero_tarjeta">Número de Tarjeta:</label>
+    <input type="text" name="numero_tarjeta" required><br>
 
-            <!-- Menú hamburguesa (solo visible en pantallas pequeñas) -->
-            <div id="menu-toggle" class="menu-toggle">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
+    <label for="cvv">CVV:</label>
+    <input type="text" name="cvv" required><br>
 
-            <!-- Menú desplegable -->
-            <div class="mobile-menu">
-                <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
-                <a href="../vista/galeria/galeria.php">Galería</a>
-                <a href="../vista/ofertas/ofertas.php">Ofertas</a>
-                <a href="../vista/Contacto/contacto.php">Contacto</a>
-                <a href="../vista/Clientes/login.php">Iniciar sesión</a>
-                <a href="../vista/Clientes/perfil.php">Perfil</a>
-                
-                <!-- Enlace para Hoteles con dropdown -->
-                <div class="dropdown-mobile">
-                    <a href="#" class="dropbtn">Hoteles</a>
-                    <div class="dropdown-content-mobile">
-                        <div class="dropdown-section">
-                            <h4>Europa</h4>
-                            <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
-                            <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
-                            <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
-                        </div>
-                        <div class="dropdown-section">
-                            <h4>USA</h4>
-                            <a href="../vista/ciudades/USA/Florida.php">Florida</a>
-                            <a href="../vista/ciudades/USA/California.php">California</a>
-                            <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <label for="fecha_expiracion">Fecha de Expiración:</label>
+    <input type="month" name="fecha_expiracion" required><br>
 
+    <input type="hidden" name="habitacionId" value="<?php echo htmlspecialchars($habitacionId); ?>">
+    <input type="hidden" name="clienteId" value="<?php echo htmlspecialchars($clienteId); ?>">
+    <input type="hidden" name="hotelId" value="<?php echo htmlspecialchars($hotelId); ?>">
+    <input type="hidden" name="checkin" value="<?php echo htmlspecialchars($checkin); ?>">
+    <input type="hidden" name="checkout" value="<?php echo htmlspecialchars($checkout); ?>">
+    <input type="hidden" name="guests" value="<?php echo htmlspecialchars($guests); ?>">
+    <input type="hidden" name="precioTotal" value="<?php echo htmlspecialchars($precioTotal); ?>"> <!-- Guardar el precio total en un campo oculto -->
 
-        </section>
-    </header>
-    <h1>Pagar Reserva</h1>
+    <button type="submit">Confirmar y Pagar</button>
+</form>
 
-    <!-- Mostrar los detalles de la reserva -->
-    <p><strong>Hotel:</strong> <?php echo htmlspecialchars($hotelDetails['Nombre']); ?></p> <!-- Asumiendo que 'Nombre' es un campo del array -->
-    <p><strong>Habitación:</strong> <?php echo htmlspecialchars($habitacionId); ?></p>
-    <p><strong>Check-in:</strong> <?php echo htmlspecialchars($checkin); ?></p>
-    <p><strong>Check-out:</strong> <?php echo htmlspecialchars($checkout); ?></p>
-    <p><strong>Personas:</strong> <?php echo htmlspecialchars($guests); ?></p>
-
-    <!-- Formulario de pago -->
-    <form action="../controller/pago/pagoController.php" method="POST">
-        <label for="numero_tarjeta">Número de Tarjeta:</label>
-        <input type="text" name="numero_tarjeta" required><br>
-
-        <label for="cvv">CVV:</label>
-        <input type="text" name="cvv" required><br>
-
-        <label for="fecha_expiracion">Fecha de Expiración:</label>
-        <input type="month" name="fecha_expiracion" required><br>
-
-        <!-- Datos ocultos para procesar la reserva -->
-        <input type="hidden" name="habitacionId" value="<?php echo htmlspecialchars($habitacionId); ?>">
-        <input type="hidden" name="clienteId" value="<?php echo htmlspecialchars($clienteId); ?>">
-        <input type="hidden" name="hotelId" value="<?php echo htmlspecialchars($hotelId); ?>">
-        <input type="hidden" name="checkin" value="<?php echo htmlspecialchars($checkin); ?>">
-        <input type="hidden" name="checkout" value="<?php echo htmlspecialchars($checkout); ?>">
-        <input type="hidden" name="guests" value="<?php echo htmlspecialchars($guests); ?>">
-
-        <button type="submit">Confirmar y Pagar</button>
-    </form>
+<script src="../static/js/pagos/pagos.js"></script>
 </body>
 </html>

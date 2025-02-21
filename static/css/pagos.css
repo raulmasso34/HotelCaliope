@@ -103,3 +103,19 @@ button:hover {
 .input-group input:focus {
     outline: none;
 }
+
+
+#popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+.popup-content {
+    font-size: 18px;
+}
