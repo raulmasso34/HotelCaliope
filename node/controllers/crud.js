@@ -263,7 +263,7 @@ exports.savehab = (req, res)=>{
     const Estado = req.body.Estado;
     const Id_Hotel = req.body.Id_Hotel; 
     const Id_Habitacion = req.body.Id_Habitacion === '' || req.body.Id_Habitacion === 'null' ? null : req.body.Id_Habitacion;
-    const Id_Actividad = req.body.Id_Actividad || null;
+    const Id_Actividad = req.body.Id_Actividad;
 
     // Aquí ejecutamos la consulta
     conexion.query(
@@ -284,7 +284,6 @@ exports.savehab = (req, res)=>{
  //ACTIVIDADES
 
  exports.savea = (req, res)=>{
-    const Actividad = req.body.Actividad;
     const Id_Hotel = req.body.Id_Hotel;
     const Dia_Inicio = req.body.Dia_Inicio;
     const Dia_Fin = req.body.Dia_Fin;  
@@ -293,11 +292,12 @@ exports.savehab = (req, res)=>{
     const Capacidad_Maxima = req.body.Capacidad_Maxima;
     const Ubicacion = req.body.Ubicacion;
     const Descripcion = req.body.Descripcion;
+    const Actividad = req.body.Actividad;
+
 
    
     conexion.query('INSERT INTO Actividades SET ?', 
        {
-       Actividad:Actividad, 
        Id_Hotel:Id_Hotel,
        Dia_Inicio:Dia_Inicio,
        Dia_Fin:Dia_Fin,
@@ -305,7 +305,9 @@ exports.savehab = (req, res)=>{
        Hora_Fin:Hora_Fin,
        Capacidad_Maxima:Capacidad_Maxima,
        Ubicacion:Ubicacion,
-       Descripcion:Descripcion
+       Descripcion:Descripcion,
+       Nombre:Actividad
+
    }, (error, results)=>{
        if(error){
            console.log(error);
@@ -332,7 +334,7 @@ exports.savehab = (req, res)=>{
 
     // Aquí ejecutamos la consulta
     conexion.query(
-        'UPDATE Actividades SET Actividad = ?, Id_Hotel = ?, Dia_Inicio = ?, Dia_Fin = ?, Hora_Inicio = ?, Hora_Fin = ?, Capacidad_Maxima = ?, Ubicacion = ?, Descripcion = ? WHERE Id_Actividades = ?',
+        'UPDATE Actividades SET Nombre = ?, Id_Hotel = ?, Dia_Inicio = ?, Dia_Fin = ?, Hora_Inicio = ?, Hora_Fin = ?, Capacidad_Maxima = ?, Ubicacion = ?, Descripcion = ? WHERE Id_Actividades = ?',
         [Actividad, Id_Hotel,  Dia_Inicio, Dia_Fin, Hora_Inicio, Hora_Fin, Capacidad_Maxima, Ubicacion, Descripcion, id],
         (error, results) => {
             if (error) {
@@ -456,5 +458,55 @@ exports.savet = (req, res)=>{
     );
 };
 
+// Controlador crud.js
+exports.updatereserva = (req, res) => {
+    // Obtener el Id_Reserva de req.body
+    const idReserva = req.body.Id_Reserva;
 
+    // Obtener los valores del formulario de manera individual
+    const Id_Hotel = req.body.Id_Hotel;
+    const Id_Habitacion = req.body.Id_Habitacion;
+    const Id_Actividad = req.body.Id_Actividad;
+    const Id_Tarifa = req.body.Id_Tarifa;
+    const Checkin = req.body.Checkin;
+    const Checkout = req.body.Checkout;
+    const Numero_Personas = req.body.Numero_Personas;
+    const Id_Servicios = req.body.Id_Servicios;
 
+    // Consulta para obtener el Id_Cliente asociado a la reserva
+    const queryCliente = 'SELECT Id_Cliente FROM Reservas WHERE Id_Reserva = ?';
+
+    conexion.query(queryCliente, [idReserva], (error, results) => {
+        if (error) {
+            console.error('Error al obtener el Id_Cliente:', error);
+            return res.status(500).send('Error en la base de datos');
+        }
+
+        if (results.length > 0) {
+            const Id_Cliente = results[0].Id_Cliente;  // Obtener el Id_Cliente de la reserva
+
+            // Consulta para actualizar la reserva
+            const queryUpdate = `
+                UPDATE Reservas 
+                SET Id_Hotel = ?, Id_Habitacion = ?, Id_Actividad = ?, Id_Tarifa = ?, 
+                    Id_Servicios = ?, Checkin = ?, Checkout = ?, Numero_Personas = ? 
+                WHERE Id_Reserva = ?
+            `;
+
+            conexion.query(queryUpdate, 
+                [Id_Hotel, Id_Habitacion, Id_Actividad, Id_Tarifa, Id_Servicios, Checkin, Checkout, Numero_Personas, idReserva], 
+                (error, results) => {
+                    if (error) {
+                        console.error('Error en la consulta SQL:', error);
+                        return res.status(500).send('Error en la base de datos');
+                    } else {
+                        // Redirigir después de la actualización a la página del cliente
+                        res.redirect(`/informacion/${Id_Cliente}`);
+                    }
+                }
+            );
+        } else {
+            return res.status(404).send('Reserva no encontrada');
+        }
+    });
+};
