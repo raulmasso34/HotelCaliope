@@ -100,7 +100,7 @@ module.exports = router;
         //PAIS
        /* router.post('/savepais', crud.savepais)
         router.post('/updatepais', crud.updatepais);  */
-        router.post('/pais', (req,res)=> {
+        router.get('/pais', (req,res)=> {
             conexion.query(
                 `SELECT Id_Pais, Pais FROM Pais;`,
                 (error, results) => {

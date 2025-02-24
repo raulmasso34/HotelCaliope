@@ -209,6 +209,22 @@ exports.savehab = (req, res)=>{
        );
    };
 
+   //PAIS:
+  /*   exports.savep = (req, res ) =>{
+     const Pais = req-body.Pais;
+    
+
+        conexion.query('INSERT INTO Pais SET ?',
+        {Pais:Pais},( error, results)=>{
+            if(error){
+                console.log(error);
+            }else{
+                res.redirect('/pais/');
+        }}
+        //console.log(nom + " - "+cognom+" - "+dni+" - "+correu+" - "+telefon+" - "+usuari+" - "+password+" - "+pais+" - "+ciudad+" - "+codigopostal);
+        console.log(req.body);
+    )} */
+
 
    //OFERTAS
 
