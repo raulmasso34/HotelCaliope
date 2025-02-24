@@ -102,9 +102,9 @@
         confirmButtonText: 'Confirmar'
         }).then((result) => {
         if (result.isConfirmed) {
-        Swal.fire("Eliminado!", "La pais con ID " + Id_pais + " ha sido eliminado.", "success").then(() => {
+        Swal.fire("Eliminado!", "La pais con ID " + Id_Pais + " ha sido eliminado.", "success").then(() => {
             // Aquí, redirige al servidor para eliminar el cliente
-            window.location.href = '/deleteo/' + Id_pais  ;  // Usa 'href' en lugar de 'location'
+            window.location.href = '/deletep/' + Id_Pais  ;  // Usa 'href' en lugar de 'location'
         });
         } else {
         Swal.fire("Acción cancelada", "", "info");

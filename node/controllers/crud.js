@@ -210,20 +210,52 @@ exports.savehab = (req, res)=>{
    };
 
    //PAIS:
-  /*   exports.savep = (req, res ) =>{
-     const Pais = req-body.Pais;
+   exports.savep = (req, res)=>{
+
+    const Pais = req.body.Pais;
+
+   
+    conexion.query('INSERT INTO Pais SET ?', 
+        {
+            Pais:Pais
+        }, (error, results)=>{
+       if(error){
+           console.log(error);
+       }else{
+           res.redirect('/pais/');
+       }
+        })
+        console.log(req.body);
+   
+    };
+
+
+
+    //  UPDATE PAIS
+    exports.updatep = (req, res) => {
+        const id = req.body.Id_Pais; 
+        const nuevoNombrePais = req.body.Pais; // Suponiendo que el nombre del campo en el formulario es "Pais"
+    
+        // Aquí ejecutamos la consulta
+        conexion.query(
+            'UPDATE Pais SET Pais = ? WHERE Id_Pais = ?',
+            [nuevoNombrePais, id], // Usa nuevoNombrePais para actualizar el campo Pais
+            (error, results) => {
+                if (error) {
+                    console.error('Error en la consulta SQL:', error);
+                    return res.status(500).send('Error en la base de datos');
+                }
+                if (results.affectedRows === 0) {
+                    return res.status(404).send('País no encontrado');
+                }
+                res.redirect('/pais/');
+            }
+        );
+    };
     
 
-        conexion.query('INSERT INTO Pais SET ?',
-        {Pais:Pais},( error, results)=>{
-            if(error){
-                console.log(error);
-            }else{
-                res.redirect('/pais/');
-        }}
-        //console.log(nom + " - "+cognom+" - "+dni+" - "+correu+" - "+telefon+" - "+usuari+" - "+password+" - "+pais+" - "+ciudad+" - "+codigopostal);
-        console.log(req.body);
-    )} */
+
+
 
 
    //OFERTAS
