@@ -100,7 +100,7 @@ exports.savehab = (req, res)=>{
     const Tipo = req.body.Tipo;
     const Capacidad = req.body.Capacidad;
     const Precio = req.body.Precio;
-    const Disponibilidad = req.body.Disponibilidad;  
+    
     const Id_Hotel = req.body.Id_Hotel;
    
     conexion.query('INSERT INTO Habitaciones SET ?', 
@@ -109,7 +109,7 @@ exports.savehab = (req, res)=>{
        Tipo:Tipo,
        Capacidad:Capacidad,
        Precio:Precio,
-       Disponibilidad:Disponibilidad,
+      
        Id_Hotel:Id_Hotel
    }, (error, results)=>{
        if(error){
@@ -124,18 +124,19 @@ exports.savehab = (req, res)=>{
     
    };
    
+   
    exports.updatehab = (req, res) => {
        const id = req.body.Id_Habitaciones; // Cambiar 'id' por 'Id_Client' para mantener coherencia.
        const Numero_Habitacion = req.body.Numero_Habitacion;
        const Tipo = req.body.Tipo;
        const Capacidad = req.body.Capacidad;
        const Precio = req.body.Precio;
-       const Disponibilidad = req.body.Disponibilidad;  
+ 
        const Id_Hotel = req.body.Id_Hotel;
    
        conexion.query(
-           'UPDATE Habitaciones SET Numero_Habitacion = ?, Tipo = ?, Capacidad = ?, Precio = ?, Disponibilidad = ?, Id_Hotel = ? WHERE Id_Habitaciones = ?',
-           [Numero_Habitacion, Tipo, Capacidad, Precio, Disponibilidad, Id_Hotel, id],
+           'UPDATE Habitaciones SET Numero_Habitacion = ?, Tipo = ?, Capacidad = ?, Precio = ?,  Id_Hotel = ? WHERE Id_Habitaciones = ?',
+           [Numero_Habitacion, Tipo, Capacidad, Precio, Id_Hotel, id],
            (error, results) => {
                if (error) {
                    console.error('Error en la consulta SQL:', error);
