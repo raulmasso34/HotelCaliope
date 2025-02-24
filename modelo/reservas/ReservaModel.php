@@ -110,35 +110,12 @@ class ReservaModel {
     
         if ($stmt->execute()) {
             // Una vez que la reserva se ha realizado, obtenemos la ID de la reserva insertada
-            $reservaId = $this->conn->insert_id;
-    
-            // Actualizamos la disponibilidad de la habitación y el estado a 'Reservada'
-            $queryUpdate = "UPDATE Habitaciones 
-                            SET Fecha_Disponibilidad_Inicio = ?, Fecha_Disponibilidad_Fin = ?, Disponibilidad = 0, Estado = 'Reservada' 
-                            WHERE Id_Habitaciones = ? AND (Fecha_Disponibilidad_Inicio IS NULL OR Fecha_Disponibilidad_Fin IS NULL)";
-    
-            $stmtUpdate = $this->conn->prepare($queryUpdate);
-            if ($stmtUpdate === false) {
-                die('Error preparing update statement: ' . $this->conn->error);
-            }
-    
-            // Para el caso de que no existan fechas, asignamos las fechas de la reserva.
-            // Usamos 's' para las fechas (tipo string) y 'i' para el ID de la habitación.
-            $stmtUpdate->bind_param("ssi", 
-                $checkin,  // Fecha de inicio de disponibilidad (Checkin)
-                $checkout, // Fecha de fin de disponibilidad (Checkout)
-                $habitacionId // ID de la habitación
-            );
-    
-            if ($stmtUpdate->execute()) {
-                return $reservaId;  // Devuelve la ID de la reserva si todo fue exitoso
-            } else {
-                die("Error en la actualización de disponibilidad y estado: " . $stmtUpdate->error);
-            }
+            return $this->conn->insert_id;  // Devuelve la ID de la reserva si todo fue exitoso
         } else {
             die("Error en la ejecución de la consulta de reserva: " . $stmt->error);
         }
     }
+    
     
 
     public function getReservationDetails($reservationId) {
@@ -223,10 +200,7 @@ class ReservaModel {
         $checkout = $_SESSION['checkout']; 
     
         $query = "SELECT * FROM Habitaciones 
-                  WHERE Id_Hotel = ? 
-                  AND Estado = 'Disponible' 
-                  AND (Fecha_Disponibilidad_Fin IS NULL OR Fecha_Disponibilidad_Fin >= ?) 
-                  AND (Fecha_Disponibilidad_Inicio IS NULL OR Fecha_Disponibilidad_Inicio <= ?) 
+                  WHERE Id_Hotel = ?
                   AND NOT EXISTS (
                       SELECT 1 FROM Reservas 
                       WHERE Reservas.Id_Habitacion = Habitaciones.Id_Habitaciones
