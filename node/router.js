@@ -1,26 +1,26 @@
-        const express = require('express');
-        const router = express.Router();
-        const conexion = require('./database/db');
+const express = require('express');
+const router = express.Router();
+const conexion = require('./database/db');
 
-        const crud = require('./controllers/crud');
-        const { route } = require('express/lib/application');
+const crud = require('./controllers/crud');
+const { route } = require('express/lib/application');
 
-        module.exports = router;
+module.exports = router;
 
 
-        //CLIENTES
-        router.get('/', (req,res) =>{
-            conexion.query(
-                `SELECT 
-                    c.Id_Client, c.Nom, c.Cognom, c.DNI, c.CorreuElectronic, 
-                    c.Telefon, c.Usuari, c.Password, p.Pais, c.Ciudad, c.CodigoPostal 
-                FROM 
-                    Clients c 
-                LEFT JOIN 
-                    Pais p 
-                ON 
-                    c.Id_Pais = p.Id_Pais;`,
-                (error, results) => {
+    //CLIENTES
+    router.get('/', (req,res) =>{
+        conexion.query(
+            `SELECT 
+               c.Id_Client, c.Nom, c.Cognom, c.DNI, c.CorreuElectronic, 
+               c.Telefon, c.Usuari, c.Password, p.Pais, c.Ciudad, c.CodigoPostal 
+            FROM 
+               Clients c 
+               LEFT JOIN 
+                Pais p 
+            ON 
+               c.Id_Pais = p.Id_Pais;`,
+               (error, results) => {
                     if (error) {
                         throw error;
                     } else {
@@ -31,7 +31,7 @@
             
         })
 
-
+    
 
 
         //ruta para crear registros
@@ -96,7 +96,45 @@
             });
         });
 
-        //HABITACIONES
+
+        //PAIS
+       /* router.post('/savepais', crud.savepais)
+        router.post('/updatepais', crud.updatepais);  */
+        router.post('/pais', (req,res)=> {
+            conexion.query(
+                `SELECT Id_Pais, Pais FROM Pais;`,
+                (error, results) => {
+                    if (error) {
+                        throw error;
+                    } else {
+                        // Usa la ruta relativa sin la barra inicial
+                        res.render('pais/pais', { results });
+                    }
+                }
+            )
+        });
+
+        
+        /* app.get('/pais', (req, res) => {
+            res.send("Ruta de países funcionando");
+        }); */
+        
+        
+        //Añadir pais
+
+        router.get('/createp',(req,res)=>{
+            const queryPais = 'SELECT Id_Pais, Pais FROM Pais'
+        })
+
+        router.get('editp/:id', (req, res)=>{
+            const Id_Pais = req.params.id;
+            //Consultas SQL
+            const queryPais = 'SELECT * FROM Pais WHERE Id_Pais =?';
+            
+        })
+
+
+    //HABITACIONES
 
         router.post('/savehab', crud.savehab)
         router.post('/updatehab', crud.updatehab);
@@ -104,8 +142,8 @@
             conexion.query(
                 `SELECT 
                     ha.Id_Habitaciones, ha.Numero_Habitacion, ha.Tipo, ha.Capacidad, ha.Precio, 
-                    ha.Disponibilidad, h.Nombre,
-                    IF(ha.Disponibilidad = 1, 'Disponible', 'No Disponible') AS Disponibilidad
+                     h.Nombre
+                    
                 FROM 
                     Habitaciones ha 
                 LEFT JOIN 
@@ -194,7 +232,7 @@
         });
 
 
-        //HOTEL
+    //HOTEL
 
         router.post('/saveh', crud.saveh)
         router.post('/updateh', crud.updateh);
