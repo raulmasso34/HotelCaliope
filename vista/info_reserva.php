@@ -14,8 +14,6 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-
-
 if (isset($_GET['id'])) {
     $id_reserva = intval($_GET['id']); // Sanitiza el parámetro recibido
 
@@ -25,13 +23,10 @@ if (isset($_GET['id'])) {
             c.Nom AS Nombre_Cliente, 
             h.Nombre AS Nombre_Hotel, 
             ha.Tipo AS Tipo_Habitacion, 
-            ha.Numero_Habitacion AS Numero_Habitacion,  -- Aquí agregamos el campo Numero de Habitacion
+            ha.Numero_Habitacion AS Numero_Habitacion, 
             a.Nombre AS Nombre_Actividad, 
             p.Pais AS Nombre_Pais, 
             r.Precio_Habitacion, 
-            r.Precio_Actividad, 
-            r.Precio_Tarifa, 
-            r.Precio_Total, 
             r.Checkin, 
             r.Checkout, 
             r.Numero_Personas
@@ -58,6 +53,19 @@ if (isset($_GET['id'])) {
     // Verifica si se encontró la reserva
     if ($resultado->num_rows > 0) {
         $reserva = $resultado->fetch_assoc();
+        
+        // Calcular el número de noches
+        $checkinDate = new DateTime($reserva['Checkin']);
+        $checkoutDate = new DateTime($reserva['Checkout']);
+        $interval = $checkinDate->diff($checkoutDate);
+        $numero_noches = $interval->days; // Total de noches
+
+        // Calcular el precio total basado en el precio de la habitación
+        $precio_habitacion = $reserva['Precio_Habitacion'];
+        $numero_personas = $reserva['Numero_Personas'];
+
+        // Calcular el precio total multiplicando por el número de noches y el número de personas
+        $precio_total_calculado = $precio_habitacion * $numero_noches * $numero_personas;
     } else {
         echo "<p>La reserva no se encontró. Por favor, verifica el ID.</p>";
         exit;
@@ -97,7 +105,7 @@ if (isset($_GET['id'])) {
         </tr>
         <tr>
             <td>Número de Habitación</td>
-            <td><?php echo htmlspecialchars($reserva['Numero_Habitacion'] ); ?></td>
+            <td><?php echo htmlspecialchars($reserva['Numero_Habitacion']); ?></td>
         </tr>
         <tr>
             <td>Actividad</td>
@@ -109,7 +117,7 @@ if (isset($_GET['id'])) {
         </tr>
         <tr>
             <td>Precio Total</td>
-            <td>$<?php echo htmlspecialchars($reserva['Precio_Total']); ?></td>
+            <td>$<?php echo htmlspecialchars(number_format($precio_total_calculado, 2)); ?></td> <!-- Formatear a 2 decimales -->
         </tr>
         <!-- Mostrar la fecha de Check-in -->
         <tr>
@@ -117,13 +125,7 @@ if (isset($_GET['id'])) {
             <td>
                 <?php
                 // Verificar si la fecha de Check-in está disponible y formatearla
-                $checkin = $reserva['Checkin'] ?? 'No disponible';
-                if ($checkin !== 'No disponible') {
-                    $checkinDate = new DateTime($checkin);
-                    echo $checkinDate->format('d/m/Y');
-                } else {
-                    echo $checkin;
-                }
+                echo $checkinDate->format('d/m/Y');
                 ?>
             </td>
         </tr>
@@ -133,13 +135,7 @@ if (isset($_GET['id'])) {
             <td>
                 <?php
                 // Verificar si la fecha de Check-out está disponible y formatearla
-                $checkout = $reserva['Checkout'] ?? 'No disponible';
-                if ($checkout !== 'No disponible') {
-                    $checkoutDate = new DateTime($checkout);
-                    echo $checkoutDate->format('d/m/Y');
-                } else {
-                    echo $checkout;
-                }
+                echo $checkoutDate->format('d/m/Y');
                 ?>
             </td>
         </tr>
@@ -148,7 +144,6 @@ if (isset($_GET['id'])) {
     <a href="../vista/Clientes/perfil.php">Volver atrás</a>
 </body>
 </html>
-
 
 <?php
 // Cerrar conexión

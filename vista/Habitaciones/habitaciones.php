@@ -40,6 +40,7 @@ if ($controller !== null) {
     // Verificar si se han obtenido los países y hacer algo con ellos
     
 } 
+$habitaciones = $controller->obtenerHabitaciones() ?? [];
 ?>
 
 <!DOCTYPE html>
@@ -61,12 +62,13 @@ if ($controller !== null) {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link rel="stylesheet" href="../../static/css/habitaciones/habitaciones.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../static/css/style.css">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+
     <!-- Scripts -->
-    <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+   
+    <script src="../../static/js/habitaciones/habitaciones.js"></script>
 </head>
 
 <body>
@@ -229,12 +231,176 @@ if ($controller !== null) {
         </section>
     </header>
     
+    <section class="habitaciones">
+        <div class="container">
+            <h2>Nuestras Habitaciones</h2>
+
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <?php 
+                    // Agrupar habitaciones por tipo
+                    $habitacionesPorTipo = [];
+                    foreach ($habitaciones as $habitacion) {
+                        $tipo = $habitacion['Tipo'];
+                        if (!isset($habitacionesPorTipo[$tipo])) {
+                            $habitacionesPorTipo[$tipo] = [];
+                        }
+                        $habitacionesPorTipo[$tipo][] = $habitacion;
+                    }
+
+                    // Mostrar un slide por cada tipo de habitación
+                    foreach ($habitacionesPorTipo as $tipo => $listaHabitaciones):
+                        // Ruta base para las imágenes
+                        $basePath = "../../static/img/habitaciones/";
+
+                        // Obtener el tipo de habitación y convertirlo en minúsculas con guiones bajos
+                        $tipoHabitacion = strtolower(str_replace(' ', '_', $tipo));
+
+                        // Definir las posibles rutas de imagen
+                        $imagenes = [
+                            "{$basePath}{$tipoHabitacion}.jpg",
+                            "{$basePath}{$tipoHabitacion}1.jpg",   // Primera opción (imagen tipoHabitacion.jpg)
+                            "{$basePath}{$tipoHabitacion}2.jpg",
+                            "{$basePath}{$tipoHabitacion}3.jpg"
+                            , // Segunda opción (tipoHabitacion2.jpg)
+                            "{$basePath}default.jpg"             // Imagen por defecto
+                        ];
+
+                        // Variable para la imagen a mostrar (se define como una imagen predeterminada)
+                        $imagenPath = "{$basePath}default.jpg";  // Imagen por defecto en caso de que no se encuentren otras
+
+                        // Buscar la primera imagen existente en la lista
+                        foreach ($imagenes as $img) {
+                            if (file_exists($img)) {
+                                $imagenPath = $img;
+                                break;
+                            }
+                        }
+                        ?>
+                        <div class="swiper-slide">
+                            <div class="habitacion-card">
+                                <img src="<?php echo htmlspecialchars($imagenPath); ?>" alt="<?php echo htmlspecialchars($tipo); ?>" class="card-img-top">
+
+                                <div class="habitacion-info">
+                                    <h3><?php echo $tipo; ?></h3>
+                                    <p><strong>Capacidad:</strong> <?php echo $listaHabitaciones[0]['Capacidad']; ?> personas</p>
+                                    <p><strong>Precio:</strong> Desde $<?php echo $listaHabitaciones[0]['Precio']; ?> por noche</p>
+                                    <a href="reservar.php?tipo=<?php echo urlencode($tipo); ?>" class="btn">Ver más</a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <!-- Botones personalizados con iconos de Bootstrap -->
+                <div class="swiper-button-prev">
+                    <i class="bi bi-chevron-left"></i>
+                </div>
+                <div class="swiper-button-next">
+                    <i class="bi bi-chevron-right"></i>
+                </div>
+
+            </div>
+        </div>
+    </section>
 
 
+    <section class="preg-comunes">
+        <div class="container">
+            <h2>Preguntas Frecuentes</h2>
+
+            <div class="faq">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        ¿Cómo puedo hacer una reserva?
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Puede realizar una reserva a través de nuestra página web o llamando directamente al hotel. También puede enviar un correo electrónico con su solicitud.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        ¿El desayuno está incluido?
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sí, el desayuno está incluido en todas nuestras tarifas, servido de 7:00 AM a 10:00 AM.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        ¿Puedo cancelar mi reserva?
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Las cancelaciones se pueden hacer hasta 48 horas antes de la llegada sin ningún cargo. Pasado ese plazo, se aplicará una tarifa de cancelación.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-box">
+            <!-- Sección: Sobre el Hotel -->
+            <div class="footer-sec">
+                <h1>SOBRE LOS HOTELS</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.</p>
+                <a href="../vista/index.php"><img class="img-footer" src="../../static/img/logo_blanco.png" alt=""></a>
+                <div class="language-selector">
+                <select id="language-select" onchange="changeLanguage()">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                </select>
+                </div>
+            </div>
+
+            <!-- Sección: Links -->
+            <div class="footer-sec">
+                <h1>LINKS</h1>
+                <div class="links-footer">
+                    <a href="#">Sobre nosotros</a>
+                    <a href="#">Servicios</a>
+                    <a href="#">Hoteles</a>
+                </div>
+            </div>
+
+            <!-- Sección: Contacto y Redes Sociales -->
+            <div class="footer-sec">
+                <h1>DÓNDE NOS ENCONTRAMOS</h1>
+                <div class="sec-tres">
+                    <p>Calle xxx 99999 <br> Lorem ipsum, España</p>
+                    <span class="contact-info">
+                        <i class="fa-solid fa-phone"></i> 999 999 999
+                    </span>
+                    <span class="contact-info">
+                        <i class="fa-solid fa-envelope"></i> hotelcalope@gmail.com
+                    </span>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="privacidad">
+            <p>Lorem ipsum dolor sit ame</p>
+        </div>
+        <div id="privacy-banner" class="privacy-banner">
+            <p>Este sitio web utiliza cookies para garantizar que obtengas la mejor experiencia. Consulta nuestra <a href="../vista/politicas/privacidad.php">Política de Privacidad</a>.</p>
+            <button id="accept-btn">Aceptar</button>
+        </div>
+
+    </footer>
+
+    <!-----------------------------------SCRIPTS---------------------------->
+    <script src="../static/js/main.js"></script>
+    <script src="../static/js/calendario.js"></script>
 
 
-
-    
     <script src="../../static/js/habitaciones/habitaciones.js"></script>
 
     </body>

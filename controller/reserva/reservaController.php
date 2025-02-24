@@ -141,6 +141,9 @@ class ReservaController {
             return null; // Si no se encuentra el hotel
         }
     }
+    public function obtenerHabitaciones() {
+        return $this-> reservaModel->obtenerHabitaciones();
+    }
     
     // Obtener detalles de la habitación por su ID
     public function obtenerDetallesHabitacion($habitacionId) {
