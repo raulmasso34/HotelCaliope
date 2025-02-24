@@ -99,16 +99,21 @@
                           <td><%= user.Ciudad %></td>
                           <td><%= user.CodigoPostal %></td>
                           <td>
+                            <div class="d-flex gap-1">
                               <a href="/edit/<%= user.Id_Client %>" class="btn btn-sm btn-warning" title="Edit">
                                 <i class="fa-solid fa-pen-to-square"></i>
                               </a>
-                              <!-- <a href="/delete/<%= user.Id_Client %>" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this client?')">
-                                <i class="fa-solid fa-trash-can"></i>
-                              </a>  -->
                               <a onclick="confirmar('<%= user.Id_Client %>')" class="btn btn-sm btn-danger" title="Delete">
                                 <i class="fa-solid fa-trash-can"></i>
                               </a>
-                            </td>
+                              <a href="/informacion/<%= user.Id_Client %>" class="btn btn-sm btn-info" title="Info">
+                                <i class="fa-solid fa-circle-info"></i> 
+                            </a>
+                            
+                            </div>
+                          </td>
+                          
+                          
                             
                       </tr>
                 <%  })%>

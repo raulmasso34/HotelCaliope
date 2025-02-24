@@ -57,7 +57,7 @@
         <div class="card border-secondary">
             <div class="card-header">Nuevo Registro</div>
             <div class="card-body">
-                  <form action="/saveo" method="POST">
+                  <form action="/updateo" method="POST">
                     <input type="hidden" id="Id_Oferta" name="Id_Oferta" value="<%= oferta.Id_Oferta %>">
                     <div class="mb-3">
                         <label for="Nombre" class="form-label">Nombre</label>
@@ -121,16 +121,16 @@
                     
                                   
                       <div class="mb-3">
-                        <label for="Id_Actividad" class="form-label">Actividad</label>
-                       
+                        <label for="Id_Actividad" class="form-label">Actividad</label>    
                         <select name="Id_Actividad" id="Id_Actividad" class="form-select">
-                            <% actividades.forEach(actividad => { %>
+                          <% actividades.forEach(actividad => { %>
                               <option value="<%= actividad.Id_Actividades %>"
-                                 <%= actividad.Id_Actividades === actividad.Id_Actividades ? 'selected' : '' %>>
-                                <%= actividad.Actividad %>
+                                <%= actividad.Id_Actividades === actividad.Id_Actividades ? 'selected' : '' %>>
+                                  <%= actividad.Actividad %>
                               </option>
-                            <% }); %>
-                          </select>
+                          <% }); %>
+                      </select>
+                                        
                         
                       </div> 
                    <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>

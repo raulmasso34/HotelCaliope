@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+    const mysql = require('mysql');
 
 const conexion = mysql.createConnection({
     host: 'localhost',
@@ -9,11 +9,12 @@ const conexion = mysql.createConnection({
 })
 
 conexion.connect((error)=>{
-    if(error){
-        console.error('El error de conexión es '+error);
-    }
+        if(error){
+            console.error('El error de conexión es '+error);
+        }
 
-    console.log('conexion realizada')
-})
+        console.log('conexion realizada')
+    })
 
 module.exports = conexion;
+ 

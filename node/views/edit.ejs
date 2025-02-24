@@ -106,7 +106,8 @@
                 </div>
                 <div class="mb-3">
                   <label for="CodigoPostal" class="form-label">Código Postal</label>
-                  <input type="number" class="form-control" id="CodigoPostal" name="CodigoPostal" tabindex="1" value="<%= user.CodigoPostal %>">
+                  <input type="text" class="form-control" id="CodigoPostal" name="CodigoPostal" tabindex="1" maxlength="5" value="<%= user.CodigoPostal %>">
+
                 </div>
                 <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
                 <a href="/" class="btn btn-secondary">Cancelar</a>

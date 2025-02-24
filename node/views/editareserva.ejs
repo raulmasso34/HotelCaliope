@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--Usamos boxicons-->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Editar Reserva</title>  
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/"><i class="fa-solid fa-right-from-bracket"></i></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">CLIENTES</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/habitaciones/">HABITACIONES</a>
+            </li>
+            <!-- Agregar más enlaces según sea necesario -->
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <% if (reserva) { %>
+      <div class="container mt-4">
+        <div class="card border-secondary">
+          <div class="card-header">EDITAR RESERVA</div>
+          <div class="card-body">
+            <form action="/updatereserva" method="POST">
+              <input type="hidden" id="Id_Reserva" name="Id_Reserva" value="<%= reserva.Id_Reserva %>">
+          
+              <!-- Hotel -->
+              <div class="mb-3">
+                  <label for="Id_Hotel" class="form-label">Hotel</label>
+                  <select name="Id_Hotel" id="Id_Hotel" class="form-select">
+                      <% hoteles.forEach(hotel => { %>
+                          <option value="<%= hotel.Id_Hotel %>" <%= hotel.Id_Hotel == reserva.Id_Hotel ? 'selected' : '' %>>
+                              <%= hotel.Nombre %>
+                          </option>
+                      <% }); %>
+                  </select>
+              </div>
+          
+              <!-- Habitación -->
+              <div class="mb-3">
+                  <label for="Id_Habitacion" class="form-label">Habitación</label>
+                  <select name="Id_Habitacion" id="Id_Habitacion" class="form-select">
+                      <% habitaciones.forEach(habitacion => { %>
+                          <option value="<%= habitacion.Id_Habitaciones %>" <%= habitacion.Id_Habitaciones == reserva.Id_Habitacion ? 'selected' : '' %>>
+                              <%= habitacion.Tipo %>
+                          </option>
+                      <% }); %>
+                  </select>
+              </div>
+          
+              <!-- Actividad -->
+              <div class="mb-3">
+                  <label for="Id_Actividad" class="form-label">Actividad</label>
+                  <select name="Id_Actividad" id="Id_Actividad" class="form-select">
+                      <% actividades.forEach(actividad => { %>
+                          <option value="<%= actividad.Id_Actividades %>" <%= actividad.Id_Actividades == reserva.Id_Actividad ? 'selected' : '' %>>
+                              <%= actividad.Actividad %>
+                          </option>
+                      <% }); %>
+                  </select>
+              </div>
+          
+              <!-- Checkin -->
+              <div class="mb-3">
+                <label for="Checkin" class="form-label">Fecha de Check-in</label>
+                <input type="date" class="form-control" id="Checkin" name="Checkin" 
+                       value="<%= new Date(reserva.Checkin).toISOString().split('T')[0] %>">
+            </div>
+            
+            <!-- Checkout -->
+            <div class="mb-3">
+                <label for="Checkout" class="form-label">Fecha de Checkout</label>
+                <input type="date" class="form-control" id="Checkout" name="Checkout" 
+                       value="<%= new Date(reserva.Checkout).toISOString().split('T')[0] %>">
+            </div>
+            
+          
+              <!-- Número de personas -->
+              <div class="mb-3">
+                  <label for="Numero_Personas" class="form-label">Número de personas</label>
+                  <input type="number" class="form-control" id="Numero_Personas" name="Numero_Personas" value="<%= reserva.Numero_Personas %>">
+              </div>
+          
+              <!-- Servicios -->
+              <div class="mb-3">
+                  <label for="Id_Servicio" class="form-label">Servicios</label>
+                  <select name="Id_Servicio" id="Id_Servicio" class="form-select">
+                      <% servicios.forEach(servicio => { %>
+                          <option value="<%= servicio.Id_Servicio %>" <%= servicio.Id_Servicio == reserva.Id_Servicio ? 'selected' : '' %>> 
+                              <%= servicio.Servicio %>
+                          </option>
+                      <% }); %>
+                  </select>
+              </div>
+          
+              <!-- Tarifa -->
+              <div class="mb-3">
+                  <label for="Id_Tarifa" class="form-label">Tarifa</label>
+                  <select name="Id_Tarifa" id="Id_Tarifa" class="form-select">
+                      <% tarifas.forEach(tarifa => { %>
+                          <option value="<%= tarifa.Id_Tarifa %>" <%= tarifa.Id_Tarifa == reserva.Id_Tarifa ? 'selected' : '' %>> 
+                              <%= tarifa.Temporada %>
+                          </option>
+                      <% }); %>
+                  </select>
+              </div>
+          
+              <!-- Botones -->
+              <button type="submit" class="btn btn-primary">Guardar</button>
+              <a href="/informacion/<%= reserva.Id_Cliente %>" class="btn btn-secondary">Cancelar</a>
+          </form>
+          
+          </div>
+        </div>
+      </div>
+    <% } %>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>
