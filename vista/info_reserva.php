@@ -105,6 +105,7 @@ $db->close();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Agregar Font Awesome -->
 </head>
 <body>
     <div class="container mt-4">
@@ -152,13 +153,12 @@ $db->close();
             </tr>
         </table>
         
-        <h2>Cancelar Reserva</h2>
+       
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">
             Cancelar reserva
         </button>
 
-        <!-- Modal de Confirmación -->
-        <!-- Modal de Confirmación de Cancelación -->
+        
         <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered custom-modal">
                 <div class="modal-content">
@@ -187,7 +187,9 @@ $db->close();
 
 
 
-        <a href="../vista/Clientes/perfil.php" class="btn btn-primary mt-3">Volver atrás</a>
+        <a href="../vista/Clientes/perfil.php" class="icono-salida" title="Volver atrás">
+            <i class="fas fa-sign-out-alt"></i> <!-- Icono de salida -->
+        </a>
     </div>
 </body>
 </html>
