@@ -183,6 +183,10 @@ class ReservaController {
         }
     }
 
+    public function pagarReserva($idReserva) {
+        $nuevoEstado = 'Pagado';
+        return $this->reservaModel->actualizarEstadoReserva($idReserva, $nuevoEstado);
+    }
     
     
 

@@ -406,6 +406,23 @@ class ReservaModel {
         return $reservations;
     }
 
+    public function actualizarEstadoReserva($idReserva, $nuevoEstado) {
+        $query = "UPDATE Reservas SET Estado = ? WHERE Id_Reserva = ?";
+        $stmt = $this->conn->prepare($query);
+        
+        if (!$stmt) {
+            throw new Exception('Error en la preparación de la consulta: ' . $this->conn->error);
+        }
+    
+        // Vincular los parámetros
+        $stmt->bind_param("si", $nuevoEstado, $idReserva); // "si" significa string y integer
+    
+        // Ejecutar la consulta
+        return $stmt->execute(); // Retorna true si la actualización fue exitosa
+    }
+    
+
+
    
 }
 ?>

@@ -28,7 +28,6 @@ if (isset($_SESSION['Reservas'])) {
 
 // Obtener los detalles de la habitación, incluyendo el precio
 $habitacionDetails = $reservaController->obtenerDetallesHabitacion($habitacionId);
-// Al crear una reserva, asegúrate de usar el precio actual
 $precioHabitacion = $habitacionDetails['Precio'] ?? 0; // Asegúrate de usar el nombre correcto
 
 // Calcular el número de noches
@@ -50,6 +49,8 @@ $precioTotal = $precioHabitacion * $numeroNoches;
     <link rel="stylesheet" href="../static/css/pagos.css">
     <link rel="stylesheet" href="../static/css/detalles.css">
     <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
+    
+
 </head>
 <body>
 
@@ -90,6 +91,7 @@ $precioTotal = $precioHabitacion * $numeroNoches;
     <input type="hidden" name="checkout" value="<?php echo htmlspecialchars($checkout); ?>">
     <input type="hidden" name="guests" value="<?php echo htmlspecialchars($guests); ?>">
     <input type="hidden" name="precioTotal" value="<?php echo htmlspecialchars($precioTotal); ?>"> <!-- Guardar el precio total en un campo oculto -->
+    <input type="hidden" name="metodo_pago" value="Tarjeta"> <!-- Método de pago -->
 
     <button type="submit">Confirmar y Pagar</button>
 </form>

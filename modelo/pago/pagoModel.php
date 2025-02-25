@@ -1,6 +1,4 @@
 <?php
-// PagoModel.php
-
 class PagoModel {
     private $conn;
 
@@ -22,7 +20,6 @@ class PagoModel {
             echo "Error al procesar el pago: " . $stmt->error;
         }
     }
-    
 
     public function insertarReserva($hotelId, $clienteId, $checkin, $checkout, $guests, $paisId, $actividadId, $habitacionId = null, $tarifaId = null, $precioHabitacion = null, $precioActividad = null, $precioTarifa = null, $precioTotal = null) {
         try {
@@ -52,6 +49,27 @@ class PagoModel {
             return null;
         }
     }
-    
+
+    // Método para actualizar el estado de la reserva
+    public function actualizarEstadoReserva($idReserva, $nuevoEstado) {
+        // Asegúrate de que la tabla se llama "Reservas"
+        $query = "UPDATE Reservas SET Estado = ? WHERE Id_Reserva = ?";
+        $stmt = $this->conn->prepare($query);
+        
+        if (!$stmt) {
+            throw new Exception('Error en la preparación de la consulta: ' . $this->conn->error);
+        }
+
+        // Vincular los parámetros
+        $stmt->bind_param("si", $nuevoEstado, $idReserva);
+
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            return true; // Retorna true si la actualización fue exitosa
+        } else {
+            throw new Exception('Error al ejecutar la consulta: ' . $stmt->error);
+        }
+    }
 }
 ?>
+    

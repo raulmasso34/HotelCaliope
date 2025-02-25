@@ -80,7 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "La fecha de check-in no es válida.";
         exit;
     }
-    
 
     // Aquí es donde se simula el procesamiento del pago (en un caso real, se integraría con una API de pago)
     $pagoExitoso = true; // Simulando que el pago fue exitoso
@@ -90,6 +89,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $PagoModel = new PagoModel($db);
         $fechaPago = date('Y-m-d H:i:s');
         $PagoModel->procesarPago($hotelId, $clienteId, $reservaId, 'Tarjeta', $fechaPago, $metodoPagoId);
+
+        // Actualizar el estado de la reserva a "Pagado"
+        $ReservaModel = new ReservaModel($db);
+        $ReservaModel->actualizarEstadoReserva($reservaId, 'Pagado');
 
         // Redirigir a la página de confirmación
         header("Location: ../../vista/reserva_confirmada.php");
