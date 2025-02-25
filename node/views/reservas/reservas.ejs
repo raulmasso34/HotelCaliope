@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.bootstrap5.css">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <title>Hotel</title>  
+        <title>reservas</title>  
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -26,16 +26,14 @@
               <a class="nav-link active" aria-current="page" href="/">CLIENTES</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link active" href="/reservas/">RESERVAS</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/habitaciones/">HABITACIONES</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="/hotel/">HOTEL</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/reservas/">RESERVAS</a>
-            </li><li class="nav-item">
-                <a class="nav-link active" href="/reservas/">RESERVAS</a>
-              </li>
             <li class="nav-item">
               <a class="nav-link active" href="/ofertas/">OFERTAS</a>
             </li>
@@ -62,45 +60,34 @@
 
 
     <div class="container">
-            <a href="/createh" class="btn btn-outline-primary mt-4"> <i class="fa-solid fa-plus"></i></a>
-            <table id="hoteles" class="table table-striped" class="table table-bordered table-striped text-center mt-4">
+            <a href="/creates" class="btn btn-outline-primary mt-4"> <i class="fa-solid fa-plus"></i></a>
+            <table id="reservas" class="table table-striped" class="table table-bordered table-striped text-center mt-4">
                 <thead>
                     <tr class="bg-primary text-white">
                         <th scope="col">ID</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">CorreoElectronico</th>
-                        <th scope="col">Telefono</th>
-                        <th scope="col">Direccion</th>
-                        <th scope="col">CodigoPostal</th>
-                        <th scope="col">Pais</th>
-                        <th scope="col">Ciudad</th>
-                        <th scope="col">Estrellas</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col">Cliente </th>
+                        <th scope="col">Actividad</th>
+                        <th scope="col">Habitación</th>
+                        <th scope="col">Hotel</th>
+                        <th scope="col">Precio Habitación</th>
+                        <th scope="col">Precio de actividad</th>
+                        <th scope="col">Precio TOTAL</th>
+                        <th scope="col">Check-In</th>
+                        <th scope="col">Check-Out</th>
+                        <th scope="col">Personas</th>
+                        <th scope="col">Estado</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% results.forEach((hotel)=> { %>
+                    <% results.forEach((reservas)=> { %>
                         <tr>
-                        <td><%= hotel.Id_Hotel %></td>
-                        <td><%= hotel.Nombre %></td>
-                        <td><%= hotel.CorreoElectronico %></td>
-                        <td><%= hotel.Telefono %></td>
-                        <td><%= hotel.Direccion %></td>
-                        <td><%= hotel.CodigoPostal %></td>
-                        <td><%= hotel.Pais %></td>
-                        <td><%= hotel.Ciudad %></td>
-                        <td><%= hotel.Estrellas %></td>
-                        <td class="d-flex gap-1">
-                            <a href="/edith/<%= hotel.Id_Hotel %>" class="btn btn-sm btn-warning" title="Edit">
-                              <i class="fa-solid fa-pen-to-square"></i>
-                            </a>
-                            <a onclick="confirmar('<%= hotel.Id_Hotel %>')" class="btn btn-sm btn-danger" title="Delete">
-                              <i class="fa-solid fa-trash-can"></i>
-                            </a>
-                            <a href="/menu/<%= hotel.Id_Hotel %>" class="btn btn-sm btn-info" title="Info">
-                              <i class="fa-solid fa-circle-info"></i> 
-                          </a>                           
-                          </td>
+                        <td><%= reservas.Id_Reserva %></td>
+                        <td><%= reservas.Nombre%> <%= reservas.Apellido %></td>
+                        <td><%= reservas.Actividad%></td>
+                        <td><%= reservas.Descripcion %></td>
+                        <td><%= reservas.Precio %></td>
+
+                    
                           
                     </tr>
               <%  })%>
@@ -114,10 +101,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.14.0/dist/sweetalert2.all.min.js"></script>
   <script>
-    new DataTable('#hoteles');
-    function confirmar(Id_Hotel) {
+    new DataTable('#reservas');
+    function confirmar(Id_reservas) {
   Swal.fire({
-    title: "¿Quieres eliminar el Hotel?",
+    title: "¿Quieres eliminar el reservas?",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -125,9 +112,9 @@
     confirmButtonText: 'Confirmar'
   }).then((result) => {
     if (result.isConfirmed) {
-      Swal.fire("Eliminado!", "El Hotel con ID " + Id_Hotel + " ha sido eliminado.", "success").then(() => {
+      Swal.fire("Eliminado!", "La actividades con ID " + Id_reservas + " ha sido eliminado.", "success").then(() => {
         // Aquí, redirige al servidor para eliminar el cliente
-        window.location.href = '/deleteh/' + Id_Hotel  ;  // Usa 'href' en lugar de 'location'
+        window.location.href = '/deletes/' + Id_reservas  ;  // Usa 'href' en lugar de 'location'
       });
     } else {
       Swal.fire("Acción cancelada", "", "info");

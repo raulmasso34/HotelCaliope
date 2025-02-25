@@ -352,6 +352,31 @@ module.exports = router;
         });
 
 
+        //RESERVAS
+
+        router.get('/reservas', (req, res) => {
+            const query = `
+                SELECT 
+                    r.*, 
+                    c.Nom AS Nombre, 
+                    c.Cognom AS Apellido,
+                    a.Nombre AS Actividad 
+                FROM Reservas r
+                
+                LEFT JOIN Clients c ON r.Id_Cliente = c.Id_Client 
+                LEFT JOIN Actividades a on r.Id_Actividad = a.Id_Actividades
+            `;
+        
+            conexion.query(query, (error, results) => {
+                if (error) {
+                    throw error;
+                } else {
+                    res.render('reservas/reservas', { results });
+                }
+            });
+        });
+        
+
         //OFERTAS
 
         router.post('/saveo', crud.saveo)
