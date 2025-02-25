@@ -360,11 +360,16 @@ module.exports = router;
                     r.*, 
                     c.Nom AS Nombre, 
                     c.Cognom AS Apellido,
-                    a.Nombre AS Actividad 
+                    a.Nombre AS Actividad,
+                    h.Numero_Habitacion AS Habitacion,
+                    ho.Nombre AS Hotel
+
                 FROM Reservas r
-                
+
                 LEFT JOIN Clients c ON r.Id_Cliente = c.Id_Client 
                 LEFT JOIN Actividades a on r.Id_Actividad = a.Id_Actividades
+                LEFT JOIN Habitaciones h on r.Id_Habitacion = h.Id_Habitaciones
+                LEFT JOIN Hotel ho on r.Id_Hotel = ho.Id_Hotel
             `;
         
             conexion.query(query, (error, results) => {
