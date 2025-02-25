@@ -434,16 +434,52 @@ body {
 }
 
 
-.canceled {
-    background-color: red; /* Cambia el fondo a rojo */
-    color: white; /* Cambia el color del texto a blanco */
-    padding: 10px; /* Espacio interno */
-    border-radius: 5px; /* Bordes redondeados */
-    margin-bottom: 10px; /* Espaciado entre las reservas */
+/* Estilo base para los botones */
+.btn-show {
+    display: inline-flex; /* Usar flexbox para centrar el contenido */
+    align-items: center; /* Centrar el contenido verticalmente */
+    padding: 9px; /* Espaciado interno */
+    font-size: 20px; /* Tamaño del ícono */
+    border: 1px solid transparent; /* Sin borde visible */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar el ratón */
+    
 }
 
+/* Estilo para el botón de "Mostrar más" */
+.btn-show-more {
+    background-color: #f8f9fa; /* Fondo claro y neutro */
+    color: #007bff; /* Color del ícono en azul */
+    border: 1px solid #074587; /* Borde azul */
+}
 
+/* Efecto al pasar el ratón */
+.btn-show-more:hover {
+    background-color: #e2e6ea; /* Fondo más oscuro al pasar el ratón */
+    transform: scale(1.05); /* Efecto de agrandamiento */
+}
 
+/* Estilo para el botón de "Mostrar menos" */
+.btn-show-less {
+    background-color: #f8f9fa; /* Fondo claro y neutro */
+    color: #dc3545; /* Color del ícono en rojo */
+    border: 1px solid #dc3545; /* Borde rojo */
+}
+
+/* Efecto al pasar el ratón */
+.btn-show-less:hover {
+    background-color: #f9e0e3; /* Fondo más oscuro al pasar el ratón */
+    transform: scale(1.05); /* Efecto de agrandamiento */
+}
+
+/* Espacio entre el ícono y el texto (si es necesario) */
+.btn-show i {
+    margin-right: 0px; /* Espacio a la derecha del ícono */
+}
+
+.icono-salida{
+    color: red;
+}
 
 /* Estilo para dispositivos móviles (opcional) */
 @media screen and (max-width: 768px) {

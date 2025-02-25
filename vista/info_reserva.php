@@ -153,12 +153,13 @@ $db->close();
             </tr>
         </table>
         
-       
+        <h2>Cancelar Reserva</h2>
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">
             Cancelar reserva
         </button>
 
-        
+        <!-- Modal de Confirmación -->
+        <!-- Modal de Confirmación de Cancelación -->
         <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered custom-modal">
                 <div class="modal-content">
