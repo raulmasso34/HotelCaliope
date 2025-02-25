@@ -171,6 +171,21 @@ class ReservaController {
     public function obtenerNombrePais($paisId) {
         return $this->paisModel->obtenerNombrePais($paisId);
     }
+    public function cancelar() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reservaId'])) {
+            $reservaId = (int)$_POST['reservaId'];
+            if ($this->reservaModel->cancelarReserva($reservaId)) {
+                header("Location: ../vista/Clientes/perfil.php");
+                exit; 
+            } else {
+                echo "Error al cancelar la reserva.";
+            }
+        }
+    }
+
+    
+    
+
 
 
    

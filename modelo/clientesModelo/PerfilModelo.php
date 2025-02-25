@@ -47,11 +47,10 @@ class PerfilModel {
     public function getReservations($clientId) {
         $sql = "
             SELECT r.*, h.Nombre 
-            FROM Reservas r
-            JOIN Hotel h ON r.Id_Hotel = h.Id_Hotel
-            WHERE r.Id_Cliente = ?
-        ";
-    
+                FROM Reservas r
+                JOIN Hotel h ON r.Id_Hotel = h.Id_Hotel
+                WHERE r.Id_Cliente = ? AND (r.Estado != 'Cancelado' OR r.Estado IS NULL)
+            ";
         if ($stmt = $this->conn->prepare($sql)) {
             $stmt->bind_param("i", $clientId);  // Usamos 'i' para indicar que el parámetro es un entero
             $stmt->execute();  // Ejecutar la consulta

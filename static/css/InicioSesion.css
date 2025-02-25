@@ -434,6 +434,16 @@ body {
 }
 
 
+.canceled {
+    background-color: red; /* Cambia el fondo a rojo */
+    color: white; /* Cambia el color del texto a blanco */
+    padding: 10px; /* Espacio interno */
+    border-radius: 5px; /* Bordes redondeados */
+    margin-bottom: 10px; /* Espaciado entre las reservas */
+}
+
+
+
 
 /* Estilo para dispositivos móviles (opcional) */
 @media screen and (max-width: 768px) {
@@ -447,3 +457,5 @@ body {
         font-size: 1em;
     }
 }
+
+

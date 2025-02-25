@@ -1,5 +1,5 @@
 <?php
-session_start();  
+session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -17,18 +17,17 @@ require_once __DIR__ . '/../../modelo/clientesModelo/PerfilModelo.php';  // Incl
 $db = new Database();
 $conn = $db->getConnection();
 
-
-
 // Crear una instancia del modelo PerfilModel
 $perfilModel = new PerfilModel($conn);
 
 // Obtener el ID del usuario desde la sesión
-$userId = $_SESSION['user_id'];  // Recuperamos el ID del usuario que inició sesión
+$userId = $_SESSION['user_id'];
 
 // Obtener el perfil del usuario
 $profile = $perfilModel->getProfile($userId);
 $reservations = $perfilModel->getReservations($userId);
 
+// Verifica si se obtuvo el perfil
 if ($profile === null) {
     echo "Error al obtener el perfil.";
     exit();
@@ -64,45 +63,30 @@ $db->closeConnection();
         <div class="reservas-info">
             <h2>Reservas:</h2>
             <?php
-            if (isset($reservations) && !empty($reservations)) {
-                $visibleReservations = array_slice($reservations, 0, 3);
-                $hiddenReservations = array_slice($reservations, 3);
+            $tieneReservasActivas = false;
 
-                foreach ($visibleReservations as $reservation) {
+            if (isset($reservations) && !empty($reservations)) {
+                foreach ($reservations as $reservation) {
+                    if ($reservation['Estado'] == 'Cancelada') {
+                        continue; // Omitir reservas canceladas
+                    }
+                    $tieneReservasActivas = true; // Al menos una reserva activa
+
                     echo "<div class='reservation-button'>";
                     echo "<a href='../info_reserva.php?id=" . urlencode($reservation['Id_Reserva']) . "' class='btn-reserva'>";
                     echo "Hotel: " . htmlspecialchars($reservation['Nombre']);
                     echo "</a>";
                     echo "</div>";
                 }
+            }
 
-                if (!empty($hiddenReservations)) {
-                    echo "<div id='more-reservations' class='hidden-reservations'>";
-                    foreach ($hiddenReservations as $reservation) {
-                        echo "<div class='reservation-button'>";
-                        echo "<a href='../info_reserva.php?id=" . urlencode($reservation['Id_Reserva']) . "' class='btn-reserva'>";
-                        echo "Hotel: " . htmlspecialchars($reservation['Nombre']);
-                        echo "</a>";
-                        echo "</div>";
-                    }
-                    echo "</div>";
-                    echo "<button id='show-more' class='toggle-reservations-btn'>Ver más reservas</button>";
-                    echo "<button id='show-less' class='toggle-reservations-btn' style='display: none;'>Ocultar</button>";
-                }
-            } else {
-                echo "<p>No tienes reservas.</p>";
+            if (!$tieneReservasActivas) {
+                echo "<p>No tienes reservas activas.</p>";
             }
             ?>
         </div>
-
-    
-        <div class="perfil-salir"> 
-            <a href="../index.php">Volver a la pantalla principal</a>
-        </div>
     </div>
-</div>
 
-
-<script src="../../static/js/perfil/pefil.js"></script>
+    <script src="../../static/js/perfil/pefil.js"></script>
 </body>
 </html>
