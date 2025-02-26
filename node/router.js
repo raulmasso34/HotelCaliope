@@ -363,6 +363,7 @@ module.exports = router;
                     a.Nombre AS Actividad,
                     h.Numero_Habitacion AS Habitacion,
                     ho.Nombre AS Hotel
+                    
 
                 FROM Reservas r
 
