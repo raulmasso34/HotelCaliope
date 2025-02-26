@@ -73,6 +73,28 @@ class ReservaModel {
         return $stmt->get_result()->fetch_assoc();
     }
 
+    public function obtenerPrecioTarifa($idTarifa) {
+        try {
+            $sql = "SELECT Precio FROM Tarifas WHERE Id_Tarifa = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $idTarifa);
+            $stmt->execute();
+            $resultado = $stmt->get_result()->fetch_row();
+            
+            // Cerrar el statement
+            $stmt->close();
+    
+            // Retornar el precio si se encontró
+            return $resultado ? $resultado[0] : 0; // Si no se encuentra, retornar 0
+        } catch (Exception $e) {
+            error_log("Error al obtener precio de tarifa: " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    
+    
+
     public function insertarReserva($hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal, $NumeroPersonas) {
         // Verifica si se ha seleccionado una actividad
         if (empty($actividadId)) {
@@ -80,7 +102,16 @@ class ReservaModel {
             $actividadId = NULL;
             $precioActividad = 0;
         }
-        $precioTotal = $precioHabitacion + $precioActividad + $precioTarifa;
+        $precioActividad = $this->obtenerPrecioActividad($actividadId);
+    
+        // Obtener el precio de la tarifa (asegúrate de tener un método para esto)
+        $precioTarifa = $this->obtenerPrecioTarifa($hotelId); // O el método que uses para obtener el precio de la tarifa
+    
+        // Calcular el número de noches
+        $num_noches = (new DateTime($checkout))->diff(new DateTime($checkin))->days;
+    
+        // Calcular el precio total solo en base a la habitación y el número de noches
+        $precioTotal = ($precioHabitacion * $num_noches) + $precioActividad + $precioTarifa;
     
         // Primero, realizamos la inserción de la reserva
         $query = "INSERT INTO Reservas (Id_Hotel, Id_Cliente, Checkin, Checkout, Id_Pais, Id_Actividad, Id_Habitacion, Id_Tarifa, Precio_Habitacion, Precio_Actividad, Precio_Tarifa, Precio_Total, Numero_Personas) 
