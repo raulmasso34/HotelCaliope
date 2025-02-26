@@ -230,7 +230,7 @@ class ReservaModel {
         $checkin = $_SESSION['checkin'];  
         $checkout = $_SESSION['checkout']; 
     
-        $query = "SELECT * FROM Habitaciones 
+        $query = `SELECT * FROM Habitaciones 
                   WHERE Id_Hotel = ?
                   AND NOT EXISTS (
                       SELECT 1 FROM Reservas 
@@ -240,7 +240,7 @@ class ReservaModel {
                           OR (Reservas.Checkout BETWEEN ? AND ?)
                           OR (Reservas.Checkin <= ? AND Reservas.Checkout >= ?)
                       )
-                  )"; 
+                  )`; 
     
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("issssss", $hotelId, $fechaActual, $fechaActual, $checkin, $checkout, $checkin, $checkout, $checkin, $checkout);
