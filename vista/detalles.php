@@ -58,7 +58,7 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
 
 
     <header>
-    <section class="main-up">
+        <section class="main-up">
             <div class="main-up-left">
                <a href="../vista/index.php"> <img src="../static/img/logo_blanco.png" alt="Imagen secundaria"></a>
             </div>

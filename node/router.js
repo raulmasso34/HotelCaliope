@@ -98,9 +98,9 @@ module.exports = router;
 
 
         //PAIS
-       /* router.post('/savepais', crud.savepais)
-        router.post('/updatepais', crud.updatepais);  */
-        router.post('/pais', (req,res)=> {
+       router.post('/savep', crud.savep)
+       router.post('/updatep', crud.updatep);   
+        router.get('/pais', (req,res)=> {
             conexion.query(
                 `SELECT Id_Pais, Pais FROM Pais;`,
                 (error, results) => {
@@ -113,25 +113,65 @@ module.exports = router;
                 }
             )
         });
-
-        
-        /* app.get('/pais', (req, res) => {
-            res.send("Ruta de países funcionando");
-        }); */
-        
         
         //Añadir pais
 
-        router.get('/createp',(req,res)=>{
-            const queryPais = 'SELECT Id_Pais, Pais FROM Pais'
-        })
+        router.get('/createp', (req, res) => {
+            // Consulta para obtener los países
+            const queryPais = 'SELECT Id_Pais, Pais FROM Pais'; 
+        
+            // Ejecutar la consulta
+            conexion.query(queryPais, (error, paisResults) => {
+                if (error) {
+                    console.error('Error al obtener los países:', error.message);
+                    return res.status(500).send('Error en el servidor');
+                }
+        
+                // Renderizar la vista con los datos obtenidos
+                res.render('pais/createp', { 
+                    paises: paisResults
+                });
+            });
+        });
 
-        router.get('editp/:id', (req, res)=>{
+        //EDITAR PAIS
+        
+
+        router.get('/editp/:id', (req, res) => {
             const Id_Pais = req.params.id;
-            //Consultas SQL
-            const queryPais = 'SELECT * FROM Pais WHERE Id_Pais =?';
-            
-        })
+            const queryPais = 'SELECT * FROM Pais WHERE Id_Pais = ?';
+        
+            // Primera consulta: Obtener el país específico
+            conexion.query(queryPais, [Id_Pais], (error, paisResults) => {
+                if (error) {
+                    console.error('Error al obtener el pais:', error.message);
+                    return res.status(500).send('Error en el servidor');
+                }
+
+                if (paisResults.length === 0) {
+                    return res.status(404).send('Pais no encontrado');
+                } 
+                res.render('pais/editp', {
+                    pais: paisResults[0], // Datos de la habitación
+                    
+                });
+            });
+        });
+
+        //ELIMINAR PAIS
+
+        router.get('/deletep/:id', (req, res) => {
+            const id = req.params.id; 
+            conexion.query('DELETE FROM Pais WHERE Id_Pais = ?', [id], (error, results) => {
+                if (error) {
+                    throw error;
+                } else {
+                    res.redirect('/pais'); // Redirigimos al usuario a la página principal
+                }
+            });
+        });
+        
+
 
 
     //HABITACIONES
@@ -311,6 +351,37 @@ module.exports = router;
             });
         });
 
+
+        //RESERVAS
+
+        router.get('/reservas', (req, res) => {
+            const query = `
+                SELECT 
+                    r.*, 
+                    c.Nom AS Nombre, 
+                    c.Cognom AS Apellido,
+                    a.Nombre AS Actividad,
+                    h.Numero_Habitacion AS Habitacion,
+                    ho.Nombre AS Hotel
+                    
+
+                FROM Reservas r
+
+                LEFT JOIN Clients c ON r.Id_Cliente = c.Id_Client 
+                LEFT JOIN Actividades a on r.Id_Actividad = a.Id_Actividades
+                LEFT JOIN Habitaciones h on r.Id_Habitacion = h.Id_Habitaciones
+                LEFT JOIN Hotel ho on r.Id_Hotel = ho.Id_Hotel
+            `;
+        
+            conexion.query(query, (error, results) => {
+                if (error) {
+                    throw error;
+                } else {
+                    res.render('reservas/reservas', { results });
+                }
+            });
+        });
+        
 
         //OFERTAS
 

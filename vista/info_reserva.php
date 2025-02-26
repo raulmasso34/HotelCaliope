@@ -7,6 +7,8 @@ error_reporting(E_ALL);
 
 $database = new Database();
 $db = $database->getConnection();
+require_once __DIR__ . '/../controller/reserva/reservaController.php';
+$reservaController = new ReservaController($db);
 
 // Verifica si el usuario ha iniciado sesión
 if (!isset($_SESSION['user_id'])) {
@@ -14,6 +16,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+// Verifica si se proporciona el ID de la reserva
 if (isset($_GET['id'])) {
     $id_reserva = intval($_GET['id']); // Sanitiza el parámetro recibido
 
@@ -66,6 +69,19 @@ if (isset($_GET['id'])) {
 
         // Calcular el precio total multiplicando por el número de noches y el número de personas
         $precio_total_calculado = $precio_habitacion * $numero_noches * $numero_personas;
+
+        // Manejo de la cancelación
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reservaId'])) {
+            $reservaId = $_POST['reservaId'];
+            if ($reservaController->cancelar($reservaId)) {
+                // Redirigir o mostrar mensaje de éxito
+                header('Location: ../vista/Clientes/perfil.php'); // Cambia esta ruta según tu aplicación
+                exit();
+            } else {
+                echo "Error al cancelar la reserva.";
+            }
+        }
+
     } else {
         echo "<p>La reserva no se encontró. Por favor, verifica el ID.</p>";
         exit;
@@ -74,78 +90,107 @@ if (isset($_GET['id'])) {
     echo "<p>ID de reserva no proporcionado.</p>";
     exit;
 }
+
+// Cerrar conexión
+$db->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles de la Reserva</title>
-    <link rel="stylesheet" href="../static/css/info_reserva.css">
+    <link rel="stylesheet" href="../static/css/info_reserva.css"> <!-- Tu CSS debe estar después de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Agregar Font Awesome -->
 </head>
 <body>
-    <h1>DETALLES DE LA RESERVA</h1>
-    <table class="details-table">
-        <tr>
-            <th>Campo</th>
-            <th>Detalle</th>
-        </tr>
-        <tr>
-            <td>Cliente</td>
-            <td><?php echo htmlspecialchars($reserva['Nombre_Cliente']); ?></td>
-        </tr>
-        <tr>
-            <td>Hotel</td>
-            <td><?php echo htmlspecialchars($reserva['Nombre_Hotel']); ?></td>
-        </tr>
-        <tr>
-            <td>Habitación</td>
-            <td><?php echo htmlspecialchars($reserva['Tipo_Habitacion']); ?></td>
-        </tr>
-        <tr>
-            <td>Número de Habitación</td>
-            <td><?php echo htmlspecialchars($reserva['Numero_Habitacion']); ?></td>
-        </tr>
-        <tr>
-            <td>Actividad</td>
-            <td><?php echo htmlspecialchars($reserva['Nombre_Actividad'] ?? 'N/A'); ?></td>
-        </tr>
-        <tr>
-            <td>País</td>
-            <td><?php echo htmlspecialchars($reserva['Nombre_Pais'] ?? 'N/A'); ?></td>
-        </tr>
-        <tr>
-            <td>Precio Total</td>
-            <td>$<?php echo htmlspecialchars(number_format($precio_total_calculado, 2)); ?></td> <!-- Formatear a 2 decimales -->
-        </tr>
-        <!-- Mostrar la fecha de Check-in -->
-        <tr>
-            <td>Fecha de Check-in</td>
-            <td>
-                <?php
-                // Verificar si la fecha de Check-in está disponible y formatearla
-                echo $checkinDate->format('d/m/Y');
-                ?>
-            </td>
-        </tr>
-        <!-- Mostrar la fecha de Check-out -->
-        <tr>
-            <td>Fecha de Check-out</td>
-            <td>
-                <?php
-                // Verificar si la fecha de Check-out está disponible y formatearla
-                echo $checkoutDate->format('d/m/Y');
-                ?>
-            </td>
-        </tr>
-    </table>
-    
-    <a href="../vista/Clientes/perfil.php">Volver atrás</a>
+    <div class="container mt-4">
+        <h1 class="text-center">DETALLES DE LA RESERVA</h1>
+        <table class="table">
+            <tr>
+                <th>Campo</th>
+                <th>Detalle</th>
+            </tr>
+            <tr>
+                <td>Cliente</td>
+                <td><?php echo htmlspecialchars($reserva['Nombre_Cliente']); ?></td>
+            </tr>
+            <tr>
+                <td>Hotel</td>
+                <td><?php echo htmlspecialchars($reserva['Nombre_Hotel']); ?></td>
+            </tr>
+            <tr>
+                <td>Habitación</td>
+                <td><?php echo htmlspecialchars($reserva['Tipo_Habitacion']); ?></td>
+            </tr>
+            <tr>
+                <td>Número de Habitación</td>
+                <td><?php echo htmlspecialchars($reserva['Numero_Habitacion']); ?></td>
+            </tr>
+            <tr>
+                <td>Actividad</td>
+                <td><?php echo htmlspecialchars($reserva['Nombre_Actividad'] ?? 'N/A'); ?></td>
+            </tr>
+            <tr>
+                <td>País</td>
+                <td><?php echo htmlspecialchars($reserva['Nombre_Pais'] ?? 'N/A'); ?></td>
+            </tr>
+            <tr>
+                <td>Precio Total</td>
+                <td>$<?php echo htmlspecialchars(number_format($precio_total_calculado, 2)); ?></td>
+            </tr>
+            <tr>
+                <td>Fecha de Check-in</td>
+                <td><?php echo $checkinDate->format('d/m/Y'); ?></td>
+            </tr>
+            <tr>
+                <td>Fecha de Check-out</td>
+                <td><?php echo $checkoutDate->format('d/m/Y'); ?></td>
+            </tr>
+        </table>
+        
+        <h2>Cancelar Reserva</h2>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">
+            Cancelar reserva
+        </button>
+
+        <!-- Modal de Confirmación -->
+        <!-- Modal de Confirmación de Cancelación -->
+        <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered custom-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title d-flex align-items-center" id="cancelModalLabel">
+                            <img src="../static/img/logo_blanco.png" alt="Hotel Logo" width="60" class="me-2">
+                            Confirmar Cancelación
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar";"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p class="fs-5">¿Estás seguro de que deseas cancelar esta reserva?</p>
+                        <p class="text-danger-custom">Esta acción no se puede deshacer.</p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, volver</button>
+                        <form action="" method="POST" class="d-inline">
+                            <input type="hidden" name="reservaId" value="<?= htmlspecialchars($reserva['Id_Reserva']); ?>">
+                            <button type="submit" class="btn btn-danger">Sí, cancelar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <a href="../vista/Clientes/perfil.php" class="icono-salida" title="Volver atrás">
+            <i class="fas fa-sign-out-alt"></i> <!-- Icono de salida -->
+        </a>
+    </div>
 </body>
 </html>
-
-<?php
-// Cerrar conexión
-$db->close();
-?>

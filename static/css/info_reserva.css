@@ -1,16 +1,3 @@
-/* static/css/info_reserva.css */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f5f0;
-    margin: 0;
-    padding: 40px 20px;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    min-height: 90vh; /* Ocupa toda la altura de la pantalla */
-}
 
 .details-table {
     width: 90%;

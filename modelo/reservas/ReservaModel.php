@@ -225,16 +225,7 @@ class ReservaModel {
     }
     
     
-    public function actualizarEstadoHabitacionReservada($habitacionId) {
-        // Actualiza el estado de la habitación a 'Reservada'
-        $query = "UPDATE Habitaciones 
-                  SET Estado = 'Reservada' 
-                  WHERE Id_Habitaciones = ?";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $habitacionId);
-        $stmt->execute();
-    }
-
+  
     
 
     public function obtenerReservaPorId($reservaId) {
@@ -351,6 +342,87 @@ class ReservaModel {
             return null;
         }
     }
+    public function cancelarReserva($reservaId) {
+        $query = "UPDATE Reservas SET Estado = 'Cancelado', FechaCancelacion = NOW() WHERE Id_Reserva = ?";
+        
+        $stmt = $this->conn->prepare($query);
+        if ($stmt === false) {
+            die('Error preparing statement: ' . $this->conn->error);
+        }
+        
+        $stmt->bind_param("i", $reservaId);
+        
+        if ($stmt->execute()) {
+            return true; // La reserva fue cancelada
+        } else {
+            die("Error en la ejecución de la consulta de cancelación: " . $stmt->error);
+        }
+    }
+    
+    
+
+    public function marcarComoPagada($reservaId) {
+        $query = "UPDATE Reservas SET Estado = 'Pagado' WHERE Id_Reserva = ?";
+        
+        $stmt = $this->conn->prepare($query);
+        if ($stmt === false) {
+            die('Error preparing statement: ' . $this->conn->error);
+        }
+        
+        $stmt->bind_param("i", $reservaId);
+        
+        if ($stmt->execute()) {
+            return true; // La reserva fue marcada como pagada
+        } else {
+            die("Error en la ejecución de la consulta de pago: " . $stmt->error);
+        }
+    }
+
+    public function procesarReserva($data) {
+        // Suponiendo que $data incluye los detalles de la reserva
+        $reservaId = $this->insertarReserva(...); // Llama al método para insertar
+    
+        if ($data['metodoPago'] === 'pago en línea') {
+            $this->marcarComoPagada($reservaId); // Marca como pagada
+        }
+    }
+
+    public function getReservations($userId) {
+        $query = "SELECT * FROM Reservas 
+                WHERE Id_Cliente = ? 
+                AND (Estado != 'Cancelada' OR 
+                    (Estado = 'Cancelada' AND DATEDIFF(NOW(), FechaCancelacion) <= 10))";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $reservations = [];
+        while ($row = $result->fetch_assoc()) {
+            $reservations[] = $row;
+        }
+
+        return $reservations;
+    }
+
+    public function actualizarEstadoReserva($idReserva, $nuevoEstado) {
+        $query = "UPDATE Reservas SET Estado = ? WHERE Id_Reserva = ?";
+        $stmt = $this->conn->prepare($query);
+        
+        if (!$stmt) {
+            throw new Exception('Error en la preparación de la consulta: ' . $this->conn->error);
+        }
+    
+        // Vincular los parámetros
+        $stmt->bind_param("si", $nuevoEstado, $idReserva); // "si" significa string y integer
+    
+        // Ejecutar la consulta
+        return $stmt->execute(); // Retorna true si la actualización fue exitosa
+    }
+    
+
+
    
 }
 ?>
