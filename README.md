@@ -52,3 +52,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminar_reservas`()
 BEGIN
     DELETE FROM Reservas WHERE Checkout < NOW();
 END
+
+
+
+ $sql = "SELECT DISTINCT h.Id_Pais, p.Pais FROM Hotel h inner join Pais p on h.Id_Pais = p.Id_Pais ";
+            $stmt = $this->conn->prepare($sql);
