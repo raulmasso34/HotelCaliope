@@ -189,7 +189,7 @@ if ($controller !== null) {
                             <label for="location"><i class="fa-solid fa-map-marker-alt"></i> Lugar</label>
                             <select id="location" name="location" class="form-select" required>
                                 <?php foreach ($paises as $pais): ?>
-                                    <option value="<?php echo $pais['Id_Pais']; ?>">
+                                    <option value="<?php echo $pais['Pais']; ?>">
                                         <?php echo $pais['Pais']; ?>
                                     </option>
                                 <?php endforeach; ?>
