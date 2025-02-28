@@ -91,6 +91,18 @@ class ReservaModel {
             return 0;
         }
     }
+    // Obtener el precio real de la habitación antes de insertar la reserva
+    public function obtenerPrecioHabitacion($habitacionId) {
+    $query = "SELECT Precio FROM Habitaciones WHERE Id_Habitaciones = ?";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("i", $habitacionId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()) {
+        return $row['Precio'];
+    }
+    return 0; // Retorna 0 si no encuentra la habitación
+}
 
     
     
@@ -102,16 +114,20 @@ class ReservaModel {
             $actividadId = NULL;
             $precioActividad = 0;
         }
-        $precioActividad = $this->obtenerPrecioActividad($actividadId);
-    
-        // Obtener el precio de la tarifa (asegúrate de tener un método para esto)
-        $precioTarifa = $this->obtenerPrecioTarifa($hotelId); // O el método que uses para obtener el precio de la tarifa
-    
-        // Calcular el número de noches
-        $num_noches = (new DateTime($checkout))->diff(new DateTime($checkin))->days;
-    
-        // Calcular el precio total solo en base a la habitación y el número de noches
-        $precioTotal = ($precioHabitacion * $num_noches) + $precioActividad + $precioTarifa;
+            $precioActividad = $this->obtenerPrecioActividad($actividadId);
+
+            // Si tarifaId es NULL, asigna 0 al precio de tarifa
+            $precioTarifa = $tarifaId ? $this->obtenerPrecioTarifa($hotelId) : 0;
+            
+            $precioHabitacion = $this->obtenerPrecioHabitacion($habitacionId);
+
+
+            // Calcular el número de noches
+            $num_noches = (new DateTime($checkout))->diff(new DateTime($checkin))->days;
+
+            // Calcular el precio total solo en base a la habitación y el número de noches
+            $precioTotal = ($precioHabitacion * $num_noches) + $precioActividad + $precioTarifa;
+
     
         // Primero, realizamos la inserción de la reserva
         $query = "INSERT INTO Reservas (Id_Hotel, Id_Cliente, Checkin, Checkout, Id_Pais, Id_Actividad, Id_Habitacion, Id_Tarifa, Precio_Habitacion, Precio_Actividad, Precio_Tarifa, Precio_Total, Numero_Personas) 
@@ -312,20 +328,6 @@ class ReservaModel {
         }
     }
 
-    public function obtenerPrecioHabitacion($habitacionId) {
-        try {
-            $sql = "SELECT Precio FROM Habitaciones WHERE Id_Habitaciones = ?";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("i", $habitacionId);
-            $stmt->execute();
-            $precio = $stmt->get_result()->fetch_row()[0];
-            $stmt->close();
-            return $precio;
-        } catch (Exception $e) {
-            error_log("Error al obtener precio de habitación: " . $e->getMessage());
-            return 0;
-        }
-    }
 
     public function obtenerActividadesPorHotel($idHotel) {
         try {

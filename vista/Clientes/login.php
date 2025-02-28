@@ -20,8 +20,8 @@ error_reporting(E_ALL);
             <h2>Bienvenido al Hotel Caliope</h2>
         </div>
         
-        <!-- Formulario de Login -->
-        <form method="POST" action="../../controller/clients/LoginController.php">
+        <!-- Formulario de Login con ID CORREGIDO -->
+        <form method="POST" action="../../controller/clients/LoginController.php" id="loginForm">
             <label for="Usuari">Usuario:</label>
             <input type="text" name="Usuari" id="Usuari" required>
 
@@ -30,6 +30,10 @@ error_reporting(E_ALL);
 
             <label for="Password">Contraseña:</label>
             <input type="password" name="Password" id="Password" required>
+
+            <!-- CAPTCHA Fake DENTRO del formulario -->
+            <input type="checkbox" id="captcha" name="captcha" value="1">
+            <label for="captcha">No soy un robot</label><br>
 
             <button class="login-btn" type="submit">Iniciar sesión</button>
         </form>
@@ -45,5 +49,15 @@ error_reporting(E_ALL);
             <p>¿No tienes cuenta? <a href="registre.php">Regístrate aquí</a></p>
         </div>
     </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            var captchaChecked = document.getElementById("captcha").checked;
+            if (!captchaChecked) {
+                alert("❌ Debes marcar la casilla de verificación.");
+                event.preventDefault(); // Evita que se envíe el formulario
+            }
+        });
+    </script>
 </body>
 </html>

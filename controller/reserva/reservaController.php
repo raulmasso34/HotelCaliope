@@ -95,6 +95,25 @@ class ReservaController {
         }
     }
 
+    public function obtenerPrecioACtividada($actividadId){
+        $precio = $this->reservaModel->obtenerPrecioActividad($actividadId);
+        if ($precio > 0) {
+            echo "Precio de la actividad: $" . $precio;
+        } else {
+            echo "Error al obtener el precio de la habitación.";
+        }
+    }
+
+
+    public function obternPrecioTarifa($hotelId){
+        $precio = $this->reservaModel->obtenerPrecioTarifa($hotelId);
+        if ($precio > 0) {
+            echo "Precio de la tarifa: $" . $precio;
+            } else {
+            echo "Error al obtener el precio de la tarifa.";
+        }
+    }
+
     // Obtener actividades disponibles para un hotel
     public function obtenerActividades($idHotel) {
         $actividades = $this->reservaModel->obtenerActividadesPorHotel($idHotel);

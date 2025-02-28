@@ -21,6 +21,8 @@ if (isset($_SESSION['Reservas'])) {
     $checkin = $reserva['checkin'] ?? 'No disponible';
     $checkout = $reserva['checkout'] ?? 'No disponible';
     $guests = $reserva['guests'] ?? 'No disponible';
+    $precioTarifa = $reserva['precioTarifa'] ?? 0; // Suponiendo que esto está almacenado
+    $precioActividad = $reserva['precioActividad'] ?? 0; // Suponiendo que esto también está almacenado
 } else {
     echo "Error: No se ha recibido la reserva en la sesión.";
     exit;
@@ -36,11 +38,10 @@ $checkoutDate = new DateTime($checkout);
 $numeroNoches = $checkoutDate->diff($checkinDate)->days;
 
 // Calcular el precio total
-$precioTotal = $precioHabitacion * $numeroNoches;
+$precioTotal = ($precioHabitacion * $numeroNoches) + $precioTarifa + $precioActividad;
 
-// Mostrar precio total
+// Mostrar el resumen de la reserva
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>

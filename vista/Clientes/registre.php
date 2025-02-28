@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,7 @@
         </div>
         
         <!-- Formulario de Registro -->
-        <form action="../../controller/clients/RegistreController.php" method="POST">
+        <form action="../../controller/clients/RegistreController.php" method="POST" id="registerForm">
             <div class="registro-form-row">
                 <div class="registro-form-group">
                     <label for="nom">Nombre:</label>
@@ -72,12 +72,26 @@
                 </div>
             </div>
 
+            <!-- CAPTCHA Fake -->
+            <input type="checkbox" id="captcha" name="captcha" value="1">
+            <label for="captcha">No soy un robot</label><br>
+
             <button class="registre-btn" type="submit">Registrarse</button>
         </form>
 
         <div class="register-link">
-            <p>¿Ya tines cuenta? <a href="login.php">Inicia sesión</a></p>
+            <p>¿Ya tienes cuenta? <a href="login.php">Inicia sesión</a></p>
         </div>
     </div>
+
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            var captchaChecked = document.getElementById("captcha").checked;
+            if (!captchaChecked) {
+                alert("❌ Debes marcar la casilla de verificación.");
+                event.preventDefault(); // Evita que se envíe el formulario
+            }
+        });
+    </script>
 </body>
 </html>
