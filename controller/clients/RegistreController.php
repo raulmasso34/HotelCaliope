@@ -61,14 +61,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     echo $resultado; // Muestra el resultado del registro
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Verificar si el CAPTCHA fue marcado
-    if (!isset($_POST['captcha'])) {
-        header("Location: ../../vista/Clientes/registre.php?error=Debes marcar la casilla de verificación.");
-        exit();
-    }
-
-    // Aquí iría tu código de autenticación del usuario
-    echo "✔ CAPTCHA correcto. Registro completado, inicia sesión.";
-}
 ?>
