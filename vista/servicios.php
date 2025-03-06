@@ -1,23 +1,67 @@
+<?php
+session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+require_once __DIR__ . '/../controller/reserva/reservaController.php';
+
+$reservaController = new ReservaController();
+
+// Verifica si ya tienes el hotelId en la sesión
+if (isset($_POST['hotelId'])) {
+    $_SESSION['hotelId'] = $_POST['hotelId']; // Guardamos el hotelId en la sesión cuando se selecciona
+}
+
+$hotelId = $_SESSION['hotelId'] ?? null; // Recuperamos el hotelId de la sesión
+
+// Si el hotelId no está definido, muestra un mensaje de error
+if ($hotelId === null) {
+    echo "No se ha seleccionado un hotel.";
+    exit; // Termina la ejecución si no se ha seleccionado un hotel
+}
+
+// Obtener los servicios desde el controlador
+$servicios = $reservaController->mostrarServicios();
+
+// Verifica si se ha enviado el formulario para seleccionar servicios
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['servicios'])) {
+    // Recuperar los servicios seleccionados del formulario
+    $serviciosSeleccionados = $_POST['servicios'];
+
+    // Guardamos los servicios seleccionados en la sesión
+    $_SESSION['Reservas']['servicios'] = $serviciosSeleccionados;
+    
+    // (Opcional) Guardamos el precio total de los servicios seleccionados en la sesión
+    $totalServicios = array_sum($serviciosSeleccionados); // Sumar el precio de todos los servicios seleccionados
+    $_SESSION['Reservas']['totalServicios'] = $totalServicios;
+
+    // Redirigir a la página de pagos
+    header("Location: pagos.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/servicios.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <title>Servicios</title>
 </head>
 <body>
 
     <header>
         <section class="main-up">
             <div class="main-up-left">
-               <a href="../vista/index.php"> <img src="../static/img/logo_blanco.png" alt="Imagen secundaria"></a>
+                <a href="../vista/index.php"><img src="../static/img/logo_blanco.png" alt="Imagen secundaria"></a>
             </div>
 
             <div class="main-up-right">
                 <div class="links">
                     <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
-                    
                     <div class="dropdown">
                         <a href="#" class="dropbtn">Hoteles</a>
                         <div class="dropdown-content">
@@ -35,16 +79,12 @@
                             </div>
                         </div>
                     </div>
-
                     <a href="../vista/galeria/galeria.php">Galería</a>
                     <a href="../vista/ofertas/ofertas.php">Ofertas</a>
                     <a href="../vista/Contacto/contacto.php">Contacto</a>
-                    
-                    <!-- Contenedor del perfil -->
                     <div class="dropdown-perfil">
                         <a class="icon-perfil" href="javascript:void(0);">
-                        <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
-                        
+                            <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
                         </a>
                         <div class="dropdown-perfil-content">
                             <a href="../vista/Clientes/login.php">
@@ -57,7 +97,6 @@
                                 <i class="bi bi-box-arrow-right"></i> Cerrar sesión
                             </a>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -77,8 +116,6 @@
                 <a href="../vista/Contacto/contacto.php">Contacto</a>
                 <a href="../vista/Clientes/login.php">Iniciar sesión</a>
                 <a href="../vista/Clientes/perfil.php">Perfil</a>
-                
-                <!-- Enlace para Hoteles con dropdown -->
                 <div class="dropdown-mobile">
                     <a href="#" class="dropbtn">Hoteles</a>
                     <div class="dropdown-content-mobile">
@@ -97,74 +134,46 @@
                     </div>
                 </div>
             </div>
-
-
         </section>
     </header>
 
     <h1>¿Quieres alguno de estos servicios?</h1>
     <div class="servicios-container">
-        <div class="servicio">
-            <img src="../static/img/servicios/spa.jpg" alt="Spa">
-            <h2>Spa</h2>
-            <p>Disfruta de un momento de relajación en nuestro spa con sauna y masajes.</p>
-            <ul>
-                <li><strong>Masajes:</strong> Relájate con terapias personalizadas.</li>
-                <li><strong>Sauna:</strong> Acceso ilimitado a la zona de sauna.</li>
-                <li><strong>Hidromasaje:</strong> Baños termales con minerales naturales.</li>
-            </ul>
-            <button onclick="reservarServicio('Spa')">Reservar</button>
-        </div>
-        <div class="servicio">
-            <img src="../static/img/servicios/limpieza.jpg" alt="Limpieza">
-            <h2>Limpieza</h2>
-            <p>Servicio de limpieza diaria para que disfrutes de una habitación impecable.</p>
-            <ul>
-                <li><strong>Diaria:</strong> Limpieza y cambio de sábanas.</li>
-                <li><strong>Profunda:</strong> Limpieza completa cada 3 días.</li>
-            </ul>
-            <button onclick="reservarServicio('Limpieza')">Reservar</button>
-        </div>
-        <div class="servicio">
-            <img src="../static/img/servicios/parking.jpg" alt="Parking">
-            <h2>Parking</h2>
-            <p>Estacionamiento privado y seguro para tu comodidad.</p>
-            <ul>
-                <li><strong>24/7:</strong> Seguridad y vigilancia las 24 horas.</li>
-                <li><strong>Cubierto:</strong> Espacios protegidos contra el clima.</li>
-            </ul>
-            <button onclick="reservarServicio('Parking')">Reservar</button>
-        </div>
-        <div class="servicio">
-            <img src="../static/img/servicios/taxi.jpg" alt="Taxi">
-            <h2>Taxi</h2>
-            <p>Servicio de taxi disponible las 24 horas para tus traslados.</p>
-            <ul>
-                <li><strong>Al aeropuerto:</strong> Traslados rápidos y seguros.</li>
-                <li><strong>Dentro de la ciudad:</strong> Movilidad cómoda y confiable.</li>
-            </ul>
-            <button onclick="reservarServicio('Taxi')">Reservar</button>
-        </div>
+        <?php if (!empty($servicios)) : ?>
+            <!-- Mostrar los servicios -->
+            <form action="" method="POST"> <!-- Enviamos el formulario con los servicios seleccionados -->
+                <div class="servicios-lista">
+                    <?php foreach ($servicios as $servicio) : ?>
+                        <?php 
+                        // Definir la ruta de la imagen según el nombre del servicio
+                        $imagen = '../static/img/servicios/' . strtolower(str_replace(' ', '_', $servicio['Servicio'])) . '.jpg'; 
+                        // Comprobar si la imagen existe
+                        $imagen_path = file_exists($imagen) ? $imagen : 'images/default.jpg'; // Imagen por defecto si no se encuentra la específica
+                        ?>
+                        <div class="servicio" id="servicio-<?php echo $servicio['Id_Servicio']; ?>">
+                            <img src="<?php echo $imagen_path; ?>" alt="Imagen de <?php echo $servicio['Servicio']; ?>" class="imagen-servicio">
+                            <h3><?php echo $servicio['Servicio']; ?></h3>
+                            <p><?php echo $servicio['Descripcion']; ?></p>
+                            <p>Precio: <?php echo $servicio['Precio']; ?>€</p>
+                            <!-- Checkbox para seleccionar el servicio -->
+                            <label>
+                                <input type="checkbox" name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" value="<?php echo $servicio['Precio']; ?>">
+                                Seleccionar
+                            </label>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <!-- Continuar a pagos -->
+                <div class="continuar-btn">
+                    <input type="submit" value="Continuar con servicio" id="btn-continuar">
+                </div>
+            </form>
+        <?php else : ?>
+            <p>No hay servicios disponibles en este momento.</p>
+        <?php endif; ?>
     </div>
 
-    <section class="beneficios">
-        <h2>Beneficios adicionales de nuestros servicios</h2>
-        <div class="beneficios-container">
-            <div class="beneficio">
-                <h3>✅ Servicios personalizados</h3>
-                <p>Ajustamos cada servicio según tus necesidades y horarios.</p>
-            </div>
-            <div class="beneficio">
-                <h3>💆 Comodidad y bienestar</h3>
-                <p>Desde el Spa hasta el servicio de taxi, todo pensado para tu confort.</p>
-            </div>
-            <div class="beneficio">
-                <h3>🕒 Disponibilidad 24/7</h3>
-                <p>Acceso a limpieza, parking y traslados en cualquier momento del día.</p>
-            </div>
-        </div>
-    </section>
-    
     <footer class="main-footer">
         <div class="footer-box">
             <!-- Sección: Sobre el Hotel -->
@@ -193,33 +202,15 @@
 
             <!-- Sección: Contacto y Redes Sociales -->
             <div class="footer-sec">
-                <h1>DÓNDE NOS ENCONTRAMOS</h1>
-                <div class="sec-tres">
-                    <p>Calle xxx 99999 <br> Lorem ipsum, España</p>
-                    <span class="contact-info">
-                        <i class="fa-solid fa-phone"></i> 999 999 999
-                    </span>
-                    <span class="contact-info">
-                        <i class="fa-solid fa-envelope"></i> hotelcalope@gmail.com
-                    </span>
-                    <div class="social-icons">
-                        <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    </div>
+                <h1>CONTACTO</h1>
+                <div class="social-links">
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-twitter"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
                 </div>
             </div>
         </div>
-        <div class="privacidad">
-            <p>Lorem ipsum dolor sit ame</p>
-        </div>
-        <div id="privacy-banner" class="privacy-banner">
-            <p>Este sitio web utiliza cookies para garantizar que obtengas la mejor experiencia. Consulta nuestra <a href="../vista/politicas/privacidad.php">Política de Privacidad</a>.</p>
-            <button id="accept-btn">Aceptar</button>
-        </div>
-
     </footer>
 
-    
 </body>
 </html>

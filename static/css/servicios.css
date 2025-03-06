@@ -1,13 +1,19 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #002064e2;
+    background-color: #dae5ffa1;
     color: white;
     margin: 0;
     padding: 0;
     text-align: center;
     box-sizing: border-box;
 }
+
+body h1{
+    color: black;
+}
+
+
 header {
     background: #2c3e50; /* Azul oscuro lujoso */
     padding: 15px 0;
@@ -238,70 +244,61 @@ h1 {
     margin-bottom: 30px;
 }
 
-.servicios-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    max-width: 1200px;
-    margin: auto;
-}
 
-.servicio {
-    background: #2a617d;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: left;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
 
-.servicio img {
+/* Contenedor principal para los servicios */
+
+.servicios-container{
+
+  
     width: 100%;
-    border-radius: 10px;
 }
 
-.servicio h2 {
-    margin: 15px 0;
+
+.servicios-lista{
+    display: flex ;
+    height: max-content;
+    width: 80%;
+   
     text-align: center;
+    margin: auto;
+    text-align: center;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    gap: 20px; 
+    
 }
 
-.servicio p {
-    font-size: 14px;
+.servicio{
+
+    background-color: #4778f5;
+    justify-content: space-between;
+    width: 33%;
+    text-align: center;
+    margin-top: 20px;
 }
 
-.servicio ul {
-    padding-left: 20px;
+.imagen-servicio {
+    width: 100%; /* Ajusta el tamaño según lo necesites */
+    height: auto;
+    margin-bottom: 10px; /* Espacio entre la imagen y el contenido */
 }
 
-.servicio ul li {
-    margin: 5px 0;
-}
-
-button {
-    display: block;
-    width: 100%;
-    background-color: #ffc107;
-    color: #333;
-    border: none;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-    margin-top: 15px;
-}
-
-button:hover {
-    background-color: #e0a800;
-}
-
-
-/* Beneficios */
+/* Sección de beneficios */
 .beneficios {
     background-color: #b1ceee;
     padding: 40px 20px;
     margin-top: 30px;
 }
 
+/* Título de los beneficios */
+.beneficios h2 {
+    color: blue;
+}
+
+/* Contenedor para los beneficios */
 .beneficios-container {
     display: flex;
     flex-wrap: wrap;
@@ -311,6 +308,7 @@ button:hover {
     margin: auto;
 }
 
+/* Estilo individual de cada beneficio */
 .beneficio {
     background: rgb(63, 94, 230);
     padding: 15px;
@@ -320,10 +318,53 @@ button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Estilo cuando un servicio es seleccionado */
+.servicio.seleccionado {
+    background-color: #4CAF50; /* Color verde */
+    color: white;
+}
 
+/* Estilo de los botones de reservar */
+.btn-reservar {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #0b1f34;
+    font-size: 20px;
+    color: white;
+    border-radius: 7px;
+    border: none;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
 
+.btn-reservar:hover {
+    background-color: #b30000;
+}
 
+/* Estilo del botón de continuar */
+.continuar-btn {
+    margin-top: 20px;
+    text-align: center;
+}
 
+/* Estilo del botón de continuar en el formulario */
+#btn-continuar {
+    background-color: #071847;
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+/* Estilo del botón de continuar cuando es hover */
+#btn-continuar:hover {
+    background-color: #6c0000;
+}
 
 
 
