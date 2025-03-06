@@ -174,7 +174,7 @@ $database->closeConnection();
 
         <h3 class="mt-3">Precio Total: <span id="precioTotal">Calculando...</span> €</h3>
 
-        <form action="../vista/pagos.php" method="POST">
+        <form action="../vista/servicios.php" method="POST">
             <input type="hidden" name="habitacionId" value="<?php echo $habitacionId; ?>">
             <input type="hidden" name="clienteId" value="<?php echo $clienteId; ?>">
             <input type="hidden" name="hotelId" value="<?php echo $hotelId; ?>">
