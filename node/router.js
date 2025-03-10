@@ -1116,7 +1116,7 @@ router.get('/estadisticas/Servicios/:id', (req, res) => {
     COALESCE(s.Servicio, 'No se ha reservado ningún servicio') AS Servicio, 
     COUNT(r.Id_Reserva) AS total_reservas
 FROM Reservas r
-LEFT JOIN Servicio s ON r.Id_Servicios = s.Id_Servicio
+LEFT JOIN Servicio s ON r.Id_Servicio = s.Id_Servicio
 WHERE r.Id_Hotel = ? 
 GROUP BY s.Servicio;
 
