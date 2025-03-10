@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú del Hotel</title>
+    <!-- Enlace a Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        .btn-custom {
+            width: 50%;         /* Ajuste de ancho */
+            padding: 15px 10px; /* Hace los botones más gruesos */
+            font-size: 1.3rem;  /* Texto más grande */
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <a href="/menu/<%= hotelId %>" class="btn btn-sm btn-danger" title="Exit">
+        <i class="fa-solid fa-right-from-bracket"></i>
+    </a>
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4">
+            <h2 class="text-center mb-4">📌 Menú del Hotel</h2>
+
+            <!-- Sección de Estadísticas -->
+            <h4 class="text-center mt-3">📊 Estadísticas</h4>
+            <div class="d-grid gap-3">
+             
+                <a href="/estadisticas/Actividades-CadenaHotel" class="btn btn-primary btn-lg mx-auto btn-custom">
+                    📈 Estadística de Actividades
+                </a>
+                <a href="/estadisticas/Reservas-del-mes-CadenaHotel" class="btn btn-primary btn-lg mx-auto btn-custom">
+                    📅 Reservas por Mes
+                </a>
+                <a href="/estadisticas/Todas-las-reservas-CadenaHotel" class="btn btn-primary btn-lg mx-auto btn-custom">
+                    📋 Todas las Reservas
+                </a>
+                <a href="/estadisticas/Servicios-CadenaHotel" class="btn btn-primary btn-lg mx-auto btn-custom">
+                    🛎️ Reservas de Servicios
+                </a>
+                <a href="/estadisticas/Temporadas-CadenaHotel" class="btn btn-primary btn-lg mx-auto btn-custom">
+                    ☀️❄️ Temporadas más Vendidas
+                </a>
+                <a href="/estadisticas/Habitaciones-CadenaHotel/" class="btn btn-primary btn-lg mx-auto btn-custom">
+                    🏨 Reservas por Tipo de Habitación
+                </a>
+            </div>
+
+                 <!-- Estadísticas de toda la cadena de hoteles -->
+                 <h4 class="text-center mt-4">🏨 Estadísticas del Hotel <strong><%= hotelId %></strong></h4>
+                 <div class="d-grid gap-3">
+                     <a href="/menu-estadistica-hotel/<%= hotelId %>" class="btn btn-success btn-lg mx-auto btn-custom">
+                         🌍 Ver Estadísticas del Hotel <strong><%= hotelId %></strong>
+                     </a>
+                 </div>
+        </div>
+    </div>
+
+    <!-- Script de Bootstrap (JS opcional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

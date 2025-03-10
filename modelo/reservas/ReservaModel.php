@@ -19,7 +19,7 @@ class ReservaModel {
 
     public function obtenerPaises() {
         try {
-            $sql = "SELECT * FROM Pais";
+            $sql = "SELECT DISTINCT h.Id_Pais,p.Pais from Hotel h left join Pais p on h.Id_Pais = p.Id_Pais";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->get_result();

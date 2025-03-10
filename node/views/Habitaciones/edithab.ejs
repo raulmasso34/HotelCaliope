@@ -44,6 +44,9 @@
             <li class="nav-item">
               <a class="nav-link active" href="/pais/">PAIS</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/reservas/">RESERVAS</a>
+            </li>
           </ul>
           <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -81,7 +84,13 @@
                   <label for="Precio" class="form-label">Precio</label>
                   <input type="number" class="form-control" id="Precio" name="Precio" tabindex="1" value="<%= habitacion.Precio %>">
                 </div>
-              
+                <div class="mb-3">
+                  <label for="Disponibilidad" class="form-label">Disponibilidad</label>
+                  <select name="Disponibilidad" id="Disponibilidad" class="form-select" aria-label="Elige una de las opciones">
+                    <option <%= habitacion.Disponibilidad == '1' ? "Selected" : '' %> value="1">Disponible</option>
+                    <option <%= habitacion.Disponibilidad == '0' ? "Selected" : '' %>  value="0">No Disponible</option>
+                 </select>
+                </div>
                 <div class="mb-3">
                   <label for="Id_Hotel" class="form-label">Hotel</label>
                   <select name="Id_Hotel" id="Id_Hotel" class="form-select">

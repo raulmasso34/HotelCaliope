@@ -1,26 +1,26 @@
-const express = require('express');
-const router = express.Router();
-const conexion = require('./database/db');
+        const express = require('express');
+        const router = express.Router();
+        const conexion = require('./database/db');
 
-const crud = require('./controllers/crud');
-const { route } = require('express/lib/application');
+        const crud = require('./controllers/crud');
+        const { route } = require('express/lib/application');
 
-module.exports = router;
+        module.exports = router;
 
 
-    //CLIENTES
-    router.get('/', (req,res) =>{
-        conexion.query(
-            `SELECT 
-               c.Id_Client, c.Nom, c.Cognom, c.DNI, c.CorreuElectronic, 
-               c.Telefon, c.Usuari, c.Password, p.Pais, c.Ciudad, c.CodigoPostal 
-            FROM 
-               Clients c 
-               LEFT JOIN 
-                Pais p 
-            ON 
-               c.Id_Pais = p.Id_Pais;`,
-               (error, results) => {
+        //CLIENTES
+        router.get('/', (req,res) =>{
+            conexion.query(
+                `SELECT 
+                    c.Id_Client, c.Nom, c.Cognom, c.DNI, c.CorreuElectronic, 
+                    c.Telefon, c.Usuari, c.Password, p.Pais, c.Ciudad, c.CodigoPostal 
+                FROM 
+                    Clients c 
+                LEFT JOIN 
+                    Pais p 
+                ON 
+                    c.Id_Pais = p.Id_Pais;`,
+                (error, results) => {
                     if (error) {
                         throw error;
                     } else {
@@ -31,7 +31,7 @@ module.exports = router;
             
         })
 
-    
+
 
 
         //ruta para crear registros
@@ -96,85 +96,7 @@ module.exports = router;
             });
         });
 
-
-        //PAIS
-       router.post('/savep', crud.savep)
-       router.post('/updatep', crud.updatep);   
-        router.get('/pais', (req,res)=> {
-            conexion.query(
-                `SELECT Id_Pais, Pais FROM Pais;`,
-                (error, results) => {
-                    if (error) {
-                        throw error;
-                    } else {
-                        // Usa la ruta relativa sin la barra inicial
-                        res.render('pais/pais', { results });
-                    }
-                }
-            )
-        });
-        
-        //Añadir pais
-
-        router.get('/createp', (req, res) => {
-            // Consulta para obtener los países
-            const queryPais = 'SELECT Id_Pais, Pais FROM Pais'; 
-        
-            // Ejecutar la consulta
-            conexion.query(queryPais, (error, paisResults) => {
-                if (error) {
-                    console.error('Error al obtener los países:', error.message);
-                    return res.status(500).send('Error en el servidor');
-                }
-        
-                // Renderizar la vista con los datos obtenidos
-                res.render('pais/createp', { 
-                    paises: paisResults
-                });
-            });
-        });
-
-        //EDITAR PAIS
-        
-
-        router.get('/editp/:id', (req, res) => {
-            const Id_Pais = req.params.id;
-            const queryPais = 'SELECT * FROM Pais WHERE Id_Pais = ?';
-        
-            // Primera consulta: Obtener el país específico
-            conexion.query(queryPais, [Id_Pais], (error, paisResults) => {
-                if (error) {
-                    console.error('Error al obtener el pais:', error.message);
-                    return res.status(500).send('Error en el servidor');
-                }
-
-                if (paisResults.length === 0) {
-                    return res.status(404).send('Pais no encontrado');
-                } 
-                res.render('pais/editp', {
-                    pais: paisResults[0], // Datos de la habitación
-                    
-                });
-            });
-        });
-
-        //ELIMINAR PAIS
-
-        router.get('/deletep/:id', (req, res) => {
-            const id = req.params.id; 
-            conexion.query('DELETE FROM Pais WHERE Id_Pais = ?', [id], (error, results) => {
-                if (error) {
-                    throw error;
-                } else {
-                    res.redirect('/pais'); // Redirigimos al usuario a la página principal
-                }
-            });
-        });
-        
-
-
-
-    //HABITACIONES
+        //HABITACIONES
 
         router.post('/savehab', crud.savehab)
         router.post('/updatehab', crud.updatehab);
@@ -182,8 +104,8 @@ module.exports = router;
             conexion.query(
                 `SELECT 
                     ha.Id_Habitaciones, ha.Numero_Habitacion, ha.Tipo, ha.Capacidad, ha.Precio, 
-                     h.Nombre
-                    
+                    ha.Disponibilidad, h.Nombre,
+                    IF(ha.Disponibilidad = 1, 'Disponible', 'No Disponible') AS Disponibilidad
                 FROM 
                     Habitaciones ha 
                 LEFT JOIN 
@@ -272,7 +194,7 @@ module.exports = router;
         });
 
 
-    //HOTEL
+        //HOTEL
 
         router.post('/saveh', crud.saveh)
         router.post('/updateh', crud.updateh);
@@ -351,37 +273,6 @@ module.exports = router;
             });
         });
 
-
-        //RESERVAS
-
-        router.get('/reservas', (req, res) => {
-            const query = `
-                SELECT 
-                    r.*, 
-                    c.Nom AS Nombre, 
-                    c.Cognom AS Apellido,
-                    a.Nombre AS Actividad,
-                    h.Numero_Habitacion AS Habitacion,
-                    ho.Nombre AS Hotel
-                    
-
-                FROM Reservas r
-
-                LEFT JOIN Clients c ON r.Id_Cliente = c.Id_Client 
-                LEFT JOIN Actividades a on r.Id_Actividad = a.Id_Actividades
-                LEFT JOIN Habitaciones h on r.Id_Habitacion = h.Id_Habitaciones
-                LEFT JOIN Hotel ho on r.Id_Hotel = ho.Id_Hotel
-            `;
-        
-            conexion.query(query, (error, results) => {
-                if (error) {
-                    throw error;
-                } else {
-                    res.render('reservas/reservas', { results });
-                }
-            });
-        });
-        
 
         //OFERTAS
 
@@ -767,6 +658,112 @@ module.exports = router;
         });
 
 
+ //PAIS
+ router.post('/savep', crud.savep)
+ router.post('/updatep', crud.updatep);   
+  router.get('/pais', (req,res)=> {
+      conexion.query(
+          `SELECT Id_Pais, Pais FROM Pais ORDER BY Pais desc;`,
+          (error, results) => {
+              if (error) {
+                  throw error;
+              } else {
+                  // Usa la ruta relativa sin la barra inicial
+                  res.render('pais/pais', { results });
+              }
+          }
+      )
+  });
+  
+  //Añadir pais
+
+  router.get('/createp', (req, res) => {
+      // Consulta para obtener los países
+      const queryPais = 'SELECT Id_Pais, Pais FROM Pais'; 
+  
+      // Ejecutar la consulta
+      conexion.query(queryPais, (error, paisResults) => {
+          if (error) {
+              console.error('Error al obtener los países:', error.message);
+              return res.status(500).send('Error en el servidor');
+          }
+  
+          // Renderizar la vista con los datos obtenidos
+          res.render('pais/createp', { 
+              paises: paisResults
+          });
+      });
+  });
+
+  //EDITAR PAIS
+  
+
+  router.get('/editp/:id', (req, res) => {
+      const Id_Pais = req.params.id;
+      const queryPais = 'SELECT * FROM Pais WHERE Id_Pais = ?';
+  
+      // Primera consulta: Obtener el país específico
+      conexion.query(queryPais, [Id_Pais], (error, paisResults) => {
+          if (error) {
+              console.error('Error al obtener el pais:', error.message);
+              return res.status(500).send('Error en el servidor');
+          }
+
+          if (paisResults.length === 0) {
+              return res.status(404).send('Pais no encontrado');
+          } 
+          res.render('pais/editp', {
+              pais: paisResults[0], // Datos de la habitación
+              
+          });
+      });
+  });
+
+  //ELIMINAR PAIS
+
+  router.get('/deletep/:id', (req, res) => {
+      const id = req.params.id; 
+      conexion.query('DELETE FROM Pais WHERE Id_Pais = ?', [id], (error, results) => {
+          if (error) {
+              throw error;
+          } else {
+              res.redirect('/pais'); // Redirigimos al usuario a la página principal
+          }
+      });
+  });
+
+
+
+
+       //RESERVAS
+
+       router.get('/reservas', (req, res) => {
+        const query = `
+            SELECT 
+                r.*, 
+                c.Nom AS Nombre, 
+                c.Cognom AS Apellido,
+                a.Nombre AS Actividad,
+                h.Numero_Habitacion AS Habitacion,
+                ho.Nombre AS Hotel
+                
+
+            FROM Reservas r
+
+            LEFT JOIN Clients c ON r.Id_Cliente = c.Id_Client 
+            LEFT JOIN Actividades a on r.Id_Actividad = a.Id_Actividades
+            LEFT JOIN Habitaciones h on r.Id_Habitacion = h.Id_Habitaciones
+            LEFT JOIN Hotel ho on r.Id_Hotel = ho.Id_Hotel
+        `;
+    
+        conexion.query(query, (error, results) => {
+            if (error) {
+                throw error;
+            } else {
+                res.render('reservas/reservas', { results });
+            }
+        });
+    });
         //TARIFA
 
         router.post('/savet', crud.savet)
@@ -1044,5 +1041,368 @@ router.post('/editareserva/:id', (req, res) => {
 
 router.get('/menu/:id', (req, res) => {
     const hotelId = req.params.id;
-    res.render('informacion/menu', { hotelId }); // Renderiza la vista con la ID del hotel
+    res.render('hotel/informacion/menu', { hotelId }); // Renderiza la vista con la ID del hotel
 });
+
+router.get('/menu-estadistica-hotel/:id', (req, res) => {
+    const hotelId = req.params.id;
+    res.render('hotel/informacion/estadistica/porhotel/menu-hotel', { hotelId }); // Renderiza la vista con la ID del hotel
+});
+router.get('/estadisticas/Actividades/:id', (req, res) => {
+    const hotelId = req.params.id;
+
+    const query = `
+        SELECT a.Nombre AS actividad, COUNT(r.Id_Reserva) AS total_reservas 
+        FROM Reservas r
+        left join Actividades a on r.Id_Actividad = a.Id_Actividades
+        WHERE r.Id_Hotel = ? 
+        GROUP BY actividad
+    `;
+
+    conexion.query(query, [hotelId], (error, resultados) => {
+        if (error) {
+            console.error('Error al obtener estadísticas:', error);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        console.log(resultados);  // Verifica los resultados aquí
+
+        // Renderizamos la vista con los datos
+        res.render('hotel/informacion/estadistica/porhotel/actividad-reserva', { hotelId: hotelId, datos: resultados });
+    });
+});
+
+
+
+
+
+router.get('/estadisticas/Reservas-del-mes/:id', (req, res) => {
+    const hotelId = req.params.id;
+
+    const query = `
+        SELECT 
+            MONTH(r.Checkin) AS mes, 
+            COUNT(r.Id_Reserva) AS total_reservas 
+        FROM Reservas r
+        WHERE r.Id_Hotel = ? 
+        GROUP BY mes
+        ORDER BY mes;
+    `;
+
+    conexion.query(query, [hotelId], (error, resultados) => {
+        if (error) {
+            console.error('Error al obtener estadísticas:', error);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        console.log(resultados);  // Verifica los datos en la consola
+
+        // Renderizar la vista con los datos
+        res.render('hotel/informacion/estadistica/porhotel/mes', { hotelId: hotelId, datos: resultados });
+    });
+});
+
+
+
+
+
+
+//estadistica servicios
+router.get('/estadisticas/Servicios/:id', (req, res) => {
+    const hotelId = req.params.id;
+
+    const query = `
+      SELECT 
+    COALESCE(s.Servicio, 'No se ha reservado ningún servicio') AS Servicio, 
+    COUNT(r.Id_Reserva) AS total_reservas
+FROM Reservas r
+LEFT JOIN Servicio s ON r.Id_Servicios = s.Id_Servicio
+WHERE r.Id_Hotel = ? 
+GROUP BY s.Servicio;
+
+    `;
+
+    conexion.query(query, [hotelId], (error, resultados) => {
+        if (error) {
+            console.error('Error al obtener estadísticas:', error);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        console.log(resultados);  // Verifica los resultados aquí
+
+        // Renderizamos la vista con los datos
+        res.render('hotel/informacion/estadistica/porhotel/servicio-reserva', { hotelId: hotelId, datos: resultados });
+    });
+});
+
+//esadistica tipo habitacion
+router.get('/estadisticas/Habitaciones/:id', (req, res) => {
+    const hotelId = req.params.id;
+
+    const query = `
+      SELECT 
+    COALESCE(h.Tipo, 'No se ha reservado ningúna Habitacion') AS Tipo, 
+    COUNT(r.Id_Reserva) AS total_reservas
+FROM Reservas r
+LEFT JOIN Habitaciones h ON r.Id_Habitacion = h.Id_Habitaciones
+WHERE r.Id_Hotel = ? 
+GROUP BY h.Tipo;
+
+    `;
+
+    conexion.query(query, [hotelId], (error, resultados) => {
+        if (error) {
+            console.error('Error al obtener estadísticas:', error);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        console.log(resultados);  // Verifica los resultados aquí
+
+        // Renderizamos la vista con los datos
+        res.render('hotel/informacion/estadistica/porhotel/tiipo_habitacion', { hotelId: hotelId, datos: resultados });
+    });
+});
+
+
+router.get('/estadisticas/Temporadas/:id', (req, res) => {
+    const hotelId = req.params.id;
+
+    const query = `
+        SELECT 
+            CASE 
+                WHEN (MONTH(r.CheckIn) BETWEEN 12 AND 12 OR MONTH(r.CheckIn) BETWEEN 1 AND 3) THEN 'Invierno'
+                WHEN (MONTH(r.CheckIn) BETWEEN 3 AND 6) THEN 'Primavera'
+                WHEN (MONTH(r.CheckIn) BETWEEN 6 AND 9) THEN 'Verano'
+                WHEN (MONTH(r.CheckIn) BETWEEN 9 AND 12) THEN 'Otoño'
+                ELSE 'Desconocido'
+            END AS Temporada,
+            COUNT(r.Id_Reserva) AS total_reservas
+        FROM Reservas r
+        WHERE r.Id_Hotel = ? 
+        GROUP BY Temporada
+        ORDER BY FIELD(Temporada, 'Invierno', 'Primavera', 'Verano', 'Otoño');
+    `;
+
+    conexion.query(query, [hotelId], (error, resultados) => {
+        if (error) {
+            console.error('Error al obtener estadísticas por temporada:', error);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        console.log(resultados);  // Verifica los resultados en consola
+
+        // Renderiza la vista con los datos de temporadas
+        res.render('hotel/informacion/estadistica/porhotel/Temporada', { hotelId, datos: resultados });
+    });
+});
+
+router.get('/estadisticas/Todas-las-reservas/:id', (req, res) => {
+    const hotelId = req.params.id;
+
+    const query = `
+  SELECT 
+    year AS year,
+    COUNT(r.Id_Reserva) AS total_reservas
+FROM (
+    SELECT YEAR(CheckIn) AS year FROM Reservas WHERE Id_Hotel = ?
+    UNION
+    SELECT YEAR(CheckOut) AS year FROM Reservas WHERE Id_Hotel = ?
+) AS años
+LEFT JOIN Reservas r
+    ON YEAR(r.CheckIn) <= años.year 
+    AND YEAR(r.CheckOut) >= años.year
+    AND r.Id_Hotel = ?
+GROUP BY años.year
+ORDER BY años.year;
+
+
+    `;
+
+    conexion.query(query, [hotelId, hotelId, hotelId], (error, resultados) => {
+        if (error) {
+            console.error('Error al obtener estadísticas por año:', error);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        console.log(resultados);  // Verifica que la columna se llame 'year'
+
+        // Renderiza la vista con los datos de reservas por año
+        res.render('hotel/informacion/estadistica/porhotel/reservageneral', { hotelId, datos: resultados });
+    });
+});
+
+//ESTADISTICAS POR HOTELES
+
+// Ruta que recibe el hotelId en la URL
+router.post('/estadisticas/cadena-hoteles', (req, res) => {
+    const hotelId = req.body.hotelId;  // Accede al hotelId desde el cuerpo de la solicitud
+
+    res.render('hotel/informacion/estadistica/todoshoteles/menu-todos', { hotelId: hotelId });  // Renderiza la vista con la ID del hotel
+});
+
+
+
+router.get('/estadisticas/Actividades-CadenaHotel', (req, res) => {
+    const hotelId = req.params.hotelId;
+    const query = `
+        SELECT 
+    h.Nombre AS hotel, 
+    COUNT(r.Id_Reserva) AS total_reservas
+FROM Reservas r
+JOIN Hotel h ON r.Id_Hotel = h.Id_Hotel
+WHERE r.Id_Actividad IS NOT NULL  -- Asegura que solo cuente reservas con servicios
+GROUP BY h.Nombre
+ORDER BY total_reservas DESC;
+
+    `;
+
+    conexion.query(query, (error, resultados) => {
+        if (error) {
+            console.error('Error al obtener estadísticas:', error);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        console.log(resultados); // Verifica los resultados en consola
+
+        // Renderiza la vista con los datos de todos los hoteles
+        res.render('hotel/informacion/estadistica/todoshoteles/actividad-hoteles', { datos: resultados ,hotelId: hotelId});
+    });
+});
+
+
+
+router.get('/estadisticas/Reservas-del-mes-CadenaHotel', (req, res) => {
+    const query = `
+        SELECT 
+            h.Nombre AS hotel,
+            DATE_FORMAT(r.Checkin, '%Y-%m') AS mes, 
+            COUNT(r.Id_Reserva) AS total_reservas
+        FROM Reservas r
+        JOIN Hotel h ON r.Id_Hotel = h.Id_Hotel
+        GROUP BY hotel, mes
+        ORDER BY mes ASC, total_reservas DESC;
+    `;
+
+    conexion.query(query, (error, resultados) => {
+        if (error) {
+            console.error('Error al obtener estadísticas:', error);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        console.log(resultados); // Para verificar los datos en consola
+
+        // Renderiza la vista con los datos agrupados por mes y hotel
+        res.render('hotel/informacion/estadistica/todoshoteles/mes-hoteles', { datos: resultados });
+    });
+});
+
+router.get('/estadisticas/Servicios-CadenaHotel', (req, res) => {
+    const query = `
+        SELECT 
+    h.Nombre AS hotel, 
+    COUNT(r.Id_Reserva) AS total_reservas
+FROM Reservas r
+JOIN Hotel h ON r.Id_Hotel = h.Id_Hotel
+WHERE r.Id_Servicios IS NOT NULL  -- Asegura que solo cuente reservas con servicios
+GROUP BY h.Nombre
+ORDER BY total_reservas DESC;
+
+    `;
+
+    conexion.query(query, (error, resultados) => {
+        if (error) {
+            console.error('Error al obtener estadísticas:', error);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        console.log(resultados); // Verifica los resultados en consola
+
+        // Renderiza la vista con los datos de todos los hoteles
+        res.render('hotel/informacion/estadistica/todoshoteles/servicio-hoteles', { datos: resultados});
+    });
+});
+
+
+router.get('/estadisticas/Habitaciones-CadenaHotel', (req, res) => {
+    const query = `
+        SELECT 
+            h.Nombre AS hotel, 
+            hab.Tipo AS tipo_habitacion, 
+            COUNT(r.Id_Reserva) AS total_reservas
+        FROM Reservas r
+        JOIN Hotel h ON r.Id_Hotel = h.Id_Hotel
+        JOIN Habitaciones hab ON r.Id_Habitacion = hab.Id_Habitaciones
+        WHERE r.Id_Habitacion IS NOT NULL
+        GROUP BY h.Nombre, hab.Tipo
+        ORDER BY h.Nombre, total_reservas DESC;
+    `;
+
+    conexion.query(query, (error, resultados) => {
+        if (error) {
+            console.error('Error al obtener estadísticas:', error);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        console.log(resultados); // Para verificar los datos en consola
+        res.render('hotel/informacion/estadistica/todoshoteles/tipohab-hoteles', { datos: resultados });
+    });
+});
+
+
+router.get('/estadisticas/Temporadas-CadenaHotel', (req, res) => {
+    const query = `
+        SELECT 
+            h.Nombre AS hotel,
+            CASE 
+                WHEN MONTH(r.Checkin) IN (12, 1, 2) THEN 'Invierno'
+                WHEN MONTH(r.Checkin) IN (3, 4, 5) THEN 'Primavera'
+                WHEN MONTH(r.Checkin) IN (6, 7, 8) THEN 'Verano'
+                WHEN MONTH(r.Checkin) IN (9, 10, 11) THEN 'Otoño'
+            END AS temporada,
+            COUNT(r.Id_Reserva) AS total_reservas
+        FROM Reservas r
+        JOIN Hotel h ON r.Id_Hotel = h.Id_Hotel
+        WHERE r.Checkin IS NOT NULL
+        GROUP BY h.Nombre, temporada
+        ORDER BY h.Nombre, temporada;
+    `;
+
+    conexion.query(query, (error, resultados) => {
+        if (error) {
+            console.error('Error al obtener estadísticas:', error);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        console.log(resultados); // Verifica los datos en consola
+
+        // Renderiza la vista con los datos de reservas por temporada
+        res.render('hotel/informacion/estadistica/todoshoteles/temporada-hoteles', { datos: resultados });
+    });
+});
+
+router.get('/estadisticas/Todas-las-reservas-CadenaHotel', (req, res) => {
+    const query = `
+        SELECT 
+            h.Nombre AS hotel,
+            YEAR(r.Checkin) AS anio,
+            COUNT(r.Id_Reserva) AS total_reservas
+        FROM Reservas r
+        JOIN Hotel h ON r.Id_Hotel = h.Id_Hotel
+        WHERE r.Checkin IS NOT NULL
+        GROUP BY h.Nombre, anio
+        ORDER BY h.Nombre, anio;
+    `;
+
+    conexion.query(query, (error, resultados) => {
+        if (error) {
+            console.error('Error al obtener estadísticas:', error);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        console.log(resultados); // Verifica los datos en consola
+
+        // Renderiza la vista con los datos de reservas por año
+        res.render('hotel/informacion/estadistica/todoshoteles/reservas-hoteles', { datos: resultados });
+    });
+});
+

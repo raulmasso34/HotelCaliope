@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas por Año</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4">
+            <h2 class="text-center mb-4">📊 Estadísticas de Reservas por Año</h2>
+            <div id="leyendaAnios" class="text-center mb-3"></div> 
+
+            <canvas id="graficoAnios"></canvas>
+
+            <a href="/menu" class="btn btn-secondary mt-3">⬅️ Volver al Menú</a>
+        </div>
+    </div>
+
+    <script>
+        // Datos enviados desde Node.js
+        const datos = JSON.parse('<%- JSON.stringify(datos) %>');
+
+        // Obtener lista de hoteles únicos
+        const hoteles = [...new Set(datos.map(item => item.hotel))];
+
+        // Obtener lista de años únicos ordenados
+        const anios = [...new Set(datos.map(item => item.anio))].sort();
+
+        // Crear un objeto para almacenar reservas por año y hotel
+        const reservasPorAnio = {};
+        anios.forEach(anio => {
+            reservasPorAnio[anio] = hoteles.map(hotel => {
+                const dato = datos.find(d => d.hotel === hotel && d.anio === anio);
+                return dato ? dato.total_reservas : 0;
+            });
+        });
+
+        // Obtener el valor máximo de reservas para calcular el límite del eje Y
+        let maxReservas = 0;
+        Object.values(reservasPorAnio).forEach(array => {
+            maxReservas = Math.max(maxReservas, ...array);
+        });
+
+        // Establecer el límite en un 5% más del máximo
+        const yMaxLimit = Math.ceil(maxReservas * 1.05);
+
+        // Obtener los colores ya guardados en localStorage o iniciar un objeto vacío
+        let coloresAnios = JSON.parse(localStorage.getItem('coloresAnios')) || {};
+
+        // Función para generar un color aleatorio
+        function generarColorAleatorio() {
+            return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+        }
+
+        // Asignar colores fijos a cada año (si no tiene color, se le genera uno)
+        anios.forEach(anio => {
+            if (!coloresAnios[anio]) {
+                coloresAnios[anio] = generarColorAleatorio();
+            }
+        });
+
+        // Guardar en localStorage para persistencia
+        localStorage.setItem('coloresAnios', JSON.stringify(coloresAnios));
+
+        // Crear datasets para cada año
+        const datasets = anios.map(anio => ({
+            label: anio.toString(),
+            data: reservasPorAnio[anio],
+            backgroundColor: coloresAnios[anio],
+            borderWidth: 1
+        }));
+
+        // Configurar gráfico
+        const ctx = document.getElementById('graficoAnios').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: hoteles, // Eje X con los nombres de los hoteles
+                datasets: datasets // Cada año tiene su color
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        max: yMaxLimit // Límite máximo del eje Y con 5% extra
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        });
+
+        // Función para mostrar la leyenda de colores por año
+        function mostrarLeyenda() {
+            const leyendaContainer = document.getElementById('leyendaAnios');
+            leyendaContainer.innerHTML = ''; 
+
+            anios.forEach(anio => {
+                const color = coloresAnios[anio];
+                const leyendaItem = document.createElement('div');
+                leyendaItem.style.display = 'inline-block';
+                leyendaItem.style.marginRight = '15px';
+
+                // Crear un círculo de color para cada año
+                const colorCirculo = document.createElement('span');
+                colorCirculo.style.display = 'inline-block';
+                colorCirculo.style.width = '15px';
+                colorCirculo.style.height = '15px';
+                colorCirculo.style.backgroundColor = color;
+                colorCirculo.style.borderRadius = '50%';
+                colorCirculo.style.marginRight = '5px';
+
+                // Crear el nombre del año
+                const anioTexto = document.createElement('span');
+                anioTexto.textContent = anio;
+
+                // Añadir los elementos al contenedor de leyenda
+                leyendaItem.appendChild(colorCirculo);
+                leyendaItem.appendChild(anioTexto);
+                leyendaContainer.appendChild(leyendaItem);
+            });
+        }
+
+        // Mostrar la leyenda
+
+    </script>
+
+</body>
+</html>
