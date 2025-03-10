@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $actividadId = $reserva['actividadId'] ?? null;
     $metodoPagoId = $reserva['metodo_pago'] ?? null;
 
-    // Depuración: Verifica si checkin está recibiendo correctamente
+    // Verificar si checkin está recibiendo correctamente
     if (empty($checkin)) {
         echo "Error: No se ha recibido la fecha de Checkin.";
         exit;
@@ -44,16 +44,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_SESSION['Reservas']['Id_Reserva'])) {
         // Si no existe el Id_Reserva, insertamos la reserva en la base de datos
         $ReservaModel = new ReservaModel($db);
-        $tarifaId = null; // O valor correspondiente
+        $tarifaId = null;   
         $precioHabitacion = 100; // Ejemplo, ajusta según tus necesidades
         $precioActividad = 50; // Ejemplo, ajusta según tus necesidades
         $precioTarifa = 20; // Ejemplo, ajusta según tus necesidades
-        $precioTotal = $precioHabitacion + $precioActividad + $precioTarifa;
+        $precioTotal = $precioHabitacion + $precioActividad + $precioTarifa + $precioServicio;
         $NumeroPersonas = $guests; // O el valor correspondiente
 
+        // Recuperamos el servicioId y precioServicio si están disponibles
+        $servicioId = $reserva['servicioId'] ?? null;
+        $precioServicio = $reserva['precioServicio'] ?? 0;
+
         // Insertamos la reserva y obtenemos el ID de la reserva
-        $reservaId = $ReservaModel->insertarReserva($hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal, $NumeroPersonas);
-        
+        $reservaId = $ReservaModel->insertarReserva(
+            $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
+        $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, 
+        $precioTarifa, $precioTotal, $NumeroPersonas, 
+        $servicioId, $precioServicio, 
+        $estado, $fechaCancelacion// Parámetro precioServicio
+        );
+
         if ($reservaId !== null) {
             // Guardamos el Id_Reserva en la sesión
             $_SESSION['Reservas']['Id_Reserva'] = $reservaId;
@@ -76,6 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Por favor, completa todos los campos de pago.";
         exit;
     }
+
     if (empty($checkin) || !preg_match("/\d{4}-\d{2}-\d{2}/", $checkin)) {
         echo "La fecha de check-in no es válida.";
         exit;

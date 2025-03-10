@@ -31,11 +31,25 @@ class ReservaController {
     }
 
     // Crear una nueva reserva
-    public function crearReserva($hotelId, $clienteId, $checkin, $checkout, $guests, $paisId, $actividadId, $habitacionId = null, $tarifaId = null, $precioHabitacion = null, $precioActividad = null, $precioTarifa = null, $precioTotal = null, $servicioId = null, $precioServicio = null) {
-    
+    // Crear una nueva reserva
+    public function crearReserva(
+        $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
+        $habitacionId = null, $tarifaId = null, $precioHabitacion = null, 
+        $precioActividad = null, $precioTarifa = null, $precioTotal = null, 
+        $NumeroPersonas = null,  // ✅ Se agrega el parámetro faltante
+        $servicioId = null, 
+        $precioServicio = null, 
+        $estado = 'Activo',  // ✅ Se agrega por defecto "Activo"
+        $fechaCancelacion = null  // ✅ Se agrega por defecto NULL
+    ) {
         // Insertar la reserva con todos los datos correctos
-        $reservaId = $this->reservaModel->insertarReserva($hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal, $guests, $servicioId, $precioServicio);
-
+        $reservaId = $this->reservaModel->insertarReserva(
+            $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
+            $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, 
+            $precioTarifa, $precioTotal, $NumeroPersonas, 
+            $servicioId, $precioServicio, 
+            $estado, $fechaCancelacion // ✅ Se pasan los dos nuevos parámetros
+        );
     
         if ($reservaId) {
             echo "Reserva creada con éxito. ID: " . $reservaId;
@@ -43,6 +57,8 @@ class ReservaController {
             echo "Error al crear la reserva.";
         }
     }
+    
+    
     
 
     // Obtener una reserva por su ID

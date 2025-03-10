@@ -95,8 +95,14 @@ class ReservaModel {
     
     
 
-    public function insertarReserva($hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal, $NumeroPersonas, $servicioId, $precioServicio) {
-        // Verifica si se ha seleccionado una actividad
+    public function insertarReserva(
+        $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
+        $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, 
+        $precioTarifa, $precioTotal, $NumeroPersonas, 
+        $servicioId, $precioServicio, 
+        $estado, $fechaCancelacion // ✅ Se agregan estos nuevos parámetros
+    ) {
+        // Verifica si se ha seleccionado una actividad o servicio
         if (empty($actividadId)) {
             $actividadId = NULL;
             $precioActividad = 0;
@@ -106,43 +112,32 @@ class ReservaModel {
             $precioServicio = 0;
         }
     
-        // Obtener precios
-        $precioActividad = $this->obtenerPrecioActividad($actividadId);
-        $precioServicio = $this->obtenerPrecioServicio($servicioId);
-        $precioTarifa = $this->obtenerPrecioTarifa($hotelId);
-    
         // Calcular el número de noches
         $num_noches = (new DateTime($checkout))->diff(new DateTime($checkin))->days;
-    
+        
         // Calcular el precio total
         $precioTotal = ($precioHabitacion * $num_noches) + $precioActividad + $precioTarifa + $precioServicio;
     
-        // Consulta SQL con 15 parámetros en VALUES
-        $query = "INSERT INTO Reservas (Id_Hotel, Id_Cliente, Checkin, Checkout, Id_Pais, Id_Actividad, Id_Habitacion, Id_Tarifa, Precio_Habitacion, Precio_Actividad, Precio_Tarifa, Precio_Total, Numero_Personas, Id_Servicio, Precio_Servicio) 
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        // Consulta SQL con 17 parámetros
+        $query = "INSERT INTO Reservas 
+            (Id_Hotel, Id_Cliente, Checkin, Checkout, Id_Pais, Id_Actividad, 
+            Id_Habitacion, Id_Tarifa, Precio_Habitacion, Precio_Actividad, 
+            Precio_Tarifa, Precio_Total, Numero_Personas, Id_Servicio, 
+            Precio_Servicio, Estado, FechaCancelacion) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
         $stmt = $this->conn->prepare($query);
         if ($stmt === false) {
             die('Error preparando la consulta: ' . $this->conn->error);
         }
     
-        // Corregir el orden de los parámetros
-        $stmt->bind_param("iissiiiidddiddi", 
-            $hotelId, 
-            $clienteId, 
-            $checkin,  
-            $checkout, 
-            $paisId, 
-            $actividadId, 
-            $habitacionId, 
-            $tarifaId, 
-            $precioHabitacion, 
-            $precioActividad, 
-            $precioTarifa, 
-            $precioTotal,
-            $NumeroPersonas,
-            $servicioId,  
-            $precioServicio  
+        // Vincular parámetros
+        $stmt->bind_param("iissiiiidddiddsss", 
+            $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
+            $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, 
+            $precioTarifa, $precioTotal, $NumeroPersonas, 
+            $servicioId, $precioServicio, 
+            $estado, $fechaCancelacion 
         );
     
         if ($stmt->execute()) {
@@ -151,6 +146,7 @@ class ReservaModel {
             die("Error en la ejecución de la consulta de reserva: " . $stmt->error);
         }
     }
+    
     
     
 
