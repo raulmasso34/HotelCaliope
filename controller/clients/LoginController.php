@@ -42,6 +42,17 @@ class LoginController {
                 header("Location: ../../vista/Clientes/login.php?error=Usuario o contraseña incorrectos");
                 exit;
             }
+            
+        }
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Verificar si el CAPTCHA fue marcado
+            if (!isset($_POST['captcha'])) {
+                header("Location: ../../vista/Clientes/login.php?error=Debes marcar la casilla de verificación.");
+                exit();
+            }
+        
+            // Aquí iría tu código de autenticación del usuario
+            echo "✔ CAPTCHA correcto. Iniciando sesión...";
         }
     }
     

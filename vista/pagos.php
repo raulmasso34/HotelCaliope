@@ -6,6 +6,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// Depurar datos antes de la inserción
+
+
+
 // Requerir el controlador de reservas
 require_once __DIR__ . '/../controller/reserva/reservaController.php';
 $reservaController = new ReservaController();
@@ -21,6 +25,8 @@ if (isset($_SESSION['Reservas'])) {
     $checkin = $reserva['checkin'] ?? 'No disponible';
     $checkout = $reserva['checkout'] ?? 'No disponible';
     $guests = $reserva['guests'] ?? 'No disponible';
+    $precioTarifa = $reserva['precioTarifa'] ?? 0; // Suponiendo que esto está almacenado
+    $precioActividad = $reserva['precioActividad'] ?? 0; // Suponiendo que esto también está almacenado
 } else {
     echo "Error: No se ha recibido la reserva en la sesión.";
     exit;
@@ -36,9 +42,16 @@ $checkoutDate = new DateTime($checkout);
 $numeroNoches = $checkoutDate->diff($checkinDate)->days;
 
 // Calcular el precio total
-$precioTotal = $precioHabitacion * $numeroNoches;
+$precioTotal = ($precioHabitacion * $numeroNoches) + $precioTarifa + $precioActividad;
 
-// Mostrar precio total
+// **Recuperar los servicios seleccionados de la sesión**
+$serviciosSeleccionados = $_SESSION['Reservas']['servicios'] ?? []; // Recuperar los servicios seleccionados (si existen)
+$totalServicios = $_SESSION['Reservas']['totalServicios'] ?? 0; // El precio total de los servicios
+
+// **Sumar el precio de los servicios al precio total**
+$precioTotal += $totalServicios;
+var_dump($habitacionId, $clienteId, $hotelId, $checkin, $checkout, $guests, $paisId, $actividadId, $metodoPagoId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal);
+
 ?>
 
 <!DOCTYPE html>
@@ -49,8 +62,6 @@ $precioTotal = $precioHabitacion * $numeroNoches;
     <link rel="stylesheet" href="../static/css/pagos.css">
     <link rel="stylesheet" href="../static/css/detalles.css">
     <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
-    
-
 </head>
 <body>
 
@@ -71,7 +82,23 @@ $precioTotal = $precioHabitacion * $numeroNoches;
 <p><strong>Check-out:</strong> <?php echo htmlspecialchars($checkout); ?></p>
 <p><strong>Precio de la Habitación:</strong> $<?php echo number_format($precioHabitacion, 2); ?></p>
 <p><strong>Número de Noches:</strong> <?php echo $numeroNoches; ?></p>
-<p><strong>Precio Total:</strong> $<?php echo number_format($precioTotal, 2); ?></p> <!-- Mostrar el precio total -->
+<p><strong>Precio Total (sin servicios):</strong> $<?php echo number_format($precioTotal - $totalServicios, 2); ?></p>
+
+<!-- Mostrar los servicios seleccionados -->
+<?php if (!empty($serviciosSeleccionados)) : ?>
+    <h3>Servicios Seleccionados:</h3>
+    <ul>
+        <?php foreach ($serviciosSeleccionados as $servicioId => $precioServicio) : ?>
+            <li>Servicio ID: <?php echo $servicioId; ?> - Precio: $<?php echo number_format($precioServicio, 2); ?></li>
+        <?php endforeach; ?>
+    </ul>
+    <p><strong>Total Servicios:</strong> $<?php echo number_format($totalServicios, 2); ?></p>
+<?php else : ?>
+    <p>No has seleccionado servicios adicionales.</p>
+<?php endif; ?>
+
+<!-- Precio Total con Servicios -->
+<p><strong>Precio Total con Servicios:</strong> $<?php echo number_format($precioTotal, 2); ?></p>
 
 <!-- Formulario de pago -->
 <form id="pagoForm" action="../controller/pago/pagoController.php" method="POST" onsubmit="mostrarPopup(event)">

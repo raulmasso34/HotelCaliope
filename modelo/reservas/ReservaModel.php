@@ -19,7 +19,11 @@ class ReservaModel {
 
     public function obtenerPaises() {
         try {
+<<<<<<< HEAD
             $sql = "SELECT DISTINCT h.Id_Pais,p.Pais from Hotel h left join Pais p on h.Id_Pais = p.Id_Pais";
+=======
+            $sql = "SELECT DISTINCT h.Id_Pais, p.Pais FROM Hotel h inner join Pais p on h.Id_Pais = p.Id_Pais ";
+>>>>>>> 7cfef5c82474dd13c478b1cd4c8971f811ebdbaf
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -73,48 +77,80 @@ class ReservaModel {
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public function insertarReserva($hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal, $NumeroPersonas) {
-        // Verifica si se ha seleccionado una actividad
+    public function obtenerPrecioTarifa($idTarifa) {
+        try {
+            $sql = "SELECT Precio FROM Tarifas WHERE Id_Tarifa = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $idTarifa);
+            $stmt->execute();
+            $resultado = $stmt->get_result()->fetch_row();
+            
+            // Cerrar el statement
+            $stmt->close();
+    
+            // Retornar el precio si se encontró
+            return $resultado ? $resultado[0] : 0; // Si no se encuentra, retornar 0
+        } catch (Exception $e) {
+            error_log("Error al obtener precio de tarifa: " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    
+    
+
+    public function insertarReserva(
+        $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
+        $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, 
+        $precioTarifa, $precioTotal, $NumeroPersonas, 
+        $servicioId, $precioServicio, 
+        $estado, $fechaCancelacion // ✅ Se agregan estos nuevos parámetros
+    ) {
+        // Verifica si se ha seleccionado una actividad o servicio
         if (empty($actividadId)) {
-            // Si no hay actividad, asigna 0 al precio de actividad
             $actividadId = NULL;
             $precioActividad = 0;
         }
-        $precioTotal = $precioHabitacion + $precioActividad + $precioTarifa;
+        if (empty($servicioId)) {
+            $servicioId = NULL;
+            $precioServicio = 0;
+        }
     
-        // Primero, realizamos la inserción de la reserva
-        $query = "INSERT INTO Reservas (Id_Hotel, Id_Cliente, Checkin, Checkout, Id_Pais, Id_Actividad, Id_Habitacion, Id_Tarifa, Precio_Habitacion, Precio_Actividad, Precio_Tarifa, Precio_Total, Numero_Personas) 
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        // Calcular el número de noches
+        $num_noches = (new DateTime($checkout))->diff(new DateTime($checkin))->days;
+        
+        // Calcular el precio total
+        $precioTotal = ($precioHabitacion * $num_noches) + $precioActividad + $precioTarifa + $precioServicio;
+        $estado = 'Pagado';
+        // Consulta SQL con 17 parámetros
+        $query = "INSERT INTO Reservas 
+            (Id_Hotel, Id_Cliente, Checkin, Checkout, Id_Pais, Id_Actividad, 
+            Id_Habitacion, Id_Tarifa, Precio_Habitacion, Precio_Actividad, 
+            Precio_Tarifa, Precio_Total, Numero_Personas, Id_Servicio, 
+            Precio_Servicio, Estado, FechaCancelacion) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
         $stmt = $this->conn->prepare($query);
         if ($stmt === false) {
-            die('Error preparing statement: ' . $this->conn->error);
+            die('Error preparando la consulta: ' . $this->conn->error);
         }
     
-        // Usamos 's' para los campos de tipo string como checkin y checkout
-        $stmt->bind_param("iissiiiiddddd", 
-            $hotelId, 
-            $clienteId, 
-            $checkin,  // Esta es una fecha, tipo 's'
-            $checkout, // Esta es una fecha, tipo 's'
-            $paisId, 
-            $actividadId, 
-            $habitacionId, 
-            $tarifaId, 
-            $precioHabitacion, 
-            $precioActividad, 
-            $precioTarifa, 
-            $precioTotal,
-            $NumeroPersonas
+        // Vincular parámetros
+        $stmt->bind_param("iissiiiidddiddsss", 
+            $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
+            $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, 
+            $precioTarifa, $precioTotal, $NumeroPersonas, 
+            $servicioId, $precioServicio, 
+            $estado, $fechaCancelacion 
         );
     
         if ($stmt->execute()) {
-            // Una vez que la reserva se ha realizado, obtenemos la ID de la reserva insertada
-            return $this->conn->insert_id;  // Devuelve la ID de la reserva si todo fue exitoso
+            return $this->conn->insert_id;  
         } else {
             die("Error en la ejecución de la consulta de reserva: " . $stmt->error);
         }
     }
+    
     
     
 
@@ -327,6 +363,23 @@ class ReservaModel {
         }
     }
 
+    public function obtenerPrecioServicio($servicioId){
+        try{
+            $sql = "SELECT Precio FROM Servicios WHERE Id_Servicio = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $servicioId);
+            $stmt->execute();
+            $precio = $stmt->get_result()->fetch_row()[0];
+            $stmt->close();
+            return $precio;
+        }   catch (Exception $e) {
+                error_log("Error al obtener precio de servicio: " . $e->getMessage());
+                return 0;
+        }
+
+        
+    }
+
     public function obtenerMetodosPagoPorCliente($idCliente) {
         try {
             $sql = "SELECT * FROM MetodoPago WHERE Id_Cliente = ?";
@@ -422,7 +475,69 @@ class ReservaModel {
     }
     
 
+    public function obtenerServicioId($idServicio) {
+        try {
+            // Consulta para obtener los detalles del servicio por su ID
+            $sql = "SELECT * FROM Servicio WHERE Id_Servicio = ?";
+            $stmt = $this->conn->prepare($sql);
+            
+            // Vinculamos el parámetro
+            $stmt->bind_param("i", $idServicio);
+            
+            // Ejecutamos la consulta
+            $stmt->execute();
+            
+            // Obtenemos los resultados
+            $result = $stmt->get_result();
+            
+            // Si encontramos un servicio con ese ID, lo devolvemos
+            if ($result->num_rows > 0) {
+                return $result->fetch_assoc();
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            // Manejo de errores
+            echo "Error al obtener el servicio: " . $e->getMessage();
+            return false;
+        }
+    }
+    
+    
+    
+
+    public function obtenerServicios($idHotel){
+        try{
+            // Modificar la consulta para filtrar por el Id_Hotel
+            $sql = "SELECT * FROM Servicio WHERE Id_Hotel = ?";
+            $stmt = $this->conn->prepare($sql);
+    
+            // Vincular el parámetro Id_Hotel
+            $stmt->bind_param("i", $idHotel); // "i" es el tipo de dato (entero)
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            // Obtener los resultados
+            $servicios = $result->fetch_all(MYSQLI_ASSOC);
+            
+            // Cerrar el statement
+            $stmt->close();
+    
+            return $servicios;
+        } catch(Exception $e){
+            error_log("Error al obtener servicios: " . $e->getMessage());
+            return null; // Si hay un error, devuelve null
+        }
+    }
+    
+    
+    
+    
+    
+}
+    
+
 
    
-}
+
 ?>

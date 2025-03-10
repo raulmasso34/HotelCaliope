@@ -86,7 +86,7 @@ if ($controller !== null) {
                     <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
                     
                     <div class="dropdown">
-                        <a href="#" class="dropbtn">Hoteles</a>
+                        <a href="../vista/hoteles.php" class="dropbtn">Hoteles</a>
                         <div class="dropdown-content">
                             <div class="dropdown-section">
                                 <h4>Europa</h4>

@@ -1,5 +1,7 @@
 <?php
+require_once __DIR__ . '/../../config/Database.php';
 class PagoModel {
+    
     private $conn;
 
     // Constructor que recibe la conexión de la base de datos
@@ -8,68 +10,54 @@ class PagoModel {
     }
 
     // Método para procesar un pago
+   // Método para procesar un pago
     public function procesarPago($hotelId, $clienteId, $reservaId, $metodoPago, $fechaPago, $metodoPagoId) {
         $query = "INSERT INTO Pago (Id_Hotel, Id_Cliente, Id_Reserva, MetodoPago, Fecha_Pago, Id_MetodoPago) 
-                  VALUES (?, ?, ?, ?, ?, ?)";
+                VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("iiisss", $hotelId, $clienteId, $reservaId, $metodoPago, $fechaPago, $metodoPagoId);
 
+        // Verifica si la preparación de la consulta fue exitosa
+        if (!$stmt) {
+            throw new Exception('Error al preparar la consulta: ' . $this->conn->error);
+        }
+
+        // Vincula los parámetros
+        // Asegúrate de que 'MetodoPago' es un string y 'Id_MetodoPago' es un entero
+        $stmt->bind_param("iiissi", $hotelId, $clienteId, $reservaId, $metodoPago, $fechaPago, $metodoPagoId);
+
+        // Ejecuta la consulta
         if ($stmt->execute()) {
             echo "Pago procesado con éxito.";
         } else {
-            echo "Error al procesar el pago: " . $stmt->error;
+            throw new Exception("Error al procesar el pago: " . $stmt->error);
         }
+
+        $stmt->close();
     }
 
-    public function insertarReserva($hotelId, $clienteId, $checkin, $checkout, $guests, $paisId, $actividadId, $habitacionId = null, $tarifaId = null, $precioHabitacion = null, $precioActividad = null, $precioTarifa = null, $precioTotal = null) {
-        try {
-            // Prepare la consulta SQL
-            $query = "INSERT INTO Reservas (Id_Hotel, Id_Cliente, Checkin, Checkout, Numero_Personas, Id_Pais, Id_Actividad, Id_Habitacion, Id_Tarifa, Precio_Habitacion, Precio_Actividad, Precio_Tarifa, Precio_Total) 
-                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            
-            // Preparar el statement
-            $stmt = $this->conn->prepare($query);
-            
-            if (!$stmt) {
-                throw new Exception('Error en la preparación de la consulta: ' . $this->conn->error);
-            }
-    
-            // Vincular los parámetros
-            $stmt->bind_param("iisssiiiddd", $hotelId, $clienteId, $checkin, $checkout, $guests, $paisId, $actividadId, $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal);
-    
-            // Ejecutar la consulta
-            if ($stmt->execute()) {
-                $stmt->close();
-                return $this->conn->insert_id;  // Devuelve el ID de la nueva reserva
-            } else {
-                throw new Exception('Error al ejecutar la consulta: ' . $stmt->error);
-            }
-        } catch (Exception $e) {
-            error_log("Error al insertar la reserva: " . $e->getMessage());
-            return null;
-        }
-    }
+
+   
 
     // Método para actualizar el estado de la reserva
     public function actualizarEstadoReserva($idReserva, $nuevoEstado) {
-        // Asegúrate de que la tabla se llama "Reservas"
         $query = "UPDATE Reservas SET Estado = ? WHERE Id_Reserva = ?";
         $stmt = $this->conn->prepare($query);
-        
+
         if (!$stmt) {
-            throw new Exception('Error en la preparación de la consulta: ' . $this->conn->error);
+            throw new Exception('Error al preparar la consulta: ' . $this->conn->error);
         }
 
-        // Vincular los parámetros
+        // Vincula los parámetros
         $stmt->bind_param("si", $nuevoEstado, $idReserva);
 
-        // Ejecutar la consulta
+        // Ejecuta la consulta
         if ($stmt->execute()) {
-            return true; // Retorna true si la actualización fue exitosa
+            return true;
         } else {
-            throw new Exception('Error al ejecutar la consulta: ' . $stmt->error);
+            throw new Exception("Error al actualizar el estado de la reserva: " . $stmt->error);
         }
+
+        $stmt->close();
     }
 }
 ?>
-    

@@ -31,15 +31,33 @@ class ReservaController {
     }
 
     // Crear una nueva reserva
-    public function crearReserva($hotelId, $clienteId, $checkin, $checkout, $guests, $paisId, $actividadId, $habitacionId = null, $tarifaId = null, $precioHabitacion = null, $precioActividad = null, $precioTarifa = null, $precioTotal = null) {
-        $reservaId = $this->reservaModel->insertarReserva($hotelId, $clienteId, $checkin, $checkout, $guests, $paisId, $actividadId, $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal);
+    // Crear una nueva reserva
+    public function crearReserva(
+        $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
+        $habitacionId = null, $tarifaId = null, $precioHabitacion = null, 
+        $precioActividad = null, $precioTarifa = null, $precioTotal = null, 
+        $NumeroPersonas = null, $servicioId = null, $precioServicio = null, 
+        $estado = 'Activo', $fechaCancelacion = null
+    ) {
+        // Llama al modelo para insertar la reserva en la base de datos
+        $reservaId = $this->reservaModel->insertarReserva(
+            $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
+            $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, 
+            $precioTarifa, $precioTotal, $NumeroPersonas, 
+            $servicioId, $precioServicio, 
+            $estado, $fechaCancelacion
+        );
 
+        // Verifica si la reserva fue insertada correctamente
         if ($reservaId) {
             echo "Reserva creada con éxito. ID: " . $reservaId;
         } else {
             echo "Error al crear la reserva.";
         }
     }
+    
+    
+    
 
     // Obtener una reserva por su ID
     public function obtenerReserva($reservaId) {
@@ -92,6 +110,34 @@ class ReservaController {
             echo "Precio de la habitación: $" . $precio;
         } else {
             echo "Error al obtener el precio de la habitación.";
+        }
+    }
+
+    public function obtenerPrecioACtividada($actividadId){
+        $precio = $this->reservaModel->obtenerPrecioActividad($actividadId);
+        if ($precio > 0) {
+            echo "Precio de la actividad: $" . $precio;
+        } else {
+            echo "Error al obtener el precio de la habitación.";
+        }
+    }
+
+
+    public function obtenerPrecioServicio($servicioId){
+        $precio = $this->reservaModel->obtenerPrecioServicio($servicioId);
+        if ($precio > 0) { 
+            echo "Precio del servicio: $" . $precio;
+        } else {
+            echo "Error al obtener el precio del servicio.";
+        }
+    }
+
+    public function obternPrecioTarifa($hotelId){
+        $precio = $this->reservaModel->obtenerPrecioTarifa($hotelId);
+        if ($precio > 0) {
+            echo "Precio de la tarifa: $" . $precio;
+            } else {
+            echo "Error al obtener el precio de la tarifa.";
         }
     }
 
@@ -188,9 +234,60 @@ class ReservaController {
         return $this->reservaModel->actualizarEstadoReserva($idReserva, $nuevoEstado);
     }
     
+    public function mostrarServiciosId() {
+        try {
+            // Verificar si el hotelId está almacenado en la sesión
+            if (isset($_SESSION['hotelId'])) {
+                $hotelId = $_SESSION['hotelId'];
+                
+                // Llamar al método ObtenerServiciosId para obtener los servicios del hotel
+                $servicios = $this->reservaModel->obtenerServicioId($hotelId);
+                
+                // Verificar si tenemos servicios
+                if ($servicios) {
+                    // Devolver los servicios (puedes hacer lo que necesites con ellos)
+                    return $servicios;
+                } else {
+                    echo "No se encontraron servicios para este hotel.";
+                    return false;
+                }
+            } else {
+                // Si no existe hotelId en la sesión
+                echo "Error: No se ha encontrado el hotelId en la sesión.";
+                return false;
+            }
+        } catch (Exception $e) {
+            // Manejar cualquier error en el proceso
+            echo "Error al mostrar los servicios: " . $e->getMessage();
+            return false;
+        }
+    }
     
-
-
+    
+    public function mostrarServicios(){
+        // Verificar si el ID del hotel está presente en la sesión
+        if (isset($_SESSION['hotelId'])) {
+            $hotelId = $_SESSION['hotelId']; // Obtener el Id del hotel desde la sesión
+        } else {
+            // Si no está presente, manejar el error o redirigir
+            echo "Error: No se ha seleccionado un hotel.";
+            return []; // Retorna un arreglo vacío para evitar continuar con el flujo
+        }
+        
+        // Obtener los servicios desde el modelo, pasando el hotelId
+        $servicios = $this->reservaModel->obtenerServicios($hotelId);
+    
+        // Verificar si se obtuvieron servicios y devolverlos
+        if (is_array($servicios) && !empty($servicios)) {
+            return $servicios;
+        } else {
+            // Si no hay servicios, devolver un arreglo vacío o un mensaje de error
+            return [];
+        }
+    }
+    
+    
+    
 
    
 
