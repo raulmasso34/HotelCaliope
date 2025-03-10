@@ -6,6 +6,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// Depurar datos antes de la inserción
+
+
+
 // Requerir el controlador de reservas
 require_once __DIR__ . '/../controller/reserva/reservaController.php';
 $reservaController = new ReservaController();
@@ -46,6 +50,7 @@ $totalServicios = $_SESSION['Reservas']['totalServicios'] ?? 0; // El precio tot
 
 // **Sumar el precio de los servicios al precio total**
 $precioTotal += $totalServicios;
+var_dump($habitacionId, $clienteId, $hotelId, $checkin, $checkout, $guests, $paisId, $actividadId, $metodoPagoId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal);
 
 ?>
 

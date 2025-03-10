@@ -12,23 +12,33 @@ $reservaController = new ReservaController();
 if (isset($_SESSION['Reservas'])) {
     $reserva = $_SESSION['Reservas'];
 
-    // Recuperar los datos de la reserva
+    // Recuperar los datos de la reserva, con valores predeterminados si no están definidos
     $habitacionId = $reserva['habitacionId'] ?? 'No disponible';
     $clienteId = $reserva['clienteId'] ?? 'No disponible';
     $hotelId = $reserva['hotelId'] ?? 'No disponible';
     $checkin = $reserva['checkin'] ?? 'No disponible';
     $checkout = $reserva['checkout'] ?? 'No disponible';
     $guests = $reserva['guests'] ?? 'No disponible';
+    $paisId = $reserva['paisId'] ?? 'No disponible';  // Asegúrate de agregar esto
+    $actividadId = $reserva['actividadId'] ?? 'No disponible';  // Asegúrate de agregar esto
+    $metodoPagoId = $reserva['metodo_pago'] ?? 'No disponible';  // Asegúrate de agregar esto
+    $precioHabitacion = $reserva['precioHabitacion'] ?? 'No disponible';  // Asegúrate de agregar esto
+    $precioActividad = $reserva['precioActividad'] ?? 'No disponible';  // Asegúrate de agregar esto
+    $precioTarifa = $reserva['precioTarifa'] ?? 'No disponible';  // Asegúrate de agregar esto
+    $precioTotal = $reserva['precioTotal'] ?? 'No disponible';  // Asegúrate de agregar esto
     
     // Suponiendo que tienes un controlador que obtiene los detalles del hotel
-    // Ejemplo:
     $hotelDetails = $reservaController->obtenerDetallesHotel($hotelId);
 } else {
     echo "Error: No se ha recibido la reserva en la sesión.";
     exit;
 }
 
+// Depuración de los datos
+var_dump($_SESSION['Reservas']);
+var_dump($habitacionId, $clienteId, $hotelId, $checkin, $checkout, $guests, $paisId, $actividadId, $metodoPagoId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal);
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

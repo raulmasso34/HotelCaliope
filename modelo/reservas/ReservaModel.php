@@ -117,7 +117,7 @@ class ReservaModel {
         
         // Calcular el precio total
         $precioTotal = ($precioHabitacion * $num_noches) + $precioActividad + $precioTarifa + $precioServicio;
-    
+        $estado = 'Pagado';
         // Consulta SQL con 17 parámetros
         $query = "INSERT INTO Reservas 
             (Id_Hotel, Id_Cliente, Checkin, Checkout, Id_Pais, Id_Actividad, 

@@ -57,3 +57,130 @@ END
 
  $sql = "SELECT DISTINCT h.Id_Pais, p.Pais FROM Hotel h inner join Pais p on h.Id_Pais = p.Id_Pais ";
             $stmt = $this->conn->prepare($sql);
+
+
+
+---------------------------CODIGO GUARDADO X SI ACASO-----------------
+
+  <header>
+        <section class="main-up">
+            <div class="main-up-left">
+                <a href="../vista/index.php"><img src="../static/img/logo_blanco.png" alt="Imagen secundaria"></a>
+            </div>
+
+            <div class="main-up-right">
+                <div class="links">
+                    <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Hoteles</a>
+                        <div class="dropdown-content">
+                            <div class="dropdown-section">
+                                <h4>Europa</h4>
+                                <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                                <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                                <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                            </div>
+                            <div class="dropdown-section">
+                                <h4>USA</h4>
+                                <a href="../vista/ciudades/USA/Florida.php">Florida</a>
+                                <a href="../vista/ciudades/USA/California.php">California</a>
+                                <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="../vista/galeria/galeria.php">Galería</a>
+                    <a href="../vista/ofertas/ofertas.php">Ofertas</a>
+                    <a href="../vista/Contacto/contacto.php">Contacto</a>
+                    <div class="dropdown-perfil">
+                        <a class="icon-perfil" href="javascript:void(0);">
+                            <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
+                        </a>
+                        <div class="dropdown-perfil-content">
+                            <a href="../vista/Clientes/login.php">
+                                <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+                            </a>
+                            <a href="../vista/Clientes/perfil.php">
+                                <i class="bi bi-person"></i> Perfil
+                            </a>
+                            <a href="../controller/clients/LoginController.php?action=logout">
+                                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menú hamburguesa (solo visible en pantallas pequeñas) -->
+            <div id="menu-toggle" class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+
+            <!-- Menú desplegable -->
+            <div class="mobile-menu">
+                <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                <a href="../vista/galeria/galeria.php">Galería</a>
+                <a href="../vista/ofertas/ofertas.php">Ofertas</a>
+                <a href="../vista/Contacto/contacto.php">Contacto</a>
+                <a href="../vista/Clientes/login.php">Iniciar sesión</a>
+                <a href="../vista/Clientes/perfil.php">Perfil</a>
+                <div class="dropdown-mobile">
+                    <a href="#" class="dropbtn">Hoteles</a>
+                    <div class="dropdown-content-mobile">
+                        <div class="dropdown-section">
+                            <h4>Europa</h4>
+                            <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                            <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                            <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>USA</h4>
+                            <a href="../vista/ciudades/USA/Florida.php">Florida</a>
+                            <a href="../vista/ciudades/USA/California.php">California</a>
+                            <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </header>
+
+    --------------------------------------------------------------------------------
+     <footer class="main-footer">
+        <div class="footer-box">
+            <!-- Sección: Sobre el Hotel -->
+            <div class="footer-sec">
+                <h1>SOBRE LOS HOTELS</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.</p>
+                <a href="../vista/index.php"><img class="img-footer" src="../static/img/logo_blanco.png" alt=""></a>
+                <div class="language-selector">
+                <select id="language-select" onchange="changeLanguage()">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                </select>
+                </div>
+            </div>
+
+            <!-- Sección: Links -->
+            <div class="footer-sec">
+                <h1>LINKS</h1>
+                <div class="links-footer">
+                    <a href="#">Sobre nosotros</a>
+                    <a href="#">Servicios</a>
+                    <a href="#">Hoteles</a>
+                </div>
+            </div>
+
+            <!-- Sección: Contacto y Redes Sociales -->
+            <div class="footer-sec">
+                <h1>CONTACTO</h1>
+                <div class="social-links">
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-twitter"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>

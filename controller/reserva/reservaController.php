@@ -36,21 +36,19 @@ class ReservaController {
         $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
         $habitacionId = null, $tarifaId = null, $precioHabitacion = null, 
         $precioActividad = null, $precioTarifa = null, $precioTotal = null, 
-        $NumeroPersonas = null,  // ✅ Se agrega el parámetro faltante
-        $servicioId = null, 
-        $precioServicio = null, 
-        $estado = 'Activo',  // ✅ Se agrega por defecto "Activo"
-        $fechaCancelacion = null  // ✅ Se agrega por defecto NULL
+        $NumeroPersonas = null, $servicioId = null, $precioServicio = null, 
+        $estado = 'Activo', $fechaCancelacion = null
     ) {
-        // Insertar la reserva con todos los datos correctos
+        // Llama al modelo para insertar la reserva en la base de datos
         $reservaId = $this->reservaModel->insertarReserva(
             $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
             $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, 
             $precioTarifa, $precioTotal, $NumeroPersonas, 
             $servicioId, $precioServicio, 
-            $estado, $fechaCancelacion // ✅ Se pasan los dos nuevos parámetros
+            $estado, $fechaCancelacion
         );
-    
+
+        // Verifica si la reserva fue insertada correctamente
         if ($reservaId) {
             echo "Reserva creada con éxito. ID: " . $reservaId;
         } else {
