@@ -15,7 +15,11 @@
 
             <canvas id="graficoActividades"></canvas>
 
-            <a href="/estadisticas/cadena-hoteles" class="btn btn-secondary mt-3">⬅️ Volver al Menú</a>
+            
+        <!-- Enlace desde tu vista EJS -->
+        <a href="/estadisticas/cadena-hoteles?hotelId=<%= hotelId %>" class="btn">
+            Ver Menú
+        </a>
         </div>
     </div>
 

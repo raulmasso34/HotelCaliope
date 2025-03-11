@@ -1044,9 +1044,12 @@ router.get('/menu/:id', (req, res) => {
     res.render('hotel/informacion/menu', { hotelId }); // Renderiza la vista con la ID del hotel
 });
 
-router.get('/menu-estadistica-hotel/:id', (req, res) => {
+// Ruta para mostrar el menú de estadísticas del hotel específico
+router.get("/menu-estadistica-hotel/:id", (req, res) => {
     const hotelId = req.params.id;
-    res.render('hotel/informacion/estadistica/porhotel/menu-hotel', { hotelId }); // Renderiza la vista con la ID del hotel
+    res.render("hotel/informacion/estadistica/porhotel/menu-hotel", { 
+        hotelId: hotelId 
+    });
 });
 router.get('/estadisticas/Actividades/:id', (req, res) => {
     const hotelId = req.params.id;
@@ -1235,9 +1238,24 @@ ORDER BY años.year;
 
 // Ruta que recibe el hotelId en la URL
 router.post('/estadisticas/cadena-hoteles', (req, res) => {
-    const hotelId = req.body.hotelId;  // Accede al hotelId desde el cuerpo de la solicitud
+    // Obtiene el hotelId desde el cuerpo de la solicitud POST
+    const hotelId = req.body.hotelId; 
 
-    res.render('hotel/informacion/estadistica/todoshoteles/menu-todos', { hotelId: hotelId });  // Renderiza la vista con la ID del hotel
+    res.render('hotel/informacion/estadistica/todoshoteles/menu-todos', { 
+        hotelId: hotelId 
+    });
+});
+
+router.get('/estadisticas/cadena-hoteles', (req, res) => {
+    // Usa req.query para parámetros de URL (ej: /cadena-hoteles?hotelId=123)
+    const hotelId = req.query.hotelId; 
+
+    // Si usas parámetros en la ruta (ej: /cadena-hoteles/:hotelId), sería:
+    // const hotelId = req.params.hotelId;
+
+    res.render('hotel/informacion/estadistica/todoshoteles/menu-todos', { 
+        hotelId: hotelId 
+    });
 });
 
 
