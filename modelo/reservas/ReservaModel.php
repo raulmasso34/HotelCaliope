@@ -96,56 +96,64 @@ class ReservaModel {
     
 
     public function insertarReserva(
+    $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
+    $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, 
+    $precioTarifa, $precioTotal, $NumeroPersonas, 
+    $servicioId, $precioServicio, 
+    $estado, $fechaCancelacion
+) {
+    // Verifica si se ha seleccionado una actividad o servicio
+    if (empty($actividadId)) {
+        $actividadId = NULL;
+        $precioActividad = 0;
+    }
+    if (empty($servicioId)) {
+        $servicioId = NULL;
+        $precioServicio = 0;
+    }
+    
+    // Calcular el número de noches
+    $num_noches = (new DateTime($checkout))->diff(new DateTime($checkin))->days;
+    
+    // Asegúrate de que el precio de la habitación no esté siendo sobreescrito
+    error_log("Precio habitación antes del cálculo: $precioHabitacion");
+    
+    // Calcular el precio total
+    $precioTotal = ($precioHabitacion * $num_noches) + $precioActividad + $precioTarifa + $precioServicio;
+    error_log("Precio total calculado: $precioTotal");
+
+    // Estado fijo
+    $estado = 'Pagado';
+
+    // Consulta SQL con 17 parámetros
+    $query = "INSERT INTO Reservas 
+        (Id_Hotel, Id_Cliente, Checkin, Checkout, Id_Pais, Id_Actividad, 
+        Id_Habitacion, Id_Tarifa, Precio_Habitacion, Precio_Actividad, 
+        Precio_Tarifa, Precio_Total, Numero_Personas, Id_Servicio, 
+        Precio_Servicio, Estado, FechaCancelacion) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $this->conn->prepare($query);
+    if ($stmt === false) {
+        die('Error preparando la consulta: ' . $this->conn->error);
+    }
+
+    // Vincular parámetros con tipos correctos
+    $stmt->bind_param("iissiiiidddiddsss", 
         $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
         $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, 
         $precioTarifa, $precioTotal, $NumeroPersonas, 
         $servicioId, $precioServicio, 
-        $estado, $fechaCancelacion // ✅ Se agregan estos nuevos parámetros
-    ) {
-        // Verifica si se ha seleccionado una actividad o servicio
-        if (empty($actividadId)) {
-            $actividadId = NULL;
-            $precioActividad = 0;
-        }
-        if (empty($servicioId)) {
-            $servicioId = NULL;
-            $precioServicio = 0;
-        }
-    
-        // Calcular el número de noches
-        $num_noches = (new DateTime($checkout))->diff(new DateTime($checkin))->days;
-        
-        // Calcular el precio total
-        $precioTotal = ($precioHabitacion * $num_noches) + $precioActividad + $precioTarifa + $precioServicio;
-        $estado = 'Pagado';
-        // Consulta SQL con 17 parámetros
-        $query = "INSERT INTO Reservas 
-            (Id_Hotel, Id_Cliente, Checkin, Checkout, Id_Pais, Id_Actividad, 
-            Id_Habitacion, Id_Tarifa, Precio_Habitacion, Precio_Actividad, 
-            Precio_Tarifa, Precio_Total, Numero_Personas, Id_Servicio, 
-            Precio_Servicio, Estado, FechaCancelacion) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    
-        $stmt = $this->conn->prepare($query);
-        if ($stmt === false) {
-            die('Error preparando la consulta: ' . $this->conn->error);
-        }
-    
-        // Vincular parámetros
-        $stmt->bind_param("iissiiiidddiddsss", 
-            $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
-            $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, 
-            $precioTarifa, $precioTotal, $NumeroPersonas, 
-            $servicioId, $precioServicio, 
-            $estado, $fechaCancelacion 
-        );
-    
-        if ($stmt->execute()) {
-            return $this->conn->insert_id;  
-        } else {
-            die("Error en la ejecución de la consulta de reserva: " . $stmt->error);
-        }
+        $estado, $fechaCancelacion
+    );
+
+    if ($stmt->execute()) {
+        return $this->conn->insert_id;  
+    } else {
+        die("Error en la ejecución de la consulta de reserva: " . $stmt->error);
     }
+}
+
     
     
     
@@ -294,7 +302,7 @@ class ReservaModel {
             return false;
         }
     }
-
+//
     public function reservaExistente($idReserva) {
         try {
             $sql = "SELECT COUNT(*) FROM Reservas WHERE Id_Reserva = ?";

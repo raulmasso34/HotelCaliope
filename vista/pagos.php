@@ -25,6 +25,9 @@ if (isset($_SESSION['Reservas'])) {
     $checkin = $reserva['checkin'] ?? 'No disponible';
     $checkout = $reserva['checkout'] ?? 'No disponible';
     $guests = $reserva['guests'] ?? 'No disponible';
+    $metodoPagoId = $reserva['metodoPagoId'] ?? 'No disponible';
+    $actividadId = $reserva['actividadId'] ?? 'No disponible';
+    $paisId = $reserva['paisId'] ?? 'No disponible';
     $precioTarifa = $reserva['precioTarifa'] ?? 0; // Suponiendo que esto está almacenado
     $precioActividad = $reserva['precioActividad'] ?? 0; // Suponiendo que esto también está almacenado
 } else {
@@ -114,11 +117,12 @@ var_dump($habitacionId, $clienteId, $hotelId, $checkin, $checkout, $guests, $pai
     <input type="hidden" name="habitacionId" value="<?php echo htmlspecialchars($habitacionId); ?>">
     <input type="hidden" name="clienteId" value="<?php echo htmlspecialchars($clienteId); ?>">
     <input type="hidden" name="hotelId" value="<?php echo htmlspecialchars($hotelId); ?>">
+    <input type="hidden" name="paisId" value="<?php echo htmlspecialchars($paisId); ?>">
     <input type="hidden" name="checkin" value="<?php echo htmlspecialchars($checkin); ?>">
     <input type="hidden" name="checkout" value="<?php echo htmlspecialchars($checkout); ?>">
     <input type="hidden" name="guests" value="<?php echo htmlspecialchars($guests); ?>">
     <input type="hidden" name="precioTotal" value="<?php echo htmlspecialchars($precioTotal); ?>"> <!-- Guardar el precio total en un campo oculto -->
-    <input type="hidden" name="metodo_pago" value="Tarjeta"> <!-- Método de pago -->
+    <input type="hidden" name="metodoPagoId" value="Tarjeta"> <!-- Método de pago -->
 
     <button type="submit">Confirmar y Pagar</button>
 </form>
