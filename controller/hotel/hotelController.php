@@ -1,37 +1,65 @@
 <?php
+require_once __DIR__ . '/../../modelo/hotel/hotelModel.php';
 require_once __DIR__ . '/../../config/Database.php';
-require_once __DIR__ . '/../../modelo/hotel/HotelModel.php'; 
-require_once __DIR__ . '/../../modelo/reservas/ReservaModel.php';
 
 class HotelController {
     private $hotelModel;
-    private $reservaModel;
 
     public function __construct() {
-        $db = new Database();
-        $connection = $db->getConnection();
-        $this->hotelModel = new HotelModel($connection);
-        $this->reservaModel = new ReservaModel($connection);
+        $database = new Database();
+        $db = $database->getConnection();
+        $this->hotelModel = new HotelModel($db);
     }
 
-    public function obtenerHoteles($paisId) {
-        return $this->hotelModel->obtenerHotelesPorPais($paisId);
+    // Obtener detalles de un hotel específico
+    public function obtenerDetallesHotel($hotelId) {
+        return $this->hotelModel->obtenerDetallesHotel($hotelId);
     }
 
-    public function mostrarDetallesHotel($hotelId) {
-      //  $hotelDetails = $this->reservaModel->obtenerHotelPorId($hotelId);
-     // $habitaciones = $this->reservaModel->obtenerHabitacionPorHotelId($hotelId);
+    // Obtener hoteles según un país
+    public function obtenerHotelesPorPais($location) {
+        return $this->hotelModel->obtenerHotelesPorPais($location);
+    }
 
-        include '../vista/detalles_hotel.php';
+    // Obtener un hotel por su ID
+    public function obtenerHotelPorId($hotelId) {
+        return $this->hotelModel->obtenerHotelPorId($hotelId);
+    }
+
+    // Obtener las habitaciones disponibles en un hotel
+    public function obtenerHabitaciones($hotelId) {
+        return $this->hotelModel->obtenerHabitaciones($hotelId);
     }
 }
 
-if (isset($_GET['hotelId'])) {
-    $hotelId = $_GET['hotelId'];
-    $controller = new HotelController();
-    $controller->mostrarDetallesHotel($hotelId);
-} else {
-    header('Location: reservas.php');
-    exit;
+// Manejo de peticiones directas desde el navegador o AJAX
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $hotelController = new HotelController();
+
+    if (isset($_POST['action'])) {
+        switch ($_POST['action']) {
+            case 'obtenerDetallesHotel':
+                if (!empty($_POST['hotelId'])) {
+                    echo json_encode($hotelController->obtenerDetallesHotel($_POST['hotelId']));
+                }
+                break;
+
+            case 'obtenerHotelesPorPais':
+                if (!empty($_POST['location'])) {
+                    echo json_encode($hotelController->obtenerHotelesPorPais($_POST['location']));
+                }
+                break;
+
+            case 'obtenerHabitaciones':
+                if (!empty($_POST['hotelId'])) {
+                    echo json_encode($hotelController->obtenerHabitaciones($_POST['hotelId']));
+                }
+                break;
+
+            default:
+                echo json_encode(["error" => "Acción no válida"]);
+                break;
+        }
+    }
 }
 ?>

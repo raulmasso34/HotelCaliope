@@ -21,25 +21,6 @@ if ($hotelId === null) {
     exit; // Termina la ejecución si no se ha seleccionado un hotel
 }
 
-// Obtener los servicios desde el controlador
-$servicios = $reservaController->mostrarServicios();
-
-// Verifica si se ha enviado el formulario para seleccionar servicios
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['servicios'])) {
-    // Recuperar los servicios seleccionados del formulario
-    $serviciosSeleccionados = $_POST['servicios'];
-
-    // Guardamos los servicios seleccionados en la sesión
-    $_SESSION['Reservas']['servicios'] = $serviciosSeleccionados;
-    
-    // (Opcional) Guardamos el precio total de los servicios seleccionados en la sesión
-    $totalServicios = array_sum($serviciosSeleccionados); // Sumar el precio de todos los servicios seleccionados
-    $_SESSION['Reservas']['totalServicios'] = $totalServicios;
-
-    // Redirigir a la página de pagos
-    header("Location: pagos.php");
-    exit;
-}
 ?>
 
 <!DOCTYPE html>

@@ -46,33 +46,39 @@ class HabitacionesModel {
     }
 
     public function obtenerHabitacionesPorHotel($hotelId) {
+        if (!$this->conn) {
+            error_log("Error: La conexión a la base de datos no está establecida.");
+            return [];
+        }
+    
         $fechaActual = date('Y-m-d');
         $checkin = $_SESSION['checkin'];  
         $checkout = $_SESSION['checkout']; 
     
-        $query = `SELECT * FROM Habitaciones 
+        $query = "SELECT * FROM Habitaciones 
                   WHERE Id_Hotel = ?
-                  AND NOT EXISTS (
-                      SELECT 1 FROM Reservas 
-                      WHERE Reservas.Id_Habitacion = Habitaciones.Id_Habitaciones
-                      AND (
-                          (Reservas.Checkin BETWEEN ? AND ?) 
-                          OR (Reservas.Checkout BETWEEN ? AND ?)
-                          OR (Reservas.Checkin <= ? AND Reservas.Checkout >= ?)
-                      )
-                  )`; 
+                  AND Id_Habitaciones NOT IN (
+                      SELECT Id_Habitacion FROM Reservas 
+                      WHERE (Checkin BETWEEN ? AND ?) 
+                      OR (Checkout BETWEEN ? AND ?)
+                      OR (Checkin <= ? AND Checkout >= ?)
+                  )"; 
     
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("issssss", $hotelId, $fechaActual, $fechaActual, $checkin, $checkout, $checkin, $checkout, $checkin, $checkout);
+        if (!$stmt) {
+            error_log("Error en la preparación de la consulta: " . $this->conn->error);
+            return [];
+        }
+    
+        $stmt->bind_param("issssss", $hotelId, $checkin, $checkout, $checkin, $checkout, $checkin, $checkout);
         $stmt->execute();
         $result = $stmt->get_result();
     
-        $habitaciones = [];
-        while ($row = $result->fetch_assoc()) {
-            $habitaciones[] = $row;
-        }
+        $habitaciones = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
     
         return $habitaciones;
     }
+    
 }
 ?>

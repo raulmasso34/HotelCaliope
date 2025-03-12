@@ -1,20 +1,37 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // Conexión a la base de datos
 include '../config/Database.php';
 $database = new Database();
 $db = $database->getConnection();
 session_start();
-require_once __DIR__ . '/../controller/reserva/reservaController.php';
-$reservaController = new ReservaController();
 
-// Usamos correctamente el objeto reservaController
+// Incluir controladores correctos
+require_once __DIR__ . '/../controller/reserva/reservaController.php';
+require_once __DIR__ . '/../controller/hotel/hotelController.php';
+require_once __DIR__ . '/../controller/habitacion/habitacionController.php';
+require_once __DIR__ . '/../controller/metodoPago/metodoPagoController.php';
+require_once __DIR__ . '/../controller/actividad/actividadController.php';
+require_once __DIR__ . '/../controller/pais/paisController.php';
+
+// Crear instancias de los controladores
+$reservaController = new ReservaController();
+$hotelController = new HotelController();
+$habitacionController = new HabitacionController();
+$metodoPagoController = new MetodoPagoController();
+$actividadController = new ActividadController();
+$paisController = new PaisController();
+// Obtener ID de usuario de la sesión
 $user_id = $_SESSION['user_id'] ?? null; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Recuperar los datos del formulario
+    // Recuperar datos del formulario
     $habitacionId = $_POST['habitacionId'] ?? null;
-    $clienteId = $user_id; // ID del usuario desde la sesión
-    $hotelId = $_POST['hotelId'] ?? null;  // Asegurarse de que el hotelId se obtiene
+    $clienteId = $user_id; 
+    $hotelId = $_POST['hotelId'] ?? null;
     $checkin = $_POST['checkin'] ?? null;
     $checkout = $_POST['checkout'] ?? null;
     $guests = $_POST['guests'] ?? null;
@@ -22,17 +39,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $actividadId = $_POST['actividadId'] ?? null;
     $metodoPagoId = $_POST['metodo_pago'] ?? null;
 
-    // Llamamos al método obtenerDetallesHotel usando el hotelId
-    $hotelDetails = $reservaController->obtenerDetallesHotel($hotelId);
-    // Llamamos al método obtenerDetallesHabitacion usando el habitacionId
-    $habitacionDetails = $reservaController->obtenerDetallesHabitacion($habitacionId);
+    // Obtener detalles del hotel desde HotelController
+    $hotelDetails = $hotelController->obtenerDetallesHotel($hotelId);
+    
+    // Obtener detalles de la habitación desde HabitacionController
+    $habitacionDetails = $habitacionController->obtenerHabitacionPorId($habitacionId);
 
-    // Llamamos al método obtenerActividadesPorHotel solo después de que hotelId esté definido
-    $actividades = $reservaController->obtenerActividadesPorHotel($hotelId);
-    $metodosPago = $reservaController->obtenerMetodosPagoDisponibles();
-    $paisNombre = $reservaController->obtenerNombrePais($paisId);
+    // Obtener actividades del hotel desde HotelController
+    $actividades = $actividadController->obtenerActividadesPorHotel($hotelId);
 
-    // Guardar los datos de la reserva en la sesión
+    // Obtener métodos de pago desde ReservaController
+    $metodosPago = $metodoPagoController->obtenerMetodosPago();
+
+    // Obtener el nombre del país desde HotelController
+    $paisNombre = $paisController->obtenerNombrePais($paisId);
+
+    // Guardar datos de la reserva en la sesión
     $_SESSION['Reservas'] = [
         'habitacionId' => $habitacionId,
         'clienteId' => $clienteId,
@@ -44,14 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'actividadId' => $actividadId,
         'metodo_pago' => $metodoPagoId
     ];
-
-    // Verificar si se han guardado correctamente los datos
-   
 }
 
-// Cerrar la conexión a la base de datos
+// Cerrar conexión
 $database->closeConnection();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">

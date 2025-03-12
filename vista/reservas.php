@@ -5,63 +5,49 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 include '../config/Database.php';
-$database = new Database();
-$db = $database->getConnection();  // Obtener la conexión
+require_once __DIR__ . '/../controller/reserva/reservaController.php';
+require_once __DIR__ . '/../controller/hotel/hotelController.php';
 
-// Limpiar las variables de sesión si el usuario ha vuelto al formulario
+// Conectar a la base de datos
+$database = new Database();
+$db = $database->getConnection();
+
+// Crear instancia del controlador
+$reservaController = new ReservaController();
+$hotelController = new HotelController();
+// Resetear sesión si el usuario regresa al formulario
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['reset']) && $_GET['reset'] == 'true') {
-    unset($_SESSION['location']);
-    unset($_SESSION['checkin']);
-    unset($_SESSION['checkout']);
-    unset($_SESSION['guests']);
-    unset($_SESSION['habitacionId']);
+    unset($_SESSION['location'], $_SESSION['checkin'], $_SESSION['checkout'], $_SESSION['guests'], $_SESSION['habitacionId']);
 }
 
-// Al enviar el formulario
+// Guardar datos en sesión al enviar el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Guardar los datos del formulario en la sesión
-    $_SESSION['location'] = $_POST['location'];  // Guardar el valor de la ubicación seleccionada
+    $_SESSION['location'] = $_POST['location'];
     $_SESSION['checkin'] = $_POST['checkin'];
     $_SESSION['checkout'] = $_POST['checkout'];
-    $_SESSION['guests'] = $_POST['numero_personas'];  // Guardamos el valor de 'numero_personas' en la sesión
+    $_SESSION['guests'] = $_POST['numero_personas'];
     $_SESSION['habitacionId'] = $_POST['habitacionId'];
 
-    // Redirigir a la página de reservas para mostrar los detalles del hotel
     header('Location: ../vista/reservas.php');
     exit();
 }
 
-// Incluir el controlador
-require_once __DIR__ . '/../controller/reserva/reservaController.php';
-
-// Crear una instancia del controlador
-$reservaController = new ReservaController();
-
+// Obtener lista de países desde el controlador
 $paises = $reservaController->obtenerPaises();
 
-
-// Obtener la ubicación seleccionada de la sesión
-$location = $_SESSION['location'] ?? null;  // Se obtiene la ubicación de la sesión
-
-// Validar que haya una ubicación seleccionada
+// Validar si hay una ubicación seleccionada
+$location = $_SESSION['location'] ?? null;
 if (!$location) {
     echo "No se ha seleccionado una ubicación.";
     exit;
 }
 
-// Obtener los hoteles disponibles para la ubicación seleccionada
-$hoteles = $reservaController->obtenerHotelesPorPais($location);
-// Obtener la ubicación seleccionada de la sesión
-$location = $_SESSION['location'] ?? null;  // Se obtiene la ubicación de la sesión
+// Obtener los hoteles disponibles en la ubicación seleccionada
 
-// Validar que haya una ubicación seleccionada
-if (!$location) {
-    echo "No se ha seleccionado una ubicación.";
-    exit;
-}
+$hoteles = $hotelController->obtenerHotelesPorPais($location);
+
 
 $database->closeConnection();
-
 ?>
 
 

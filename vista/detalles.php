@@ -5,6 +5,14 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once __DIR__ . '/../controller/reserva/reservaController.php';
+require_once __DIR__ . '/../controller/hotel/hotelController.php';
+require_once __DIR__ . '/../controller/habitacion/habitacionController.php';
+
+$hotelController = new HotelController();
+$habitacionController = new HabitacionController();
+
+$hotelController = new HotelController();
+
 $reservaController = new ReservaController();
 
 if (!isset($_SESSION['user_id'])) {
@@ -19,8 +27,8 @@ if (!isset($_SESSION['location'], $_SESSION['checkin'], $_SESSION['checkout'], $
 
 $hotelId = $_GET['hotelId'];
 
-$hotelDetails = $reservaController->obtenerDetallesHotel($hotelId);
-$habitaciones = $reservaController->obtenerHabitacionesPorHotel($hotelId);
+$hotelDetails = $hotelController->obtenerDetallesHotel($hotelId);
+$habitaciones = $habitacionController->obtenerHabitacionesPorHotel($hotelId);
 
 if (!$hotelDetails) {
     echo "Detalles del hotel no disponibles.";

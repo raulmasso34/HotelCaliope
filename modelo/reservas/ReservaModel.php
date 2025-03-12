@@ -207,7 +207,7 @@ class ReservaModel {
         } else {
             die("Error en la ejecución de la consulta de pago: " . $stmt->error);
         }
-    }
+    }   
 
     public function getReservations($userId) {
         $query = "SELECT * FROM Reservas 
@@ -243,13 +243,31 @@ class ReservaModel {
         return $stmt->execute(); // Retorna true si la actualización fue exitosa
     }
     
+    public function insertarReserva($idCliente, $idActividad, $idHabitacion, $idHotel, $idServicio, $idTarifa, $precioHabitacion, $precioActividad, $precioTarifa, $precioServicio, $precioTotal, $checkin, $checkout, $numeroPersonas, $idPais) {
+        try {
+            $sql = "INSERT INTO Reservas (Id_Cliente, Id_Actividad, Id_Habitacion, Id_Hotel, Id_Servicio, Id_Tarifa, Precio_Habitacion, Precio_Actividad, Precio_Tarifa, Precio_Servicio, Precio_Total, Checkin, Checkout, Numero_Personas, Id_Pais, Estado) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pendiente')";
+            
+            $stmt = $this->conn->prepare($sql);
+            if (!$stmt) {
+                throw new Exception("Error en la preparación de la consulta: " . $this->conn->error);
+            }
+            
+            $stmt->bind_param("iiiiiddddddssii", $idCliente, $idActividad, $idHabitacion, $idHotel, $idServicio, $idTarifa, $precioHabitacion, $precioActividad, $precioTarifa, $precioServicio, $precioTotal, $checkin, $checkout, $numeroPersonas, $idPais);
+            
+            if ($stmt->execute()) {
+                $stmt->close();
+                return $this->conn->insert_id; // Retorna el ID de la nueva reserva
+            } else {
+                throw new Exception("Error al insertar la reserva: " . $stmt->error);
+            }
+        } catch (Exception $e) {
+            error_log("Error en insertarReserva: " . $e->getMessage());
+            return false;
+        }
+    }
+    
 
-
-    //SERVICIOS
-
-
-   
-   
 
    
 }

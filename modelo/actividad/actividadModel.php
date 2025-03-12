@@ -14,14 +14,18 @@ class ActividadModel {
 
     // Obtener actividades de un hotel por su ID
     public function obtenerActividadesPorHotel($hotelId) {
-        $sql = "SELECT * FROM Actividades WHERE Id_Hotel = ? AND Fecha >= CURDATE()";  // Filtra actividades futuras
+        $sql = "SELECT Id_Actividades, Id_Hotel, Dia_Inicio, Dia_Fin, Hora_Inicio, Hora_Fin, 
+                       Capacidad_Maxima, Ubicacion, Descripcion, Precio, Nombre 
+                FROM Actividades 
+                WHERE Id_Hotel = ? AND Dia_Fin >= CURDATE()";  
+    
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $hotelId);
         $stmt->execute();
         
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);  // Devuelve las actividades del hotel
     }
-
+    
     
     public function obtenerPrecioActividad($actividadId) {
         try {
