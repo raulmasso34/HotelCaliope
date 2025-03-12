@@ -21,7 +21,22 @@ class ActividadModel {
         
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);  // Devuelve las actividades del hotel
     }
+
     
+    public function obtenerPrecioActividad($actividadId) {
+        try {
+            $sql = "SELECT Precio FROM Actividades WHERE Id_Actividad = ?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bind_param("i", $actividadId);
+            $stmt->execute();
+            $precio = $stmt->get_result()->fetch_row()[0];
+            $stmt->close();
+            return $precio;
+        } catch (Exception $e) {
+            error_log("Error al obtener precio de actividad: " . $e->getMessage());
+            return 0;
+        }
+    }
 
     // Obtener una actividad específica por su ID
     public function obtenerActividadPorId($actividadId) {

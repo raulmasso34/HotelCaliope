@@ -77,7 +77,19 @@ class ReservaController {
             );
     
             // Verificamos si la reserva se creó correctamente
-           
+            if ($reservaId) {
+                // Si la reserva se creó correctamente, insertamos los servicios seleccionados
+                if (!empty($serviciosSeleccionados)) {
+                    // Insertar los servicios asociados con esta reserva
+                    foreach ($serviciosSeleccionados as $idServicio => $precio) {
+                        // Insertamos cada servicio con la reserva
+                        $this->reservaModel->insertarServicioReserva($reservaId, $idServicio, $precio);
+                    }
+                }
+                echo "Reserva creada con éxito. ID: " . $reservaId;
+            } else {
+                echo "Error al crear la reserva.";
+            }
         }
     }
     

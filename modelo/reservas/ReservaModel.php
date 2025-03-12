@@ -3,10 +3,8 @@ require_once __DIR__ . '/../../modelo/reservas/ReservaModel.php';
 require_once __DIR__ . '/../../modelo/hotel/hotelModel.php';
 require_once __DIR__ . '/../../modelo/actividad/actividadModel.php';
 require_once __DIR__ . '/../../modelo/metodopago/metodoPagoModel.php';
+require_once __DIR__ . '/../../modelo/servicios/serviciosModel.php';
 require_once __DIR__ . '/../../config/Database.php';
-
-
-
 
 class ReservaModel {
 
@@ -30,47 +28,7 @@ class ReservaModel {
             return null;
         }
     }
-
-    public function obtenerMetodosPago() {
-        $query = $this->conn->prepare("SELECT * FROM MetodoPago WHERE Activo = 1");
-        $query->execute();
-        return $query->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
-
-    public function obtenerDetallesHotel($hotelId) {
-        $query = $this->conn->prepare("SELECT * FROM Hotel WHERE Id_Hotel = ?");
-        $query->bind_param("i", $hotelId);
-        $query->execute();
-        return $query->get_result()->fetch_assoc();
-    }
-
-    public function obtenerDetallesHabitacion($habitacionId) {
-        $query = $this->conn->prepare("SELECT * FROM Habitaciones WHERE Id_Habitaciones = ?");
-        $query->bind_param("i", $habitacionId);
-        $query->execute();
-        return $query->get_result()->fetch_assoc();
-    }
-    public function obtenerHabitaciones() {
-        $query = $this->conn->prepare("SELECT * FROM Habitaciones");
-        $query->execute();
-        return $query->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
-    
-
-    public function obtenerActividades($hotelId) {
-        $query = $this->conn->prepare("SELECT * FROM Actividades WHERE Id_Hotel = ?");
-        $query->bind_param("i", $hotelId);
-        $query->execute();
-        return $query->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
-
-    public function obtenerDetalles($hotelId) {
-        $query = "SELECT * FROM Hotel WHERE Id_Hotel = ?";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $hotelId);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
-    }
+ 
 
     public function obtenerPrecioTarifa($idTarifa) {
         try {
@@ -90,113 +48,9 @@ class ReservaModel {
             return 0;
         }
     }
-    // Obtener el precio real de la habitación antes de insertar la reserva
-    public function obtenerPrecioHabitacion($habitacionId) {
-    $query = "SELECT Precio FROM Habitaciones WHERE Id_Habitaciones = ?";
-    $stmt = $this->conn->prepare($query);
-    $stmt->bind_param("i", $habitacionId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($row = $result->fetch_assoc()) {
-        return $row['Precio'];
-    }
-    return 0; // Retorna 0 si no encuentra la habitación
-}
+  
 
-    
-    
-
-public function insertarReserva($hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal, $NumeroPersonas, $servicios) {
-    // Verifica si se ha seleccionado una actividad
-    if (empty($actividadId)) {
-        // Si no hay actividad, asigna NULL al precio de actividad
-        $actividadId = NULL;
-        $precioActividad = 0;
-    } else {
-        // Si se ha seleccionado una actividad, obtenemos su precio
-        $precioActividad = $this->obtenerPrecioActividad($actividadId);
-    }
-
-    // Si tarifaId es NULL, asigna 0 al precio de tarifa
-    $precioTarifa = $tarifaId ? $this->obtenerPrecioTarifa($hotelId) : 0;
-
-    // Obtener el precio de la habitación
-    $precioHabitacion = $this->obtenerPrecioHabitacion($habitacionId);
-
-    // Calcular el número de noches
-    $num_noches = (new DateTime($checkout))->diff(new DateTime($checkin))->days;
-
-    // Calcular el precio total solo en base a la habitación, actividad, tarifa y el número de noches
-    $precioTotal = ($precioHabitacion * $num_noches) + $precioActividad + $precioTarifa;
-
-    // Inicia la conexión para insertar la reserva
-    $query = "INSERT INTO Reservas (Id_Hotel, Id_Cliente, Checkin, Checkout, Id_Pais, Id_Actividad, Id_Habitacion, Id_Tarifa, Precio_Habitacion, Precio_Actividad, Precio_Tarifa, Precio_Total, Numero_Personas) 
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    
-    $stmt = $this->conn->prepare($query);
-    if ($stmt === false) {
-        die('Error preparando la sentencia: ' . $this->conn->error);
-    }
-
-    // Vinculamos los parámetros
-    $stmt->bind_param("iissiiiiddddd", 
-        $hotelId, 
-        $clienteId, 
-        $checkin,  // Es una fecha, tipo 's'
-        $checkout, // Es una fecha, tipo 's'
-        $paisId, 
-        $actividadId, 
-        $habitacionId, 
-        $tarifaId, 
-        $precioHabitacion, 
-        $precioActividad, 
-        $precioTarifa, 
-        $precioTotal,
-        $NumeroPersonas
-    );
-
-    if ($stmt->execute()) {
-        // Obtener el ID de la reserva insertada
-        $reservaId = $this->conn->insert_id;
-
-        // Insertar los servicios seleccionados
-        if (!empty($servicios)) {
-            $queryServicios = "INSERT INTO Reservas_Servicios (Id_Reserva, Id_Servicio, Precio_Servicio) 
-                               VALUES (?, ?, ?)";
-
-            $stmtServicios = $this->conn->prepare($queryServicios);
-            if ($stmtServicios === false) {
-                die('Error preparando la sentencia de servicios: ' . $this->conn->error);
-            }
-
-            // Calcular el total de los servicios
-            $totalServicios = 0;
-
-            // Insertamos los servicios seleccionados
-            foreach ($servicios as $idServicio => $precioServicio) {
-                $stmtServicios->bind_param("iid", $reservaId, $idServicio, $precioServicio);
-                $stmtServicios->execute();
-                $totalServicios += $precioServicio; // Sumar al total
-            }
-
-            // Actualizamos el precio total de la reserva con los servicios seleccionados
-            $nuevoPrecioTotal = $precioTotal + $totalServicios;
-
-            // Actualizar el precio total en la tabla de reservas
-            $queryActualizarTotal = "UPDATE Reservas SET Precio_Total = ? WHERE Id_Reserva = ?";
-            $stmtActualizarTotal = $this->conn->prepare($queryActualizarTotal);
-            $stmtActualizarTotal->bind_param("di", $nuevoPrecioTotal, $reservaId);
-            $stmtActualizarTotal->execute();
-        }
-
-        // Si todo fue exitoso, devolver el ID de la reserva
-        return $reservaId;
-    } else {
-        die("Error en la ejecución de la consulta de reserva: " . $stmt->error);
-    }
-}
-
-    
+     
 
     public function getReservationDetails($reservationId) {
         // Consulta SQL con el marcador de posición "?"
@@ -244,18 +98,6 @@ public function insertarReserva($hotelId, $clienteId, $checkin, $checkout, $pais
         }
     }
 
-   
-        public function obtenerMetodosPagoDisponibles() {
-            $query = "SELECT * FROM MetodoPago WHERE Activo = 1";
-            $stmt = $this->conn->prepare($query);
-            $stmt->execute();
-            
-            // Usando MySQLi en lugar de PDO
-            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        }
-
-    
-   
 
     public function obtenerHabitacionPorId($habitacionId) {
         try {
@@ -274,39 +116,6 @@ public function insertarReserva($hotelId, $clienteId, $checkin, $checkout, $pais
         }
     }
 
-    public function obtenerHabitacionesPorHotel($hotelId) {
-        $fechaActual = date('Y-m-d');
-        $checkin = $_SESSION['checkin'];  
-        $checkout = $_SESSION['checkout']; 
-    
-        $query = `SELECT * FROM Habitaciones 
-                  WHERE Id_Hotel = ?
-                  AND NOT EXISTS (
-                      SELECT 1 FROM Reservas 
-                      WHERE Reservas.Id_Habitacion = Habitaciones.Id_Habitaciones
-                      AND (
-                          (Reservas.Checkin BETWEEN ? AND ?) 
-                          OR (Reservas.Checkout BETWEEN ? AND ?)
-                          OR (Reservas.Checkin <= ? AND Reservas.Checkout >= ?)
-                      )
-                  )`; 
-    
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("issssss", $hotelId, $fechaActual, $fechaActual, $checkin, $checkout, $checkin, $checkout, $checkin, $checkout);
-        $stmt->execute();
-        $result = $stmt->get_result();
-    
-        $habitaciones = [];
-        while ($row = $result->fetch_assoc()) {
-            $habitaciones[] = $row;
-        }
-    
-        return $habitaciones;
-    }
-    
-    
-  
-    
 
     public function obtenerReservaPorId($reservaId) {
         try {
@@ -361,53 +170,9 @@ public function insertarReserva($hotelId, $clienteId, $checkin, $checkout, $pais
         }
     }
 
+  
 
-    public function obtenerActividadesPorHotel($idHotel) {
-        try {
-            $sql = "SELECT * FROM Actividades WHERE Id_Hotel = ?";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("i", $idHotel);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $actividades = $result->fetch_all(MYSQLI_ASSOC);
-            $stmt->close();
-            return $actividades;
-        } catch (Exception $e) {
-            error_log("Error al obtener actividades para el hotel: " . $e->getMessage());
-            return null;
-        }
-    }
-
-    public function obtenerPrecioActividad($actividadId) {
-        try {
-            $sql = "SELECT Precio FROM Actividades WHERE Id_Actividad = ?";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("i", $actividadId);
-            $stmt->execute();
-            $precio = $stmt->get_result()->fetch_row()[0];
-            $stmt->close();
-            return $precio;
-        } catch (Exception $e) {
-            error_log("Error al obtener precio de actividad: " . $e->getMessage());
-            return 0;
-        }
-    }
-
-    public function obtenerMetodosPagoPorCliente($idCliente) {
-        try {
-            $sql = "SELECT * FROM MetodoPago WHERE Id_Cliente = ?";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("i", $idCliente);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $metodosPago = $result->fetch_all(MYSQLI_ASSOC);
-            $stmt->close();
-            return $metodosPago;
-        } catch (Exception $e) {
-            error_log("Error al obtener métodos de pago: " . $e->getMessage());
-            return null;
-        }
-    }
+   
     public function cancelarReserva($reservaId) {
         $query = "UPDATE Reservas SET Estado = 'Cancelado', FechaCancelacion = NOW() WHERE Id_Reserva = ?";
         
@@ -441,15 +206,6 @@ public function insertarReserva($hotelId, $clienteId, $checkin, $checkout, $pais
             return true; // La reserva fue marcada como pagada
         } else {
             die("Error en la ejecución de la consulta de pago: " . $stmt->error);
-        }
-    }
-
-    public function procesarReserva($data) {
-        // Suponiendo que $data incluye los detalles de la reserva
-        $reservaId = $this->insertarReserva(...); // Llama al método para insertar
-    
-        if ($data['metodoPago'] === 'pago en línea') {
-            $this->marcarComoPagada($reservaId); // Marca como pagada
         }
     }
 
@@ -492,27 +248,8 @@ public function insertarReserva($hotelId, $clienteId, $checkin, $checkout, $pais
     //SERVICIOS
 
 
-    public function obtenerServicios() {
-        $sql = "SELECT * FROM Servicio WHERE Id_Hotel = ?";
-        $stmt = $this->conn->prepare($sql);
-        
-        // Usamos bind_param para pasar el valor de $_SESSION['hotelId'] como parámetro
-        $stmt->bind_param("i", $_SESSION['hotelId']);  // 'i' es para un entero
-        $stmt->execute();
-        
-        // Obtener el resultado de la consulta
-        $result = $stmt->get_result();
-        
-        // Obtener todos los servicios
-        $servicios = $result->fetch_all(MYSQLI_ASSOC);  // Devuelve todos los servicios como un array
-        return $servicios;  // Devuelve los servicios del hotel
-    }
-    
-    
-   // Nueva versión de la función
-
-
-
+   
+   
 
    
 }

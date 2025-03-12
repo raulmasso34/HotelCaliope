@@ -13,18 +13,15 @@ class MetodoPagoModel {
     }
 
     // Obtener todos los métodos de pago disponibles
-    public function obtenerMetodosPago() {
-        $sql = "SELECT * FROM MetodoPago WHERE Activo = 1";  // Solo métodos de pago activos
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
+   
 
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            return $result->fetch_all(MYSQLI_ASSOC);  // Devuelve todos los métodos de pago disponibles como un array
-        } else {
-            return [];  // Devuelve un array vacío si no hay resultados
-        }
+    public function obtenerMetodosPago() {
+        $query = $this->conn->prepare("SELECT * FROM MetodoPago WHERE Activo = 1");
+        $query->execute();
+        return $query->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+
+    
 
     // Obtener los métodos de pago asociados a un cliente (suponiendo que tienes una relación en tu DB)
     public function obtenerMetodosPagoPorCliente($clienteId) {
@@ -79,5 +76,7 @@ class MetodoPagoModel {
 
         return $stmt->execute();  // Retorna true si la desactivación fue exitosa
     }
+
+    
 }
 ?>

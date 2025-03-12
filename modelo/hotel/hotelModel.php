@@ -9,22 +9,15 @@ class HotelModel {
         $this->conn = $db;
     }
 
+  
     public function obtenerDetallesHotel($hotelId) {
-        $sql = "SELECT * FROM Hotel WHERE Id_Hotel = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $hotelId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows > 0) {
-            return $result->fetch_assoc(); // Retorna el arreglo de resultados
-        } else {
-            return null; // Si no hay resultados, retorna null
-        }
+        $query = $this->conn->prepare("SELECT * FROM Hotel WHERE Id_Hotel = ?");
+        $query->bind_param("i", $hotelId);
+        $query->execute();
+        return $query->get_result()->fetch_assoc();
     }
     
     
-
     
    
     public function obtenerHotelesPorPais($location) {
