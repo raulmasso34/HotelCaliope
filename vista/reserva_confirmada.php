@@ -25,7 +25,8 @@ if (isset($_SESSION['Reservas'])) {
     $precioHabitacion = $reserva['precioHabitacion'] ?? 'No disponible';  // Asegúrate de agregar esto
     $precioActividad = $reserva['precioActividad'] ?? 'No disponible';  // Asegúrate de agregar esto
     $precioTarifa = $reserva['precioTarifa'] ?? 'No disponible';  // Asegúrate de agregar esto
-    $precioTotal = $reserva['precioTotal'] ?? 'No disponible';  // Asegúrate de agregar esto
+    $precioTotal = $reserva['precioTotal'] ?? 'No disponible';
+      // Asegúrate de agregar esto
     
     // Suponiendo que tienes un controlador que obtiene los detalles del hotel
     $hotelDetails = $reservaController->obtenerDetallesHotel($hotelId);
@@ -34,9 +35,8 @@ if (isset($_SESSION['Reservas'])) {
     exit;
 }
 
-// Depuración de los datos
-var_dump($_SESSION['Reservas']);
-var_dump($habitacionId, $clienteId, $hotelId, $checkin, $checkout, $guests, $paisId, $actividadId, $metodoPagoId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal);
+
+
 ?>
 
 <!DOCTYPE html>

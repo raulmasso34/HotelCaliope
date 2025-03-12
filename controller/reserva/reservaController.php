@@ -31,32 +31,55 @@ class ReservaController {
     }
 
     // Crear una nueva reserva
-    // Crear una nueva reserva
-    public function crearReserva(
-        $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
-        $habitacionId = null, $tarifaId = null, $precioHabitacion = null, 
-        $precioActividad = null, $precioTarifa = null, $precioTotal = null, 
-        $NumeroPersonas = null, $servicioId = null, $precioServicio = null, 
-        $estado = 'Activo', $fechaCancelacion = null
-    ) {
-        // Llama al modelo para insertar la reserva en la base de datos
-        $reservaId = $this->reservaModel->insertarReserva(
-            $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
-            $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, 
-            $precioTarifa, $precioTotal, $NumeroPersonas, 
-            $servicioId, $precioServicio, 
-            $estado, $fechaCancelacion
-        );
-
-        // Verifica si la reserva fue insertada correctamente
-        if ($reservaId) {
-            echo "Reserva creada con éxito. ID: " . $reservaId;
-        } else {
-            echo "Error al crear la reserva.";
+    public function crearReserva() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+            // Recibimos los datos del formulario
+            $hotelId = $_POST['hotelId'];
+            $clienteId = $_POST['clienteId'];
+            $checkin = $_POST['checkin'];
+            $checkout = $_POST['checkout'];
+            $guests = $_POST['guests'];
+            $paisId = $_POST['paisId'];
+            $actividadId = isset($_POST['actividadId']) ? $_POST['actividadId'] : null;
+            $habitacionId = isset($_POST['habitacionId']) ? $_POST['habitacionId'] : null;
+            $tarifaId = isset($_POST['tarifaId']) ? $_POST['tarifaId'] : null;
+        
+            // Recibimos los servicios seleccionados y calculamos su precio total
+            $serviciosSeleccionados = isset($_POST['servicios']) ? $_POST['servicios'] : []; // Array de servicios
+            $precioServicios = array_sum($serviciosSeleccionados);  // Sumamos el precio de todos los servicios seleccionados
+        
+            // Se calcula el precio de habitación, tarifa, actividad, etc.
+            $precioHabitacion = $_POST['precioHabitacion'] ?? 0;
+            $precioActividad = $_POST['precioActividad'] ?? 0;
+            $precioTarifa = $_POST['precioTarifa'] ?? 0;
+            $precioTotal = $_POST['precioTotal'] ?? 0;
+        
+            // Ahora sumamos el precio de los servicios al precio total
+            $precioTotal += $precioServicios;
+    
+            // Llamamos a la función para insertar la reserva, pasando los datos necesarios
+            $reservaId = $this->reservaModel->insertarReserva(
+                $hotelId, 
+                $clienteId, 
+                $checkin, 
+                $checkout, 
+                $paisId, 
+                $actividadId, 
+                $habitacionId, 
+                $tarifaId, 
+                $precioHabitacion, 
+                $precioServicios,
+                $precioActividad, 
+                $precioTarifa, 
+                $precioTotal, 
+                $guests
+            );
+    
+            // Verificamos si la reserva se creó correctamente
+           
         }
     }
-    
-    
     
 
     // Obtener una reserva por su ID
@@ -122,15 +145,6 @@ class ReservaController {
         }
     }
 
-
-    public function obtenerPrecioServicio($servicioId){
-        $precio = $this->reservaModel->obtenerPrecioServicio($servicioId);
-        if ($precio > 0) { 
-            echo "Precio del servicio: $" . $precio;
-        } else {
-            echo "Error al obtener el precio del servicio.";
-        }
-    }
 
     public function obternPrecioTarifa($hotelId){
         $precio = $this->reservaModel->obtenerPrecioTarifa($hotelId);
@@ -234,60 +248,14 @@ class ReservaController {
         return $this->reservaModel->actualizarEstadoReserva($idReserva, $nuevoEstado);
     }
     
-    public function mostrarServiciosId() {
-        try {
-            // Verificar si el hotelId está almacenado en la sesión
-            if (isset($_SESSION['hotelId'])) {
-                $hotelId = $_SESSION['hotelId'];
-                
-                // Llamar al método ObtenerServiciosId para obtener los servicios del hotel
-                $servicios = $this->reservaModel->obtenerServicioId($hotelId);
-                
-                // Verificar si tenemos servicios
-                if ($servicios) {
-                    // Devolver los servicios (puedes hacer lo que necesites con ellos)
-                    return $servicios;
-                } else {
-                    echo "No se encontraron servicios para este hotel.";
-                    return false;
-                }
-            } else {
-                // Si no existe hotelId en la sesión
-                echo "Error: No se ha encontrado el hotelId en la sesión.";
-                return false;
-            }
-        } catch (Exception $e) {
-            // Manejar cualquier error en el proceso
-            echo "Error al mostrar los servicios: " . $e->getMessage();
-            return false;
-        }
+    
+    //------------------------------------------------------------------SERVICIOS------------------------------------------------------
+    public function mostrarServicios() {
+        // Llama al método obtenerServicios() del modelo para obtener todos los servicios
+        return $this->reservaModel->obtenerServicios();  // Devuelve todos los servicios para el hotel
     }
     
-    
-    public function mostrarServicios(){
-        // Verificar si el ID del hotel está presente en la sesión
-        if (isset($_SESSION['hotelId'])) {
-            $hotelId = $_SESSION['hotelId']; // Obtener el Id del hotel desde la sesión
-        } else {
-            // Si no está presente, manejar el error o redirigir
-            echo "Error: No se ha seleccionado un hotel.";
-            return []; // Retorna un arreglo vacío para evitar continuar con el flujo
-        }
-        
-        // Obtener los servicios desde el modelo, pasando el hotelId
-        $servicios = $this->reservaModel->obtenerServicios($hotelId);
-    
-        // Verificar si se obtuvieron servicios y devolverlos
-        if (is_array($servicios) && !empty($servicios)) {
-            return $servicios;
-        } else {
-            // Si no hay servicios, devolver un arreglo vacío o un mensaje de error
-            return [];
-        }
-    }
-    
-    
-    
+
 
    
 

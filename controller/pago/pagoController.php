@@ -5,6 +5,10 @@ require_once __DIR__ . '/../../modelo/pago/pagoModel.php';
 require_once __DIR__ . '/../../modelo/reservas/ReservaModel.php';
 require_once __DIR__ . '/../../config/Database.php';  
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -15,6 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $reserva = $_SESSION['Reservas'];
+    
+    // Recuperar datos de la reserva
     $habitacionId = $reserva['habitacionId'] ?? null;
     $clienteId = $reserva['clienteId'] ?? null;
     $hotelId = $reserva['hotelId'] ?? null;
@@ -23,35 +29,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $guests = $reserva['guests'] ?? null;
     $paisId = $reserva['paisId'] ?? null;
     $actividadId = $reserva['actividadId'] ?? null;
-    $metodoPagoId = $reserva['metodo_pago'] ?? null;
+    $metodoPagoId = $_POST['metodoPagoId'] ?? 'Tarjeta'; // Método de pago
+    $estadoReserva = "Pendiente";
 
-    if (empty($checkin)) {
-        echo "Error: No se ha recibido la fecha de Checkin.";
+    if (empty($checkin) || empty($checkout)) {
+        echo "Error: No se han recibido las fechas de Check-in o Check-out.";
         exit;
     }
 
+    // Establecer la conexión a la base de datos
     $database = new Database();
     $db = $database->getConnection();
+    $ReservaModel = new ReservaModel($db);
 
-    // Asegurarse de que el Id_Reserva no esté duplicado
+    // Recuperar los precios de la habitación y la actividad desde el modelo
+    $precioHabitacion = $ReservaModel->obtenerPrecioHabitacion($habitacionId);
+    $precioActividad = $ReservaModel->obtenerPrecioActividad($actividadId);
+
+    // Recuperar los servicios seleccionados de la sesión
+    $serviciosSeleccionados = $_SESSION['Reservas']['servicios'] ?? [];
+    $totalServicios = $_SESSION['Reservas']['totalServicios'] ?? 0;
+    $precioTarifa = 0; // O agregar lógica para obtener tarifas adicionales si es necesario
+    
+    // Calcular el precio total
+    $precioTotal = $precioHabitacion + $precioActividad + $precioTarifa + $totalServicios;
+
+    // Insertar la reserva solo si aún no existe
     if (!isset($_SESSION['Reservas']['Id_Reserva'])) {
-        $ReservaModel = new ReservaModel($db);
-        $tarifaId = null;   
-        $precioHabitacion = 100; // Ajusta según necesidades
-        $precioActividad = 50; // Ajusta según necesidades
-        $precioTarifa = 20; // Ajusta según necesidades
-        $precioServicio = $reserva['precioServicio'] ?? 0;
-        $precioTotal = $precioHabitacion + $precioActividad + $precioTarifa + $precioServicio;
-        $NumeroPersonas = $guests;
-
-        // Recuperamos el servicioId si está disponible
-        $servicioId = $reserva['servicioId'] ?? null;
-
         $reservaId = $ReservaModel->insertarReserva(
-            $hotelId, $clienteId, $checkin, $checkout, $paisId, $actividadId, 
-            $habitacionId, $tarifaId, $precioHabitacion, $precioActividad, 
-            $precioTarifa, $precioTotal, $NumeroPersonas, 
-            $servicioId, $precioServicio, 'Pendiente', null
+            $hotelId, 
+            $clienteId, 
+            $checkin, 
+            $checkout, 
+            $paisId, 
+            $actividadId, 
+            $habitacionId, 
+            $tarifaId, 
+            $precioHabitacion, 
+            $precioServicios,
+            $precioActividad, 
+            $precioTarifa, 
+            $precioTotal, 
+            $guests
         );
 
         if ($reservaId !== null) {
@@ -64,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $reservaId = $_SESSION['Reservas']['Id_Reserva'];
     }
 
+   
     // Procesar el pago
     $numeroTarjeta = $_POST['numero_tarjeta'] ?? '';
     $cvv = $_POST['cvv'] ?? '';
@@ -74,14 +94,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $pagoExitoso = true; // Simula el pago
+    // Simular pago exitoso
+    $pagoExitoso = true;
 
     if ($pagoExitoso) {
         $PagoModel = new PagoModel($db);
         $fechaPago = date('Y-m-d H:i:s');
         $PagoModel->procesarPago($hotelId, $clienteId, $reservaId, 'Tarjeta', $fechaPago, $metodoPagoId);
 
-        $ReservaModel = new ReservaModel($db);
+        // Marcar la reserva como pagada
         $ReservaModel->actualizarEstadoReserva($reservaId, 'Pagado');
 
         header("Location: ../../vista/reserva_confirmada.php");
@@ -90,4 +111,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Error al procesar el pago.";
     }
 }
+
 ?>

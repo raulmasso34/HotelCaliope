@@ -73,7 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['servicios'])) {
                             <p>Precio: <?php echo $servicio['Precio']; ?>€</p>
                             <!-- Checkbox para seleccionar el servicio -->
                             <label>
-                                <input type="checkbox" name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" value="<?php echo $servicio['Precio']; ?>">
+                            <input type="checkbox" name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" value="<?php echo $servicio['Precio']; ?>">
+
                                 Seleccionar
                             </label>
                         </div>

@@ -1,0 +1,27 @@
+name: Deploy to FTP
+on:
+  push:
+    branches:
+      - main  # Tu repositorio usa "main", así que dejamos así
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT || '21' }}
+          local-dir: ./           # Subirá todo el contenido de la raíz del repositorio
+          server-dir: /htdocs     # Ajusta esto según tu hosting (ejemplo para InfinityFree)
+          exclude: |
+            .gitignore
+            .github/
+            README.md
+            *.sql
