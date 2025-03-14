@@ -215,21 +215,25 @@ $database->closeConnection();
                 </select>
             </div>
 
-            <div class="mb-3">
-                <label for="metodo_pago" class="form-label">Selecciona un método de pago:</label>
-                <select class="form-select" name="metodo_pago" id="metodo_pago" required>
-                    <?php if (!empty($metodosPago)): ?>
-                        <?php foreach ($metodosPago as $metodo): ?>
-                            <option value="<?php echo $metodo['Id_MetodoPago']; ?>">
-                                <?php echo htmlspecialchars($metodo['Tipo']); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <option value="">No hay métodos de pago disponibles</option>
-                    <?php endif; ?>
-                </select>
-            </div>
+           
 
+
+                <div class="mb-3">
+                    <label for="metodoPagoId" class="form-label">Selecciona un método de pago:</label>
+                    <select class="form-select" name="metodoPagoId" id="metodoPagoId" required>
+                        <?php if (!empty($metodosPago)): ?>
+                            <?php foreach ($metodosPago as $metodo): ?>
+                                <option value="<?php echo $metodo['Id_MetodoPago']; ?>">
+                                    <?php echo htmlspecialchars($metodo['Tipo']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <option value="">No hay métodos de pago disponibles</option>
+                        <?php endif; ?>
+                    </select>
+                </div>
+
+           
             <button type="submit" class="btn btn-primary w-100">Confirmar Reserva y Pagar</button>
         </form>
     </div>

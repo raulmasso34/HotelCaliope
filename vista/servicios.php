@@ -4,22 +4,37 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/../controller/reserva/reservaController.php';
+require_once __DIR__ . '/../controller/servicios/serviciosController.php';  // Nombre correcto del controlador
 
-$reservaController = new ReservaController();
+$servicioController = new ServiciosController();
 
 // Verifica si ya tienes el hotelId en la sesión
 if (isset($_POST['hotelId'])) {
-    $_SESSION['hotelId'] = $_POST['hotelId']; // Guardamos el hotelId en la sesión cuando se selecciona
+    $_SESSION['hotelId'] = $_POST['hotelId']; // Guardamos el hotelId en la sesión
 }
 
-$hotelId = $_SESSION['hotelId'] ?? null; // Recuperamos el hotelId de la sesión
+$hotelId = $_SESSION['hotelId'] ?? null;
 
-// Si el hotelId no está definido, muestra un mensaje de error
-if ($hotelId === null) {
-    echo "No se ha seleccionado un hotel.";
-    exit; // Termina la ejecución si no se ha seleccionado un hotel
+// Si el hotelId no está definido, muestra un mensaje de error y termina la ejecución
+if (!$hotelId) {
+    echo "<p style='color:red;'>No se ha seleccionado un hotel.</p>";
+    exit;
 }
+
+// Obtener los servicios del hotel, asegurando que sea un array válido
+$servicios = $servicioController->obtenerServicios($hotelId);
+if (!is_array($servicios)) {
+    $servicios = [];  // Evita errores si la consulta falla
+}
+
+// Si el usuario envía el formulario con los servicios seleccionados
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['servicios'])) {
+    $_SESSION['Reservas']['servicios'] = $_POST['servicios']; // Guardamos los servicios en la sesión
+    header("Location: pagos.php"); // Redirige a la página de pago
+    exit;
+}
+
+
 
 ?>
 
@@ -29,7 +44,7 @@ if ($hotelId === null) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/servicios.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <script src="../static/js/servicios/servicios.js"></script>
     <title>Servicios</title>
 </head>
 <body>
@@ -37,40 +52,35 @@ if ($hotelId === null) {
     <h1>¿Quieres alguno de estos servicios?</h1>
     <div class="servicios-container">
         <?php if (!empty($servicios)) : ?>
-            <!-- Mostrar los servicios -->
-            <form action="" method="POST"> <!-- Enviamos el formulario con los servicios seleccionados -->
+            <form action="" method="POST">
                 <div class="servicios-lista">
                     <?php foreach ($servicios as $servicio) : ?>
                         <?php 
-                        // Definir la ruta de la imagen según el nombre del servicio
                         $imagen = '../static/img/servicios/' . strtolower(str_replace(' ', '_', $servicio['Servicio'])) . '.jpg'; 
-                        // Comprobar si la imagen existe
-                        $imagen_path = file_exists($imagen) ? $imagen : 'images/default.jpg'; // Imagen por defecto si no se encuentra la específica
+                        $imagen_path = file_exists($imagen) ? $imagen : '../static/img/servicios/default.jpg';
                         ?>
-                        <div class="servicio" id="servicio-<?php echo $servicio['Id_Servicio']; ?>">
-                            <img src="<?php echo $imagen_path; ?>" alt="Imagen de <?php echo $servicio['Servicio']; ?>" class="imagen-servicio">
-                            <h3><?php echo $servicio['Servicio']; ?></h3>
-                            <p><?php echo $servicio['Descripcion']; ?></p>
-                            <p>Precio: <?php echo $servicio['Precio']; ?>€</p>
-                            <!-- Checkbox para seleccionar el servicio -->
+                        <div class="servicio">
+                            <img class="imagen-servicio" src="<?php echo $imagen_path; ?>" alt="<?php echo htmlspecialchars($servicio['Servicio']); ?>">
+                            <h3><?php echo htmlspecialchars($servicio['Servicio']); ?></h3>
+                            <p><?php echo htmlspecialchars($servicio['Descripcion']); ?></p>
+                            <p>Precio: <?php echo number_format($servicio['Precio'], 2); ?>€</p>
                             <label>
-                            <input type="checkbox" name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" value="<?php echo $servicio['Precio']; ?>">
+                            <input type="checkbox" name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" value="<?php echo htmlspecialchars($servicio['Precio'] ?? 10); ?>">
 
-                                Seleccionar
+
                             </label>
                         </div>
                     <?php endforeach; ?>
                 </div>
-
-                <!-- Continuar a pagos -->
                 <div class="continuar-btn">
-                    <input type="submit" value="Continuar con servicio" id="btn-continuar">
+                    <input id="btn-continuar" type="submit" value="Continuar con servicio">
                 </div>
             </form>
         <?php else : ?>
             <p>No hay servicios disponibles en este momento.</p>
         <?php endif; ?>
     </div>
-
+            
 </body>
 </html>
+

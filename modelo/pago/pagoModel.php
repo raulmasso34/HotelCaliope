@@ -11,29 +11,31 @@ class PagoModel {
 
     // Método para procesar un pago
    // Método para procesar un pago
-    public function procesarPago($hotelId, $clienteId, $reservaId, $metodoPago, $fechaPago, $metodoPagoId) {
-        $query = "INSERT INTO Pago (Id_Hotel, Id_Cliente, Id_Reserva, MetodoPago, Fecha_Pago, Id_MetodoPago) 
-                VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = $this->conn->prepare($query);
+   public function procesarPago($hotelId, $clienteId, $reservaId, $metodoPago, $fechaPago, $metodoPagoId) {
+    $query = "INSERT INTO Pago (Id_Hotel, Id_Cliente, Id_Reserva, MetodoPago, Fecha_Pago, Id_MetodoPago) 
+              VALUES (?, ?, ?, ?, ?, ?)";
+              error_log("Fecha generada: " . $fechaPago);
 
-        // Verifica si la preparación de la consulta fue exitosa
-        if (!$stmt) {
-            throw new Exception('Error al preparar la consulta: ' . $this->conn->error);
-        }
+    
+    $stmt = $this->conn->prepare($query);
 
-        // Vincula los parámetros
-        // Asegúrate de que 'MetodoPago' es un string y 'Id_MetodoPago' es un entero
-        $stmt->bind_param("iiissi", $hotelId, $clienteId, $reservaId, $metodoPago, $fechaPago, $metodoPagoId);
-
-        // Ejecuta la consulta
-        if ($stmt->execute()) {
-            echo "Pago procesado con éxito.";
-        } else {
-            throw new Exception("Error al procesar el pago: " . $stmt->error);
-        }
-
-        $stmt->close();
+    if (!$stmt) {
+        throw new Exception('Error al preparar la consulta: ' . $this->conn->error);
     }
+
+    // 🔹 Corregido: Usa "iiisis" en `bind_param()`
+    $stmt->bind_param("iiissi", $hotelId, $clienteId, $reservaId, $metodoPago, $fechaPago, $metodoPagoId);
+
+
+    if ($stmt->execute()) {
+        return true; // ✅ Éxito
+    } else {
+        throw new Exception("Error al procesar el pago: " . $stmt->error);
+    }
+
+    $stmt->close();
+}
+
 
 
    
@@ -59,5 +61,7 @@ class PagoModel {
 
         $stmt->close();
     }
+
+    
 }
 ?>

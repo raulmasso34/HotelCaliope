@@ -25,7 +25,7 @@ class HabitacionesModel {
         if ($row = $result->fetch_assoc()) {
             return $row['Precio'];
         }
-        return 0; // Retorna 0 si no encuentra la habitación
+         // Retorna 0 si no encuentra la habitación
     }
 
     public function obtenerHabitacionPorId($habitacionId) {
@@ -38,12 +38,19 @@ class HabitacionesModel {
             $result = $stmt->get_result();
             $habitacion = $result->fetch_assoc();
             $stmt->close();
+    
+            // 🚨 Verifica si la consulta devuelve datos correctos
+            echo "<pre>";
+            print_r($habitacion);
+            echo "</pre>";
+    
             return $habitacion;
         } catch (Exception $e) {
             error_log("Error al obtener habitación: " . $e->getMessage());
             return null;
         }
     }
+    
 
     public function obtenerHabitacionesPorHotel($hotelId) {
         if (!$this->conn) {

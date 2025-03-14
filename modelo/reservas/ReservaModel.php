@@ -99,22 +99,7 @@ class ReservaModel {
     }
 
 
-    public function obtenerHabitacionPorId($habitacionId) {
-        try {
-            $sql = "SELECT * FROM Habitaciones WHERE Id_Habitaciones = ?";  
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("i", $habitacionId);
-            $stmt->execute();
-    
-            $result = $stmt->get_result();
-            $habitacion = $result->fetch_assoc();
-            $stmt->close();
-            return $habitacion;
-        } catch (Exception $e) {
-            error_log("Error al obtener habitación: " . $e->getMessage());
-            return null;
-        }
-    }
+   
 
 
     public function obtenerReservaPorId($reservaId) {
@@ -229,43 +214,109 @@ class ReservaModel {
     }
 
     public function actualizarEstadoReserva($idReserva, $nuevoEstado) {
-        $query = "UPDATE Reservas SET Estado = ? WHERE Id_Reserva = ?";
-        $stmt = $this->conn->prepare($query);
-        
-        if (!$stmt) {
-            throw new Exception('Error en la preparación de la consulta: ' . $this->conn->error);
+        // Lista de estados válidos según la base de datos
+        $estadosValidos = ['Por pagar', 'Pagado', 'Cancelado'];
+    
+        // Verifica si el nuevo estado es válido
+        if (!in_array($nuevoEstado, $estadosValidos)) {
+            throw new Exception("Error: Estado inválido '$nuevoEstado'.");
         }
     
-        // Vincular los parámetros
-        $stmt->bind_param("si", $nuevoEstado, $idReserva); // "si" significa string y integer
+        $query = "UPDATE Reservas SET Estado = ? WHERE Id_Reserva = ?";
+        $stmt = $this->conn->prepare($query);
     
-        // Ejecutar la consulta
-        return $stmt->execute(); // Retorna true si la actualización fue exitosa
+        if (!$stmt) {
+            throw new Exception('Error al preparar la consulta: ' . $this->conn->error);
+        }
+    
+        $stmt->bind_param("si", $nuevoEstado, $idReserva);
+    
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            throw new Exception("Error al actualizar el estado de la reserva: " . $stmt->error);
+        }
+    
+        $stmt->close();
     }
     
-    public function insertarReserva($idCliente, $idActividad, $idHabitacion, $idHotel, $idServicio, $idTarifa, $precioHabitacion, $precioActividad, $precioTarifa, $precioServicio, $precioTotal, $checkin, $checkout, $numeroPersonas, $idPais) {
+    
+    public function insertarReserva($idCliente, $idActividad, $idHabitacion, $idHotel, $idTarifa, $precioHabitacion, $precioActividad, $precioTarifa, $precioServicio, $precioTotal, $checkin, $checkout, $numeroPersonas, $idPais) {
         try {
-            $sql = "INSERT INTO Reservas (Id_Cliente, Id_Actividad, Id_Habitacion, Id_Hotel, Id_Servicio, Id_Tarifa, Precio_Habitacion, Precio_Actividad, Precio_Tarifa, Precio_Servicio, Precio_Total, Checkin, Checkout, Numero_Personas, Id_Pais, Estado) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pendiente')";
-            
+            // Validación de datos obligatorios
+            if (!$idCliente || !$idHabitacion || !$idHotel || !$precioTotal || !$checkin || !$checkout || !$numeroPersonas || !$idPais) {
+                throw new Exception("Uno o más valores obligatorios están vacíos.");
+            }
+    
+            // 🔹 **Asegurar que las columnas y los valores coinciden**
+            $sql = "INSERT INTO Reservas 
+                    (Id_Cliente, Id_Actividad, Id_Habitacion, Id_Hotel, Id_Tarifa, Precio_Habitacion, Precio_Actividad, 
+                     Precio_Tarifa, Precio_Servicio, Precio_Total, Checkin, Checkout, Numero_Personas, Id_Pais, Estado) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pagado')";
+    
             $stmt = $this->conn->prepare($sql);
             if (!$stmt) {
-                throw new Exception("Error en la preparación de la consulta: " . $this->conn->error);
+                throw new Exception("Error al preparar la consulta: " . $this->conn->error);
             }
-            
-            $stmt->bind_param("iiiiiddddddssii", $idCliente, $idActividad, $idHabitacion, $idHotel, $idServicio, $idTarifa, $precioHabitacion, $precioActividad, $precioTarifa, $precioServicio, $precioTotal, $checkin, $checkout, $numeroPersonas, $idPais);
-            
+    
+            // 🔹 **Corrección: Coincidencia exacta entre tipos y valores**
+            $stmt->bind_param("iiiiidddddssii", 
+                $idCliente, 
+                $idActividad, 
+                $idHabitacion, 
+                $idHotel, 
+                $idTarifa, 
+                $precioHabitacion, 
+                $precioActividad, 
+                $precioTarifa, 
+                $precioServicio, 
+                $precioTotal, 
+                $checkin, 
+                $checkout, 
+                $numeroPersonas, 
+                $idPais
+            );
+    
+            // Ejecutar consulta
             if ($stmt->execute()) {
+                $idReserva = $this->conn->insert_id;
                 $stmt->close();
-                return $this->conn->insert_id; // Retorna el ID de la nueva reserva
+                return $idReserva;
             } else {
-                throw new Exception("Error al insertar la reserva: " . $stmt->error);
+                throw new Exception("Error al ejecutar la consulta: " . $stmt->error);
             }
         } catch (Exception $e) {
             error_log("Error en insertarReserva: " . $e->getMessage());
+            echo "<p class='text-danger'>Error: " . $e->getMessage() . "</p>";
             return false;
         }
     }
+    
+
+    public function asociarServicioAReserva($idReserva, $idServicio) {
+        // ✅ Consulta SQL corregida para MySQLi
+        $sql = "INSERT INTO Reserva_Servicio (Id_Reserva, Id_Servicio) VALUES (?, ?)";
+    
+        // ✅ Preparar la consulta con MySQLi
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            throw new Exception("Error al preparar la consulta: " . $this->conn->error);
+        }
+    
+        // ✅ Bind de parámetros en MySQLi
+        $stmt->bind_param("ii", $idReserva, $idServicio);
+    
+        // ✅ Ejecutar la consulta y verificar si fue exitosa
+        if ($stmt->execute()) {
+            $stmt->close();
+            return true;
+        } else {
+            throw new Exception("Error al insertar servicio en reserva: " . $stmt->error);
+        }
+    }
+    
+    
+    
     
 
 

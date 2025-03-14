@@ -1,41 +1,46 @@
 <?php
 session_start();
 
+// Mostrar errores en desarrollo
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/../controller/reserva/reservaController.php';
-$reservaController = new ReservaController();
+require_once __DIR__ . '/../controller/hotel/hotelController.php';
+
+$hotelController = new HotelController();
 
 // Verificar si la reserva está en la sesión
-if (isset($_SESSION['Reservas'])) {
-    $reserva = $_SESSION['Reservas'];
-
-    // Recuperar los datos de la reserva, con valores predeterminados si no están definidos
-    $habitacionId = $reserva['habitacionId'] ?? 'No disponible';
-    $clienteId = $reserva['clienteId'] ?? 'No disponible';
-    $hotelId = $reserva['hotelId'] ?? 'No disponible';
-    $checkin = $reserva['checkin'] ?? 'No disponible';
-    $checkout = $reserva['checkout'] ?? 'No disponible';
-    $guests = $reserva['guests'] ?? 'No disponible';
-    $paisId = $reserva['paisId'] ?? 'No disponible';  // Asegúrate de agregar esto
-    $actividadId = $reserva['actividadId'] ?? 'No disponible';  // Asegúrate de agregar esto
-    $metodoPagoId = $reserva['metodo_pago'] ?? 'No disponible';  // Asegúrate de agregar esto
-    $precioHabitacion = $reserva['precioHabitacion'] ?? 'No disponible';  // Asegúrate de agregar esto
-    $precioActividad = $reserva['precioActividad'] ?? 'No disponible';  // Asegúrate de agregar esto
-    $precioTarifa = $reserva['precioTarifa'] ?? 'No disponible';  // Asegúrate de agregar esto
-    $precioTotal = $reserva['precioTotal'] ?? 'No disponible';
-      // Asegúrate de agregar esto
-    
-    // Suponiendo que tienes un controlador que obtiene los detalles del hotel
-    $hotelDetails = $reservaController->obtenerDetallesHotel($hotelId);
-} else {
+if (!isset($_SESSION['Reservas'])) {
     echo "Error: No se ha recibido la reserva en la sesión.";
     exit;
 }
 
+$reserva = $_SESSION['Reservas'];
 
+// ✅ Recuperar datos con valores predeterminados
+$hotelId = $reserva['hotelId'] ?? 'No disponible';
+$habitacionId = $reserva['habitacionId'] ?? 'No disponible';
+$clienteId = $reserva['clienteId'] ?? 'No disponible';
+$checkin = $reserva['checkin'] ?? 'No disponible';
+$checkout = $reserva['checkout'] ?? 'No disponible';
+$guests = $reserva['guests'] ?? 'No disponible';
+
+// ✅ Verificar y asignar método de pago
+$metodoPagoId = $reserva['metodoPagoId'] ?? null;
+$metodoPago = 'No disponible';
+if ($metodoPagoId !== null) {
+    $metodoPago = ($metodoPagoId == 1) ? 'Tarjeta de Crédito' : 'Otro Método';
+}
+
+// ✅ Formatear el precio total
+$precioTotal = isset($reserva['precioTotal']) && is_numeric($reserva['precioTotal']) 
+    ? '$' . number_format(floatval($reserva['precioTotal']), 2, '.', '') 
+    : 'No disponible';
+
+// Obtener detalles del hotel
+$hotelDetails = $hotelController->obtenerDetallesHotel($hotelId);
+$hotelNombre = $hotelDetails['Nombre'] ?? 'Hotel Desconocido';
 
 ?>
 
@@ -46,7 +51,6 @@ if (isset($_SESSION['Reservas'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Reserva Confirmada</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 <body class="bg-light">
     <div class="container py-5">
@@ -56,12 +60,14 @@ if (isset($_SESSION['Reservas'])) {
             
             <div class="mt-4 text-start">
                 <h2 class="h5 border-bottom pb-2">Detalles de la Reserva</h2>
-                <p><strong>Hotel:</strong> <?php echo htmlspecialchars($hotelDetails['Nombre']); ?></p>
+                <p><strong>Hotel:</strong> <?php echo htmlspecialchars($hotelNombre); ?></p>
                 <p><strong>Habitación:</strong> <?php echo htmlspecialchars($habitacionId); ?></p>
                 <p><strong>Cliente ID:</strong> <?php echo htmlspecialchars($clienteId); ?></p>
                 <p><strong>Check-in:</strong> <?php echo htmlspecialchars($checkin); ?></p>
                 <p><strong>Check-out:</strong> <?php echo htmlspecialchars($checkout); ?></p>
                 <p><strong>Invitados:</strong> <?php echo htmlspecialchars($guests); ?></p>
+                <p><strong>Método de Pago:</strong> <?php echo htmlspecialchars($metodoPago); ?></p>
+                <p><strong>Total Pagado:</strong> <?php echo htmlspecialchars($precioTotal); ?></p>
             </div>
             
             <a href="../vista/index.php" class="btn btn-primary mt-3">Volver al inicio</a>

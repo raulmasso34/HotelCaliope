@@ -6,54 +6,83 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Depurar datos antes de la inserción
-
-
-
-// Requerir el controlador de reservas
 require_once __DIR__ . '/../controller/reserva/reservaController.php';
+require_once __DIR__ . '/../controller/pago/pagoController.php';
+require_once __DIR__ . '/../controller/habitacion/habitacionController.php';
+
 $reservaController = new ReservaController();
+$pagoController = new PagoController();
+$habitacionController = new HabitacionController();
 
 // Verificar si la reserva está en la sesión
-if (isset($_SESSION['Reservas'])) {
-    $reserva = $_SESSION['Reservas'];
-
-    // Recuperar los datos de la reserva
-    $habitacionId = $reserva['habitacionId'] ?? 'No disponible';
-    $clienteId = $reserva['clienteId'] ?? 'No disponible';
-    $hotelId = $reserva['hotelId'] ?? 'No disponible';
-    $checkin = $reserva['checkin'] ?? 'No disponible';
-    $checkout = $reserva['checkout'] ?? 'No disponible';
-    $guests = $reserva['guests'] ?? 'No disponible';
-    $metodoPagoId = $reserva['metodoPagoId'] ?? 'No disponible';
-    $actividadId = $reserva['actividadId'] ?? 'No disponible';
-    $paisId = $reserva['paisId'] ?? 'No disponible';
-    $precioTarifa = $reserva['precioTarifa'] ?? 0; // Suponiendo que esto está almacenado
-    $precioActividad = $reserva['precioActividad'] ?? 0; // Suponiendo que esto también está almacenado
-} else {
-    echo "Error: No se ha recibido la reserva en la sesión.";
+if (!isset($_SESSION['Reservas'])) {
+    echo "<p class='text-danger'>Error: No se ha recibido la reserva en la sesión.</p>";
     exit;
 }
 
+$reserva = $_SESSION['Reservas'];
+
+// Recuperar los datos de la reserva
+$habitacionId = $reserva['habitacionId'] ?? null;
+$clienteId = $reserva['clienteId'] ?? null;
+$hotelId = $reserva['hotelId'] ?? null;
+$checkin = $reserva['checkin'] ?? null;
+$checkout = $reserva['checkout'] ?? null;
+$guests = $reserva['guests'] ?? null;
+$metodoPagoId = $reserva['metodoPagoId'] ?? null;
+$actividadId = $reserva['actividadId'] ?? null;
+$paisId = $reserva['paisId'] ?? null;
+$precioTarifa = $reserva['precioTarifa'] ?? 0;
+$precioActividad = $reserva['precioActividad'] ?? 0;
+
+echo "<pre>";
+print_r($_SESSION['Reservas']);
+echo "</pre>";
+
+
+// Obtener los detalles de la habitación
 // Obtener los detalles de la habitación, incluyendo el precio
-$habitacionDetails = $reservaController->obtenerDetallesHabitacion($habitacionId);
-$precioHabitacion = $habitacionDetails['Precio'] ?? 0; // Asegúrate de usar el nombre correcto
+// Obtener los detalles de la habitación
+$habitacionDetails = $habitacionController->obtenerHabitacionPorId($habitacionId);
+
+if (!$habitacionDetails || !isset($habitacionDetails['Precio'])) {
+    die("<p class='text-danger'>Error: No se encontró la habitación o su precio no está definido.</p>");
+}
+
+// Verificar si se obtiene el precio de la habitación
+$precioHabitacion = floatval($habitacionDetails['Precio']);
+echo "<p>Precio de la habitación obtenido: $precioHabitacion</p>";
+
+
 
 // Calcular el número de noches
 $checkinDate = new DateTime($checkin);
 $checkoutDate = new DateTime($checkout);
 $numeroNoches = $checkoutDate->diff($checkinDate)->days;
 
-// Calcular el precio total
-$precioTotal = ($precioHabitacion * $numeroNoches) + $precioTarifa + $precioActividad;
+// Recuperar los servicios seleccionados y su costo total
+$serviciosSeleccionados = $_SESSION['Reservas']['servicios'] ?? [];
+$totalServicios = 0; // Inicializar correctamente
+foreach ($serviciosSeleccionados as $servicioId => $precio) {
+    if (!is_numeric($precio)) {
+        die("<p class='text-danger'>Error: Un servicio tiene un precio inválido ($precio).</p>");
+    }
+    $totalServicios += floatval($precio);
+}
 
-// **Recuperar los servicios seleccionados de la sesión**
-$serviciosSeleccionados = $_SESSION['Reservas']['servicios'] ?? []; // Recuperar los servicios seleccionados (si existen)
-$totalServicios = $_SESSION['Reservas']['totalServicios'] ?? 0; // El precio total de los servicios
 
-// **Sumar el precio de los servicios al precio total**
-$precioTotal += $totalServicios;
-var_dump($habitacionId, $clienteId, $hotelId, $checkin, $checkout, $guests, $paisId, $actividadId, $metodoPagoId, $precioHabitacion, $precioActividad, $precioTarifa, $precioTotal);
+
+
+
+$precioTotal = ($precioHabitacion * $numeroNoches) + $precioTarifa + $precioActividad + $totalServicios;
+
+echo "<p>Precio total calculado: $precioTotal</p>";
+echo "Precio de la habitación a enviar: " . $precioHabitacion;
+$fechaPago = date("Y-m-d H:i:s"); // Incluye la hora
+ // Asegúrate de que la fecha esté bien formateada
+error_log("Fecha a insertar: " . $fechaPago);
+
+
 
 ?>
 
@@ -105,6 +134,8 @@ var_dump($habitacionId, $clienteId, $hotelId, $checkin, $checkout, $guests, $pai
 
 <!-- Formulario de pago -->
 <form id="pagoForm" action="../controller/pago/pagoController.php" method="POST" onsubmit="mostrarPopup(event)">
+
+
     <label for="numero_tarjeta">Número de Tarjeta:</label>
     <input type="text" name="numero_tarjeta" required><br>
 
@@ -114,18 +145,39 @@ var_dump($habitacionId, $clienteId, $hotelId, $checkin, $checkout, $guests, $pai
     <label for="fecha_expiracion">Fecha de Expiración:</label>
     <input type="month" name="fecha_expiracion" required><br>
 
-    <input type="hidden" name="habitacionId" value="<?php echo htmlspecialchars($habitacionId); ?>">
-    <input type="hidden" name="clienteId" value="<?php echo htmlspecialchars($clienteId); ?>">
-    <input type="hidden" name="hotelId" value="<?php echo htmlspecialchars($hotelId); ?>">
-    <input type="hidden" name="paisId" value="<?php echo htmlspecialchars($paisId); ?>">
-    <input type="hidden" name="checkin" value="<?php echo htmlspecialchars($checkin); ?>">
-    <input type="hidden" name="checkout" value="<?php echo htmlspecialchars($checkout); ?>">
-    <input type="hidden" name="guests" value="<?php echo htmlspecialchars($guests); ?>">
-    <input type="hidden" name="precioTotal" value="<?php echo htmlspecialchars($precioTotal); ?>"> <!-- Guardar el precio total en un campo oculto -->
-    <input type="hidden" name="metodoPagoId" value="Tarjeta"> <!-- Método de pago -->
+    <!-- Datos de la reserva -->
+    <input type="hidden" name="habitacionId" value="<?= htmlspecialchars($habitacionId); ?>">
+    <input type="hidden" name="precioHabitacion" value="<?= htmlspecialchars($precioHabitacion); ?>">
+
+    <input type="hidden" name="clienteId" value="<?= htmlspecialchars($clienteId); ?>">
+    <input type="hidden" name="hotelId" value="<?= htmlspecialchars($hotelId); ?>">
+    <input type="hidden" name="paisId" value="<?= htmlspecialchars($paisId); ?>">
+    <input type="hidden" name="checkin" value="<?= htmlspecialchars($checkin); ?>">
+    <input type="hidden" name="checkout" value="<?= htmlspecialchars($checkout); ?>">
+    <input type="hidden" name="guests" value="<?= htmlspecialchars($guests); ?>">
+    <input type="hidden" name="precioTotal" value="<?= htmlspecialchars($precioTotal); ?>">
+    <input type="hidden" name="metodoPagoId" value="1">
+
+
+    <!-- Actividad (Opcional) -->
+    <input type="hidden" name="actividadId" value="<?= isset($actividadId) ? htmlspecialchars($actividadId) : ''; ?>">
+
+    <!-- Tarifa (Opcional) -->
+    <input type="hidden" name="tarifaId" value="<?= isset($tarifaId) ? htmlspecialchars($tarifaId) : ''; ?>">
+
+    <!-- Servicios Adicionales -->
+    <?php
+    if (!empty($_SESSION['Reservas']['servicios'])) {
+        foreach ($_SESSION['Reservas']['servicios'] as $idServicio => $precio) {
+            echo '<input type="hidden" name="servicios[' . $idServicio . ']" value="' . htmlspecialchars($precio) . '">';
+        }
+    }
+    ?>
+
 
     <button type="submit">Confirmar y Pagar</button>
 </form>
+
 
 <script src="../static/js/pagos/pagos.js"></script>
 </body>

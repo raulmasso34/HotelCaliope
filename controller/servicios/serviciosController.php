@@ -1,7 +1,7 @@
 <?php
-// ServiciosController.php
 
 require_once __DIR__ . '/../../modelo/servicios/serviciosModel.php';
+require_once __DIR__ . '/../../config/Database.php';
 
 class ServiciosController {
     private $serviciosModel;
@@ -10,25 +10,12 @@ class ServiciosController {
         $this->serviciosModel = new ServiciosModel();
     }
 
-    public function obtenerServicios() {
-        session_start(); // Asegurar que la sesión está iniciada
-        
-        if (!isset($_SESSION['hotelId'])) {
-            echo json_encode(["error" => "ID de hotel no disponible en la sesión"]);
-            return;
+    public function obtenerServicios($hotelId) {
+        if (!$hotelId) {
+            return []; // Si no hay hotel seleccionado, devuelve un array vacío
         }
 
-        $servicios = $this->serviciosModel->obtenerServicios();
-        
-        if ($servicios) {
-            echo json_encode($servicios);
-        } else {
-            echo json_encode(["error" => "No se encontraron servicios disponibles"]);
-        }
+        return $this->serviciosModel->obtenerServicios($hotelId);
     }
 }
-
-// Manejo de la solicitud
-$controller = new ServiciosController();
-$controller->obtenerServicios();
 ?>
