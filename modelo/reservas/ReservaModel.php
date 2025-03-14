@@ -241,7 +241,7 @@ class ReservaModel {
     }
     
     
-    public function insertarReserva($idCliente, $idActividad, $idHabitacion, $idHotel, $idTarifa, $precioHabitacion, $precioActividad, $precioTarifa, $precioServicio, $precioTotal, $checkin, $checkout, $numeroPersonas, $idPais) {
+    public function insertarReserva($idCliente, $idHabitacion, $idHotel, $idTarifa, $precioHabitacion, $precioActividad, $precioTarifa, $precioServicio, $precioTotal, $checkin, $checkout, $numeroPersonas, $idPais) {
         try {
             // Validación de datos obligatorios
             if (!$idCliente || !$idHabitacion || !$idHotel || !$precioTotal || !$checkin || !$checkout || !$numeroPersonas || !$idPais) {
@@ -250,7 +250,7 @@ class ReservaModel {
     
             // 🔹 **Asegurar que las columnas y los valores coinciden**
             $sql = "INSERT INTO Reservas 
-                    (Id_Cliente, Id_Actividad, Id_Habitacion, Id_Hotel, Id_Tarifa, Precio_Habitacion, Precio_Actividad, 
+                    (Id_Cliente, Id_Habitacion, Id_Hotel, Id_Tarifa, Precio_Habitacion, Precio_Actividad, 
                      Precio_Tarifa, Precio_Servicio, Precio_Total, Checkin, Checkout, Numero_Personas, Id_Pais, Estado) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pagado')";
     
@@ -260,9 +260,8 @@ class ReservaModel {
             }
     
             // 🔹 **Corrección: Coincidencia exacta entre tipos y valores**
-            $stmt->bind_param("iiiiidddddssii", 
+            $stmt->bind_param("iiiidddddssii", 
                 $idCliente, 
-                $idActividad, 
                 $idHabitacion, 
                 $idHotel, 
                 $idTarifa, 
@@ -317,6 +316,22 @@ class ReservaModel {
     
     
     
+    public function asociarActividadAReserva($idReserva, $idActividad, $precio) {
+        $query = "INSERT INTO Reservas_Actividades (Id_Reserva, Id_Actividad, Precio_Actividad) VALUES (?, ?, ?)";
+        $stmt = $this->conn->prepare($query);
+        
+        if (!$stmt) {
+            die("Error en la consulta: " . $this->conn->error);
+        }
+        
+        $stmt->bind_param("iid", $idReserva, $idActividad, $precio);
+        
+        if (!$stmt->execute()) {
+            die("Error al asociar actividad: " . $stmt->error);
+        }
+        
+        $stmt->close();
+    }
     
 
 

@@ -21,6 +21,10 @@ class ActividadController {
         return $this->actividadModel->obtenerPrecioActividad($actividadId);
     }
 
+    public function obtenerNombreActividad($actividadId){
+        return $this->actividadModel->obtenerNombreActividad($actividadId);
+    }
+
     // Obtener detalles de una actividad por su ID
     public function obtenerActividadPorId($actividadId) {
         return $this->actividadModel->obtenerActividadPorId($actividadId);

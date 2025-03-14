@@ -29,7 +29,7 @@ class ActividadModel {
     
     public function obtenerPrecioActividad($actividadId) {
         try {
-            $sql = "SELECT Precio FROM Actividades WHERE Id_Actividad = ?";
+            $sql = "SELECT Precio FROM Actividades WHERE Id_Actividades = ?";
             $stmt = $this->conn->prepare($sql);
             $stmt->bind_param("i", $actividadId);
             $stmt->execute();
@@ -41,6 +41,33 @@ class ActividadModel {
             return 0;
         }
     }
+    public function obtenerNombreActividad($actividadId) {
+        try {
+            $sql = "SELECT Nombre FROM Actividades WHERE Id_Actividades = ?";
+            $stmt = $this->conn->prepare($sql);
+            
+            if (!$stmt) {
+                throw new Exception("Error en la preparación de la consulta: " . $this->conn->error);
+            }
+    
+            $stmt->bind_param("i", $actividadId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            if ($row = $result->fetch_assoc()) {
+                $nombreActividad = $row['Nombre']; // Obtiene el nombre de la actividad
+            } else {
+                $nombreActividad = null; // No se encontró la actividad
+            }
+    
+            $stmt->close();
+            return $nombreActividad;
+        } catch (Exception $e) {
+            error_log("Error al obtener nombre de actividad: " . $e->getMessage());
+            return null; // Devuelve null si hay un error
+        }
+    }
+    
 
     // Obtener una actividad específica por su ID
     public function obtenerActividadPorId($actividadId) {

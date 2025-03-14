@@ -24,7 +24,11 @@ class PagoController {
     
     
     public function procesarPagoReserva($datos) {
+        
+        
         try {
+
+            
             // ✅ 1. Validar los datos obligatorios
             if (empty($datos['clienteId']) || empty($datos['habitacionId']) || empty($datos['hotelId']) || empty($datos['checkin']) || empty($datos['checkout']) || empty($datos['guests']) || empty($datos['paisId'])) {
                 throw new Exception("Error: Datos de la reserva incompletos.");
@@ -53,7 +57,6 @@ class PagoController {
             // ✅ 5. Insertar la reserva en la base de datos
             $idReserva = $this->reservaModel->insertarReserva(
                 $datos['clienteId'],
-                !empty($datos['actividadId']) ? $datos['actividadId'] : null,
                 $datos['habitacionId'],
                 $datos['hotelId'],
                 !empty($datos['tarifaId']) ? $datos['tarifaId'] : null,
@@ -75,9 +78,19 @@ class PagoController {
             // ✅ 6. Insertar servicios en la tabla intermedia
             if (!empty($datos['servicios']) && is_array($datos['servicios'])) {
                 foreach ($datos['servicios'] as $idServicio => $precio) {
-                    $this->reservaModel->asociarServicioAReserva($idReserva, $idServicio);
+                    if (!$this->reservaModel->asociarServicioAReserva($idReserva, $idServicio)) {
+                        throw new Exception("Error al asociar el servicio ID: $idServicio.");
+                    }
                 }
             }
+            
+            // ✅ Insertar actividades en la tabla intermedia
+            if (!empty($datos['actividades']) && is_array($datos['actividades'])) {
+                foreach ($datos['actividades'] as $idActividad => $precio) {
+                    $this->reservaModel->asociarActividadAReserva($idReserva, $idActividad, $precio);
+                }
+            }
+
     
             // ✅ 7. Procesar el pago
             $pagoExitoso = $this->pagoModel->procesarPago(
@@ -111,22 +124,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $datosReserva = [
         'clienteId' => $_POST['clienteId'] ?? null,
-        'actividadId' => $_POST['actividadId'] ?? null,
         'habitacionId' => $_POST['habitacionId'] ?? null,
         'hotelId' => $_POST['hotelId'] ?? null,
-        'servicios' => $_POST['servicios'] ?? [],
-        'tarifaId' => $_POST['tarifaId'] ?? null,
-        'precioHabitacion' => $_POST['precioHabitacion'] ?? 0,
-        'precioActividad' => $_POST['precioActividad'] ?? 0,
-        'precioTarifa' => $_POST['precioTarifa'] ?? 0,
-        'precioServicio' => $_POST['precioServicio'] ?? 0,
-        'precioTotal' => $_POST['precioTotal'] ?? 0,
         'checkin' => $_POST['checkin'] ?? null,
         'checkout' => $_POST['checkout'] ?? null,
         'guests' => $_POST['guests'] ?? null,
         'paisId' => $_POST['paisId'] ?? null,
-        'metodoPagoId' => isset($_POST['metodoPagoId']) ? intval($_POST['metodoPagoId']) : null
+        'metodoPagoId' => isset($_POST['metodoPagoId']) ? intval($_POST['metodoPagoId']) : null,
+        'servicios' => [],
+        'actividades' => [],
     ];
+    
+    // 📌 Reestructurar los servicios para que sean clave => valor (ID => Precio)
+    if (!empty($_POST['servicios']) && is_array($_POST['servicios'])) {
+        foreach ($_POST['servicios'] as $idServicio) {
+            $datosReserva['servicios'][$idServicio] = 0; // Asigna un precio 0 si no hay dato
+        }
+    }
+    
+    // 📌 Reestructurar las actividades de la misma forma
+    if (!empty($_POST['actividades']) && is_array($_POST['actividades'])) {
+        foreach ($_POST['actividades'] as $idActividad) {
+            $datosReserva['actividades'][$idActividad] = 0; // Asigna un precio 0 si no hay dato
+        }
+    }
+    
+    // 🚨 Imprimir los datos corregidos antes de procesar la reserva
+    echo "<pre>";
+    print_r($datosReserva);
+    echo "</pre>";
+  
 
     // ✅ Ejecutar el proceso de pago y reserva
     $resultado = $pagoController->procesarPagoReserva($datosReserva);
@@ -134,9 +161,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ✅ Manejo seguro de errores y redirección
     if ($resultado['success']) {
         header("Location: ../../vista/reserva_confirmada.php");
-        
-    } else {
-        echo "<script>alert('Error: " . $resultado['message'] . "'); window.history.back();</script>";
-    }
+     
+    };
+
+ 
 
 }
