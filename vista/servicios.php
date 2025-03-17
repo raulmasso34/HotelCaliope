@@ -20,14 +20,7 @@ if (isset($_POST['metodoPagoId'])) {
 }
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    echo "<h3>Datos recibidos de POST</h3>";
-    echo "<pre>";
-    var_dump($_POST);
-    echo "</pre>";
 
-
-}
 
 
 
@@ -71,6 +64,14 @@ if (!is_array($actividades)) {
     $actividades = [];
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $_SESSION['Reservas']['actividades'] = $_POST['actividades'] ?? [];
+}
+
+
+
+
+
 
 
 ?>
@@ -89,14 +90,7 @@ if (!is_array($actividades)) {
     <h1>¿Quieres añadir algún servicio?</h1>
     <form action="../vista/pagos.php" method="POST">
         <!-- Depuración: Ver si los datos se envían correctamente -->
-        <?php
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            echo "<h3>Datos enviados desde servicios.php</h3>";
-            echo "<pre>";
-            var_dump($_POST);
-            echo "</pre>";
-        }
-        ?>
+        
         
         <input type="hidden" name="habitacionId" value="<?php echo $_SESSION['Reservas']['habitacionId'] ?? ''; ?>">
         <input type="hidden" name="hotelId" value="<?php echo $_SESSION['hotelId']; ?>">
@@ -105,28 +99,24 @@ if (!is_array($actividades)) {
         <input type="hidden" name="guests" value="<?php echo $_SESSION['Reservas']['guests'] ?? ''; ?>">
         <input type="hidden" name="paisId" value="<?php echo $_SESSION['Reservas']['paisId'] ?? ''; ?>">
         <input type="hidden" name="metodoPagoId" value="<?php echo $_SESSION['Reservas']['metodoPagoId'] ?? ''; ?>">
-
         <div class="servicios-container">
-            <?php foreach ($servicios as $servicio) : ?>
-                <div class="servicio">
-                    <h3><?php echo htmlspecialchars($servicio['Servicio']); ?></h3>
-                    <p>Precio: <?php echo number_format($servicio['Precio'], 2); ?>€</p>
-                    <label>
-                        <input type="checkbox" name="servicios[]" value="<?php echo $servicio['Id_Servicio']; ?>">
-                    </label>
-                </div>
-            <?php endforeach; ?>
+        <?php foreach ($servicios as $servicio) : ?>
+            <label>
+                <input type="checkbox" name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" value="<?php echo $servicio['Precio']; ?>">
+                <?php echo htmlspecialchars($servicio['Servicio']); ?> - $<?php echo number_format($servicio['Precio'], 2); ?>
+            </label><br>
+        <?php endforeach; ?>
         </div>
+       
+
 
         <div class="actividades-container">
             <?php foreach ($actividades as $actividad) : ?>
-                <div class="actividad">
-                    <h3><?php echo htmlspecialchars($actividad['Nombre']); ?></h3>
-                    <p><strong>Precio:</strong> <?php echo number_format($actividad['Precio'], 2); ?>€</p>
-                    <label>
-                        <input type="checkbox" name="actividades[]" value="<?php echo $actividad['Id_Actividades']; ?>">
-                    </label>
-                </div>
+                <label>
+                <input type="checkbox" name="actividades[<?php echo $actividad['Id_Actividades']; ?>]" value="<?php echo $actividad['Precio']; ?>">
+
+                    <?php echo htmlspecialchars($actividad['Nombre']); ?> - $<?php echo number_format($actividad['Precio'], 2); ?>
+                </label><br>
             <?php endforeach; ?>
         </div>
 

@@ -1,4 +1,4 @@
-<?php
+ <?php
 session_start();
 
 // Configuración de errores
@@ -77,6 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -109,39 +112,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <p><strong>Precio Total (sin servicios):</strong> $<?php echo number_format($precioTotal - $totalServicios - $totalActividades, 2); ?></p>
 
 <h3>Servicios Adicionales Seleccionados:</h3>
-<?php if (!empty($_POST['servicios'])) : ?>
-    <ul>
-        <?php foreach ($_POST['servicios'] as $idServicio => $precio) : ?>
-            <li>Servicio ID: <?php echo htmlspecialchars($idServicio); ?> (Falta cargar nombre)</li>
-        <?php endforeach; ?>
-    </ul>
-<?php else : ?>
-    <p>No has seleccionado servicios adicionales.</p>
-<?php endif; ?>
+<?php
+require_once __DIR__ ."/../controller/servicios/serviciosController.php";
+$servicioController = new ServiciosController();
+
+$serviciosSeleccionados = $_POST['servicios'] ?? []; // Si no hay selección, deja array vacío
+
+if (!empty($serviciosSeleccionados)) {
+    echo "<ul>";
+    foreach ($serviciosSeleccionados as $idServicio => $precio) {
+        $nombreServicio = $servicioController->obtenerNombreServicioPorId($idServicio); // Obtener el nombre
+        if ($nombreServicio) {
+            echo "<li>" . htmlspecialchars($nombreServicio) . " - $" . number_format($precio, 2) . "</li>";
+        } else {
+            echo "<li>Servicio ID: " . htmlspecialchars($idServicio) . " (No encontrado)</li>";
+        }
+    }
+    echo "</ul>";
+} else {
+    echo "<p>No has seleccionado servicios adicionales.</p>";
+}
+?>
 
 <h3>Actividades Seleccionadas:</h3>
-<?php 
-require_once __DIR__ . '/../controller/actividad/actividadController.php';
-$actividadController = new ActividadController();
+<ul>
+<?php
+if (!empty($_SESSION['Reservas']['actividades'])) {
+    foreach ($_SESSION['Reservas']['actividades'] as $idActividad => $precio) {
+        $nombreActividad = $actividadController->obtenerNombreActividad($idActividad) ?? "Actividad no encontrada";
+        echo "<li>$nombreActividad - Precio: $" . number_format($precio, 2) . "</li>";
+    }
+} else {
+    echo "<li>No se seleccionaron actividades.</li>";
+}
+?>
+</ul>
 
-if (!empty($datosReserva['actividades'])) : ?>
-    <ul>
-        <?php 
-        foreach ($datosReserva['actividades'] as $idActividad => $precio) : 
-            if ($idActividad > 0) { // Asegurar que el ID de la actividad es válido
-                $nombreActividad = $actividadController->obtenerNombreActividad($idActividad);
-                if (!empty($nombreActividad)) {
-                    echo "<li>" . htmlspecialchars($nombreActividad) . " (ID: $idActividad)</li>";
-                } else {
-                    echo "<li>Actividad ID: $idActividad (No encontrada en BD)</li>";
-                }
-            }
-        endforeach; 
-        ?>
-    </ul>
-<?php else : ?>
-    <p>No has seleccionado actividades adicionales.</p>
-<?php endif; ?>
+
 
 
 

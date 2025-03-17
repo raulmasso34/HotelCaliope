@@ -43,7 +43,7 @@ class ActividadModel {
     }
     public function obtenerNombreActividad($actividadId) {
         try {
-            $sql = "SELECT Nombre FROM Actividades WHERE Id_Actividades = ?";
+            $sql = "SELECT Nombre,Precio FROM Actividades WHERE Id_Actividades = ?";
             $stmt = $this->conn->prepare($sql);
             
             if (!$stmt) {
