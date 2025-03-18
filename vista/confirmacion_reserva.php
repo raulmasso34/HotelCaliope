@@ -1,8 +1,6 @@
-<?php
+<!-- <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
 // Conexión a la base de datos
 include '../config/Database.php';
 $database = new Database();
@@ -53,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Obtener el nombre del país desde HotelController
     $paisNombre = $paisController->obtenerNombrePais($paisId);
-
     $_SESSION['Reservas'] = [
         'habitacionId' => $habitacionId,
         'clienteId' => $clienteId,
@@ -66,14 +63,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
     
 }
-echo "<pre>";
-print_r($_SESSION['Reservas']);
-echo "</pre>";
+
 
 // Cerrar conexión
 $database->closeConnection();
 ?>
-
+ -->
 
 <!DOCTYPE html>
 <html lang="es">

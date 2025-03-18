@@ -149,11 +149,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     
-    // 🚨 Imprimir los datos corregidos antes de procesar la reserva
-    echo "<pre>";
-    print_r($datosReserva);
-    echo "</pre>";
-  
+
+   
 
     // ✅ Ejecutar el proceso de pago y reserva
     $resultado = $pagoController->procesarPagoReserva($datosReserva);

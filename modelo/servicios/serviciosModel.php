@@ -66,6 +66,17 @@ class ServiciosModel {
         $stmt->close();
         return $nombre;
     }
+
+    public function obtenerServicioPorId($servicioId){
+        $sql = "SELECT Id_Servicio, Servicio, Precio FROM Servicio WHERE Id_Servicio =?";
+        $stmt = $this -> conn -> prepare($sql);
+        $stmt-> bind_param("i", $servicioId);
+        $stmt -> execute();
+        $result = $stmt-> get_result();
+        $servicio = $result-> fetch_assoc();
+        $stmt->close();
+        return $servicio;
+    }
     
     
 }
