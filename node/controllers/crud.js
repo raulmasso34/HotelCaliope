@@ -94,58 +94,35 @@ exports.save = async (req, res) => {
 
 //Habitaciones
 
-exports.savehab = (req, res)=>{
+exports.savehab = (req, res) => {
+    const { Numero_Habitacion, Tipo, Capacidad, Precio, Id_Hotel } = req.body;
 
-    const Numero_Habitacion = req.body.Numero_Habitacion;
-    const Tipo = req.body.Tipo;
-    const Capacidad = req.body.Capacidad;
-    const Precio = req.body.Precio;
-    const Disponibilidad = req.body.Disponibilidad;  
-    const Id_Hotel = req.body.Id_Hotel;
-   
-    conexion.query('INSERT INTO Habitaciones SET ?', 
-       {
-       Numero_Habitacion:Numero_Habitacion, 
-       Tipo:Tipo,
-       Capacidad:Capacidad,
-       Precio:Precio,
-       Disponibilidad:Disponibilidad,
-       Id_Hotel:Id_Hotel
-   }, (error, results)=>{
-       if(error){
-           console.log(error);
-       }else{
-           res.redirect('/habitaciones/');
-       }
-   })
-    //console.log(nom + " - "+cognom+" - "+dni+" - "+correu+" - "+telefon+" - "+usuari+" - "+password+" - "+pais+" - "+ciudad+" - "+codigopostal);
-    console.log(req.body);
-   
+    const query = 'INSERT INTO Habitaciones (Numero_Habitacion, Tipo, Capacidad, Precio, Id_Hotel) VALUES (?, ?, ?, ?, ?)';
     
-   };
-   
-   exports.updatehab = (req, res) => {
-       const id = req.body.Id_Habitaciones; // Cambiar 'id' por 'Id_Client' para mantener coherencia.
-       const Numero_Habitacion = req.body.Numero_Habitacion;
-       const Tipo = req.body.Tipo;
-       const Capacidad = req.body.Capacidad;
-       const Precio = req.body.Precio;
-       const Disponibilidad = req.body.Disponibilidad;  
-       const Id_Hotel = req.body.Id_Hotel;
-   
-       conexion.query(
-           'UPDATE Habitaciones SET Numero_Habitacion = ?, Tipo = ?, Capacidad = ?, Precio = ?, Disponibilidad = ?, Id_Hotel = ? WHERE Id_Habitaciones = ?',
-           [Numero_Habitacion, Tipo, Capacidad, Precio, Disponibilidad, Id_Hotel, id],
-           (error, results) => {
-               if (error) {
-                   console.error('Error en la consulta SQL:', error);
-                   res.status(500).send('Error en la base de datos');
-               } else {
-                   res.redirect('/habitaciones/');
-               }
-           }
-       );
-   };
+    conexion.query(query, [Numero_Habitacion, Tipo, Capacidad, Precio, Id_Hotel], (error, results) => {
+        if (error) {
+            console.error('Error al guardar la habitación:', error);
+            return res.status(500).send('Error en la base de datos');
+        }
+        res.redirect(`/habitaciones/${Id_Hotel}`);
+    });
+};
+
+exports.updatehab = (req, res) => {
+    const { Id_Habitaciones, Numero_Habitacion, Tipo, Capacidad, Precio, Id_Hotel } = req.body;
+
+    const query = 'UPDATE Habitaciones SET Numero_Habitacion = ?, Tipo = ?, Capacidad = ?, Precio = ?, Id_Hotel = ? WHERE Id_Habitaciones = ?';
+
+    conexion.query(query, [Numero_Habitacion, Tipo, Capacidad, Precio, Id_Hotel, Id_Habitaciones], (error, results) => {
+        if (error) {
+            console.error('Error al actualizar la habitación:', error);
+            return res.status(500).send('Error en la base de datos');
+        }
+        res.redirect(`/habitaciones/${Id_Hotel}`);
+    });
+};
+
+
    
    //HOTEL
 

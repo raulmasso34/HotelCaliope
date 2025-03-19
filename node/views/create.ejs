@@ -14,18 +14,16 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/"><i class="fa-solid fa-right-from-bracket"></i></a>
+        <a class="navbar-brand" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">CLIENTES</a>
+              <a class="nav-link active" aria-current="page" href="/clientes">CLIENTES</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/habitaciones/">HABITACIONES</a>
-            </li>
+         
             <li class="nav-item">
               <a class="nav-link active" href="/hotel/">HOTEL</a>
             </li>
@@ -99,10 +97,11 @@
                         <% }); %>
                       </select>
                     </div>                                    
-                    <div class="mb-3">
-                        <label for="Ciudad" class="form-label">Ciudad</label>
-                        <input type="text" class="form-control" id="Ciudad" name="Ciudad" tabindex="1">
-                    </div>
+                    <div class="mb-3 position-relative">
+                      <label for="Ciudad" class="form-label">Ciudad</label>
+                      <input type="text" class="form-control" id="Ciudad" name="Ciudad" autocomplete="off">
+                      <div id="autocomplete-list" class="autocomplete-list list-group"></div>
+                  </div>
                     <div class="mb-3">
                         <label for="CodigoPostal" class="form-label">Codigo Postal</label>
                         <input type="text" class="form-control" id="CodigoPostal" name="CodigoPostal" tabindex="1">
@@ -117,5 +116,54 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
    
+    <script>
+      const cityInput = document.getElementById("Ciudad");
+      const autocompleteList = document.getElementById("autocomplete-list");
+
+      let timeout = null; // Para retrasar las peticiones
+
+      cityInput.addEventListener("input", () => {
+          clearTimeout(timeout); // Reiniciar el temporizador
+
+          const query = cityInput.value.trim();
+          if (query.length < 2) {
+              autocompleteList.innerHTML = "";
+              autocompleteList.style.display = "none";
+              return;
+          }
+
+          timeout = setTimeout(async () => {
+              try {
+                  const response = await fetch(`http://localhost:3000/autocomplete?q=${query}`);
+                  const cities = await response.json();
+
+                  autocompleteList.innerHTML = "";
+                  if (cities.length > 0) {
+                      autocompleteList.style.display = "block";
+                      cities.forEach(city => {
+                          const item = document.createElement("div");
+                          item.classList.add("autocomplete-item", "list-group-item");
+                          item.textContent = city;
+                          item.addEventListener("click", () => {
+                              cityInput.value = city;
+                              autocompleteList.style.display = "none";
+                          });
+                          autocompleteList.appendChild(item);
+                      });
+                  } else {
+                      autocompleteList.style.display = "none";
+                  }
+              } catch (error) {
+                  console.error("Error en la solicitud:", error);
+              }
+          }, 300); // Espera 300ms antes de hacer la petición
+      });
+
+      document.addEventListener("click", (event) => {
+          if (!event.target.closest(".position-relative")) {
+              autocompleteList.style.display = "none";
+          }
+      });
+  </script>
   </body>
 </html>
