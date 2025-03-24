@@ -549,3 +549,101 @@ if (!empty($actividadesSeleccionadas)) : ?>
         endforeach; 
         ?>
     </ul>
+
+
+
+    header detalles:
+
+     <header>
+        <section class="main-up">
+            <div class="main-up-left">
+               <a href="../vista/index.php"> <img src="../static/img/logo_blanco.png" alt="Imagen secundaria"></a>
+            </div>
+
+            <div class="main-up-right">
+                <div class="links">
+                    <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                    
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Hoteles</a>
+                        <div class="dropdown-content">
+                            <div class="dropdown-section">
+                                <h4>Europa</h4>
+                                <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                                <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                                <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                            </div>
+                            <div class="dropdown-section">
+                                <h4>USA</h4>
+                                <a href="../vista/ciudades/USA/Florida.php">Florida</a>
+                                <a href="../vista/ciudades/USA/California.php">California</a>
+                                <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="../vista/galeria/galeria.php">Galería</a>
+                    <a href="../vista/ofertas/ofertas.php">Ofertas</a>
+                    <a href="../vista/Contacto/contacto.php">Contacto</a>
+                    
+                    <!-- Contenedor del perfil -->
+                    <div class="dropdown-perfil">
+                        <a class="icon-perfil" href="javascript:void(0);">
+                        <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
+                        
+                        </a>
+                        <div class="dropdown-perfil-content">
+                            <a href="../vista/Clientes/login.php">
+                                <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+                            </a>
+                            <a href="../vista/Clientes/perfil.php">
+                                <i class="bi bi-person"></i> Perfil
+                            </a>
+                            <a href="../controller/clients/LoginController.php?action=logout">
+                                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menú hamburguesa (solo visible en pantallas pequeñas) -->
+            <div id="menu-toggle" class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+
+            <!-- Menú desplegable -->
+            <div class="mobile-menu">
+                <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                <a href="../vista/galeria/galeria.php">Galería</a>
+                <a href="../vista/ofertas/ofertas.php">Ofertas</a>
+                <a href="../vista/Contacto/contacto.php">Contacto</a>
+                <a href="../vista/Clientes/login.php">Iniciar sesión</a>
+                <a href="../vista/Clientes/perfil.php">Perfil</a>
+                
+                <!-- Enlace para Hoteles con dropdown -->
+                <div class="dropdown-mobile">
+                    <a href="#" class="dropbtn">Hoteles</a>
+                    <div class="dropdown-content-mobile">
+                        <div class="dropdown-section">
+                            <h4>Europa</h4>
+                            <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                            <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                            <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>USA</h4>
+                            <a href="../vista/ciudades/USA/Florida.php">Florida</a>
+                            <a href="../vista/ciudades/USA/California.php">California</a>
+                            <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+    </header>

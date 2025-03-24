@@ -245,22 +245,23 @@ class ReservaModel {
         try {
             // Validación de datos obligatorios
             if (!$idCliente || !$idHabitacion || !$idHotel || !$precioTotal || !$checkin || !$checkout || !$numeroPersonas || !$idPais) {
-                throw new Exception("Uno o más valores obligatorios están vacíos.");
+                throw new Exception("Datos obligatorios faltantes.");
             }
     
-            // 🔹 **Asegurar que las columnas y los valores coinciden**
+            // 🔴 SQL Corregido (14 columnas = 14 valores)
             $sql = "INSERT INTO Reservas 
                     (Id_Cliente, Id_Habitacion, Id_Hotel, Id_Tarifa, Precio_Habitacion, Precio_Actividad, 
                      Precio_Tarifa, Precio_Servicio, Precio_Total, Checkin, Checkout, Numero_Personas, Id_Pais, Estado) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pagado')";
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pagado')";
     
             $stmt = $this->conn->prepare($sql);
             if (!$stmt) {
                 throw new Exception("Error al preparar la consulta: " . $this->conn->error);
             }
     
-            // 🔹 **Corrección: Coincidencia exacta entre tipos y valores**
-            $stmt->bind_param("iiiidddddssii", 
+            // 🔴 bind_param Corregido (13 parámetros)
+            $stmt->bind_param(
+                "iiiidddddsssi", 
                 $idCliente, 
                 $idHabitacion, 
                 $idHotel, 
@@ -276,7 +277,6 @@ class ReservaModel {
                 $idPais
             );
     
-            // Ejecutar consulta
             if ($stmt->execute()) {
                 $idReserva = $this->conn->insert_id;
                 $stmt->close();
@@ -286,11 +286,9 @@ class ReservaModel {
             }
         } catch (Exception $e) {
             error_log("Error en insertarReserva: " . $e->getMessage());
-            echo "<p class='text-danger'>Error: " . $e->getMessage() . "</p>";
             return false;
         }
     }
-    
 
     public function asociarServicioAReserva($idReserva, $idServicio) {
         // ✅ Consulta SQL corregida para MySQLi

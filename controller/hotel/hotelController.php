@@ -30,6 +30,16 @@ class HotelController {
     public function obtenerHabitaciones($hotelId) {
         return $this->hotelModel->obtenerHabitaciones($hotelId);
     }
+    public function obtenerTodosHoteles() {
+        return $this->hotelModel->obtenerTodosHoteles();
+    }
+
+    public function obtenerEmailHotel($hotelId) {
+        if (!is_numeric($hotelId)) {
+            return ['error' => 'ID de hotel inválido'];
+        }
+        return $this->hotelModel->obtenerEmailPorId($hotelId);
+    }
 }
 
 // Manejo de peticiones directas desde el navegador o AJAX
@@ -61,5 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 break;
         }
     }
+    
 }
 ?>

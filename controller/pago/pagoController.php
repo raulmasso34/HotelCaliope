@@ -1,5 +1,7 @@
 <?php
-// Configuración de errores
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -71,9 +73,7 @@ class PagoController {
                 $datos['paisId']
             );
     
-            if (!$idReserva) {
-                throw new Exception("Error al insertar la reserva.");
-            }
+          
     
             // ✅ 6. Insertar servicios en la tabla intermedia
             if (!empty($datos['servicios']) && is_array($datos['servicios'])) {
@@ -117,50 +117,67 @@ class PagoController {
     }
     
 }
-
-// ✅ Capturar datos del formulario
+// ✅ Capturar datos de la SESIÓN y POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pagoController = new PagoController();
 
+    // 1. Obtener datos de la sesión
+    if (!isset($_SESSION['Reservas'])) {
+        die(json_encode(['success' => false, 'message' => 'Sesión expirada o datos no encontrados.']));
+    }
+    $reservaSession = $_SESSION['Reservas'];
+
+    // 2. Construir $datosReserva combinando sesión y POST
     $datosReserva = [
-        'clienteId' => $_POST['clienteId'] ?? null,
-        'habitacionId' => $_POST['habitacionId'] ?? null,
-        'hotelId' => $_POST['hotelId'] ?? null,
-        'checkin' => $_POST['checkin'] ?? null,
-        'checkout' => $_POST['checkout'] ?? null,
-        'guests' => $_POST['guests'] ?? null,
-        'paisId' => $_POST['paisId'] ?? null,
-        'metodoPagoId' => isset($_POST['metodoPagoId']) ? intval($_POST['metodoPagoId']) : null,
-        'servicios' => [],
-        'actividades' => [],
+        'clienteId'        => $reservaSession['clienteId'] ?? null,
+        'habitacionId'     => $reservaSession['habitacionId'] ?? null,
+        'hotelId'          => $reservaSession['hotelId'] ?? null,
+        'checkin'          => $reservaSession['checkin'] ?? null,
+        'checkout'         => $reservaSession['checkout'] ?? null,
+        'guests'           => $reservaSession['guests'] ?? null,
+        'paisId'           => $reservaSession['paisId'] ?? null,
+        'metodoPagoId'     => $reservaSession['metodoPagoId'] ?? null,
+        'precioHabitacion' => $reservaSession['precioHabitacion'] ?? 0,
+        'servicios'        => [],
+        'actividades'      => []
     ];
-    
-    // 📌 Reestructurar los servicios para que sean clave => valor (ID => Precio)
-    if (!empty($_POST['servicios']) && is_array($_POST['servicios'])) {
-        foreach ($_POST['servicios'] as $idServicio) {
-            $datosReserva['servicios'][$idServicio] = 0; // Asigna un precio 0 si no hay dato
+
+    // 3. Procesar servicios y actividades (con precios)
+    if (!empty($_SESSION['Reservas']['servicios'])) {
+        foreach ($_SESSION['Reservas']['servicios'] as $id => $servicioStr) {
+            list($idServicio, $precio) = explode('|', $servicioStr);
+            $datosReserva['servicios'][$idServicio] = floatval($precio);
         }
     }
-    
-    // 📌 Reestructurar las actividades de la misma forma
-    if (!empty($_POST['actividades']) && is_array($_POST['actividades'])) {
-        foreach ($_POST['actividades'] as $idActividad) {
-            $datosReserva['actividades'][$idActividad] = 0; // Asigna un precio 0 si no hay dato
+
+    if (!empty($_SESSION['Reservas']['actividades'])) {
+        foreach ($_SESSION['Reservas']['actividades'] as $id => $actividadStr) {
+            list($idActividad, $precio) = explode('|', $actividadStr);
+            $datosReserva['actividades'][$idActividad] = floatval($precio);
         }
     }
-    
 
-   
+    // 4. Validar datos críticos
+    $camposRequeridos = ['clienteId', 'habitacionId', 'hotelId', 'checkin', 'checkout', 'guests', 'paisId'];
+    foreach ($camposRequeridos as $campo) {
+        if (empty($datosReserva[$campo])) {
+            die(json_encode(['success' => false, 'message' => "Campo requerido faltante: $campo"]));
+        }
+    }
 
-    // ✅ Ejecutar el proceso de pago y reserva
+    // 5. Ejecutar el proceso
     $resultado = $pagoController->procesarPagoReserva($datosReserva);
 
-    // ✅ Manejo seguro de errores y redirección
+    // 6. Manejar respuesta
+    // Dentro de tu controlador (pagoController.php)
     if ($resultado['success']) {
+        unset($_SESSION['Reservas']);
         header("Location: ../../vista/reserva_confirmada.php");
-     
-    };
-
- 
-
+        exit();
+    } else {
+        // Guardar el error en sesión y recargar pagos.php
+        $_SESSION['error_pago'] = $resultado['message'];
+        header("Location: http://localhost/HotelCaliope/HotelCaliope-2/vista/pagos.php");
+        exit();
+    }
 }

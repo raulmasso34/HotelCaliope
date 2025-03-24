@@ -11,30 +11,51 @@ class PagoModel {
 
     // Método para procesar un pago
    // Método para procesar un pago
-   public function procesarPago($hotelId, $clienteId, $reservaId, $metodoPago, $fechaPago, $metodoPagoId) {
-    $query = "INSERT INTO Pago (Id_Hotel, Id_Cliente, Id_Reserva, MetodoPago, Fecha_Pago, Id_MetodoPago) 
-              VALUES (?, ?, ?, ?, ?, ?)";
-              error_log("Fecha generada: " . $fechaPago);
+    public function procesarPago($hotelId, $clienteId, $reservaId, $metodoPago, $fechaPago, $metodoPagoId) {
+        try {
+            // ✅ Validar existencia de la reserva
+            $sqlCheckReserva = "SELECT Id_Reserva FROM Reservas WHERE Id_Reserva = ?";
+            $stmtCheck = $this->conn->prepare($sqlCheckReserva);
+            $stmtCheck->bind_param("i", $reservaId);
+            $stmtCheck->execute();
+            $result = $stmtCheck->get_result();
 
-    
-    $stmt = $this->conn->prepare($query);
+            if ($result->num_rows === 0) {
+                throw new Exception("Error: La reserva con ID $reservaId no existe.");
+            }
+            $stmtCheck->close();
 
-    if (!$stmt) {
-        throw new Exception('Error al preparar la consulta: ' . $this->conn->error);
+            // ✅ Insertar pago
+            $query = "INSERT INTO Pago (Id_Hotel, Id_Cliente, Id_Reserva, MetodoPago, Fecha_Pago, Id_MetodoPago) 
+                    VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $this->conn->prepare($query);
+
+            if (!$stmt) {
+                throw new Exception('Error al preparar la consulta: ' . $this->conn->error);
+            }
+
+            // ✅ Tipos correctos: iiissi (3 enteros, 2 strings, 1 entero)
+            $stmt->bind_param("iiissi", 
+                $hotelId, 
+                $clienteId, 
+                $reservaId, 
+                $metodoPago, 
+                $fechaPago, 
+                $metodoPagoId
+            );
+
+            if (!$stmt->execute()) {
+                throw new Exception("Error al procesar el pago: " . $stmt->error);
+            }
+
+            $stmt->close();
+            return true;
+
+        } catch (Exception $e) {
+            error_log("Error en procesarPago: " . $e->getMessage());
+            throw $e; // Propagar el error para manejo superior
+        }
     }
-
-    // 🔹 Corregido: Usa "iiisis" en `bind_param()`
-    $stmt->bind_param("iiissi", $hotelId, $clienteId, $reservaId, $metodoPago, $fechaPago, $metodoPagoId);
-
-
-    if ($stmt->execute()) {
-        return true; // ✅ Éxito
-    } else {
-        throw new Exception("Error al procesar el pago: " . $stmt->error);
-    }
-
-    $stmt->close();
-}
 
 
 

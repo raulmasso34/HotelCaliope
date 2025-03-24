@@ -66,7 +66,33 @@ class HotelModel {
         }
     }
 
+    public function obtenerTodosHoteles() {
+        $query = "SELECT Id_Hotel, Nombre, CorreoElectronico FROM Hotel";
+        $result = $this->conn->query($query);
+        
+        if (!$result) {
+            error_log("Error MySQLi: " . $this->conn->error);
+            return [];
+        }
+        
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function obtenerEmailPorId($hotelId) {
+        $stmt = $this->conn->prepare("SELECT CorreoElectronico FROM Hotel WHERE Id_Hotel = ?");
+        $stmt->bind_param("i", $hotelId);
+        
+        if (!$stmt->execute()) {
+            error_log("Error ejecutando consulta: " . $stmt->error);
+            return null;
+        }
+        
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+}
+
     // Si necesitas más funciones, puedes agregarlas aquí, por ejemplo:
     // - obtenerHotelesPorEstrellas($estrellas)
-}
+
 ?>

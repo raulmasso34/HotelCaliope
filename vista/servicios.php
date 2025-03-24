@@ -33,31 +33,11 @@ if (!isset($_SESSION['Reservas'])) {
     exit;
 }
 
-// Guardar servicios y actividades en la sesión
-// Guardar servicios y actividades en la sesión
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Fusionar con los datos previos de la sesión para no perder información
-    $_SESSION['Reservas']['servicios'] = array_merge($_SESSION['Reservas']['servicios'] ?? [], isset($_POST['servicios']) ? $_POST['servicios'] : []);
-    $_SESSION['Reservas']['actividades'] = array_merge($_SESSION['Reservas']['actividades'] ?? [], isset($_POST['actividades']) ? $_POST['actividades'] : []);
-    
-}
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!empty($_POST['servicios'])) {
-        foreach ($_POST['servicios'] as $servicio) {
-            list($id, $precio) = explode('|', $servicio);
-            $_SESSION['Reservas']['servicios'][$id] = floatval($precio);
-        }
-    }
 
-    if (!empty($_POST['actividades'])) {
-        foreach ($_POST['actividades'] as $actividad) {
-            list($id, $precio) = explode('|', $actividad);
-            $_SESSION['Reservas']['actividades'][$id] = floatval($precio);
-        }
-    }
-}
+
+
 
 
 // Obtener los datos de la reserva
@@ -97,6 +77,8 @@ $actividades = $actividadController->obtenerActividadesPorHotel($hotelId) ?: [];
         <input type="hidden" name="guests" value="<?php echo $guests ?? ''; ?>">
         <input type="hidden" name="paisId" value="<?php echo $paisId ?? ''; ?>">
         <input type="hidden" name="metodoPagoId" value="<?php echo $metodoPagoId ?? ''; ?>">
+        <input type="hidden" name="clienteId" value="<?= $_SESSION['user_id'] ?>">
+        <input type="hidden" name="precioTotal" value="<?= $_SESSION['Reservas']['precioTotal'] ?? '' ?>">
 
         <!-- Servicios disponibles -->
         <div class="servicios-container">

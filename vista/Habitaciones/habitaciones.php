@@ -28,9 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Incluir el controlador
 require_once __DIR__ . '../../../controller/reserva/reservaController.php';
+require_once __DIR__ . '../../../controller/habitacion/habitacionController.php';
 
 // Crear una instancia del controlador
 $controller = new ReservaController();
+$controllerHab = new HabitacionController();
+
+
 
 // Verificar si la instancia se ha creado correctamente
 if ($controller !== null) {
@@ -40,7 +44,7 @@ if ($controller !== null) {
     // Verificar si se han obtenido los países y hacer algo con ellos
     
 } 
-$habitaciones = $controller->obtenerHabitaciones() ?? [];
+$habitaciones = $controllerHab->obtenerHabitaciones() ?? [];
 ?>
 
 <!DOCTYPE html>
@@ -109,7 +113,7 @@ $habitaciones = $controller->obtenerHabitaciones() ?? [];
 
                     <a href="../vista/galeria/galeria.php">Galería</a>
                     <a href="../vista/ofertas/ofertas.php">Ofertas</a>
-                    <a href="../vista/Contacto/contacto.php">Contacto</a>
+                    <a href="../Contacto/contacto.php">Contacto</a>
                     
                     <!-- Contenedor del perfil -->
                     <div class="dropdown-perfil">

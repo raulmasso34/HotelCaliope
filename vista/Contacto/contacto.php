@@ -102,191 +102,264 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="shortcut icon" href="../../static/img/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 
-
-<header class="main-header">
-
-    <div class="carousel">
-        <img class="carousel-background" src="../../static/img/florida/florida3.jpg" alt="Fondo 1">
-        <img class="carousel-background" src="../../static/img/florida/florida4.jpg" alt="Fondo 2">
-        <img class="carousel-background" src="../../static/img/florida/florida5.jpg" alt="Fondo 3">
-    </div>
-
-    <section class="main-up">
-        <div class="main-up-left">
-            <img src="../../static/img/logo.png" alt="Imagen secundaria">
+<body>
+    <!-- Add this right after the <body> tag -->
+    <header class="main-header">
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <div class="nav-left">
+            <a href="../index.php">
+                <img src="../../static/img/logo.png" alt="Hotel Caliope Logo" class="nav-logo">
+            </a>
         </div>
-
-        <div class="main-up-right">
-            <div class="links">
-                <a href="../../vista/index.php">Home</a>
-                <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
-                
-                <div class="dropdown">
-                    <a href="#" class="dropbtn">Hoteles</a>
-                    <div class="dropdown-content">
-                        <div class="dropdown-section">
-                            <h4>Europa</h4>
-                            <a href="../../vista/ciudades/Europa/Galicia.php">Galicia</a>
-                            <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
-                            <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
-                        </div>
-                        <div class="dropdown-section">
-                            <h4>USA</h4>
-                            <a href="../vista/ciudades/USA/Florida.php">Florida</a>
-                            <a href="../vista/ciudades/USA/California.php">California</a>
-                            <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
-                        </div>
-                    </div>
-                </div>
-
-                <a href="../vista/galeria/galeria.php">Galería</a>
-                <a href="../vista/ofertas/ofertas.php">Ofertas</a>
-                <a href="../vista/Contacto/contacto.php">Contacto</a>
-                
-                <div class="dropdown-perfil">
-                    <a class="icon-perfil" href="javascript:void(0);">
-                        <i class="fa-regular fa-user fa-2xl"></i> <!-- Icono de usuario -->
-                    </a>
-                    <div class="dropdown-perfil-content">
-                        <a href="../vista/Clientes/login.php">Iniciar sesión</a>
-                        <a href="../vista/Clientes/perfil.php">Perfil</a>
-                        <a href="..//controller/clients/LoginController.php?action=logout">Cerrar sesión</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Menú hamburguesa (solo visible en pantallas pequeñas) -->
-        <div id="menu-toggle" class="menu-toggle">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
-
-        <!-- Menú desplegable -->
-        <div class="mobile-menu">
-            <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
-            <a href="../vista/galeria/galeria.php">Galería</a>
-            <a href="../vista/ofertas/ofertas.php">Ofertas</a>
-            <a href="../vista/Contacto/contacto.php">Contacto</a>
-            <a href="../vista/Clientes/login.php">Iniciar sesión</a>
-            <a href="../vista/Clientes/perfil.php">Perfil</a>
-            
-            <!-- Enlace para Hoteles con dropdown -->
-            <div class="dropdown-mobile">
+        <div class="nav-right">
+            <a href="../Habitaciones/habitaciones.php">Habitaciones</a>
+            <div class="nav-dropdown">
                 <a href="#" class="dropbtn">Hoteles</a>
-                <div class="dropdown-content-mobile">
+                <div class="dropdown-content">
                     <div class="dropdown-section">
                         <h4>Europa</h4>
-                        <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
-                        <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
-                        <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                        <a href="../ciudades/Europa/Galicia.php">Galicia</a>
+                        <a href="../ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                        <a href="../ciudades/Europa/Pirineos.php">Pirineos</a>
                     </div>
                     <div class="dropdown-section">
                         <h4>USA</h4>
-                        <a href="../vista/ciudades/USA/Florida.php">Florida</a>
-                        <a href="../vista/ciudades/USA/California.php">California</a>
-                        <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                        <a href="../ciudades/USA/Florida.php">Florida</a>
+                        <a href="../ciudades/USA/California.php">California</a>
+                        <a href="../ciudades/USA/NuevaYork.php">Nueva York</a>
                     </div>
                 </div>
             </div>
+            <a href="../galeria/galeria.php">Galería</a>
+            <a href="../ofertas/ofertas.php">Ofertas</a>
+            <a href="contacto.php" class="active">Contacto</a>
         </div>
+    </nav>
 
-
-    </section>
-
-
-    <section class="main-center">
-        <div class="center-up">
-            <div class="center-up-up">
-                <span style="font-size: 20px; color: rgb(230, 182, 11);">
-                    <i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star "></i>
-                </span>
-            </div>
-            <div class="center-up-down">
-                <h5>Lorem ipsum dolor sit amet.</h5>
-                <H1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere, minima.</H1>
+    <!-- Hero Section -->
+    <div class="contact-hero">
+        <div class="hero-content">
+            <h1 class="animate-text">Contacta con Nosotros</h1>
+            <p class="animate-text-delay">Tu satisfacción es nuestra prioridad</p>
+            <div class="hero-buttons animate-text-delay">
+                <a href="#contact-form" class="hero-btn primary">Enviar Mensaje</a>
+                <a href="tel:+34999999999" class="hero-btn secondary">
+                    <i class="fas fa-phone"></i> Llamar Ahora
+                </a>
             </div>
         </div>
-        <div class="center-down">
-            <div class="form-reservas">
-                <div class="reservation-form">
-                    <form id="reservationForm" action="../vista/reservas.php" method="post">
-                        <!-- Campo de selección de lugar -->
+        <div class="hero-overlay"></div>
+    </div>
+    </header>
+
+
+    <main class="contact-main">
+        <!-- Contact Stats Section -->
+        <section class="contact-stats">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-hotel"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>6 Hoteles</h3>
+                        <p>En ubicaciones exclusivas</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>24/7 Atención</h3>
+                        <p>Servicio personalizado</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>5 Estrellas</h3>
+                        <p>Calidad garantizada</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Info Cards -->
+        <section class="contact-info">
+            <div class="info-container">
+                <div class="info-card">
+                    <div class="card-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3>Llámanos</h3>
+                    <p>+34 999 999 999</p>
+                    <a href="tel:+34999999999" class="card-link">Llamar ahora</a>
+                </div>
+                
+                <div class="info-card">
+                    <div class="card-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Escríbenos</h3>
+                    <p>info@hotelcaliope.com</p>
+                    <a href="mailto:info@hotelcaliope.com" class="card-link">Enviar email</a>
+                </div>
+                
+                <div class="info-card">
+                    <div class="card-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Visítanos</h3>
+                    <p>Calle Principal 123, Ciudad</p>
+                    <a href="#map" class="card-link">Ver en mapa</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section class="contact-form-section" id="contact-form">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>Envíanos un Mensaje</h2>
+                    <p>Nos pondremos en contacto contigo lo antes posible</p>
+                </div>
+                
+                <form id="contactForm" action="" method="POST" class="contact-form">
+                    <div class="form-row">
                         <div class="form-group">
-                            <label for="location">Lugar</label>
-                            <select id="location" name="location" required>
-                                <?php foreach ($paises as $pais): ?>
-                                    <option value="<?php echo $pais['Id_Pais']; ?>"><?php echo $pais['Pais']; ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                            <label for="name">
+                                <i class="fas fa-user"></i> Nombre
+                            </label>
+                            <input type="text" id="name" name="name" required 
+                                placeholder="Tu nombre completo">
                         </div>
 
-                        <!-- Campo de fecha de check-in -->
                         <div class="form-group">
-                            <label for="checkin">Fecha de Check-in</label>
-                            <input type="date" id="checkin" name="checkin" min="<?= date('Y-m-d'); ?>" required>
+                            <label for="email">
+                                <i class="fas fa-envelope"></i> Email
+                            </label>
+                            <input type="email" id="email" name="email" required 
+                                placeholder="tu@email.com">
                         </div>
+                    </div>
 
-                        <!-- Campo de fecha de check-out -->
+                    <div class="form-group">
+                        <label for="hotel">
+                            <i class="fas fa-hotel"></i> Hotel
+                        </label>
+                        <select id="hotel" name="hotel" required>
+                            <option value="">Selecciona un hotel</option>
+                            <option value="galicia">Hotel Galicia</option>
+                            <option value="pirineos">Hotel Pirineos</option>
+                            <option value="tossa">Hotel Tossa de Mar</option>
+                            <option value="florida">Hotel Florida</option>
+                            <option value="california">Hotel California</option>
+                            <option value="newyork">Hotel New York</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">
+                            <i class="fas fa-comment"></i> Mensaje
+                        </label>
+                        <textarea id="message" name="message" rows="5" required 
+                                placeholder="¿En qué podemos ayudarte?"></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <span>Enviar Mensaje</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        
+    </main>
+
+        <!-- Replace the map section with this footer -->
+    <footer class="contact-footer">
+        <div class="footer-top">
+            <div class="footer-grid">
+                <!-- About Section -->
+                <div class="footer-section">
+                    <img src="../../static/img/logo_blanco.png" alt="Hotel Caliope Logo" class="footer-logo">
+                    <p>Descubre el lujo y la comodidad en nuestros hoteles exclusivos. Una experiencia única en las mejores ubicaciones.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
+                        <li><a href="../galeria/galeria.php">Galería</a></li>
+                        <li><a href="../ofertas/ofertas.php">Ofertas</a></li>
+                        <li><a href="contacto.php">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- Our Hotels -->
+                <div class="footer-section">
+                    <h3>Nuestros Hoteles</h3>
+                    <ul class="footer-links">
+                        <li><a href="../ciudades/Europa/Galicia.php">Hotel Galicia</a></li>
+                        <li><a href="../ciudades/Europa/Tossa.php">Hotel Tossa de Mar</a></li>
+                        <li><a href="../ciudades/USA/Florida.php">Hotel Florida</a></li>
+                        <li><a href="../ciudades/USA/California.php">Hotel California</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="footer-section">
+                    <h3>Newsletter</h3>
+                    <p>Suscríbete para recibir nuestras mejores ofertas</p>
+                    <form class="newsletter-form">
                         <div class="form-group">
-                            <label for="checkout">Fecha de Check-out</label>
-                            <input type="date" id="checkout" name="checkout" min="<?= date('Y-m-d'); ?>" required>
+                            <input type="email" placeholder="Tu email" required>
+                            <button type="submit">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
                         </div>
-
-                        <!-- Campo de número de personas -->
-                        <div class="form-group">
-                            <label for="numero_personas">Número de Personas</label>
-                            <input type="number" id="numero_personas" name="numero_personas" min="1" value="<?php echo isset($_SESSION['numero_personas']) ? $_SESSION['numero_personas'] : ''; ?>" required>
-                        </div>
-
-                        <!-- Botón para enviar el formulario -->
-                        <button type="submit" id="submitBtn">Reservar</button>
                     </form>
                 </div>
             </div>
         </div>
-    </section>
-</header>
 
-<body>
-
-<div class="contacto-container">
-    <div class="form-container">
-        <h2 class="form-title">Contacto</h2>
-        <form action="#" method="POST">
-            <!-- Campo de selección de hotel -->
-            <div class="form-group">
-                <label for="hotel">Selecciona un Hotel</label>
-                <select id="hotel" name="hotel" required>
-                    <option value="galicia">Hotel Galicia</option>
-                    <option value="pirineos">Hotel Pirineos</option>
-                    <option value="tossa">Hotel Tossa de Mar</option>
-                    <option value="florida">Hotel Florida</option>
-                    <option value="california">Hotel California</option>
-                    <option value="newyork">Hotel Nueva York</option>
-                </select>
+        <div class="footer-bottom">
+            <div class="footer-info">
+                <div class="copyright">
+                    <p>&copy; 2024 Hotel Caliope. Todos los derechos reservados.</p>
+                </div>
+                <div class="footer-bottom-links">
+                    <a href="../politicas/privacidad.php">Política de Privacidad</a>
+                    <a href="../politicas/cookies.php">Política de Cookies</a>
+                    <a href="../politicas/avisolegal.php">Aviso Legal</a>
+                </div>
             </div>
-
-            <!-- Campo para el nombre -->
-            <input type="text" name="name" class="input-field" placeholder="Tu Nombre" required>
-
-            <!-- Campo para el correo electrónico -->
-            <input type="email" name="email" class="input-field" placeholder="Tu Correo Electrónico" required>
-
-            <!-- Campo para el mensaje -->
-            <textarea name="message" class="input-field" placeholder="Tu Mensaje" rows="4" required></textarea>
-
-            <!-- Botón de enviar -->
-            <button type="submit" class="submit-btn">Enviar Mensaje</button>
-        </form>
-        <div class="footer">
-            <p>¿Tienes dudas? <a href="mailto:info@hotelCaliope.com">Escríbenos aquí</a>.</p>
         </div>
-    </div>
-</div>
+    </footer>
 
 
 
+    <script>
+        // Initialize map
+        document.addEventListener('DOMContentLoaded', function() {
+            const map = L.map('map').setView([40.416775, -3.703790], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            L.marker([40.416775, -3.703790]).addTo(map)
+                .bindPopup('Hotel Caliope')
+                .openPopup();
+        });
+    </script>
 </body>
 </html>

@@ -173,6 +173,8 @@ if ($controller !== null) {
 
             </section>
 
+            
+
 
             <section class="main-center">
                 <div class="center-up">
@@ -227,196 +229,192 @@ if ($controller !== null) {
             </section>
         </header>
 
-        <section>
-            <div class="oferta-desc">
-                <h1>Ofertas</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sequi voluptatem ullam earum cumque rerum aspernatur enim dolor nam! Cum quae temporibus eos molestiae suscipit! Excepturi fugit modi consequatur maxime.</p>
-            </div>
-        </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            <!-- Add this after the header section -->
+        <main class="offers-main">
+            <!-- Season Selector -->
+            <section class="season-selector">
+                <div class="season-tabs">
+                    <button class="season-tab active" data-season="summer">
+                        <i class="fas fa-sun"></i> Ofertas de Verano
+                    </button>
+                    <button class="season-tab" data-season="winter">
+                        <i class="fas fa-snowflake"></i> Ofertas de Invierno
+                    </button>
+                </div>
+            </section>
+
+            <!-- Summer Offers -->
+            <section class="offers-section active" id="summer-offers">
+                <div class="offers-grid">
+                    <!-- Offer Card 1 -->
+                    <div class="offer-card">
+                        <div class="offer-image">
+                            <img src="../../static/img/ofertas/verano1.jpg" alt="Oferta Verano">
+                            <div class="offer-badge">-30%</div>
+                        </div>
+                        <div class="offer-content">
+                            <h3>Escapada Playera</h3>
+                            <p class="offer-location">
+                                <i class="fas fa-map-marker-alt"></i> Hotel Florida
+                            </p>
+                            <div class="offer-details">
+                                <p>7 noches de alojamiento</p>
+                                <p>Desayuno incluido</p>
+                                <p>Acceso a piscina infinity</p>
+                            </div>
+                            <div class="offer-price">
+                                <span class="original-price">1200€</span>
+                                <span class="discounted-price">840€</span>
+                            </div>
+                            <a href="#" class="offer-button">Reservar Ahora</a>
+                        </div>
+                    </div>
+
+                    <!-- Add more summer offer cards here -->
+                </div>
+            </section>
+
+            <!-- Winter Offers -->
+            <section class="offers-section" id="winter-offers">
+                <div class="offers-grid">
+                    <!-- Offer Card 1 -->
+                    <div class="offer-card">
+                        <div class="offer-image">
+                            <img src="../../static/img/ofertas/invierno1.jpg" alt="Oferta Invierno">
+                            <div class="offer-badge">-25%</div>
+                        </div>
+                        <div class="offer-content">
+                            <h3>Aventura en la Nieve</h3>
+                            <p class="offer-location">
+                                <i class="fas fa-map-marker-alt"></i> Hotel Pirineos
+                            </p>
+                            <div class="offer-details">
+                                <p>5 noches de alojamiento</p>
+                                <p>Pensión completa</p>
+                                <p>Equipo de ski incluido</p>
+                            </div>
+                            <div class="offer-price">
+                                <span class="original-price">1500€</span>
+                                <span class="discounted-price">1125€</span>
+                            </div>
+                            <a href="#" class="offer-button">Reservar Ahora</a>
+                        </div>
+                    </div>
+
+                    <!-- Add more winter offer cards here -->
+                </div>
+            </section>
+
+              <!-- Add this after the winter offers section -->
+            <section class="special-packages">
+                <div class="packages-header">
+                    <h2>Paquetes Especiales</h2>
+                    <p>Descubre nuestras experiencias exclusivas diseñadas para hacer tu estancia inolvidable</p>
+                </div>
+
+                <div class="packages-grid">
+                    <!-- All Inclusive Package -->
+                    <div class="package-card">
+                        <div class="package-icon">
+                            <i class="fas fa-infinity"></i>
+                        </div>
+                        <div class="package-content">
+                            <h3>Todo Incluido</h3>
+                            <div class="package-features">
+                                <ul>
+                                    <li><i class="fas fa-bed"></i> Hospedaje de lujo</li>
+                                    <li><i class="fas fa-utensils"></i> Todas las comidas incluidas</li>
+                                    <li><i class="fas fa-cocktail"></i> Bebidas ilimitadas</li>
+                                    <li><i class="fas fa-swimming-pool"></i> Acceso a todas las actividades</li>
+                                </ul>
+                            </div>
+                            <div class="package-price">
+                                <span>Desde</span>
+                                <h4>199€</h4>
+                                <span>por persona/noche</span>
+                            </div>
+                            <a href="#" class="package-button">Ver Detalles</a>
+                        </div>
+                    </div>
+
+                    <!-- Romantic Package -->
+                    <div class="package-card">
+                        <div class="package-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="package-content">
+                            <h3>Paquete Romántico</h3>
+                            <div class="package-features">
+                                <ul>
+                                    <li><i class="fas fa-rose"></i> Decoración especial</li>
+                                    <li><i class="fas fa-glass-cheers"></i> Cena a la luz de las velas</li>
+                                    <li><i class="fas fa-spa"></i> Spa para parejas</li>
+                                    <li><i class="fas fa-champagne-glasses"></i> Botella de champagne</li>
+                                </ul>
+                            </div>
+                            <div class="package-price">
+                                <span>Desde</span>
+                                <h4>299€</h4>
+                                <span>por pareja/noche</span>
+                            </div>
+                            <a href="#" class="package-button">Ver Detalles</a>
+                        </div>
+                    </div>
+
+                    <!-- Family Package -->
+                    <div class="package-card">
+                        <div class="package-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="package-content">
+                            <h3>Paquete Familiar</h3>
+                            <div class="package-features">
+                                <ul>
+                                    <li><i class="fas fa-child"></i> Actividades para niños</li>
+                                    <li><i class="fas fa-baby-carriage"></i> Servicio de niñera</li>
+                                    <li><i class="fas fa-percent"></i> Descuentos en habitaciones</li>
+                                    <li><i class="fas fa-gamepad"></i> Club infantil</li>
+                                </ul>
+                            </div>
+                            <div class="package-price">
+                                <span>Desde</span>
+                                <h4>399€</h4>
+                                <span>por familia/noche</span>
+                            </div>
+                            <a href="#" class="package-button">Ver Detalles</a>
+                        </div>
+                    </div>
+
+                    <!-- Adventure Package -->
+                    <div class="package-card">
+                        <div class="package-icon">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <div class="package-content">
+                            <h3>Paquete Aventura</h3>
+                            <div class="package-features">
+                                <ul>
+                                    <li><i class="fas fa-hiking"></i> Excursiones guiadas</li>
+                                    <li><i class="fas fa-bicycle"></i> Equipo deportivo incluido</li>
+                                    <li><i class="fas fa-map-marked-alt"></i> Rutas de senderismo</li>
+                                    <li><i class="fas fa-parachute-box"></i> Deportes extremos</li>
+                                </ul>
+                            </div>
+                            <div class="package-price">
+                                <span>Desde</span>
+                                <h4>249€</h4>
+                                <span>por persona/noche</span>
+                            </div>
+                            <a href="#" class="package-button">Ver Detalles</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+                              
+
+
+
+        </main>
 
 
 
@@ -462,58 +460,77 @@ if ($controller !== null) {
 
     </section>
 
-        <footer class="main-footer">
-        <div class="footer-box">
-            <!-- Sección: Sobre el Hotel -->
-            <div class="footer-sec">
-                <h1>SOBRE LOS HOTELS</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.</p>
-                <a href="../vista/index.php"><img class="img-footer" src="../static/img/logo_blanco.png" alt=""></a>
-                <div class="language-selector">
-                <select id="language-select" onchange="changeLanguage()">
-                    <option value="es">Español</option>
-                    <option value="en">English</option>
-                    <option value="fr">Français</option>
-                </select>
-                </div>
-            </div>
-
-            <!-- Sección: Links -->
-            <div class="footer-sec">
-                <h1>LINKS</h1>
-                <div class="links-footer">
-                    <a href="#">Sobre nosotros</a>
-                    <a href="#">Servicios</a>
-                    <a href="#">Hoteles</a>
-                </div>
-            </div>
-
-            <!-- Sección: Contacto y Redes Sociales -->
-            <div class="footer-sec">
-                <h1>DÓNDE NOS ENCONTRAMOS</h1>
-                <div class="sec-tres">
-                    <p>Calle xxx 99999 <br> Lorem ipsum, España</p>
-                    <span class="contact-info">
-                        <i class="fa-solid fa-phone"></i> 999 999 999
-                    </span>
-                    <span class="contact-info">
-                        <i class="fa-solid fa-envelope"></i> hotelcalope@gmail.com
-                    </span>
-                    <div class="social-icons">
-                        <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+        <!-- Replace the existing footer with this one -->
+    <footer class="contact-footer">
+        <div class="footer-top">
+            <div class="footer-grid">
+                <!-- About Section -->
+                <div class="footer-section">
+                    <img src="../../static/img/logo_blanco.png" alt="Hotel Caliope Logo" class="footer-logo">
+                    <p>Descubre el lujo y la comodidad en nuestros hoteles exclusivos. Una experiencia única en las mejores ubicaciones.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
                     </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
+                        <li><a href="../galeria/galeria.php">Galería</a></li>
+                        <li><a href="../ofertas/ofertas.php">Ofertas</a></li>
+                        <li><a href="../Contacto/contacto.php">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- Our Hotels -->
+                <div class="footer-section">
+                    <h3>Nuestros Hoteles</h3>
+                    <ul class="footer-links">
+                        <li><a href="../ciudades/Europa/Galicia.php">Hotel Galicia</a></li>
+                        <li><a href="../ciudades/Europa/Tossa.php">Hotel Tossa de Mar</a></li>
+                        <li><a href="../ciudades/USA/Florida.php">Hotel Florida</a></li>
+                        <li><a href="../ciudades/USA/California.php">Hotel California</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="footer-section">
+                    <h3>Newsletter</h3>
+                    <p>Suscríbete para recibir nuestras mejores ofertas</p>
+                    <form class="newsletter-form">
+                        <div class="form-group">
+                            <input type="email" placeholder="Tu email" required>
+                            <button type="submit">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="privacidad">
-            <p>Lorem ipsum dolor sit ame</p>
+
+        <div class="footer-bottom">
+            <div class="footer-info">
+                <div class="copyright">
+                    <p>&copy; 2024 Hotel Caliope. Todos los derechos reservados.</p>
+                </div>
+                <div class="footer-bottom-links">
+                    <a href="../politicas/privacidad.php">Política de Privacidad</a>
+                    <a href="../politicas/cookies.php">Política de Cookies</a>
+                    <a href="../politicas/avisolegal.php">Aviso Legal</a>
+                </div>
+            </div>
         </div>
     </footer>
 
     <!-----------------------------------SCRIPTS---------------------------->
     <script src="../../static/js/main.js"></script>
+    <script src="../../static/js/ofertas.js"></script>
     
     </body>
 </html>
