@@ -10,7 +10,7 @@ require_once __DIR__ . '/../controller/actividad/actividadController.php';
 $servicioController = new ServiciosController();
 $actividadController = new ActividadController();
 
-// Verifica si el hotelId y metodoPagoId están en la sesión o en POST
+// Verifica si el hotelId está en la sesión o en POST
 if (isset($_POST['hotelId'])) {
     $_SESSION['hotelId'] = $_POST['hotelId'];
 }
@@ -18,6 +18,11 @@ if (isset($_POST['hotelId'])) {
 if (isset($_POST['metodoPagoId'])) {
     $_SESSION['Reservas']['metodoPagoId'] = $_POST['metodoPagoId'];
 }
+
+
+
+
+
 
 $hotelId = $_SESSION['hotelId'] ?? null;
 
@@ -33,15 +38,13 @@ if (!isset($_SESSION['Reservas'])) {
     exit;
 }
 
+$_SESSION['Reservas']['servicios'] = $_POST['servicios'] ?? [];
+$_SESSION['Reservas']['actividades'] = $_POST['actividades'] ?? [];
 
 
-
-
-
-
-
-// Obtener los datos de la reserva
 $reserva = $_SESSION['Reservas'] ?? [];
+
+// Extraer variables de la sesión
 $habitacionId = $reserva['habitacionId'] ?? null;
 $checkin = $reserva['checkin'] ?? null;
 $checkout = $reserva['checkout'] ?? null;
@@ -49,9 +52,27 @@ $guests = $reserva['guests'] ?? null;
 $paisId = $reserva['paisId'] ?? null;
 $metodoPagoId = $reserva['metodoPagoId'] ?? null;
 
+
 // Obtener servicios y actividades del hotel
-$servicios = $servicioController->obtenerServicios($hotelId) ?: [];
-$actividades = $actividadController->obtenerActividadesPorHotel($hotelId) ?: [];
+$servicios = $servicioController->obtenerServicios($hotelId);
+if (!is_array($servicios)) {
+    $servicios = [];
+}
+
+$actividades = $actividadController->obtenerActividadesPorHotel($hotelId);
+if (!is_array($actividades)) {
+    $actividades = [];
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $_SESSION['Reservas']['actividades'] = $_POST['actividades'] ?? [];
+}
+
+
+
+
+
+
 
 ?>
 
@@ -68,45 +89,42 @@ $actividades = $actividadController->obtenerActividadesPorHotel($hotelId) ?: [];
 
     <h1>¿Quieres añadir algún servicio?</h1>
     <form action="../vista/pagos.php" method="POST">
+        <!-- Depuración: Ver si los datos se envían correctamente -->
         
-        <!-- Campos ocultos para mantener los datos de la reserva -->
-        <input type="hidden" name="habitacionId" value="<?php echo $habitacionId ?? ''; ?>">
-        <input type="hidden" name="hotelId" value="<?php echo $hotelId; ?>">
-        <input type="hidden" name="checkin" value="<?php echo $checkin ?? ''; ?>">
-        <input type="hidden" name="checkout" value="<?php echo $checkout ?? ''; ?>">
-        <input type="hidden" name="guests" value="<?php echo $guests ?? ''; ?>">
-        <input type="hidden" name="paisId" value="<?php echo $paisId ?? ''; ?>">
-        <input type="hidden" name="metodoPagoId" value="<?php echo $metodoPagoId ?? ''; ?>">
-        <input type="hidden" name="clienteId" value="<?= $_SESSION['user_id'] ?>">
-        <input type="hidden" name="precioTotal" value="<?= $_SESSION['Reservas']['precioTotal'] ?? '' ?>">
-
-        <!-- Servicios disponibles -->
+        
+        <input type="hidden" name="habitacionId" value="<?php echo $_SESSION['Reservas']['habitacionId'] ?? ''; ?>">
+        <input type="hidden" name="hotelId" value="<?php echo $_SESSION['hotelId']; ?>">
+        <input type="hidden" name="checkin" value="<?php echo $_SESSION['Reservas']['checkin'] ?? ''; ?>">
+        <input type="hidden" name="checkout" value="<?php echo $_SESSION['Reservas']['checkout'] ?? ''; ?>">
+        <input type="hidden" name="guests" value="<?php echo $_SESSION['Reservas']['guests'] ?? ''; ?>">
+        <input type="hidden" name="paisId" value="<?php echo $_SESSION['Reservas']['paisId'] ?? ''; ?>">
+        <input type="hidden" name="metodoPagoId" value="<?php echo $_SESSION['Reservas']['metodoPagoId'] ?? ''; ?>">
         <div class="servicios-container">
         <?php foreach ($servicios as $servicio) : ?>
             <label>
-            <input type="checkbox" name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" value="<?php echo $servicio['Id_Servicio'] . '|' . $servicio['Precio']; ?>">
-
+                <input type="checkbox" name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" value="<?php echo $servicio['Precio']; ?>">
                 <?php echo htmlspecialchars($servicio['Servicio']); ?> - $<?php echo number_format($servicio['Precio'], 2); ?>
             </label><br>
         <?php endforeach; ?>
         </div>
+       
 
-        <!-- Actividades disponibles -->
+
         <div class="actividades-container">
             <?php foreach ($actividades as $actividad) : ?>
                 <label>
-                <input type="checkbox" name="actividades[<?php echo $actividad['Id_Actividades']; ?>]" value="<?php echo $actividad['Id_Actividades'] . '|' . $actividad['Precio']; ?>">
+                <input type="checkbox" name="actividades[<?php echo $actividad['Id_Actividades']; ?>]" value="<?php echo $actividad['Precio']; ?>">
 
                     <?php echo htmlspecialchars($actividad['Nombre']); ?> - $<?php echo number_format($actividad['Precio'], 2); ?>
                 </label><br>
             <?php endforeach; ?>
         </div>
 
-        <!-- Botón continuar -->
         <div class="continuar-btn">
             <input id="btn-continuar" type="submit" value="Continuar">
         </div>
     </form>
+
 
 </body>
 </html>

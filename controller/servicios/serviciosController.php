@@ -41,16 +41,6 @@ class ServiciosController {
             return null; // Retorna null si hay un error
         }
     }
-
-    public function obtenerServicioPorId($servicioId){
-        try {
-            return $this->serviciosModel->obtenerServicioPorId($servicioId);
-            } catch (Exception $e) {
-                error_log("Error al obtener servicio por id: " . $e->getMessage());
-                return null; // Retorna null si hay un error
-            }
-    }
-
     
 }
     
