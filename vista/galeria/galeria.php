@@ -172,6 +172,10 @@ if (!empty($hoteles)) {
 
 
 
+
+
+
+
     
     <div class="gallery-container">
         <div class="filter-buttons">
@@ -180,11 +184,11 @@ if (!empty($hoteles)) {
             <button class="filter-btn" data-filter="norteamerica">América del Norte</button>
         </div>
 
-        <div class="gallery-grid">
+       <div class="gallery-grid">
             <?php
             // Definir rutas base
             $baseServerPath = '/var/www/html/HotelCaliope/HotelCaliope-2/static';
-            $baseWebPath = '/static';
+            $baseWebPath = '../../static';
             
             foreach ($orden_continentes as $continente) :
                 if (!empty($hoteles_por_continente[$continente])) :
@@ -194,23 +198,31 @@ if (!empty($hoteles)) {
                         <h2>Hoteles en <?= htmlspecialchars($continente) ?></h2>
                         <div class="hotel-cards">
                             <?php foreach ($hoteles_por_continente[$continente] as $hotel) : 
-                                // Lógica para determinar la imagen
+                                // Lógica mejorada para imágenes
                                 $imagenFinal = '';
                                 
                                 if (!empty($hotel['imagen'])) {
-                                    // Usar imagen de la base de datos
                                     $imagenFinal = "{$baseWebPath}/img/{$directorio}/".htmlspecialchars($hotel['imagen']);
                                 } else {
-                                    // Generar nombre de archivo basado en el nombre del hotel
                                     $nombreBase = str_replace('Hotel Caliope ', '', $hotel['nombre_hotel']);
-                                    $nombreArchivo = strtolower(str_replace(' ', '-', $nombreBase)).'.jpg';
-                                    $rutaCompleta = "{$baseServerPath}/img/{$directorio}/{$nombreArchivo}";
+                                    $nombreArchivo = strtolower(str_replace(' ', '-', $nombreBase));
                                     
-                                    if (file_exists($rutaCompleta)) {
-                                        $imagenFinal = "{$baseWebPath}/img/{$directorio}/{$nombreArchivo}";
-                                    } else {
-                                        // Imagen por defecto
-                                        $imagenFinal = "{$baseWebPath}/img/florida/florida1.jpg";
+                                    // Posibles nombres de archivo
+                                    $posiblesImagenes = [
+                                        "{$directorio}/{$nombreArchivo}.jpg",
+                                        "{$directorio}/{$nombreArchivo}1.jpg",
+                                        "{$directorio}/{$nombreArchivo}2.jpg",
+                                        "{$directorio}/{$nombreArchivo}3.jpg",
+                                        "{$directorio}/{$nombreArchivo}defaul.jpg"
+                                    ];
+                                    
+                                    // Buscar primera imagen existente
+                                    foreach ($posiblesImagenes as $imagen) {
+                                        $rutaCompleta = "{$baseServerPath}/img/{$imagen}";
+                                        if (file_exists($rutaCompleta)) {
+                                            $imagenFinal = "{$baseWebPath}/img/{$imagen}";
+                                            break;
+                                        }
                                     }
                                 }
                             ?>
