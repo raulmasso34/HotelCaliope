@@ -27,34 +27,70 @@
             <!-- Sección de Estadísticas -->
             <h4 class="text-center mt-3">📊 Estadísticas</h4>
             <div class="d-grid gap-3">
-             
-                <a href="/estadisticas/Actividades-CadenaHotel" class="btn btn-primary btn-lg mx-auto btn-custom">
-                    📈 Estadística de Actividades
-                </a>
-                <a href="/estadisticas/Reservas-del-mes-CadenaHotel" class="btn btn-primary btn-lg mx-auto btn-custom">
-                    📅 Reservas por Mes
-                </a>
-                <a href="/estadisticas/Todas-las-reservas-CadenaHotel" class="btn btn-primary btn-lg mx-auto btn-custom">
-                    📋 Todas las Reservas
-                </a>
-                <a href="/estadisticas/Servicios-CadenaHotel" class="btn btn-primary btn-lg mx-auto btn-custom">
-                    🛎️ Reservas de Servicios
-                </a>
-                <a href="/estadisticas/Temporadas-CadenaHotel" class="btn btn-primary btn-lg mx-auto btn-custom">
-                    ☀️❄️ Temporadas más Vendidas
-                </a>
-                <a href="/estadisticas/Habitaciones-CadenaHotel/" class="btn btn-primary btn-lg mx-auto btn-custom">
-                    🏨 Reservas por Tipo de Habitación
-                </a>
+                <center>
+                    <!-- Formulario para las actividades -->
+                    <form action="/estadisticas/Actividades-CadenaHotel" method="POST">
+                        <input type="hidden" name="hotelId" value="<%= hotelId %>">
+                        <button type="submit" class="btn btn-primary btn-lg mx-auto btn-custom">
+                            📈 Estadística de Actividades
+                        </button>
+                    </form>
+                  </center>
+                  
+                  <center>
+                    <!-- Formulario para reservas por mes -->
+                    <form action="/estadisticas/Reservas-del-mes-CadenaHotel" method="POST">
+                        <input type="hidden" name="hotelId" value="<%= hotelId %>">
+                        <button type="submit" class="btn btn-primary btn-lg mx-auto btn-custom">
+                            📅 Reservas por Mes
+                        </button>
+                    </form>
+                   </center> 
+                   <center>
+                    <!-- Formulario para todas las reservas -->
+                    <form action="/estadisticas/Todas-las-reservas-CadenaHotel" method="POST">
+                        <input type="hidden" name="hotelId" value="<%= hotelId %>">
+                        <button type="submit" class="btn btn-primary btn-lg mx-auto btn-custom">
+                            📋 Todas las Reservas
+                        </button>
+                    </form>
+                    </center>
+                    <center>
+                    <!-- Formulario para reservas de servicios -->
+                    <form action="/estadisticas/Servicios-CadenaHotel" method="POST">
+                        <input type="hidden" name="hotelId" value="<%= hotelId %>">
+                        <button type="submit" class="btn btn-primary btn-lg mx-auto btn-custom">
+                            🛎️ Reservas de Servicios
+                        </button>
+                    </form>
+                    </center>
+                    <center>
+                    <!-- Formulario para temporadas más vendidas -->
+                    <form action="/estadisticas/Temporadas-CadenaHotel" method="POST">
+                        <input type="hidden" name="hotelId" value="<%= hotelId %>">
+                        <button type="submit" class="btn btn-primary btn-lg mx-auto btn-custom">
+                            ☀️❄️ Temporadas más Vendidas
+                        </button>
+                    </form>
+                    </center>
+                    <center>
+                    <!-- Formulario para reservas por tipo de habitación -->
+                    <form action="/estadisticas/Habitaciones-CadenaHotel" method="POST">
+                        <input type="hidden" name="hotelId" value="<%= hotelId %>">
+                        <button type="submit" class="btn btn-primary btn-lg mx-auto btn-custom">
+                            🏨 Reservas por Tipo de Habitación
+                        </button>
+                    </form>
+                </center>
             </div>
 
-                 <!-- Estadísticas de toda la cadena de hoteles -->
-                 <h4 class="text-center mt-4">🏨 Estadísticas del Hotel <strong><%= hotelId %></strong></h4>
-                 <div class="d-grid gap-3">
-                     <a href="/estadisticas/menu-estadistica-hotel/<%= hotelId %>" class="btn btn-success btn-lg mx-auto btn-custom">
-    🌍 Ver Estadísticas del Hotel <strong><%= hotelId %></strong>
-</a>
-                 </div>
+            <!-- Estadísticas de toda la cadena de hoteles -->
+            <h4 class="text-center mt-4">🏨 Estadísticas del Hotel <strong><%= nombreHotel %></strong></h4>
+            <div class="d-grid gap-3">
+                <a href="/menu-estadistica-hotel/<%= hotelId %>" class="btn btn-success btn-lg mx-auto btn-custom">
+                    🌍 Ver Estadísticas del <strong><%= nombreHotel %></strong>
+                </a>
+            </div>
         </div>
     </div>
 

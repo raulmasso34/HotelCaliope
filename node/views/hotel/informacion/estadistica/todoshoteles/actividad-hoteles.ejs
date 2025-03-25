@@ -15,11 +15,11 @@
 
             <canvas id="graficoActividades"></canvas>
 
+            <form action="/estadisticas/cadena-hoteles" method="POST">
+                <input type="hidden" name="hotelId" value="<%= hotelId %>">
+                <button type="submit" class="btn btn-secondary mt-3">⬅️ Volver al Menú</button>
+            </form>
             
-        <!-- Enlace desde tu vista EJS -->
-        <a href="/estadisticas/cadena-hoteles?hotelId=<%= hotelId %>" class="btn">
-            Ver Menú
-        </a>
         </div>
     </div>
 

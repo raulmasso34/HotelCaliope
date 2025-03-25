@@ -3,63 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú del Hotel</title>
-    <!-- Enlace a Bootstrap 5 -->
+    <title>Estado de Reservas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <style>
-        .btn-custom {
-            width: 50%;         /* Ajuste de ancho */
-            padding: 15px 10px; /* Hace los botones más gruesos */
-            font-size: 1.3rem;  /* Texto más grande */
-        }
-    </style>
 </head>
 <body class="bg-light">
+
     <a href="/menu/<%= hotelId %>" class="btn btn-sm btn-danger" title="Exit">
         <i class="fa-solid fa-right-from-bracket"></i>
     </a>
     <div class="container mt-5">
-        <div class="card shadow-lg p-4">
-            <h2 class="text-center mb-4">📌 Menú del Hotel</h2>
+        <h2 class="text-center">🛬 Estado de Reservas del Hotel <%= nombreHotel %> - Hoy</h2>
 
-            <!-- Sección de Estadísticas -->
-            <h4 class="text-center mt-3">📊 Estadísticas</h4>
-            <div class="d-grid gap-3">
-                <a href="/estadisticas/Actividades/" class="btn btn-primary btn-lg mx-auto btn-custom">
-                    📈 Estadística de Actividades
-                </a>
-                <a href="/estadisticas/Reservas-del-mes" class="btn btn-primary btn-lg mx-auto btn-custom">
-                    📅 Reservas por Mes
-                </a>
-                <a href="/estadisticas/Todas-las-reservas" class="btn btn-primary btn-lg mx-auto btn-custom">
-                    📋 Todas las Reservas
-                </a>
-                <a href="/estadisticas/Servicios" class="btn btn-primary btn-lg mx-auto btn-custom">
-                    🛎️ Reservas de Servicios
-                </a>
-                <a href="/estadisticas/Temporadas" class="btn btn-primary btn-lg mx-auto btn-custom">
-                    ☀️❄️ Temporadas más Vendidas
-                </a>
-                <a href="/estadisticas/Habitaciones/" class="btn btn-primary btn-lg mx-auto btn-custom">
-                    🏨 Reservas por Tipo de Habitación
-                </a>
+        <!-- Pestañas de Bootstrap -->
+        <ul class="nav nav-tabs" id="reservasTab" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" id="llegaron-tab" data-bs-toggle="tab" data-bs-target="#llegaron" type="button" role="tab">Reservas Llegaron</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="no-llegaron-tab" data-bs-toggle="tab" data-bs-target="#no-llegaron" type="button" role="tab">Reservas No Llegaron</button>
+            </li>
+        </ul>
+
+        <!-- Contenido de las pestañas -->
+        <div class="tab-content mt-3" id="reservasTabContent">
+            
+            <!-- Pestaña "Llegaron" -->
+            <div class="tab-pane fade show active" id="llegaron" role="tabpanel">
+                <table class="table table-bordered mt-3">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Cliente</th>
+                            <th>Fecha de Check-in</th>
+                            <th>Estado de Llegada</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% reservasLlegaron.forEach((reserva, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= reserva.Nom %></td>
+                            <td><%= reserva.Checkin %></td>
+                            <td>✅ Llegó</td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
             </div>
 
-            <!-- Estadísticas de toda la cadena de hoteles -->
-            <h4 class="text-center mt-4">🏨 Estadísticas de Toda la Cadena</h4>
-            <div class="d-grid gap-3">
-                <a href="/estadisticas/menu-hotel/<%= hotelId %>" class="btn btn-success btn-lg mx-auto btn-custom">
-                    🌍 Ver Estadísticas Generales
-                </a>
+            <!-- Pestaña "No Llegaron" -->
+            <div class="tab-pane fade" id="no-llegaron" role="tabpanel">
+                <table class="table table-bordered mt-3">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Cliente</th>
+                            <th>Fecha de Check-in</th>
+                            <th>Estado de Llegada</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% reservasNoLlegaron.forEach((reserva, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= reserva.Nom %></td>
+                            <td><%= reserva.Checkin %></td>
+                            <td>
+                                <%= reserva.EstadoLlegada ? reserva.EstadoLlegada : 'Sin Estado' %>
+                            </td>
+                            <td>
+                                <form action="/estados/actualizar-llegada" method="POST" class="d-inline">
+                                    <input type="hidden" name="idReserva" value="<%= reserva.Id_Reserva %>">
+                                    <% if (!reserva.EstadoLlegada) { %>
+                                        <button type="submit" name="estado" value="No llegó" class="btn btn-danger btn-sm">No llegó</button>
+                                    <% } else { %>
+                                        <button type="submit" name="estado" value="Llegó" class="btn btn-success btn-sm">Llegó</button>
+                                    <% } %>
+                                </form>
+                            </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
             </div>
 
         </div>
     </div>
 
-    <!-- Script de Bootstrap (JS opcional) -->
+    <!-- Scripts de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

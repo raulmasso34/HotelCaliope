@@ -16,7 +16,10 @@
 
             <canvas id="graficoHabitaciones"></canvas>
 
-            <a href="/menu" class="btn btn-secondary mt-3">⬅️ Volver al Menú</a>
+            <form action="/estadisticas/cadena-hoteles" method="POST">
+                <input type="hidden" name="hotelId" value="<%= hotelId %>">
+                <button type="submit" class="btn btn-secondary mt-3">⬅️ Volver al Menú</button>
+            </form>
         </div>
     </div>
 

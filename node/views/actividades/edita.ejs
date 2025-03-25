@@ -21,16 +21,21 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">CLIENTES</a>
+              <a class="nav-link active" aria-current="page" href="/clientes">CLIENTES</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/habitaciones/">HABITACIONES</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/hotel/<%= user.id_hotel %>">HOTEL</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/hoteles">HOTEL</a> %>
+            <% } %>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/hotel/">HOTEL</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/ofertas/">OFERTAS</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/oferta/<%= user.id_hotel %>">OFERTAS</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/ofertas">OFERTAS</a> %>
+            <% } %>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="/actividades/">ACTIVIDADES</a>
@@ -77,13 +82,16 @@
                     <% }); %>
                   </select>
                 </div>
+               
+
+
                 <div class="mb-3">
                   <label for="Dia_Inicio" class="form-label">Dia Inicio</label>
-                  <input type="date" class="form-control" id="Dia_Inicio" name="Dia_Inicio" tabindex="1" value="<%= actividades.Dia_Inicio %>">
+                  <input type="date" class="form-control" id="Dia_Inicio" name="Dia_Inicio" value="<%= actividades.Dia_Inicio.toISOString().split('T')[0] %>">
                 </div>
                 <div class="mb-3">
                   <label for="Dia_Fin" class="form-label">Dia Fin</label>
-                  <input type="date" class="form-control" id="Dia_Fin" name="Dia_Fin" tabindex="1" value="<%= actividades.Dia_Fin %>">
+                  <input type="date" class="form-control" id="Dia_Fin" name="Dia_Fin" value="<%= actividades.Dia_Fin.toISOString().split('T')[0] %>">
                 </div>
                 <div class="mb-3">
                   <label for="Hora_Inicio" class="form-label">Hora Inicio</label>
@@ -106,7 +114,11 @@
                   <input type="text" class="form-control" id="Descripcion" name="Descripcion" tabindex="1" value="<%= actividades.Descripcion %>">
                 </div>
                 <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
+                <% if (user && user.role === 'Hotel') { %>
+                  <a class="btn btn-secondary" href="/actividad/<%= user.id_hotel %>">Cancelar</a>
+              <% } else if (user && user.role === 'General') { %>
                 <a href="/actividades/" class="btn btn-secondary">Cancelar</a>
+              <% } %>
               </form>
             </div>
           </div>

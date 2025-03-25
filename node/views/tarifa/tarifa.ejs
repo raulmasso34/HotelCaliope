@@ -16,38 +16,53 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/"><i class="fa-solid fa-right-from-bracket"></i></a>
+        <a class="navbar-brand" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">CLIENTES</a>
+              <a class="nav-link active" aria-current="page" href="/clientes">CLIENTES</a>
+            </li>
+         
+            <li class="nav-item">
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/hotel/<%= user.id_hotel %>">HOTEL</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/hoteles">HOTEL</a> %>
+            <% } %>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/habitaciones/">HABITACIONES</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/oferta/<%= user.id_hotel %>">OFERTAS</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/ofertas">OFERTAS</a> %>
+            <% } %>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/hotel/">HOTEL</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/ofertas/">OFERTAS</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/actividades/">ACTIVIDADES</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/actividad/<%= user.id_hotel %>">ACTIVIDADES</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/actividades">ACTIVIDADES</a> %>
+            <% } %>
             </li>
             <li class="nav-item active">
-              <a class="nav-link active" href="/servicio/">SERVICIO</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/tarifa/">TARIFA</a>
-            </li>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/servicios/<%= user.id_hotel %>">SERVICIO</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/servicio">SERVICIO</a> %>
+            <% } %>              </li>
+  
             <li class="nav-item">
               <a class="nav-link active" href="/pais/">PAIS</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/reservas/">RESERVAS</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/reserva/<%= user.id_hotel %>">RESERVAS</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/reservas">RESERVAS</a> %>
+            <% } %>
             </li>
           </ul>
           <form class="d-flex">

@@ -1,50 +1,207 @@
         const express = require('express');
         const router = express.Router();
         const conexion = require('./database/db');
-
+        const session = require('express-session');
+        const bcrypt = require("bcrypt");
+        const axios = require("axios");
+        const cors = require("cors");
         const crud = require('./controllers/crud');
         const { route } = require('express/lib/application');
-
+        const bodyParser = require("body-parser");
+        
         module.exports = router;
 
 
-        //CLIENTES
-        router.get('/', (req,res) =>{
-            conexion.query(
-                `SELECT 
-                    c.Id_Client, c.Nom, c.Cognom, c.DNI, c.CorreuElectronic, 
-                    c.Telefon, c.Usuari, c.Password, p.Pais, c.Ciudad, c.CodigoPostal 
-                FROM 
-                    Clients c 
-                LEFT JOIN 
-                    Pais p 
-                ON 
-                    c.Id_Pais = p.Id_Pais;`,
-                (error, results) => {
-                    if (error) {
-                        throw error;
-                    } else {
-                        res.render('index', { results });
-                    }
-                }
-            );
-            
-        })
+
+        router.use(session({
+            secret: 'tu_secreto',
+            resave: false,
+            saveUninitialized: true,
+            cookie: { secure: false }  // Cambia a true si usas HTTPS
+        }));
+        
+        // Otras configuraciones de Express
+        router.use(express.urlencoded({ extended: true }));
+        router.use(express.json());
+//login
+
+// Redirigir la raíz al login
+router.get("/", (req, res) => {
+    res.redirect("/login");
+});
+
+// Página de login
+router.get("/login", (req, res) => {
+    res.render("login/login", { error: null });
+});
+
+// Procesar login
+router.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error("Error al cerrar sesión:", err);
+            return res.status(500).send("Error al cerrar sesión");
+        }
+        res.redirect('/login'); // Redirige al usuario a la página de login
+    });
+});
+
+router.post("/login", (req, res) => {
+    const { username, password } = req.body;
+
+    // Buscar el usuario en la base de datos
+    const sql = "SELECT * FROM Administrador WHERE Usuari = ?";
+    conexion.query(sql, [username], async (error, results) => {
+        if (error) {
+            console.error("Error en la consulta:", error);
+            return res.render("login/login", { error: "Error interno" });
+        }
+
+        // Verificar si el usuario existe
+        if (results.length === 0) {
+            return res.render("login/login", { error: "Usuario o contraseña incorrectos" });
+        }
+
+        const user = results[0];
+
+        // Comparar la contraseña ingresada con la encriptada en la BD
+        const passwordMatch = await bcrypt.compare(password, user.Password);
+
+        if (!passwordMatch) {
+            return res.render("login/login", { error: "Usuario o contraseña incorrectos" });
+        }
+
+        // Guardar la sesión temporal con los datos del usuario, incluyendo la palabra clave
+        req.session.tempUser = {
+            id: user.Id_Administrador,
+            role: user.role,
+            id_hotel: user.Id_hotel,
+            pra: user.Paraula_verificacio // Guardamos la palabra clave de la base de datos
+        };
+
+        // Redirigir a la página de verificación de la palabra clave
+        res.redirect("/clave");
+    });
+});
+
+router.get("/clave", (req, res) => {
+    res.render("login/clave", { error: null });
+});
+router.post("/verificar-clave", (req, res) => {
+    const { clave } = req.body;
+
+    // Verificar si la sesión temporal del usuario existe
+    if (!req.session.tempUser) {
+        return res.redirect("/login"); // Si no hay usuario temporal, redirigir al login
+    }
+
+    const user = req.session.tempUser;
+
+    // Validar la palabra clave (comparar con la columna 'Paraula_verificacio' de la base de datos)
+    if (clave !== user.pra) {
+        return res.render("login/clave", { error: "Palabra clave incorrecta" });
+    }
+
+    // Guardar la sesión final del usuario
+    req.session.user = user;
+    delete req.session.tempUser; // Eliminar el usuario temporal
+
+    // Redirigir al lugar correspondiente según el rol
+    if (user.role === "Hotel") {
+        res.redirect(`/hotel/${user.id_hotel}`); // Redirigir al hotel específico
+    } else {
+        res.redirect("/clientes"); // Redirigir al panel de clientes
+    }
+});
 
 
 
 
-        //ruta para crear registros
-        router.get('/create', (req, res) => {
-            const queryCountries = 'SELECT Id_Pais, Pais FROM Pais'; // Consulta para obtener los países
-            conexion.query(queryCountries, (error, countryResults) => {
+// CLIENTES: Mostrar listado de clientes (protegido con sesión)
+// Ruta de clientes
+router.get("/clientes", (req, res) => {
+    const user = req.session.user;  // Obtener el usuario de la sesión
+
+    if (!user) {
+        return res.redirect('/login');  // Si no hay usuario logueado, redirigir a login
+    }
+
+    // Si el rol es 'Hotel', redirigir a la página de su hotel con su ID
+    if (user.role === 'Hotel') {
+        return res.redirect(`/hotel/${user.id_hotel}`);  
+    }
+
+    // Si el rol es 'General', mostrar la lista de clientes
+   else if (user.role === 'General') {
+        conexion.query(
+            `SELECT 
+                c.Id_Client, c.Nom, c.Cognom, c.DNI, c.CorreuElectronic, 
+                c.Telefon, c.Usuari, c.Password, p.Pais, c.Ciudad, c.CodigoPostal 
+            FROM Clients c 
+            LEFT JOIN Pais p 
+            ON c.Id_Pais = p.Id_Pais;`,
+            (error, results) => {
                 if (error) {
-                    console.error('Error al obtener los países:', error.message);
-                    return res.status(500).send('Error en el servidor');
+                    throw error;
+                } else {
+                    res.render("index", { results, user });  // Pasar los resultados y el usuario a la vista
                 }
-                res.render('create', { countries: countryResults }); // Pasa la lista de países a la vista
-            });
+            }
+        );
+    } else {
+        // Si el usuario tiene un rol desconocido, redirigirlo al login
+        return res.redirect('/login');
+    }
+});
+
+
+
+
+
+        router.use(cors()); // Permitir solicitudes desde el frontend
+
+        router.get("/autocomplete", async (req, res) => {
+            const query = req.query.q;
+            if (!query) return res.status(400).json({ error: "Falta el parámetro q" });
+        
+            try {
+                const response = await axios.get("https://nominatim.openstreetmap.org/search", {
+                    params: {
+                        q: query,
+                        format: "json",
+                        addressdetails: 1,
+                        limit: 5
+                    }
+                });
+        
+                // Filtrar resultados asegurando que sean ciudades, pueblos o aldeas
+                const cities = response.data
+                    .filter(place => place.address.city || place.address.town || place.address.village)
+                    .map(place => place.address.city || place.address.town || place.address.village)
+                    .filter((value, index, self) => self.indexOf(value) === index); // Eliminar duplicados
+        
+                res.json(cities.slice(0, 5)); // Limitar a 5 resultados
+            } catch (error) {
+                res.status(500).json({ error: "Error al obtener datos" });
+            }
         });
+router.get('/create', (req, res) => {
+
+    const user = req.session.user;
+
+    if (user.role === 'General'){
+    const queryCountries = 'SELECT Id_Pais, Pais FROM Pais'; // Consulta para obtener los países
+    conexion.query(queryCountries, (error, countryResults) => {
+        if (error) {
+            console.error('Error al obtener los países:', error.message);
+            return res.status(500).send('Error en el servidor');
+        }
+        res.render('create', { countries: countryResults, user:user }); // Pasa la lista de países a la vista
+    });
+}else{
+    res.redirect('/login'); 
+}
+});
 
 
         router.post('/save', crud.save)
@@ -53,45 +210,57 @@
         //ruta editar
 
         router.get('/edit/:id', (req, res) => {
+            const user = req.session.user;
+            if (!user) {
+                return res.redirect('/login'); // Si no hay usuario, redirigir a login
+            }
+        
             const Id_Client = req.params.id;
             const queryClient = 'SELECT * FROM Clients WHERE Id_Client = ?';
-            const queryCountries = 'SELECT Id_Pais, Pais FROM Pais'; // Consulta para los países
-
-            // Primera consulta: obtener los datos del cliente
-            conexion.query(queryClient, [Id_Client], (error, clientResults) => {
-                if (error) {
-                    console.error('Error al obtener el cliente:', error.message);
-                    return res.status(500).send('Error en el servidor');
-                }
-
-                if (clientResults.length === 0) {
-                    return res.status(404).send('Cliente no encontrado');
-                }
-
-                // Segunda consulta: obtener los países
-                conexion.query(queryCountries, (error, countryResults) => {
+            const queryCountries = 'SELECT Id_Pais, Pais FROM Pais';
+        
+            if (user.role === 'General') {
+                // Obtener datos del cliente
+                conexion.query(queryClient, [Id_Client], (error, clientResults) => {
                     if (error) {
-                        console.error('Error al obtener los países:', error.message);
+                        console.error('Error al obtener el cliente:', error.message);
                         return res.status(500).send('Error en el servidor');
                     }
-
-                    // Renderizamos la vista y enviamos los datos necesarios
-                    res.render('edit', {
-                        user: clientResults[0], // Datos del cliente
-                        countries: countryResults, // Lista de países
+        
+                    if (clientResults.length === 0) {
+                        return res.status(404).send('Cliente no encontrado');
+                    }
+        
+                    // Obtener la lista de países
+                    conexion.query(queryCountries, (error, countryResults) => {
+                        if (error) {
+                            console.error('Error al obtener los países:', error.message);
+                            return res.status(500).send('Error en el servidor');
+                        }
+        
+                        // Renderizar la vista correctamente
+                        res.render('edit', {
+                            client: clientResults[0],  // Datos del cliente
+                            countries: countryResults, // Lista de países
+                            user: user  // Usuario logueado (para verificar el rol en la vista)
+                        });
                     });
                 });
-            });
+            } else {
+                res.redirect('/login'); // Redirigir si el usuario no tiene permisos
+            }
         });
+        
 
 
         router.get('/delete/:id', (req, res) => {
+            
             const id = req.params.id; 
             conexion.query('DELETE FROM Clients WHERE Id_Client = ?', [id], (error, results) => {
                 if (error) {
                     throw error;
                 } else {
-                    res.redirect('/'); // Redirigimos al usuario a la página principal
+                    res.redirect('/login'); // Redirigimos al usuario a la página principal
                 }
             });
         });
@@ -100,49 +269,64 @@
 
         router.post('/savehab', crud.savehab)
         router.post('/updatehab', crud.updatehab);
-        router.get('/habitaciones', (req, res) => {
+        router.get('/habitaciones/:Id_Hotel', (req, res) => {
+            const user = req.session.user;
+            if (!user) {
+                return res.redirect('/login'); // Si no hay usuario, redirigir a login
+            }
+            const Id_Hotel = req.params.Id_Hotel;
+        
             conexion.query(
                 `SELECT 
                     ha.Id_Habitaciones, ha.Numero_Habitacion, ha.Tipo, ha.Capacidad, ha.Precio, 
-                    ha.Disponibilidad, h.Nombre,
-                    IF(ha.Disponibilidad = 1, 'Disponible', 'No Disponible') AS Disponibilidad
+                    h.Nombre
                 FROM 
                     Habitaciones ha 
                 LEFT JOIN 
                     Hotel h 
                 ON 
-                    ha.Id_Hotel = h.Id_Hotel;`,
+                    ha.Id_Hotel = h.Id_Hotel
+                WHERE 
+                    ha.Id_Hotel = ?;`,
+                [Id_Hotel],
                 (error, results) => {
                     if (error) {
                         throw error;
                     } else {
-                        // Usa la ruta relativa sin la barra inicial
-                        res.render('Habitaciones/habitaciones', { results });
+                        // Obtener el nombre del hotel si hay resultados
+                        const NombreHotel = results.length > 0 ? results[0].Nombre : "Hotel no encontrado";
+                        
+                        res.render('Habitaciones/habitaciones', { 
+                            results, 
+                            Id_Hotel,
+                            NombreHotel,user // Pasamos el nombre del hotel a la vista
+                        });
                     }
                 }
             );
         });
-
-        router.get('/createhab', (req, res) => {
-            const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel';
-
-            // Primera consulta: obtener disponibilidades
+        
         
 
-                // Segunda consulta: obtener hoteles
-                conexion.query(queryHotel, (error, hotelResults) => {
-                    if (error) {
-                        console.error('Error al obtener los hoteles:', error.message);
-                        return res.status(500).send('Error en el servidor');
-                    }
-
-                    // Renderizamos la vista y enviamos los datos necesarios
-                    res.render('Habitaciones/createhab', {
-                    
-                        hoteles: hotelResults
-                    });
+        router.get('/createhab/:id_hotel', (req, res) => {
+            const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel';
+            const idHotel = req.params.id_hotel; // Obtenemos el ID del hotel desde la URL
+        
+            conexion.query(queryHotel, (error, hotelResults) => {
+                if (error) {
+                    console.error('Error al obtener los hoteles:', error.message);
+                    return res.status(500).send('Error en el servidor');
+                }
+        
+                res.render('Habitaciones/createhab', {
+                    hoteles: hotelResults,
+                    idHotel: idHotel // Pasamos el ID del hotel a la vista
                 });
+            });
         });
+        
+        
+        
 
         router.get('/edithab/:id', (req, res) => {
             const Id_Habitaciones = req.params.id;
@@ -183,87 +367,184 @@
 
 
         router.get('/deletehab/:id', (req, res) => {
-            const id = req.params.id; 
-            conexion.query('DELETE FROM Habitaciones WHERE Id_Habitaciones = ?', [id], (error, results) => {
+            const id = req.params.id;
+        
+            // Obtener el Id_Hotel de la habitación antes de eliminarla
+            conexion.query('SELECT Id_Hotel FROM Habitaciones WHERE Id_Habitaciones = ?', [id], (error, results) => {
                 if (error) {
-                    throw error;
-                } else {
-                    res.redirect('/habitaciones'); // Redirigimos al usuario a la página principal
+                    console.error('Error al obtener el hotel de la habitación:', error.message);
+                    return res.status(500).send('Error en el servidor');
                 }
+        
+                if (results.length === 0) {
+                    return res.status(404).send('Habitación no encontrada');
+                }
+        
+                const Id_Hotel = results[0].Id_Hotel; // Obtener el Id_Hotel de la habitación
+        
+                // Ahora eliminamos la habitación
+                conexion.query('DELETE FROM Habitaciones WHERE Id_Habitaciones = ?', [id], (error) => {
+                    if (error) {
+                        console.error('Error al eliminar la habitación:', error.message);
+                        return res.status(500).send('Error en el servidor');
+                    }
+        
+                    // Redirigir a la página de habitaciones del hotel correspondiente
+                    res.redirect(`/habitaciones/${Id_Hotel}`);
+                });
             });
         });
-
+        
 
         //HOTEL
 
         router.post('/saveh', crud.saveh)
         router.post('/updateh', crud.updateh);
-        router.get('/hotel', (req, res) => {
+      // Ruta con parámetro Id_Hotel
+// Ruta para mostrar todos los hoteles (solo para 'General')
+router.get('/hoteles', (req, res) => {
+    const user = req.session.user;  // Obtener el usuario de la sesión
+
+    if (!user) {
+        return res.redirect('/login');  // Redirigir si el usuario no está logueado
+    }
+
+    // Si el rol es 'General', mostrar todos los hoteles
+    if (user.role === 'General') {
+        conexion.query(
+            `SELECT 
+                h.Id_Hotel, h.Nombre, h.CorreoElectronico, h.Telefono, h.Direccion, h.CodigoPostal, 
+                p.Pais, h.Ciudad, h.Estrellas        
+            FROM Hotel h
+            LEFT JOIN Pais p ON h.Id_Pais = p.Id_Pais`,
+            (error, results) => {
+                if (error) {
+                    throw error;
+                } else {
+                    // Mostrar todos los hoteles
+                    res.render('hotel/hotel', { results, user });
+                }
+            }
+        );
+    } else {
+        res.redirect('/login');  // Si el rol no es 'General', redirigir al login
+    }
+});
+
+// Ruta para mostrar información de un hotel específico (solo para 'Hotel')
+router.get('/hotel/:id', (req, res) => {
+    const user = req.session.user;  // Obtener el usuario de la sesión
+    const hotelId = req.params.id;  // Obtener el Id_Hotel de la URL
+
+    if (!user) {
+        return res.redirect('/login');  // Redirigir si el usuario no está logueado
+    }
+
+    // Si el rol es 'Hotel', filtrar por Id_Hotel del usuario
+    if (user.role === 'Hotel') {
+        // Si el Id en la URL coincide con el Id del hotel del usuario, mostrar los detalles del hotel
+        if (hotelId == user.id_hotel) {
             conexion.query(
                 `SELECT 
-                    h.Id_Hotel,h.Nombre,h.CorreoElectronico,h.Telefono,h.Direccion,h.CodigoPostal,p.Pais,h.Ciudad,h.Estrellas        
+                    h.Id_Hotel, h.Nombre, h.CorreoElectronico, h.Telefono, h.Direccion, h.CodigoPostal, 
+                    p.Pais, h.Ciudad, h.Estrellas        
                 FROM Hotel h
-                LEFT JOIN Pais p on h.Id_Pais = p.Id_Pais
-                
-                `,
+                LEFT JOIN Pais p ON h.Id_Pais = p.Id_Pais
+                WHERE h.Id_Hotel = ?`,
+                [hotelId],  // Usamos el Id_Hotel de la URL
                 (error, results) => {
                     if (error) {
                         throw error;
                     } else {
-                        // Usa la ruta relativa sin la barra inicial
-                        res.render('hotel/hotel', { results });
+                        // Mostrar solo la información del hotel del usuario
+                        res.render('hotel/hotel', { results, user });
                     }
                 }
             );
-        });
+        } else {
+            // Si el hotelId no coincide con el Id del hotel del usuario, mostrar error o redirigir
+            return res.render('hotel/error', { error: "Acceso no autorizado a este hotel." });
+        }
+    } else {
+        res.redirect('/login');  // Si el rol no es 'Hotel', redirigir al login
+    }
+});
+
+
 
         router.get('/createh', (req, res) => {
+            const user = req.session.user;
+            if(user.role === 'General' || user.role === 'Hotel'){
             const queryCountries = 'SELECT Id_Pais, Pais FROM Pais'; // Consulta para obtener los países
             conexion.query(queryCountries, (error, countryResults) => {
                 if (error) {
                     console.error('Error al obtener los países:', error.message);
                     return res.status(500).send('Error en el servidor');
                 }
-                res.render('hotel/createh', { countries: countryResults }); // Pasa la lista de países a la vista
+                res.render('hotel/createh', { countries: countryResults , user:user}); // Pasa la lista de países a la vista
             });
+        }else{
+            res.redirect('/login');  // Si el rol no es 'Hotel', redirigir al login
+        }
         });
 
         router.get('/edith/:id', (req, res) => {
+            const user = req.session.user;
             const Id_Hotel = req.params.id;
-            const queryHotel = 'SELECT * FROM Hotel WHERE Id_Hotel = ?';
-            const queryCountries = 'SELECT Id_Pais, Pais FROM Pais'; // Consulta para los países
-
-            // Primera consulta: obtener los datos del cliente
-            conexion.query(queryHotel, [Id_Hotel], (error, hotelResults) => {
+        
+            if (!user) {
+                return res.redirect('/login'); // Redirigir si no hay usuario logueado
+            }
+        
+            let queryHotel;
+            let queryParams = [];
+        
+            if (user.role === 'General') {
+                queryHotel = 'SELECT * FROM Hotel WHERE Id_Hotel = ?';
+                queryParams = [Id_Hotel]; // Tomamos el ID de la URL
+            } else if (user.role === 'Hotel') {
+                queryHotel = 'SELECT * FROM Hotel WHERE Id_Hotel = ?';
+                queryParams = [user.id_hotel]; // Forzamos a que solo pueda editar su propio hotel
+            } else {
+                return res.redirect('/login'); // Redirigir si el rol no es válido
+            }
+        
+            const queryCountries = 'SELECT Id_Pais, Pais FROM Pais'; // Consulta para obtener países
+        
+            // Obtener los datos del hotel
+            conexion.query(queryHotel, queryParams, (error, hotelResults) => {
                 if (error) {
                     console.error('Error al obtener el hotel:', error.message);
                     return res.status(500).send('Error en el servidor');
                 }
-
+        
                 if (hotelResults.length === 0) {
                     return res.status(404).send('Hotel no encontrado');
                 }
-
-                // Segunda consulta: obtener los países
+        
+                // Obtener la lista de países
                 conexion.query(queryCountries, (error, countryResults) => {
                     if (error) {
                         console.error('Error al obtener los países:', error.message);
                         return res.status(500).send('Error en el servidor');
                     }
-
-                    // Renderizamos la vista y enviamos los datos necesarios
+        
+                    // Renderizar la vista con los datos obtenidos
                     res.render('hotel/edith', {
-                        hotel: hotelResults[0], // Datos del cliente
+                        hotel: hotelResults[0],  // Datos del hotel
                         countries: countryResults, // Lista de países
+                        user: user // Pasamos el usuario a la vista
                     });
                 });
             });
         });
-
+        
 
 
         router.get('/deleteh/:id', (req, res) => {
+            const user = req.session.user;
             const id = req.params.id; 
+            if(user.role === 'General'){
             conexion.query('DELETE FROM Hotel WHERE Id_Hotel = ?', [id], (error, results) => {
                 if (error) {
                     throw error;
@@ -271,6 +552,9 @@
                     res.redirect('/hotel'); // Redirigimos al usuario a la página principal
                 }
             });
+         } else {
+                res.redirect('/login');  // Si el rol no es 'General', redirigir al login
+            }
         });
 
 
@@ -279,6 +563,9 @@
         router.post('/saveo', crud.saveo)
         router.post('/updateo', crud.updateo); 
         router.get('/ofertas', (req, res) => {
+            const user = req.session.user; 
+
+              if (user.role === 'General') {
             conexion.query(
                 `SELECT 
                     o.Id_Oferta, 
@@ -293,7 +580,7 @@
                     h.Nombre AS Nombre_Hotel,
                     ha.Numero_Habitacion,
                     a.Nombre as Actividad,
-                    IF(o.Estado = 1, 'Activo', 'Inactivo') AS Estado
+                    IF(o.Estado = 1, 'Activo', 'Inactivo') AS Estado_Descripcion
                 FROM Ofertas o
                 LEFT JOIN Hotel h ON o.Id_Hotel = h.Id_Hotel
                 LEFT JOIN Habitaciones ha ON o.Id_Habitacion = ha.Id_Habitaciones
@@ -302,114 +589,224 @@
                     if (error) {
                         throw error;
                     } else {
-                        res.render('ofertas/ofertas', { results });
+                        res.render('ofertas/ofertas', { results, user });
                     }
                 }
             );
+        }else {res.redirect('/login');}
         });
+        
+        router.get('/oferta/:id', (req, res) => {
+            const user = req.session.user;  // Obtener el usuario de la sesión
+            const hotelId = req.params.id;  // Obtener el Id_Hotel de la URL
+        
+            if (!user) {
+                return res.redirect('/login');  // Redirigir si el usuario no está logueado
+            }
+        
+            if (user.role === 'Hotel') {
+                // Si el usuario intenta acceder a otro hotel, lo redirigimos al suyo
+                if (hotelId != user.id_hotel) {
+                    return res.redirect(`/oferta/${user.id_hotel}`);
+                }
+        
+                // Mostrar las ofertas solo del hotel del usuario
+                conexion.query(
+                    `SELECT 
+                        o.Id_Oferta, 
+                        o.Nombre,
+                        o.Descripcion,
+                        o.Tipo,
+                        o.Dia_Inicio,
+                        o.Dia_Fin,
+                        o.Precio_Original,
+                        o.Precio_Oferta,
+                        o.Estado,
+                        h.Nombre AS Nombre_Hotel,
+                        ha.Numero_Habitacion,
+                        a.Nombre as Actividad,
+                        IF(o.Estado = 1, 'Activo', 'Inactivo') AS Estado_Descripcion
+                    FROM Ofertas o
+                    LEFT JOIN Hotel h ON o.Id_Hotel = h.Id_Hotel
+                    LEFT JOIN Habitaciones ha ON o.Id_Habitacion = ha.Id_Habitaciones
+                    LEFT JOIN Actividades a ON o.Id_Actividad = a.Id_Actividades
+                    WHERE h.Id_Hotel = ?`,
+                    [hotelId],  
+                    (error, results) => {
+                        if (error) {
+                            throw error;
+                        } else {
+                            res.render('ofertas/ofertas', { results, user });
+                        }
+                    }
+                );
+            } else {
+                // Si el usuario no tiene rol "Hotel", lo enviamos a la lista general de ofertas
+                return res.redirect('/login');
+            }
+        });
+        
 
+       // Ruta para crear una oferta
+router.get('/createo', (req, res) => {
+    const user = req.session.user;
 
-        router.get('/createo', (req, res) => {
-            // Consultas para obtener datos de Hotel, Habitaciones y Actividades
-            const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
-            const queryHabitacion = 'SELECT Id_Habitaciones, Numero_Habitacion FROM Habitaciones';
-            const queryActividades = 'SELECT Id_Actividades,Id_Hotel,Dia_Inicio,Dia_Fin,Hora_Inicio,Hora_Fin,Capacidad_Maxima,Ubicacion,Descripcion,Precio,Nombre as Actividad FROM Actividades';
+    if (!user) {
+        return res.redirect('/login'); // Si no está autenticado, redirige al login
+    }
 
-            // Ejecutar las consultas en paralelo
-            conexion.query(queryHotel, (error, hotelResults) => {
+    let queryHotel;
+    let queryParams = [];
+
+    if (user.role === 'General') {
+        queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
+    } else if (user.role === 'Hotel') {
+        queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel WHERE Id_Hotel = ?';
+        queryParams = [user.id_hotel]; // Solo su hotel
+    } else {
+        return res.redirect('/login'); // Si el rol es inválido
+    }
+
+    const queryHabitacion = 'SELECT Id_Habitaciones, Numero_Habitacion FROM Habitaciones';
+    const queryActividades = 'SELECT Id_Actividades, Id_Hotel, Dia_Inicio, Dia_Fin, Hora_Inicio, Hora_Fin, Capacidad_Maxima, Ubicacion, Descripcion, Precio, Nombre as Actividad FROM Actividades';
+
+    // Ejecutar consultas en paralelo
+    conexion.query(queryHotel, queryParams, (error, hotelResults) => {
+        if (error) {
+            console.error('Error al obtener los hoteles:', error.message);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        conexion.query(queryHabitacion, (error, habitacionResults) => {
+            if (error) {
+                console.error('Error al obtener las habitaciones:', error.message);
+                return res.status(500).send('Error en el servidor');
+            }
+
+            conexion.query(queryActividades, (error, actividadesResults) => {
                 if (error) {
-                    console.error('Error al obtener los hoteles:', error.message);
+                    console.error('Error al obtener las actividades:', error.message);
                     return res.status(500).send('Error en el servidor');
                 }
-                conexion.query(queryHabitacion, (error, habitacionResults) => {
-                    if (error) {
-                        console.error('Error al obtener las habitaciones:', error.message);
-                        return res.status(500).send('Error en el servidor');
-                    }
-                    conexion.query(queryActividades, (error, actividadesResults) => {
-                        if (error) {
-                            console.error('Error al obtener las actividades:', error.message);
-                            return res.status(500).send('Error en el servidor');
-                        }
 
-                        // Renderizar la vista con los datos obtenidos
-                        res.render('ofertas/createo', { 
-                            hoteles: hotelResults, 
-                            habitaciones: habitacionResults, 
-                            actividades: actividadesResults 
-                        });
-                    });
+                // Renderizar la vista con los datos obtenidos
+                res.render('ofertas/createo', { 
+                    hoteles: hotelResults, 
+                    habitaciones: habitacionResults, 
+                    actividades: actividadesResults,
+                    user:user 
                 });
             });
         });
+    });
+});
 
+// Ruta para editar una oferta
+router.get('/edito/:id', async (req, res) => {
+    const user = req.session.user;
+    const Id_Oferta = req.params.id;
 
-        router.get('/edito/:id', (req, res) => {
-            const Id_Oferta = req.params.id;
-            const queryOferta = 'SELECT * FROM Ofertas WHERE Id_Oferta = ?';
-            const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
-            const queryHabitacion = 'SELECT Id_Habitaciones,Numero_Habitacion FROM Habitaciones';
-            const queryActividades = 'SELECT Id_Actividades,Id_Hotel,Dia_Inicio,Dia_Fin,Hora_Inicio,Hora_Fin,Capacidad_Maxima,Ubicacion,Descripcion,Precio,Nombre as Actividad FROM Actividades';
+    if (!user) {
+        return res.redirect('/login');
+    }
 
-            // Primera consulta: Obtener la oferta específica
-            conexion.query(queryOferta, [Id_Oferta], (error, ofertaResults) => {
-                if (error) {
-                    console.error('Error al obtener la oferta:', error.message);
-                    return res.status(500).send('Error en el servidor');
-                }
+    try {
+        const queryOferta = user.role === 'Hotel' 
+            ? 'SELECT * FROM Ofertas WHERE Id_Oferta = ? AND Id_Hotel = ?' 
+            : 'SELECT * FROM Ofertas WHERE Id_Oferta = ?';
+        const queryParamsOferta = user.role === 'Hotel' ? [Id_Oferta, user.id_hotel] : [Id_Oferta];
 
-                if (ofertaResults.length === 0) {
-                    return res.status(404).send('Oferta no encontrada');
-                }
-
-
-                // Segunda consulta: Obtener los hoteles
-                conexion.query(queryHotel, (error, hotelResults) => {
-                    if (error) {
-                        console.error('Error al obtener los hoteles:', error.message);
-                        return res.status(500).send('Error en el servidor');
-                    }
-
-                    // Tercera consulta: Obtener las habitaciones
-                    conexion.query(queryHabitacion, (error, habitacionResults) => {
-                        if (error) {
-                            console.error('Error al obtener las habitaciones:', error.message);
-                            return res.status(500).send('Error en el servidor');
-                        }
-
-                        // Cuarta consulta: Obtener las actividades
-                        conexion.query(queryActividades, (error, actividadResults) => {
-                            if (error) {
-                                console.error('Error al obtener las actividades:', error.message);
-                                return res.status(500).send('Error en el servidor');
-                            }
-
-                            // Renderizamos la vista con todos los datos
-                            res.render('ofertas/edito', {
-                                oferta: ofertaResults[0],              // Datos de la oferta
-                                hoteles: hotelResults,       // Lista de hoteles
-                                habitaciones: habitacionResults, // Lista de habitaciones
-                                actividades: actividadResults   // Lista de actividades
-                            });
-                        });
-                    });
-                });
+        const ofertaResults = await new Promise((resolve, reject) => {
+            conexion.query(queryOferta, queryParamsOferta, (error, results) => {
+                if (error) return reject(error);
+                resolve(results);
             });
         });
 
+        if (ofertaResults.length === 0) {
+            return res.status(404).send('Oferta no encontrada o no tienes permiso para editarla');
+        }
 
+        const queryHotel = user.role === 'General' 
+            ? 'SELECT Id_Hotel, Nombre FROM Hotel' 
+            : 'SELECT Id_Hotel, Nombre FROM Hotel WHERE Id_Hotel = ?';
+        const queryParamsHotel = user.role === 'Hotel' ? [user.id_hotel] : [];
 
-
-        router.get('/deleteo/:id', (req, res) => {
-            const id = req.params.id; 
-            conexion.query('DELETE FROM Ofertas WHERE Id_Oferta = ?', [id], (error, results) => {
-                if (error) {
-                    throw error;
-                } else {
-                    res.redirect('/ofertas'); // Redirigimos al usuario a la página principal
-                }
+        const hotelResults = await new Promise((resolve, reject) => {
+            conexion.query(queryHotel, queryParamsHotel, (error, results) => {
+                if (error) return reject(error);
+                resolve(results);
             });
         });
+
+        const habitacionResults = await new Promise((resolve, reject) => {
+            conexion.query('SELECT Id_Habitaciones, Numero_Habitacion FROM Habitaciones', (error, results) => {
+                if (error) return reject(error);
+                resolve(results);
+            });
+        });
+
+        const queryActividades = user.role === 'Hotel'
+            ? 'SELECT Id_Actividades, Id_Hotel, Dia_Inicio, Dia_Fin, Hora_Inicio, Hora_Fin, Capacidad_Maxima, Ubicacion, Descripcion, Precio, Nombre as Actividad FROM Actividades WHERE Id_Hotel = ?'
+            : 'SELECT Id_Actividades, Id_Hotel, Dia_Inicio, Dia_Fin, Hora_Inicio, Hora_Fin, Capacidad_Maxima, Ubicacion, Descripcion, Precio, Nombre as Actividad FROM Actividades';
+
+        const queryParamsActividades = user.role === 'Hotel' ? [user.id_hotel] : [];
+
+        const actividadResults = await new Promise((resolve, reject) => {
+            conexion.query(queryActividades, queryParamsActividades, (error, results) => {
+                if (error) return reject(error);
+                resolve(results);
+            });
+        });
+
+        res.render('ofertas/edito', {
+            oferta: ofertaResults[0],       
+            hoteles: hotelResults,       
+            habitaciones: habitacionResults, 
+            actividades: actividadResults,
+            user: user   
+        });
+
+    } catch (error) {
+        console.error('Error en la consulta:', error);
+        return res.status(500).send('Error en el servidor');
+    }
+});
+
+
+// Ruta para eliminar una oferta
+router.get('/deleteo/:id', (req, res) => {
+    const user = req.session.user;
+    const id = req.params.id; 
+
+    if (!user) {
+        return res.redirect('/login');
+    }
+
+    let queryDelete;
+    let queryParams = [];
+
+    if (user.role === 'General' || user.role === 'Hotel') {
+        queryDelete = 'DELETE FROM Ofertas WHERE Id_Oferta = ?';
+        queryParams = [id];
+    } else {
+        return res.redirect('/login');
+    }
+
+    conexion.query(queryDelete, queryParams, (error, results) => {
+        if (error) {
+            console.error('Error al eliminar la oferta:', error.message);
+            return res.status(500).send('Error en el servidor');
+        }
+    else if(user.role === 'General'){
+        res.redirect('/ofertas/');
+    }else if(user.role === 'Hotel'){
+     res.redirect(`/oferta/${user.id_hotel}`)
+    }
+    
+    });
+});
+
 
 
         //ACTIVIDADES
@@ -417,6 +814,9 @@
         router.post('/savea', crud.savea)
         router.post('/updatea', crud.updatea); 
         router.get('/actividades', (req, res) => {
+
+            const user = req.session.user;  // Obtener el usuario de la sesión
+            if (user.role === 'General') {
             conexion.query(
                 `SELECT 
                     a.Id_Actividades, 
@@ -435,115 +835,220 @@
                     if (error) {
                         throw error;
                     } else {
-                        res.render('actividades/actividades', { results });
+                        res.render('actividades/actividades', { results, user });
                     }
                 }
             );
+        } else {
+            // Si el usuario no tiene rol "Hotel", lo enviamos a la lista general de ofertas
+            return res.redirect('/login');
+        }
         });
 
-
-        router.get('/createa', (req, res) => {
-            // Consultas para obtener datos de Hotel, Habitaciones y Actividades
-            const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
-            const queryHabitacion = 'SELECT Id_Habitaciones, Numero_Habitacion FROM Habitaciones';
-            const queryActividades = 'SELECT Id_Actividades,Id_Hotel,Dia_Inicio,Dia_Fin,Hora_Inicio,Hora_Fin,Capacidad_Maxima,Ubicacion,Descripcion,Precio,Nombre as Actividad FROM Actividades';
-
-            // Ejecutar las consultas en paralelo
-            conexion.query(queryHotel, (error, hotelResults) => {
-                if (error) {
-                    console.error('Error al obtener los hoteles:', error.message);
-                    return res.status(500).send('Error en el servidor');
-                }
-                conexion.query(queryHabitacion, (error, habitacionResults) => {
-                    if (error) {
-                        console.error('Error al obtener las habitaciones:', error.message);
-                        return res.status(500).send('Error en el servidor');
-                    }
-                    conexion.query(queryActividades, (error, actividadesResults) => {
-                        if (error) {
-                            console.error('Error al obtener las actividades:', error.message);
-                            return res.status(500).send('Error en el servidor');
-                        }
-
-                        // Renderizar la vista con los datos obtenidos
-                        res.render('actividades/createa', { 
-                            hoteles: hotelResults, 
-                            habitaciones: habitacionResults, 
-                            actividades: actividadesResults 
-                        });
-                    });
-                });
-            });
-        });
-
-
-        router.get('/edita/:id', (req, res) => {
-            const Id_Actividades = req.params.id;
-            const queryActividades = 'SELECT * FROM Actividades WHERE Id_Actividades = ?';
-            const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
-            const queryHabitacion = 'SELECT Id_Habitaciones,Numero_Habitacion FROM Habitaciones';
+        router.get('/actividad/:id', (req, res) => {
+            const user = req.session.user;  // Obtener el usuario de la sesión
+            const hotelId = req.params.id;  // Obtener el Id_Hotel de la URL
         
+            if (!user) {
+                return res.redirect('/login');  // Redirigir si el usuario no está logueado
+            }
+        
+            if (user.role === 'Hotel') {
+                // Si el usuario intenta acceder a otro hotel, lo redirigimos al suyo
+                if (hotelId != user.id_hotel) {
+                    return res.redirect(`/oferta/${user.id_hotel}`);
+                }
+        
+                // Mostrar las ofertas solo del hotel del usuario
+                conexion.query(
+                    `SELECT 
+                    a.Id_Actividades, 
+                    h.Nombre,
+                    a.Dia_Inicio,
+                    a.Dia_Fin,
+                    a.Hora_Inicio,
+                    a.Hora_Fin,
+                    a.Capacidad_Maxima,
+                    a.Ubicacion,
+                    a.Descripcion,
+                    a.Nombre as Actividad
+                FROM Actividades a
+                LEFT JOIN Hotel h ON a.Id_Hotel = h.Id_Hotel
+                    WHERE h.Id_Hotel = ?`,
+                    [hotelId],  
+                    (error, results) => {
+                        if (error) {
+                            throw error;
+                        } else {
+                            res.render('actividades/actividades', { results, user });
+                        }
+                    }
+                );
+            } else {
+                // Si el usuario no tiene rol "Hotel", lo enviamos a la lista general de ofertas
+                return res.redirect('/login');
+            }
+        });
 
-            // Primera consulta: Obtener la oferta específica
-            conexion.query(queryActividades, [Id_Actividades], (error, actividadesResults) => {
+     // Ruta para crear una actividad
+router.get('/createa', (req, res) => {
+    const user = req.session.user;
+
+    if (!user) {
+        return res.redirect('/login'); // Si no está autenticado, redirige al login
+    }
+
+    let queryHotel;
+    let queryParams = [];
+
+    if (user.role === 'General') {
+        queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
+    } else if (user.role === 'Hotel') {
+        queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel WHERE Id_Hotel = ?';
+        queryParams = [user.id_hotel]; // Solo su hotel
+    } else {
+        return res.redirect('/login');
+    }
+
+    const queryHabitacion = 'SELECT Id_Habitaciones, Numero_Habitacion FROM Habitaciones';
+    const queryActividades = 'SELECT Id_Actividades, Id_Hotel, Dia_Inicio, Dia_Fin, Hora_Inicio, Hora_Fin, Capacidad_Maxima, Ubicacion, Descripcion, Precio, Nombre as Actividad FROM Actividades';
+
+    // Obtener hoteles
+    conexion.query(queryHotel, queryParams, (error, hotelResults) => {
+        if (error) {
+            console.error('Error al obtener los hoteles:', error.message);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        // Obtener habitaciones
+        conexion.query(queryHabitacion, (error, habitacionResults) => {
+            if (error) {
+                console.error('Error al obtener las habitaciones:', error.message);
+                return res.status(500).send('Error en el servidor');
+            }
+
+            // Obtener actividades
+            conexion.query(queryActividades, (error, actividadesResults) => {
                 if (error) {
-                    console.error('Error al obtener la oferta:', error.message);
+                    console.error('Error al obtener las actividades:', error.message);
                     return res.status(500).send('Error en el servidor');
                 }
 
-                if (actividadesResults.length === 0) {
-                    return res.status(404).send('Oferta no encontrada');
-                }
-
-
-                // Segunda consulta: Obtener los hoteles
-                conexion.query(queryHotel, (error, hotelResults) => {
-                    if (error) {
-                        console.error('Error al obtener los hoteles:', error.message);
-                        return res.status(500).send('Error en el servidor');
-                    }
-
-                    // Tercera consulta: Obtener las habitaciones
-                    conexion.query(queryHabitacion, (error, habitacionResults) => {
-                        if (error) {
-                            console.error('Error al obtener las habitaciones:', error.message);
-                            return res.status(500).send('Error en el servidor');
-                        }
-
-
-                            // Renderizamos la vista con todos los datos
-                            res.render('actividades/edita', {
-                                actividades: actividadesResults [0],              // Datos de la oferta
-                                hoteles: hotelResults,       // Lista de hoteles
-                                habitaciones: habitacionResults, // Lista de habitaciones
-                                // Lista de actividades
-                            });
-                        
-                    });
+                // Renderizar la vista con los datos obtenidos
+                res.render('actividades/createa', { 
+                    hoteles: hotelResults, 
+                    habitaciones: habitacionResults, 
+                    actividades: actividadesResults,
+                    user:user 
                 });
             });
         });
+    });
+});
 
+// Ruta para editar una actividad
+router.get('/edita/:id', (req, res) => {
+    const user = req.session.user;
+    const Id_Actividades = req.params.id;
 
+    if (!user) {
+        return res.redirect('/login');
+    }
 
+    let queryActividad;
+    let queryParams = [Id_Actividades];
 
-        router.get('/deletea/:id', (req, res) => {
-            const id = req.params.id; 
-            conexion.query('DELETE FROM Actividades WHERE Id_Actividades = ?', [id], (error, results) => {
+    if (user.role === 'General') {
+        queryActividad = 'SELECT * FROM Actividades WHERE Id_Actividades = ?';
+    } else if (user.role === 'Hotel') {
+        queryActividad = 'SELECT * FROM Actividades WHERE Id_Actividades = ? AND Id_Hotel = ?';
+        queryParams.push(user.id_hotel); // Solo puede editar actividades de su hotel
+    } else {
+        return res.redirect('/login');
+    }
+
+    const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel';
+    const queryHabitacion = 'SELECT Id_Habitaciones, Numero_Habitacion FROM Habitaciones';
+
+    // Obtener actividad específica
+    conexion.query(queryActividad, queryParams, (error, actividadesResults) => {
+        if (error) {
+            console.error('Error al obtener la actividad:', error.message);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        if (actividadesResults.length === 0) {
+            return res.status(404).send('Actividad no encontrada');
+        }
+
+        // Obtener hoteles
+        conexion.query(queryHotel, (error, hotelResults) => {
+            if (error) {
+                console.error('Error al obtener los hoteles:', error.message);
+                return res.status(500).send('Error en el servidor');
+            }
+
+            // Obtener habitaciones
+            conexion.query(queryHabitacion, (error, habitacionResults) => {
                 if (error) {
-                    throw error;
-                } else {
-                    res.redirect('/actividades'); // Redirigimos al usuario a la página principal
+                    console.error('Error al obtener las habitaciones:', error.message);
+                    return res.status(500).send('Error en el servidor');
                 }
+
+                // Renderizar la vista con los datos obtenidos
+                res.render('actividades/edita', {
+                    actividades: actividadesResults[0],     
+                    hoteles: hotelResults,       
+                    habitaciones: habitacionResults,
+                    user:user 
+                });
             });
         });
+    });
+});
+
+// Ruta para eliminar una actividad
+router.get('/deletea/:id', (req, res) => {
+    const user = req.session.user;
+    const id = req.params.id;
+
+    if (!user) {
+        return res.redirect('/login');
+    }
+
+    let queryDelete;
+    let queryParams = [id];
+
+    if (user.role === 'General' || user.role === 'Hotel') {
+        queryDelete = 'DELETE FROM Actividades WHERE Id_Actividades = ?';
+    } else {
+        return res.redirect('/login');
+    }
+
+    conexion.query(queryDelete, queryParams, (error, results) => {
+        if (error) {
+            console.error('Error al eliminar la actividad:', error.message);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        else if(user.role === 'General'){
+            res.redirect('/actividades/');
+        }else if(user.role === 'Hotel'){
+         res.redirect(`/actividad/${user.id_hotel}`)
+        }// Redirigir a la lista de actividades
+    });
+});
 
 
-        //ACTIVIDADES
+
+        //SERVICIOS
 
         router.post('/saves', crud.saves)
         router.post('/updates', crud.updates); 
         router.get('/servicio', (req, res) => {
+            const user = req.session.user; 
+
+            if (user.role === 'General') {
             conexion.query(
                 `SELECT 
                     s.Id_Servicio, 
@@ -557,111 +1062,223 @@
                     if (error) {
                         throw error;
                     } else {
-                        res.render('servicio/servicio', { results });
+                        res.render('servicio/servicio', { results, user });
                     }
                 }
             );
+        }else{
+            return res.redirect('/login');
+
+        }
         });
 
-
-        router.get('/creates', (req, res) => {
-            // Consultas para obtener datos de Hotel, Habitaciones y Actividades
-            const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
-            const queryHabitacion = 'SELECT Id_Habitaciones, Numero_Habitacion FROM Habitaciones';
-            const queryActividades = 'SELECT Id_Actividades,Id_Hotel,Dia_Inicio,Dia_Fin,Hora_Inicio,Hora_Fin,Capacidad_Maxima,Ubicacion,Descripcion,Precio,Nombre as Actividad FROM Actividades';
-
-            // Ejecutar las consultas en paralelo
-            conexion.query(queryHotel, (error, hotelResults) => {
-                if (error) {
-                    console.error('Error al obtener los hoteles:', error.message);
-                    return res.status(500).send('Error en el servidor');
-                }
-                conexion.query(queryHabitacion, (error, habitacionResults) => {
-                    if (error) {
-                        console.error('Error al obtener las habitaciones:', error.message);
-                        return res.status(500).send('Error en el servidor');
-                    }
-                    conexion.query(queryActividades, (error, actividadesResults) => {
-                        if (error) {
-                            console.error('Error al obtener las actividades:', error.message);
-                            return res.status(500).send('Error en el servidor');
-                        }
-
-                        // Renderizar la vista con los datos obtenidos
-                        res.render('servicio/creates', { 
-                            hoteles: hotelResults, 
-                            habitaciones: habitacionResults, 
-                            actividades: actividadesResults 
-                        });
-                    });
-                });
-            });
-        });
-
-
-        router.get('/edits/:id', (req, res) => {
-            const Id_Servicio = req.params.id;
-            const queryServicios = 'SELECT * FROM Servicio WHERE Id_Servicio = ?';
-            const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
-            const queryHabitacion = 'SELECT Id_Habitaciones,Numero_Habitacion FROM Habitaciones';
+        router.get('/servicios/:id', (req, res) => {
+            const user = req.session.user;  // Obtener el usuario de la sesión
+            const hotelId = req.params.id;  // Obtener el Id_Hotel de la URL
         
+            if (!user) {
+                return res.redirect('/login');  // Redirigir si el usuario no está logueado
+            }
+        
+            if (user.role === 'Hotel') {
+                // Si el usuario intenta acceder a otro hotel, lo redirigimos al suyo
+                if (hotelId != user.id_hotel) {
+                    return res.redirect(`/servicios/${user.id_hotel}`);
+                }
+        
+                // Mostrar las ofertas solo del hotel del usuario
+                conexion.query(
+                    `SELECT 
+                    a.Id_Actividades, 
+                    h.Nombre,
+                    a.Dia_Inicio,
+                    a.Dia_Fin,
+                    a.Hora_Inicio,
+                    a.Hora_Fin,
+                    a.Capacidad_Maxima,
+                    a.Ubicacion,
+                    a.Descripcion,
+                    a.Nombre as Actividad
+                FROM Actividades a
+                LEFT JOIN Hotel h ON a.Id_Hotel = h.Id_Hotel
+                    WHERE h.Id_Hotel = ?`,
+                    [hotelId],  
+                    (error, results) => {
+                        if (error) {
+                            throw error;
+                        } else {
+                            res.render('actividades/actividades', { results, user });
+                        }
+                    }
+                );
+            } else {
+                // Si el usuario no tiene rol "Hotel", lo enviamos a la lista general de ofertas
+                return res.redirect('/login');
+            }
+        });
 
-            // Primera consulta: Obtener la oferta específica
-            conexion.query(queryServicios, [Id_Servicio], (error, serviciosResults) => {
+      // Ruta para crear un servicio
+router.get('/creates', (req, res) => {
+    const user = req.session.user;
+
+    if (!user) {
+        return res.redirect('/login'); // Si no está autenticado, redirige al login
+    }
+
+    let queryHotel;
+    let queryParams = [];
+
+    if (user.role === 'General') {
+        queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
+    } else if (user.role === 'Hotel') {
+        queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel WHERE Id_Hotel = ?';
+        queryParams = [user.id_hotel]; // Solo su hotel
+    } else {
+        return res.redirect('/login');
+    }
+
+    const queryHabitacion = 'SELECT Id_Habitaciones, Numero_Habitacion FROM Habitaciones';
+    const queryActividades = 'SELECT Id_Actividades, Id_Hotel, Dia_Inicio, Dia_Fin, Hora_Inicio, Hora_Fin, Capacidad_Maxima, Ubicacion, Descripcion, Precio, Nombre as Actividad FROM Actividades';
+
+    // Obtener hoteles
+    conexion.query(queryHotel, queryParams, (error, hotelResults) => {
+        if (error) {
+            console.error('Error al obtener los hoteles:', error.message);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        // Obtener habitaciones
+        conexion.query(queryHabitacion, (error, habitacionResults) => {
+            if (error) {
+                console.error('Error al obtener las habitaciones:', error.message);
+                return res.status(500).send('Error en el servidor');
+            }
+
+            // Obtener actividades
+            conexion.query(queryActividades, (error, actividadesResults) => {
                 if (error) {
-                    console.error('Error al obtener la oferta:', error.message);
+                    console.error('Error al obtener las actividades:', error.message);
                     return res.status(500).send('Error en el servidor');
                 }
 
-                if (serviciosResults.length === 0) {
-                    return res.status(404).send('Oferta no encontrada');
-                }
-
-
-                // Segunda consulta: Obtener los hoteles
-                conexion.query(queryHotel, (error, hotelResults) => {
-                    if (error) {
-                        console.error('Error al obtener los hoteles:', error.message);
-                        return res.status(500).send('Error en el servidor');
-                    }
-
-                    // Tercera consulta: Obtener las habitaciones
-                    conexion.query(queryHabitacion, (error, habitacionResults) => {
-                        if (error) {
-                            console.error('Error al obtener las habitaciones:', error.message);
-                            return res.status(500).send('Error en el servidor');
-                        }
-
-
-                            // Renderizamos la vista con todos los datos
-                            res.render('servicio/edits', {
-                                servicio: serviciosResults [0],              // Datos de la oferta
-                                hoteles: hotelResults,       // Lista de hoteles
-                                habitaciones: habitacionResults, // Lista de habitaciones
-                                // Lista de actividades
-                            });
-                        
-                    });
+                // Renderizar la vista con los datos obtenidos
+                res.render('servicio/creates', { 
+                    hoteles: hotelResults, 
+                    habitaciones: habitacionResults, 
+                    actividades: actividadesResults,
+                    user:user 
                 });
             });
         });
+    });
+});
 
-        router.get('/deletes/:id', (req, res) => {
-            const id = req.params.id; 
-            conexion.query('DELETE FROM Servicio WHERE Id_Servicio = ?', [id], (error, results) => {
+// Ruta para editar un servicio
+router.get('/edits/:id', (req, res) => {
+    const user = req.session.user;
+    const Id_Servicio = req.params.id;
+
+    if (!user) {
+        return res.redirect('/login');
+    }
+
+    let queryServicio;
+    let queryParams = [Id_Servicio];
+
+    if (user.role === 'General') {
+        queryServicio = 'SELECT * FROM Servicio WHERE Id_Servicio = ?';
+    } else if (user.role === 'Hotel') {
+        queryServicio = 'SELECT * FROM Servicio WHERE Id_Servicio = ? AND Id_Hotel = ?';
+        queryParams.push(user.id_hotel); // Solo puede editar servicios de su hotel
+    } else {
+        return res.redirect('/login');
+    }
+
+    const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel';
+    const queryHabitacion = 'SELECT Id_Habitaciones, Numero_Habitacion FROM Habitaciones';
+
+    // Obtener el servicio específico
+    conexion.query(queryServicio, queryParams, (error, servicioResults) => {
+        if (error) {
+            console.error('Error al obtener el servicio:', error.message);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        if (servicioResults.length === 0) {
+            return res.status(404).send('Servicio no encontrado');
+        }
+
+        // Obtener hoteles
+        conexion.query(queryHotel, (error, hotelResults) => {
+            if (error) {
+                console.error('Error al obtener los hoteles:', error.message);
+                return res.status(500).send('Error en el servidor');
+            }
+
+            // Obtener habitaciones
+            conexion.query(queryHabitacion, (error, habitacionResults) => {
                 if (error) {
-                    throw error;
-                } else {
-                    res.redirect('/servicio'); // Redirigimos al usuario a la página principal
+                    console.error('Error al obtener las habitaciones:', error.message);
+                    return res.status(500).send('Error en el servidor');
                 }
+
+                // Renderizar la vista con los datos obtenidos
+                res.render('servicio/edits', {
+                    servicio: servicioResults[0],     
+                    hoteles: hotelResults,       
+                    habitaciones: habitacionResults,
+                    user:user 
+                });
             });
         });
+    });
+});
+
+// Ruta para eliminar un servicio
+router.get('/deletes/:id', (req, res) => {
+    const user = req.session.user;
+    const id = req.params.id;
+
+    if (!user) {
+        return res.redirect('/login');
+    }
+
+    let queryDelete;
+    let queryParams = [id];
+
+    if (user.role === 'General') {
+        queryDelete = 'DELETE FROM Servicio WHERE Id_Servicio = ?';
+    } else if (user.role === 'Hotel') {
+        queryDelete = 'DELETE FROM Servicio WHERE Id_Servicio = ? AND Id_Hotel = ?';
+        queryParams.push(user.id_hotel); // Solo puede eliminar servicios de su hotel
+    } else {
+        return res.redirect('/login');
+    }
+
+    conexion.query(queryDelete, queryParams, (error, results) => {
+        if (error) {
+            console.error('Error al eliminar el servicio:', error.message);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        else if(user.role === 'General'){
+            res.redirect('/servicio/');
+        }else if(user.role === 'Hotel'){
+         res.redirect(`/servicios/${user.id_hotel}`)
+        } // Redirigir a la lista de servicios
+    });
+});
+
 
 
  //PAIS
  router.post('/savep', crud.savep)
  router.post('/updatep', crud.updatep);   
   router.get('/pais', (req,res)=> {
+    const user = req.session.user;  
+    if (user.role === 'Hotel') {
+        return res.redirect(`/hotel/${user.id_hotel}`);  
+    } else if(user.role === 'General'){
       conexion.query(
           `SELECT Id_Pais, Pais FROM Pais ORDER BY Pais desc;`,
           (error, results) => {
@@ -669,10 +1286,11 @@
                   throw error;
               } else {
                   // Usa la ruta relativa sin la barra inicial
-                  res.render('pais/pais', { results });
+                  res.render('pais/pais', { results,user });
               }
           }
       )
+    }
   });
   
   //Añadir pais
@@ -738,8 +1356,55 @@
        //RESERVAS
 
        router.get('/reservas', (req, res) => {
+        const user = req.session.user;  // Obtener el usuario de la sesión
+        if (user.role === 'General') {
         const query = `
             SELECT 
+                r.*, 
+                c.Nom AS Nombre, 
+                c.Cognom AS Apellido,
+                a.Nombre AS Actividad,
+                h.Numero_Habitacion AS Habitacion,
+                ho.Nombre AS Hotel
+            FROM Reservas r
+            LEFT JOIN Clients c ON r.Id_Cliente = c.Id_Client 
+            LEFT JOIN Actividades a on r.Id_Actividad = a.Id_Actividades
+            LEFT JOIN Habitaciones h on r.Id_Habitacion = h.Id_Habitaciones
+            LEFT JOIN Hotel ho on r.Id_Hotel = ho.Id_Hotel
+        `;
+    
+        conexion.query(query, (error, results) => {
+            if (error) {
+                throw error;
+            } else {
+                res.render('reservas/reservas', { results,user });
+            }
+        });
+    }else{
+        return res.redirect('/login');
+
+    }
+    });
+
+
+
+    router.get('/reserva/:id', (req, res) => {
+        const user = req.session.user;  // Obtener el usuario de la sesión
+        const hotelId = req.params.id;  // Obtener el Id_Hotel de la URL
+    
+        if (!user) {
+            return res.redirect('/login');  // Redirigir si el usuario no está logueado
+        }
+    
+        if (user.role === 'Hotel') {
+            // Si el usuario intenta acceder a otro hotel, lo redirigimos al suyo
+            if (hotelId != user.id_hotel) {
+                return res.redirect(`/reserva/${user.id_hotel}`);
+            }
+    
+            // Mostrar las ofertas solo del hotel del usuario
+            conexion.query(
+                `  SELECT 
                 r.*, 
                 c.Nom AS Nombre, 
                 c.Cognom AS Apellido,
@@ -754,21 +1419,79 @@
             LEFT JOIN Actividades a on r.Id_Actividad = a.Id_Actividades
             LEFT JOIN Habitaciones h on r.Id_Habitacion = h.Id_Habitaciones
             LEFT JOIN Hotel ho on r.Id_Hotel = ho.Id_Hotel
-        `;
-    
-        conexion.query(query, (error, results) => {
-            if (error) {
-                throw error;
-            } else {
-                res.render('reservas/reservas', { results });
-            }
-        });
+                WHERE h.Id_Hotel = ?`,
+                [hotelId],  
+                (error, results) => {
+                    if (error) {
+                        throw error;
+                    } else {
+                        res.render('reservas/reservas', { results, user });
+                    }
+                }
+            );
+        } else {
+            // Si el usuario no tiene rol "Hotel", lo enviamos a la lista general de ofertas
+            return res.redirect('/login');
+        }
     });
+    
         //TARIFA
 
         router.post('/savet', crud.savet)
         router.post('/updatet', crud.updatet); 
+
+        
+    router.get('/tarifas/:id', (req, res) => {
+        const user = req.session.user;  // Obtener el usuario de la sesión
+        const hotelId = req.params.id;  // Obtener el Id_Hotel de la URL
+    
+        if (!user) {
+            return res.redirect('/login');  // Redirigir si el usuario no está logueado
+        }
+    
+        if (user.role === 'Hotel') {
+            // Si el usuario intenta acceder a otro hotel, lo redirigimos al suyo
+            if (hotelId != user.id_hotel) {
+                return res.redirect(`/tarifas/${user.id_hotel}`);
+            }
+    
+            // Mostrar las ofertas solo del hotel del usuario
+            conexion.query(
+                ` SELECT 
+                    t.Id_Tarifa, 
+                    h.Nombre,
+                    hab.Numero_Habitacion,
+                    a.Nombre as Actividad,
+                    s.Servicio,
+                    t.Tipo_Habitacion,
+                    t.Temporada,
+                    t.Precio
+                FROM Tarifa t
+                LEFT JOIN Hotel h ON t.Id_Hotel = h.Id_Hotel
+                LEFT JOIN Habitaciones hab ON t.Id_Habitacion = hab.Id_Habitaciones 
+                LEFT JOIN Actividades a ON t.Id_Actividad = a.Id_Actividades
+                LEFT JOIN Servicio s ON t.Id_Servicios = s.Id_Servicio
+                WHERE h.Id_Hotel = ?`,
+                [hotelId],  
+                (error, results) => {
+                    if (error) {
+                        throw error;
+                    } else {
+                        res.render('tarifa/tarifa', { results, user });
+                    }
+                }
+            );
+        } else {
+            // Si el usuario no tiene rol "Hotel", lo enviamos a la lista general de ofertas
+            return res.redirect('/login');
+        }
+    });
+    
+
         router.get('/tarifa', (req, res) => {
+            const user = req.session.user;  // Obtener el usuario de la sesión
+
+            if (user.role === 'General') {
             conexion.query(
                 `SELECT 
                     t.Id_Tarifa, 
@@ -788,157 +1511,261 @@
                     if (error) {
                         throw error;
                     } else {
-                        res.render('tarifa/tarifa', { results });
+                        res.render('tarifa/tarifa', { results, user });
                     }
                 }
             );
+        } else {
+            // Si el usuario no tiene rol "Hotel", lo enviamos a la lista general de ofertas
+            return res.redirect('/login');
+        }
         });
+        router.get('/seleccionhabitacion/:id_hotel', (req, res) => {
+            const idHotel = req.params.id_hotel;
+            const query = 'SELECT Id_Habitaciones, Numero_Habitacion, Tipo FROM Habitaciones WHERE Id_Hotel = ?';
+          
+            conexion.query(query, [idHotel], (error, results) => {
+              if (error) {
+                console.error('Error al obtener las habitaciones:', error.message);
+                return res.status(500).json({ error: 'Error en el servidor' });
+              }
+              res.json(results); // Devuelve las habitaciones en formato JSON
+            });
+          });
+          
 
+       // Ruta para crear una tarifa
+router.get('/createt', (req, res) => {
+    const user = req.session.user;
 
-        router.get('/createt', (req, res) => {
-            // Consultas para obtener datos de Hotel, Habitaciones y Actividades
-            const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
-            const queryHabitacion = 'SELECT Id_Habitaciones, Numero_Habitacion, Tipo FROM Habitaciones';
-            const queryActividades = 'SELECT Id_Actividades,Id_Hotel,Dia_Inicio,Dia_Fin,Hora_Inicio,Hora_Fin,Capacidad_Maxima,Ubicacion,Descripcion,Precio,Nombre as Actividad FROM Actividades';
-            const queryServicios = 'SELECT Id_Servicio,Id_Hotel, Servicio FROM Servicio';
+    if (!user) {
+        return res.redirect('/login');
+    }
 
+    let queryHotel;
+    let queryParams = [];
 
-            // Ejecutar las consultas en paralelo
-            conexion.query(queryHotel, (error, hotelResults) => {
+    if (user.role === 'General') {
+        queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
+    } else if (user.role === 'Hotel') {
+        queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel WHERE Id_Hotel = ?';
+        queryParams = [user.id_hotel];
+    } else {
+        return res.redirect('/login');
+    }
+
+    const queryHabitacion = 'SELECT Id_Habitaciones, Numero_Habitacion, Tipo FROM Habitaciones';
+    const queryActividades = 'SELECT Id_Actividades, Id_Hotel, Dia_Inicio, Dia_Fin, Hora_Inicio, Hora_Fin, Capacidad_Maxima, Ubicacion, Descripcion, Precio, Nombre as Actividad FROM Actividades';
+    const queryServicios = 'SELECT Id_Servicio, Id_Hotel, Servicio FROM Servicio';
+
+    // Ejecutar todas las consultas en paralelo para mejorar la eficiencia
+    conexion.query(queryHotel, queryParams, (error, hotelResults) => {
+        if (error) {
+            console.error('Error al obtener los hoteles:', error.message);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        conexion.query(queryHabitacion, (error, habitacionResults) => {
+            if (error) {
+                console.error('Error al obtener las habitaciones:', error.message);
+                return res.status(500).send('Error en el servidor');
+            }
+
+            conexion.query(queryActividades, (error, actividadesResults) => {
                 if (error) {
-                    console.error('Error al obtener los hoteles:', error.message);
+                    console.error('Error al obtener las actividades:', error.message);
                     return res.status(500).send('Error en el servidor');
                 }
-                conexion.query(queryHabitacion, (error, habitacionResults) => {
+
+                conexion.query(queryServicios, (error, servicioResults) => {
                     if (error) {
-                        console.error('Error al obtener las habitaciones:', error.message);
+                        console.error('Error al obtener los servicios:', error.message);
                         return res.status(500).send('Error en el servidor');
                     }
-                    conexion.query(queryActividades, (error, actividadesResults) => {
+
+                    res.render('tarifa/createt', { 
+                        hoteles: hotelResults, 
+                        habitaciones: habitacionResults, 
+                        actividades: actividadesResults,
+                        servicio: servicioResults,
+                        user:user 
+                    });
+                });
+            });
+        });
+    });
+});
+
+// Ruta para editar una tarifa
+router.get('/editt/:id', (req, res) => {
+    const user = req.session.user;
+    const Id_Tarifa = req.params.id;
+
+    if (!user) {
+        return res.redirect('/login');
+    }
+
+    let queryTarifa;
+    let queryParams = [Id_Tarifa];
+
+    if (user.role === 'General') {
+        queryTarifa = 'SELECT * FROM Tarifa WHERE Id_Tarifa = ?';
+    } else if (user.role === 'Hotel') {
+        queryTarifa = 'SELECT * FROM Tarifa WHERE Id_Tarifa = ? AND Id_Hotel = ?';
+        queryParams.push(user.id_hotel);
+    } else {
+        return res.redirect('/login');
+    }
+
+    const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel';
+    const queryHabitacion = 'SELECT Id_Habitaciones, Numero_Habitacion, Tipo FROM Habitaciones';
+    const queryActividad = 'SELECT Id_Actividades, Id_Hotel, Dia_Inicio, Dia_Fin, Hora_Inicio, Hora_Fin, Capacidad_Maxima, Ubicacion, Descripcion, Precio, Nombre as Actividad FROM Actividades';
+    const queryServicios = 'SELECT Id_Servicio, Id_Hotel, Servicio FROM Servicio';
+
+    // Obtener la tarifa específica
+    conexion.query(queryTarifa, queryParams, (error, tarifaResults) => {
+        if (error) {
+            console.error('Error al obtener la tarifa:', error.message);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        if (tarifaResults.length === 0) {
+            return res.status(404).send('Tarifa no encontrada');
+        }
+
+        // Ejecutar las demás consultas en paralelo
+        conexion.query(queryHotel, (error, hotelResults) => {
+            if (error) {
+                console.error('Error al obtener los hoteles:', error.message);
+                return res.status(500).send('Error en el servidor');
+            }
+
+            conexion.query(queryHabitacion, (error, habitacionResults) => {
+                if (error) {
+                    console.error('Error al obtener las habitaciones:', error.message);
+                    return res.status(500).send('Error en el servidor');
+                }
+
+                conexion.query(queryActividad, (error, actividadResults) => {
+                    if (error) {
+                        console.error('Error al obtener las actividades:', error.message);
+                        return res.status(500).send('Error en el servidor');
+                    }
+
+                    conexion.query(queryServicios, (error, servicioResults) => {
                         if (error) {
-                            console.error('Error al obtener las actividades:', error.message);
+                            console.error('Error al obtener los servicios:', error.message);
                             return res.status(500).send('Error en el servidor');
                         }
-                        conexion.query(queryServicios, (error, servicioResults) => {
-                            if (error) {
-                                console.error('Error al obtener las actividades:', error.message);
-                                return res.status(500).send('Error en el servidor');
-                            }
 
-                        // Renderizar la vista con los datos obtenidos
-                        res.render('tarifa/createt', { 
-                            hoteles: hotelResults, 
+                        res.render('tarifa/editt', {
+                            tarifa: tarifaResults[0],     
+                            hoteles: hotelResults,       
                             habitaciones: habitacionResults, 
-                            actividades: actividadesResults,
-                            servicio: servicioResults 
-                        });
-                        });
-                    });
-                });
-            });
-        });
-
-
-        router.get('/editt/:id', (req, res) => {
-            const Id_Tarifa = req.params.id;
-            const queryTarifas = 'SELECT * FROM Tarifa WHERE Id_Tarifa = ?';
-            const queryHotel = 'SELECT Id_Hotel, Nombre FROM Hotel'; 
-            const queryHabitacion = 'SELECT Id_Habitaciones, Numero_Habitacion, Tipo FROM Habitaciones';
-            const queryActividad = 'SELECT Id_Actividades,Id_Hotel,Dia_Inicio,Dia_Fin,Hora_Inicio,Hora_Fin,Capacidad_Maxima,Ubicacion,Descripcion,Precio,Nombre as Actividad FROM Actividades';
-            const queryServicios = 'SELECT Id_Servicio, Id_Hotel, Servicio FROM Servicio';
-
-            // Primera consulta: Obtener la tarifa específica
-            conexion.query(queryTarifas, [Id_Tarifa], (error, tarifasResults) => {
-                if (error) {
-                    console.error('Error al obtener la tarifa:', error.message);
-                    return res.status(500).send('Error en el servidor');
-                }
-
-                if (tarifasResults.length === 0) {
-                    return res.status(404).send('Tarifa no encontrada');
-                }
-
-                // Segunda consulta: Obtener los hoteles
-                conexion.query(queryHotel, (error, hotelResults) => {
-                    if (error) {
-                        console.error('Error al obtener los hoteles:', error.message);
-                        return res.status(500).send('Error en el servidor');
-                    }
-
-                    // Tercera consulta: Obtener las habitaciones con el tipo incluido
-                    conexion.query(queryHabitacion, (error, habitacionResults) => {
-                        if (error) {
-                            console.error('Error al obtener las habitaciones:', error.message);
-                            return res.status(500).send('Error en el servidor');
-                        }
-
-                        // Cuarta consulta: Obtener actividades
-                        conexion.query(queryActividad, (error, actividadResults) => {
-                            if (error) {
-                                console.error('Error al obtener las actividades:', error.message);
-                                return res.status(500).send('Error en el servidor');
-                            }
-
-                            // Quinta consulta: Obtener servicios
-                            conexion.query(queryServicios, (error, servicioResults) => {
-                                if (error) {
-                                    console.error('Error al obtener los servicios:', error.message);
-                                    return res.status(500).send('Error en el servidor');
-                                }
-
-                                // Renderizamos la vista con todos los datos
-                                res.render('tarifa/editt', {
-                                    tarifa: tarifasResults[0],       // Datos de la tarifa
-                                    hoteles: hotelResults,           // Lista de hoteles
-                                    habitaciones: habitacionResults, // Lista de habitaciones con tipo
-                                    actividades: actividadResults,   // Lista de actividades
-                                    servicios: servicioResults       // Lista de servicios
-                                });
-                            });
+                            actividades: actividadResults,   
+                            servicios: servicioResults,
+                            user:user      
                         });
                     });
                 });
             });
         });
+    });
+});
 
+// Ruta para eliminar una tarifa
+router.get('/deletet/:id', (req, res) => {
+    const user = req.session.user;
+    const id = req.params.id;
 
-        router.get('/deletet/:id', (req, res) => {
-            const id = req.params.id; 
-            conexion.query('DELETE FROM Tarifa WHERE Id_Tarifa = ?', [id], (error, results) => {
-                if (error) {
-                    throw error;
-                } else {
-                    res.redirect('/tarifa'); // Redirigimos al usuario a la página principal
-                }
-            });
-        });
+    if (!user) {
+        return res.redirect('/login');
+    }
+
+    let queryDelete;
+    let queryParams = [id];
+
+    if (user.role === 'General') {
+        queryDelete = 'DELETE FROM Tarifa WHERE Id_Tarifa = ?';
+    } else if (user.role === 'Hotel') {
+        queryDelete = 'DELETE FROM Tarifa WHERE Id_Tarifa = ? AND Id_Hotel = ?';
+        queryParams.push(user.id_hotel);
+    } else {
+        return res.redirect('/login');
+    }
+
+    conexion.query(queryDelete, queryParams, (error, results) => {
+        if (error) {
+            console.error('Error al eliminar la tarifa:', error.message);
+            return res.status(500).send('Error en el servidor');
+        }
+
+        else if(user.role === 'General'){
+            res.redirect('/tarifa/');
+        }else if(user.role === 'Hotel'){
+         res.redirect(`/tarifas/${user.id_hotel}`)
+        } // Red
+    });
+});
+
 
 //Gestion de estados
 
   // Ruta para mostrar los estados de las reservas de un cliente
 // Ruta para obtener los estados de las reservas de un cliente específico
 router.get('/informacion/:id', (req, res) => {
+
+    const user = req.session.user;
     const clienteId = req.params.id;
 
-    // Consulta SQL para obtener las reservas del cliente
-    const query = `SELECT 
-    r.Id_Reserva, c.Nom, a.Nombre as Actividad, hab.Tipo, h.Nombre, t.Temporada, 
-    r.Precio_Habitacion, r.Precio_Actividad, r.Precio_Tarifa, r.Precio_Total,r.Checkin,r.Checkout,r.Numero_Personas,p.Pais, r.Estado
-FROM Reservas r
-LEFT JOIN Clients c ON r.Id_Cliente = c.Id_Client
-LEFT JOIN Actividades a ON r.Id_Actividad = a.Id_Actividades
-LEFT JOIN Habitaciones hab ON r.Id_Habitacion = hab.Id_Habitaciones
-LEFT JOIN Hotel h ON r.Id_Hotel = h.Id_Hotel
-LEFT JOIN Tarifa t ON r.Id_Tarifa = t.Id_Tarifa
-LEFT JOIN Pais p ON r.Id_Pais = p.Id_Pais
-WHERE r.Id_Cliente = ?;`;
-    conexion.query(query, [clienteId], (error, results) => {
+
+    if(user.role === 'General'){
+
+    // Consulta para obtener el nombre del cliente
+    const queryCliente = `SELECT Nom FROM Clients WHERE Id_Client = ?`;
+
+    conexion.query(queryCliente, [clienteId], (error, clienteResult) => {
         if (error) {
-            return res.status(500).send('Error al obtener los estados de las reservas');
+            console.error('Error al obtener el cliente:', error);
+            return res.status(500).send('Error al obtener el cliente');
         }
-        res.render('informacion', { resultados: results, clienteId });
+
+        if (clienteResult.length === 0) {
+            return res.status(404).send('Cliente no encontrado');
+        }
+
+        const Nom = clienteResult[0].Nom; // Nombre del cliente
+
+        // Ahora obtenemos sus reservas
+        const queryReservas = `
+            SELECT 
+                r.Id_Reserva, a.Nombre AS Actividad, hab.Tipo, h.Nombre, t.Temporada, 
+                r.Precio_Habitacion, r.Precio_Actividad, r.Precio_Tarifa, r.Precio_Total,
+                r.Checkin, r.Checkout, r.Numero_Personas, p.Pais, r.Estado
+            FROM Reservas r
+            LEFT JOIN Actividades a ON r.Id_Actividad = a.Id_Actividades
+            LEFT JOIN Habitaciones hab ON r.Id_Habitacion = hab.Id_Habitaciones
+            LEFT JOIN Hotel h ON r.Id_Hotel = h.Id_Hotel
+            LEFT JOIN Tarifa t ON r.Id_Tarifa = t.Id_Tarifa
+            LEFT JOIN Pais p ON r.Id_Pais = p.Id_Pais
+            WHERE r.Id_Cliente = ?;
+        `;
+
+        conexion.query(queryReservas, [clienteId], (error, reservasResults) => {
+            if (error) {
+                console.error('Error al obtener las reservas:', error);
+                return res.status(500).send('Error al obtener las reservas');
+            }
+
+            res.render('informacion', { resultados: reservasResults, clienteId, Nom });
+        });
     });
+}else{
+    res.redirect('/login'); 
+}
 });
+
+
 // Ruta para actualizar el estado de una reserva
 router.post('/cliente/:id/estado/:reservaId', (req, res) => {
     const clienteId = req.params.id;
@@ -1040,17 +1867,34 @@ router.post('/editareserva/:id', (req, res) => {
 
 
 router.get('/menu/:id', (req, res) => {
+    const user = req.session.user;
     const hotelId = req.params.id;
-    res.render('hotel/informacion/menu', { hotelId }); // Renderiza la vista con la ID del hotel
-});
+    const query = 'SELECT Nombre FROM Hotel WHERE Id_Hotel = ?';
 
-// Ruta para mostrar el menú de estadísticas del hotel específico
-router.get("/menu-estadistica-hotel/:id", (req, res) => {
-    const hotelId = req.params.id;
-    res.render("hotel/informacion/estadistica/porhotel/menu-hotel", { 
-        hotelId: hotelId 
+    conexion.query(query, [hotelId], (error, results) => {
+        if (error || results.length === 0) {
+            return res.status(500).send('Error al obtener el nombre del hotel');
+        }
+
+        const nombreHotel = results[0].Nombre; // Extrae el nombre del hotel
+        res.render('hotel/informacion/menu', { hotelId, nombreHotel,user });
     });
 });
+
+router.get('/menu-estadistica-hotel/:id', (req, res) => {
+    const hotelId = req.params.id;
+    const query = 'SELECT Nombre FROM Hotel WHERE Id_Hotel = ?';
+
+    conexion.query(query, [hotelId], (error, results) => {
+        if (error || results.length === 0) {
+            return res.status(500).send('Error al obtener el nombre del hotel');
+        }
+
+        const nombreHotel = results[0].Nombre; // Extrae el nombre del hotel
+        res.render('hotel/informacion/estadistica/porhotel/menu-hotel', { hotelId, nombreHotel });
+    });
+});
+
 router.get('/estadisticas/Actividades/:id', (req, res) => {
     const hotelId = req.params.id;
 
@@ -1238,40 +2082,34 @@ ORDER BY años.year;
 
 // Ruta que recibe el hotelId en la URL
 router.post('/estadisticas/cadena-hoteles', (req, res) => {
-    // Obtiene el hotelId desde el cuerpo de la solicitud POST
-    const hotelId = req.body.hotelId; 
+    const hotelId = req.body.hotelId;  // Accede al hotelId desde el cuerpo de la solicitud
+    const query = 'SELECT Nombre FROM Hotel WHERE Id_Hotel = ?';
 
-    res.render('hotel/informacion/estadistica/todoshoteles/menu-todos', { 
-        hotelId: hotelId 
-    });
-});
+    conexion.query(query, [hotelId], (error, results) => {
+        if (error || results.length === 0) {
+            return res.status(500).send('Error al obtener el nombre del hotel');
+        }
 
-router.get('/estadisticas/cadena-hoteles', (req, res) => {
-    // Usa req.query para parámetros de URL (ej: /cadena-hoteles?hotelId=123)
-    const hotelId = req.query.hotelId; 
-
-    // Si usas parámetros en la ruta (ej: /cadena-hoteles/:hotelId), sería:
-    // const hotelId = req.params.hotelId;
-
-    res.render('hotel/informacion/estadistica/todoshoteles/menu-todos', { 
-        hotelId: hotelId 
+        const nombreHotel = results[0].Nombre; // Extrae el nombre del hotel
+        res.render('hotel/informacion/estadistica/todoshoteles/menu-todos', { hotelId, nombreHotel });  // Ahora pasamos también el nombre del hotel
     });
 });
 
 
 
-router.get('/estadisticas/Actividades-CadenaHotel', (req, res) => {
-    const hotelId = req.params.hotelId;
+
+router.post('/estadisticas/Actividades-CadenaHotel', (req, res) => {
+    const hotelId = req.body.hotelId; // Ahora se obtiene desde el body
+
     const query = `
         SELECT 
-    h.Nombre AS hotel, 
-    COUNT(r.Id_Reserva) AS total_reservas
-FROM Reservas r
-JOIN Hotel h ON r.Id_Hotel = h.Id_Hotel
-WHERE r.Id_Actividad IS NOT NULL  -- Asegura que solo cuente reservas con servicios
-GROUP BY h.Nombre
-ORDER BY total_reservas DESC;
-
+            h.Nombre AS hotel, 
+            COUNT(r.Id_Reserva) AS total_reservas
+        FROM Reservas r
+        JOIN Hotel h ON r.Id_Hotel = h.Id_Hotel
+        WHERE r.Id_Actividad IS NOT NULL  
+        GROUP BY h.Nombre
+        ORDER BY total_reservas DESC;
     `;
 
     conexion.query(query, (error, resultados) => {
@@ -1280,16 +2118,14 @@ ORDER BY total_reservas DESC;
             return res.status(500).send('Error en el servidor');
         }
 
-        console.log(resultados); // Verifica los resultados en consola
-
-        // Renderiza la vista con los datos de todos los hoteles
-        res.render('hotel/informacion/estadistica/todoshoteles/actividad-hoteles', { datos: resultados ,hotelId: hotelId});
+        res.render('hotel/informacion/estadistica/todoshoteles/actividad-hoteles', { datos: resultados, hotelId: hotelId });
     });
 });
 
 
 
-router.get('/estadisticas/Reservas-del-mes-CadenaHotel', (req, res) => {
+router.post('/estadisticas/Reservas-del-mes-CadenaHotel', (req, res) => {
+    const hotelId = req.body.hotelId; 
     const query = `
         SELECT 
             h.Nombre AS hotel,
@@ -1310,18 +2146,19 @@ router.get('/estadisticas/Reservas-del-mes-CadenaHotel', (req, res) => {
         console.log(resultados); // Para verificar los datos en consola
 
         // Renderiza la vista con los datos agrupados por mes y hotel
-        res.render('hotel/informacion/estadistica/todoshoteles/mes-hoteles', { datos: resultados });
+        res.render('hotel/informacion/estadistica/todoshoteles/mes-hoteles', { datos: resultados, hotelId: hotelId });
     });
 });
 
-router.get('/estadisticas/Servicios-CadenaHotel', (req, res) => {
+router.post('/estadisticas/Servicios-CadenaHotel', (req, res) => {
+    const hotelId = req.body.hotelId; 
     const query = `
         SELECT 
     h.Nombre AS hotel, 
     COUNT(r.Id_Reserva) AS total_reservas
 FROM Reservas r
 JOIN Hotel h ON r.Id_Hotel = h.Id_Hotel
-WHERE r.Id_Servicios IS NOT NULL  -- Asegura que solo cuente reservas con servicios
+WHERE r.Id_Servicio IS NOT NULL  -- Asegura que solo cuente reservas con servicios
 GROUP BY h.Nombre
 ORDER BY total_reservas DESC;
 
@@ -1336,12 +2173,13 @@ ORDER BY total_reservas DESC;
         console.log(resultados); // Verifica los resultados en consola
 
         // Renderiza la vista con los datos de todos los hoteles
-        res.render('hotel/informacion/estadistica/todoshoteles/servicio-hoteles', { datos: resultados});
+        res.render('hotel/informacion/estadistica/todoshoteles/servicio-hoteles', { datos: resultados , hotelId: hotelId});
     });
 });
 
 
-router.get('/estadisticas/Habitaciones-CadenaHotel', (req, res) => {
+router.post('/estadisticas/Habitaciones-CadenaHotel', (req, res) => {
+    const hotelId = req.body.hotelId; 
     const query = `
         SELECT 
             h.Nombre AS hotel, 
@@ -1362,12 +2200,13 @@ router.get('/estadisticas/Habitaciones-CadenaHotel', (req, res) => {
         }
 
         console.log(resultados); // Para verificar los datos en consola
-        res.render('hotel/informacion/estadistica/todoshoteles/tipohab-hoteles', { datos: resultados });
+        res.render('hotel/informacion/estadistica/todoshoteles/tipohab-hoteles', { datos: resultados  , hotelId: hotelId});
     });
 });
 
 
-router.get('/estadisticas/Temporadas-CadenaHotel', (req, res) => {
+router.post('/estadisticas/Temporadas-CadenaHotel', (req, res) => {
+    const hotelId = req.body.hotelId; 
     const query = `
         SELECT 
             h.Nombre AS hotel,
@@ -1394,11 +2233,12 @@ router.get('/estadisticas/Temporadas-CadenaHotel', (req, res) => {
         console.log(resultados); // Verifica los datos en consola
 
         // Renderiza la vista con los datos de reservas por temporada
-        res.render('hotel/informacion/estadistica/todoshoteles/temporada-hoteles', { datos: resultados });
+        res.render('hotel/informacion/estadistica/todoshoteles/temporada-hoteles', { datos: resultados , hotelId: hotelId });
     });
 });
 
-router.get('/estadisticas/Todas-las-reservas-CadenaHotel', (req, res) => {
+router.post('/estadisticas/Todas-las-reservas-CadenaHotel', (req, res) => {
+    const hotelId = req.body.hotelId; 
     const query = `
         SELECT 
             h.Nombre AS hotel,
@@ -1420,7 +2260,68 @@ router.get('/estadisticas/Todas-las-reservas-CadenaHotel', (req, res) => {
         console.log(resultados); // Verifica los datos en consola
 
         // Renderiza la vista con los datos de reservas por año
-        res.render('hotel/informacion/estadistica/todoshoteles/reservas-hoteles', { datos: resultados });
+        res.render('hotel/informacion/estadistica/todoshoteles/reservas-hoteles', { datos: resultados, hotelId: hotelId });
     });
 });
+
+// estado reserva hoy
+
+router.get('/estados-reservas/:hotelId', (req, res) => {
+    const hotelId = req.params.hotelId;
+
+    // Primero, obtenemos el nombre del hotel
+    const queryHotel = 'SELECT Nombre FROM Hotel WHERE Id_Hotel = ?';
+
+    conexion.query(queryHotel, [hotelId], (error, hotelResults) => {
+        if (error || hotelResults.length === 0) {
+            return res.status(500).send('Error al obtener el nombre del hotel');
+        }
+
+        const nombreHotel = hotelResults[0].Nombre; // Extraemos el nombre del hotel
+
+        // Ahora, obtenemos las reservas para el hotel
+        const queryReservas = `
+            SELECT r.Id_Reserva, c.Nom, r.Checkin, r.EstadoLlegada
+            FROM Reservas r
+            LEFT JOIN Clients c ON r.Id_Cliente = c.Id_Client
+            WHERE r.Id_Hotel = ? AND DATE(r.Checkin) = CURDATE();
+        `;
+        
+        conexion.query(queryReservas, [hotelId], (error, resultados) => {
+            if (error) {
+                console.error('Error al obtener reservas:', error);
+                return res.status(500).send('Error en el servidor');
+            }
+            
+            // Filtramos las reservas para clasificarlas en "Llegaron" y "No Llegaron"
+            const reservasLlegaron = resultados.filter(reserva => reserva.EstadoLlegada === 'Llego');
+            const reservasNoLlegaron = resultados.filter(reserva => reserva.EstadoLlegada !== 'Llego');
+            
+            res.render('hotel/informacion/estados/reservas-clientes', {
+                reservasLlegaron,
+                reservasNoLlegaron,
+                hotelId,
+                nombreHotel // Pasamos el nombre del hotel a la vista
+            });
+        });
+    });
+});
+
+
+router.post('/estados/actualizar-llegada', (req, res) => {
+    const { idReserva, estado } = req.body;
+    
+    const query = `UPDATE Reservas SET EstadoLlegada = ? WHERE Id_Reserva = ?`;
+    
+    conexion.query(query, [estado, idReserva], (error) => {
+        if (error) {
+            console.error('Error al actualizar estado de llegada:', error);
+            return res.status(500).send('Error en el servidor');
+        }
+        
+        // Recarga la página después de actualizar el estado
+        res.redirect('back');
+    });
+});
+
 
