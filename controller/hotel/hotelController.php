@@ -40,6 +40,10 @@ class HotelController {
         }
         return $this->hotelModel->obtenerEmailPorId($hotelId);
     }
+
+    public function obtenerHoteles() {
+        return $this->hotelModel->obtenerHoteles();
+    }
 }
 
 // Manejo de peticiones directas desde el navegador o AJAX

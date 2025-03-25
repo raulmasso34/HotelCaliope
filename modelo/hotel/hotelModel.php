@@ -78,6 +78,29 @@ class HotelModel {
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function obtenerHoteles() {
+        $query = "SELECT 
+                    h.Id_Hotel AS id,
+                    h.Nombre AS nombre_hotel,
+                    h.Descripcion AS descripcion,
+                    p.Pais AS pais,  
+                    c.Nombre AS continente,
+                    c.Directorio AS directorio
+                  FROM Hotel h
+                  JOIN Pais p ON h.Id_Pais = p.Id_Pais
+                  JOIN Continentes c ON p.Id_Continente = c.Id_Continente
+                  ORDER BY c.Nombre, p.Pais";
+    
+        $result = $this->conn->query($query);
+        
+        if (!$result) {
+            error_log("Error en consulta: " . $this->conn->error);
+            return [];
+        }
+        
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function obtenerEmailPorId($hotelId) {
         $stmt = $this->conn->prepare("SELECT CorreoElectronico FROM Hotel WHERE Id_Hotel = ?");
         $stmt->bind_param("i", $hotelId);

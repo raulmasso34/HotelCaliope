@@ -1,0 +1,225 @@
+
+
+
+
+/*--------------------------HEADER-----------------*/
+
+/* Estilos para el header */
+.main-header {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('../../static/img/header-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 0;
+    position: relative;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.logo-container {
+    flex: 0 0 150px;
+}
+
+.logo {
+    max-width: 150px;
+    height: auto;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    margin: 0 2rem;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #007bff;
+}
+
+.user-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.user-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.user-link:hover {
+    background: #007bff;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.header-title {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.header-title h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header-title p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Media queries para responsividad */
+@media (max-width: 1024px) {
+    .nav-links {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links, .user-actions {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .nav-container.mobile-active .nav-links,
+    .nav-container.mobile-active .user-actions {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 1rem;
+    }
+}
+
+/* Añadir al JavaScript existente para el menú móvil */
+
+
+
+
+
+
+
+.gallery-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.filter-buttons {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.filter-btn.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.gallery-section {
+    margin-bottom: 40px;
+}
+
+.gallery-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.hotel-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.hotel-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.hotel-card:hover {
+    transform: translateY(-5px);
+}
+
+.hotel-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.hotel-info {
+    padding: 15px;
+    background-color: white;
+}
+
+.hotel-info h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.hotel-info p {
+    margin: 0 0 15px 0;
+    color: #666;
+}
+
+.view-more {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.view-more:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para la visibilidad de las secciones */
+.gallery-section.hidden {
+    display: none;
+}
