@@ -1,26 +1,124 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Variables globales
     const filterButtons = document.querySelectorAll('.filter-btn');
     const sections = document.querySelectorAll('.gallery-section');
+    const scrollArrow = document.querySelector('.scroll-down-arrow');
+    const mobileMenuBtn = document.getElementById('menu-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const carousel = document.querySelectorAll('.carousel-background');
 
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Remover clase active de todos los botones
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            // Añadir clase active al botón clickeado
-            button.classList.add('active');
-
-            const filter = button.getAttribute('data-filter');
-
-            // Mostrar/ocultar secciones según el filtro
-            sections.forEach(section => {
-                if (filter === 'all') {
-                    section.classList.remove('hidden');
-                } else if (section.classList.contains(filter)) {
-                    section.classList.remove('hidden');
-                } else {
-                    section.classList.add('hidden');
-                }
+    // Función para el filtrado de la galería
+    function initGalleryFilter() {
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+    
+                const filter = button.dataset.filter.toLowerCase();
+    
+                sections.forEach(section => {
+                    const sectionFilter = section.classList.contains(filter);
+                    const isAll = filter === 'all';
+                    
+                    section.style.display = isAll || sectionFilter ? 'block' : 'none';
+                    
+                    // Animación suave
+                    if (section.style.display === 'block') {
+                        section.style.animation = 'fadeIn 0.5s ease';
+                    }
+                });
             });
         });
-    });
+    }
+    // Función para el scroll suave
+    function initSmoothScroll() {
+        if (scrollArrow) {
+            scrollArrow.addEventListener('click', function(e) {
+                e.preventDefault();
+                const viewportHeight = window.innerHeight;
+                window.scrollTo({
+                    top: viewportHeight * 0.95,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    }
+
+    // Función para manejar la visibilidad de la flecha de scroll
+    function handleScrollArrowVisibility() {
+        if (scrollArrow) {
+            window.addEventListener('scroll', function() {
+                scrollArrow.style.opacity = window.scrollY > 100 ? '0' : '1';
+                scrollArrow.style.transition = 'opacity 0.3s ease';
+            });
+        }
+    }
+
+    // Función para el carrusel de imágenes
+    function initCarousel() {
+        if (carousel.length > 1) {
+            let currentIndex = 0;
+            
+            function nextImage() {
+                carousel[currentIndex].style.opacity = '0';
+                currentIndex = (currentIndex + 1) % carousel.length;
+                carousel[currentIndex].style.opacity = '1';
+            }
+
+            // Cambiar imagen cada 5 segundos
+            setInterval(nextImage, 5000);
+        }
+    }
+
+    // Función para el menú móvil
+    function initMobileMenu() {
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                mobileMenuBtn.classList.toggle('active');
+            });
+
+            // Cerrar menú al hacer click fuera
+            document.addEventListener('click', (e) => {
+                if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    mobileMenuBtn.classList.remove('active');
+                }
+            });
+        }
+    }
+
+    // Función para manejar animaciones de entrada
+    function initScrollAnimations() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        // Observar elementos que queremos animar
+        document.querySelectorAll('.hotel-card').forEach(card => {
+            observer.observe(card);
+        });
+    }
+
+    // Inicializar todas las funcionalidades
+    function initializeAll() {
+        initGalleryFilter();
+        initSmoothScroll();
+        handleScrollArrowVisibility();
+        initCarousel();
+        initMobileMenu();
+        initScrollAnimations();
+    }
+
+    // Iniciar todo
+    initializeAll();
 });

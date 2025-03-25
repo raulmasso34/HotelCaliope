@@ -37,69 +37,147 @@ if (!empty($hoteles)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galería de Hoteles - Hotel Calíope</title>
+
     <link rel="stylesheet" href="../../static/css/galeria.css">
+ 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
      <!-- Font Awesome para iconos -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:wght@200..1000&family=Old+Standard+TT:wght@400;700&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
 
     <header class="main-header">
-        <nav class="nav-container">
-            <div class="logo-container">
-                <a href="/">
-                    <img src="../../static/img/logo.png" alt="Hotel Calíope Logo" class="logo">
-                </a>
-            </div>
-            
-            <div class="nav-links">
-                <a href="/" class="nav-link"><i class="fas fa-home"></i> Inicio</a>
-                <a href="/vista/hoteles.php" class="nav-link"><i class="fas fa-hotel"></i> Hoteles</a>
-                <a href="/vista/servicios.php" class="nav-link"><i class="fas fa-concierge-bell"></i> Servicios</a>
-                <a href="/vista/reservas.php" class="nav-link"><i class="fas fa-calendar-alt"></i> Reservas</a>
-                <a href="/vista/Contacto/contacto.php" class="nav-link"><i class="fas fa-envelope"></i> Contacto</a>
+        <div class="carousel">
+            <img class="carousel-background" src="../../static/img/california/california.jpg" alt="Fondo 1">
+            <img class="carousel-background" src="../../static/img/galeria/galeria2.jpg" alt="Fondo 2">
+            <img class="carousel-background" src="../../static/img/galeria/galeria3.jpg" alt="Fondo 3">
+        </div>
+        
+        <section class="main-up">
+            <div class="main-up-left">
+                <img src="../../static/img/logo_blanco.png" alt="Logo Hotel Calíope">
             </div>
 
-            <div class="user-actions">
-                <?php if(isset($_SESSION['usuario'])): ?>
-                    <a href="/vista/Clientes/perfil.php" class="user-link">
-                        <i class="fas fa-user"></i> Mi Perfil
-                    </a>
-                    <a href="/vista/Clientes/logout.php" class="user-link">
-                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                    </a>
-                <?php else: ?>
-                    <a href="/vista/Clientes/login.php" class="user-link">
-                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
-                    </a>
-                    <a href="/vista/Clientes/registre.php" class="user-link">
-                        <i class="fas fa-user-plus"></i> Registrarse
-                    </a>
-                <?php endif; ?>
+            <div class="main-up-right">
+                <div class="links">
+                    <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                    
+                    <div class="dropdown">
+                        <a href="../../vista/hoteles.php" class="dropbtn">Hoteles</a>
+                        <div class="dropdown-content">
+                            <div class="dropdown-section">
+                                <h4>Europa</h4>
+                                <a href="../../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                                <a href="../../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                                <a href="../../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                            </div>
+                            <div class="dropdown-section">
+                                <h4>USA</h4>
+                                <a href="../../vista/ciudades/USA/Florida.php">Florida</a>
+                                <a href="../../vista/ciudades/USA/California.php">California</a>
+                                <a href="../../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="../../vista/galeria/galeria.php">Galería</a>
+                    <a href="../../vista/ofertas/ofertas.php">Ofertas</a>
+                    <a href="../../vista/Contacto/contacto.php">Contacto</a>
+                    
+                    <!-- Contenedor del perfil -->
+                    <div class="dropdown-perfil">
+                        <a class="icon-perfil" href="javascript:void(0);">
+                            <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
+                        </a>
+                        <div class="dropdown-perfil-content">
+                            <a href="../../vista/Clientes/login.php">
+                                <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+                            </a>
+                            <a href="../../vista/Clientes/perfil.php">
+                                <i class="bi bi-person"></i> Perfil
+                            </a>
+                            <a href="../../controller/clients/LoginController.php?action=logout" style="color: red;"> 
+                                <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <button class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
-            </button>
-        </nav>
+            <!-- Menú hamburguesa -->
+            <div id="menu-toggle" class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
 
-        <div class="header-title">
-            <h1>Galería de Hoteles</h1>
-            <p>Descubre nuestros hoteles alrededor del mundo</p>
+            <!-- Menú móvil -->
+            <div class="mobile-menu">
+                <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                <a href="../../vista/galeria/galeria.php">Galería</a>
+                <a href="../../vista/ofertas/ofertas.php">Ofertas</a>
+                <a href="../../vista/Contacto/contacto.php">Contacto</a>
+                <a href="../../vista/Clientes/login.php">Iniciar sesión</a>
+                <a href="../../vista/Clientes/perfil.php">Perfil</a>
+                
+                <div class="dropdown-mobile">
+                    <a href="#" class="dropbtn">Hoteles</a>
+                    <div class="dropdown-content-mobile">
+                        <div class="dropdown-section">
+                            <h4>Europa</h4>
+                            <a href="../../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                            <a href="../../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                            <a href="../../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>USA</h4>
+                            <a href="../../vista/ciudades/USA/Florida.php">Florida</a>
+                            <a href="../../vista/ciudades/USA/California.php">California</a>
+                            <a href="../../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="main-center">
+            <div class="center-up">
+                <div class="center-up-up">
+                    <span style="font-size: 20px; color: rgb(230, 182, 11);">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </span>
+                </div>
+                <div class="center-up-down">
+                    <h5>Descubre Nuestros Hoteles</h5>
+                    <h1>Galería de Destinos Exclusivos</h1>
+                </div>
+            </div>
+        </section>
+        <div class="scroll-down">
+            <a href="#gallery-section" class="scroll-down-arrow">
+                <i class="fa-solid fa-chevron-down"></i>
+            </a>
         </div>
     </header>
+
+
+
+    
     <div class="gallery-container">
         <div class="filter-buttons">
             <button class="filter-btn active" data-filter="all">Todos los Hoteles</button>
-            <?php
-            // Generar botones de filtro dinámicamente
-            $continentes = array_unique(array_column($hoteles, 'directorio'));
-            foreach ($continentes as $directorio) {
-                $nombre_continente = array_search($directorio, array_column($hoteles, 'directorio', 'continente'));
-                echo '<button class="filter-btn" data-filter="'.$directorio.'">'.$nombre_continente.'</button>';
-            }
-            ?>
+            <button class="filter-btn" data-filter="europa">Europa</button>
+            <button class="filter-btn" data-filter="norteamerica">América del Norte</button>
         </div>
 
         <div class="gallery-grid">
@@ -132,7 +210,7 @@ if (!empty($hoteles)) {
                                         $imagenFinal = "{$baseWebPath}/img/{$directorio}/{$nombreArchivo}";
                                     } else {
                                         // Imagen por defecto
-                                        $imagenFinal = "{$baseWebPath}/img/default.jpg";
+                                        $imagenFinal = "{$baseWebPath}/img/florida/florida1.jpg";
                                     }
                                 }
                             ?>
