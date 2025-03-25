@@ -10,22 +10,20 @@ require_once __DIR__ . '/../controller/reserva/reservaController.php';
 require_once __DIR__ . '/../controller/pago/pagoController.php';
 require_once __DIR__ . '/../controller/actividad/actividadController.php';
 require_once __DIR__ . '/../controller/habitacion/habitacionController.php';
-require_once __DIR__ . "/../controller/servicios/serviciosController.php";
 
 $reservaController = new ReservaController();
 $pagoController = new PagoController();
 $habitacionController = new HabitacionController();
 $actividadController = new ActividadController();
-$serviciosController = new ServiciosController();
 
-// Validar que la reserva existe en sesión
 if (!isset($_SESSION['Reservas'])) {
-    die("<p class='text-danger'>Error: No se ha recibido la reserva en la sesión.</p>");
+    echo "<p class='text-danger'>Error: No se ha recibido la reserva en la sesión.</p>";
+    exit;
 }
 
 $reserva = $_SESSION['Reservas'];
 
-// Obtener datos de la reserva
+// Recuperar los datos de la reserva
 $habitacionId = $reserva['habitacionId'] ?? null;
 $clienteId = $reserva['clienteId'] ?? null;
 $hotelId = $reserva['hotelId'] ?? null;
@@ -34,6 +32,8 @@ $checkout = $reserva['checkout'] ?? null;
 $guests = $reserva['guests'] ?? null;
 $metodoPagoId = $reserva['metodoPagoId'] ?? null;
 $paisId = $reserva['paisId'] ?? null;
+$precioTarifa = $reserva['precioTarifa'] ?? 0;
+$actividadesSeleccionadas = $reserva['actividades'] ?? []; // Manejo de múltiples actividades
 
 // Obtener detalles de la habitación
 $habitacionDetails = $habitacionController->obtenerHabitacionPorId($habitacionId);
@@ -41,78 +41,69 @@ if (!$habitacionDetails || !isset($habitacionDetails['Precio'])) {
     die("<p class='text-danger'>Error: No se encontró la habitación o su precio no está definido.</p>");
 }
 
+// Obtener precio de la habitación
 $precioHabitacion = floatval($habitacionDetails['Precio']);
 
-// Calcular número de noches
+// Calcular el número de noches
 $checkinDate = new DateTime($checkin);
 $checkoutDate = new DateTime($checkout);
 $numeroNoches = $checkoutDate->diff($checkinDate)->days;
 
-// Calcular total servicios
+// Calcular precio total de servicios
+$serviciosSeleccionados = $_SESSION['Reservas']['servicios'] ?? [];
 $totalServicios = 0;
-$serviciosDetalles = [];
-if (!empty($reserva['servicios'])) {
-    foreach ($reserva['servicios'] as $servicio) {
-        list($idServicio, $precioServicio) = explode('|', $servicio);
-        $servicioInfo = $serviciosController->obtenerServicioPorId(intval($idServicio));
-        if ($servicioInfo) {
-            $serviciosDetalles[] = "{$servicioInfo['Servicio']} - $$precioServicio";
-            $totalServicios += floatval($precioServicio);
-        }
+foreach ($serviciosSeleccionados as $precio) {
+    if (!is_numeric($precio)) {
+        die("<p class='text-danger'>Error: Un servicio tiene un precio inválido ($precio).</p>");
     }
+    $totalServicios += floatval($precio);
 }
 
-// Calcular total actividades
+// Calcular precio total de actividades
 $totalActividades = 0;
-$actividadesDetalles = [];
-if (!empty($reserva['actividades'])) {
-    foreach ($reserva['actividades'] as $actividad) {
-        list($idActividad, $precioActividad) = explode('|', $actividad);
-        $actividadInfo = $actividadController->obtenerActividadPorId(intval($idActividad));
-        if ($actividadInfo) {
-            $actividadesDetalles[] = "{$actividadInfo['Nombre']} - $$precioActividad";
-            $totalActividades += floatval($precioActividad);
-        }
-    }
+foreach ($actividadesSeleccionadas as $actividadId) {
+    $actividad = $actividadController->obtenerActividadesPorHotel($actividadId);
+    $totalActividades += $actividad['Precio'] ?? 0;
 }
 
-// Calcular precio total CORRECTO
-$precioTotal = ($precioHabitacion * $numeroNoches) + $totalServicios + $totalActividades;
+// Calcular precio total
+$precioTotal = ($precioHabitacion * $numeroNoches) + $precioTarifa + $totalActividades + $totalServicios;
 
-// Actualizar sesión con todos los datos
-$_SESSION['Reservas'] = [
-    'habitacionId' => $habitacionId,
-    'clienteId' => $clienteId,
-    'hotelId' => $hotelId,
-    'checkin' => $checkin,
-    'checkout' => $checkout,
-    'guests' => $guests,
-    'metodoPagoId' => $metodoPagoId,
-    'paisId' => $paisId,
-    'precioHabitacion' => $precioHabitacion,
-    'precioTotal' => $precioTotal,
-    'servicios' => $_POST['servicios'] ?? $reserva['servicios'] ?? [],
-    'actividades' => $_POST['actividades'] ?? $reserva['actividades'] ?? []
-];
-
-// Manejar POST correctamente
+// Guardar en sesión si existen
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    header("Location: ".$_SERVER['PHP_SELF']);
-    exit();
+    $_SESSION['Reservas']['servicios'] = $_POST['servicios'] ?? [];
+    $_SESSION['Reservas']['actividades'] = $_POST['actividades'] ?? [];
 }
+
+
+
+
+
+
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../static/css/pagos.css">
     <title>Pagar Reserva</title>
+    <link rel="stylesheet" href="../static/css/pagos.css">
+    <link rel="stylesheet" href="../static/css/detalles.css">
+    <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 <body>
 
+<header>
+    <section class="main-up">
+        <div class="main-up-left">
+            <a href="../vista/index.php"> <img src="../static/img/logo_blanco.png" alt="Imagen secundaria"></a>
+        </div>
+    </section>
+</header>
+
 <h1>Pagar Reserva</h1>
 
+<!-- Mostrar detalles de la reserva -->
 <p><strong>Habitación:</strong> <?php echo htmlspecialchars($habitacionId); ?></p>
 <p><strong>Check-in:</strong> <?php echo htmlspecialchars($checkin); ?></p>
 <p><strong>Check-out:</strong> <?php echo htmlspecialchars($checkout); ?></p>
@@ -121,31 +112,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <p><strong>Precio Total (sin servicios):</strong> $<?php echo number_format($precioTotal - $totalServicios - $totalActividades, 2); ?></p>
 
 <h3>Servicios Adicionales Seleccionados:</h3>
-
 <?php
-echo !empty($serviciosDetalles) ? "<ul><li>" . implode("</li><li>", $serviciosDetalles) . "</li></ul>" : "<p>No se seleccionaron servicios adicionales.</p>";
+require_once __DIR__ ."/../controller/servicios/serviciosController.php";
+$servicioController = new ServiciosController();
+
+$serviciosSeleccionados = $_POST['servicios'] ?? []; // Si no hay selección, deja array vacío
+
+if (!empty($serviciosSeleccionados)) {
+    echo "<ul>";
+    foreach ($serviciosSeleccionados as $idServicio => $precio) {
+        $nombreServicio = $servicioController->obtenerNombreServicioPorId($idServicio); // Obtener el nombre
+        if ($nombreServicio) {
+            echo "<li>" . htmlspecialchars($nombreServicio) . " - $" . number_format($precio, 2) . "</li>";
+        } else {
+            echo "<li>Servicio ID: " . htmlspecialchars($idServicio) . " (No encontrado)</li>";
+        }
+    }
+    echo "</ul>";
+} else {
+    echo "<p>No has seleccionado servicios adicionales.</p>";
+}
 ?>
 
 <h3>Actividades Seleccionadas:</h3>
+<ul>
 <?php
-echo !empty($actividadesDetalles) ? "<ul><li>" . implode("</li><li>", $actividadesDetalles) . "</li></ul>" : "<p>No se seleccionaron actividades.</p>";
+if (!empty($_SESSION['Reservas']['actividades'])) {
+    foreach ($_SESSION['Reservas']['actividades'] as $idActividad => $precio) {
+        $nombreActividad = $actividadController->obtenerNombreActividad($idActividad) ?? "Actividad no encontrada";
+        echo "<li>$nombreActividad - Precio: $" . number_format($precio, 2) . "</li>";
+    }
+} else {
+    echo "<li>No se seleccionaron actividades.</li>";
+}
 ?>
+</ul>
+
+
+
+
+
 
 <!-- Precio Total con Servicios -->
-<p><strong>Precio Total:</strong> $<?php echo number_format($precioTotal, 2); ?></p>
+<p><strong>Precio Total con Servicios:</strong> $<?php echo number_format($precioTotal, 2); ?></p>
 
 <!-- Formulario de pago -->
-<form action="../controller/pago/pagoController.php" method="POST">
+<form id="pagoForm" action="../controller/pago/pagoController.php" method="POST" onsubmit="mostrarPopup(event)">
 
-<input type="hidden" name="clienteId" value="<?= htmlspecialchars($clienteId) ?>">
-    <input type="hidden" name="hotelId" value="<?= htmlspecialchars($hotelId) ?>">
-    <input type="hidden" name="habitacionId" value="<?= htmlspecialchars($habitacionId) ?>">
-    <input type="hidden" name="checkin" value="<?= htmlspecialchars($checkin) ?>">
-    <input type="hidden" name="checkout" value="<?= htmlspecialchars($checkout) ?>">
-    <input type="hidden" name="guests" value="<?= htmlspecialchars($guests) ?>">
-    <input type="hidden" name="paisId" value="<?= htmlspecialchars($paisId) ?>">
-    <input type="hidden" name="metodoPagoId" value="<?= htmlspecialchars($metodoPagoId) ?>">
-    <input type="hidden" name="precioHabitacion" value="<?= htmlspecialchars($precioHabitacion) ?>">
     <label for="numero_tarjeta">Número de Tarjeta:</label>
     <input type="text" name="numero_tarjeta" required><br>
 
@@ -155,18 +168,30 @@ echo !empty($actividadesDetalles) ? "<ul><li>" . implode("</li><li>", $actividad
     <label for="fecha_expiracion">Fecha de Expiración:</label>
     <input type="month" name="fecha_expiracion" required><br>
 
+    <!-- Datos de la reserva -->
+    <input type="hidden" name="habitacionId" value="<?= htmlspecialchars($habitacionId); ?>">
+    <input type="hidden" name="clienteId" value="<?= htmlspecialchars($clienteId); ?>">
+    <input type="hidden" name="hotelId" value="<?= htmlspecialchars($hotelId); ?>">
+    <input type="hidden" name="paisId" value="<?= htmlspecialchars($paisId); ?>">
+    <input type="hidden" name="checkin" value="<?= htmlspecialchars($checkin); ?>">
+    <input type="hidden" name="checkout" value="<?= htmlspecialchars($checkout); ?>">
+    <input type="hidden" name="guests" value="<?= htmlspecialchars($guests); ?>">
     <input type="hidden" name="precioTotal" value="<?= htmlspecialchars($precioTotal); ?>">
+    <input type="hidden" name="metodoPagoId" value="1">
+
+    <!-- Actividades seleccionadas -->
+    <?php foreach ($actividadesSeleccionadas as $actividadId) : ?>
+        <input type="hidden" name="actividades[]" value="<?= htmlspecialchars($actividadId); ?>">
+    <?php endforeach; ?>
+
+    <!-- Servicios Adicionales -->
+    <?php foreach ($serviciosSeleccionados as $idServicio => $precio) : ?>
+        <input type="hidden" name="servicios[<?= $idServicio; ?>]" value="<?= htmlspecialchars($precio); ?>">
+    <?php endforeach; ?>
 
     <button type="submit">Confirmar y Pagar</button>
 </form>
 
-<?php
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
-
-
-?>
-
+<script src="../static/js/pagos/pagos.js"></script>
 </body>
 </html>
