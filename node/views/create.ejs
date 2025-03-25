@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--Usamos boxicons-->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Clients</title>  
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/clientes">CLIENTES</a>
+            </li>
+         
+            <li class="nav-item">
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/hotel/<%= user.id_hotel %>">HOTEL</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/hoteles">HOTEL</a> %>
+            <% } %>
+            </li>
+            <li class="nav-item">
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/oferta/<%= user.id_hotel %>">OFERTAS</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/ofertas">OFERTAS</a> %>
+            <% } %>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/actividades/">ACTIVIDADES</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link active" href="/servicio/">SERVICIO</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/tarifa/">TARIFA</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/pais/">PAIS</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/reservas/">RESERVAS</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+
+
+      <div class="container mt-4">
+        <div class="card border-secondary">
+            <div class="card-header">Nuevo Registro</div>
+            <div class="card-body">
+                <form action="/save" method="POST">
+                    <div class="mb-3">
+                        <label for="Nom" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="Nom" name="Nom" tabindex="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Cognom" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="Cognom" name="Cognom" tabindex="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="DNI" class="form-label">DNI</label>
+                        <input type="text" class="form-control" id="DNI" name="DNI" tabindex="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="CorreuElectronic" class="form-label">Correo</label>
+                        <input type="text" class="form-control" id="CorreuElectronic" name="CorreuElectronic" tabindex="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Telefon" class="form-label">Telefono</label>
+                        <input type="text" class="form-control" id="Telefon" name="Telefon" tabindex="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Usuari" class="form-label">Usuario</label>
+                        <input type="text" class="form-control" id="Usuari" name="Usuari" tabindex="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Password" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="Password" name="Password" tabindex="1">
+                    </div>
+                    <div class="mb-3">
+                      <label for="Id_Pais" class="form-label">País</label>
+                      <select name="Id_Pais" id="Id_Pais" class="form-select" aria-label="Elige una de las opciones">
+                        <% countries.forEach(country => { %>
+                          <option value="<%= country.Id_Pais %>"><%= country.Pais %></option>
+                        <% }); %>
+                      </select>
+                    </div>                                    
+                    <div class="mb-3 position-relative">
+                      <label for="Ciudad" class="form-label">Ciudad</label>
+                      <input type="text" class="form-control" id="Ciudad" name="Ciudad" autocomplete="off">
+                      <div id="autocomplete-list" class="autocomplete-list list-group"></div>
+                  </div>
+                    <div class="mb-3">
+                        <label for="CodigoPostal" class="form-label">Codigo Postal</label>
+                        <input type="text" class="form-control" id="CodigoPostal" name="CodigoPostal" tabindex="1">
+                    </div>
+                   <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
+                <a href="/clientes" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+      </div>
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+   
+    <script>
+      const cityInput = document.getElementById("Ciudad");
+      const autocompleteList = document.getElementById("autocomplete-list");
+
+      let timeout = null; // Para retrasar las peticiones
+
+      cityInput.addEventListener("input", () => {
+          clearTimeout(timeout); // Reiniciar el temporizador
+
+          const query = cityInput.value.trim();
+          if (query.length < 2) {
+              autocompleteList.innerHTML = "";
+              autocompleteList.style.display = "none";
+              return;
+          }
+
+          timeout = setTimeout(async () => {
+              try {
+                  const response = await fetch(`http://localhost:3000/autocomplete?q=${query}`);
+                  const cities = await response.json();
+
+                  autocompleteList.innerHTML = "";
+                  if (cities.length > 0) {
+                      autocompleteList.style.display = "block";
+                      cities.forEach(city => {
+                          const item = document.createElement("div");
+                          item.classList.add("autocomplete-item", "list-group-item");
+                          item.textContent = city;
+                          item.addEventListener("click", () => {
+                              cityInput.value = city;
+                              autocompleteList.style.display = "none";
+                          });
+                          autocompleteList.appendChild(item);
+                      });
+                  } else {
+                      autocompleteList.style.display = "none";
+                  }
+              } catch (error) {
+                  console.error("Error en la solicitud:", error);
+              }
+          }, 300); // Espera 300ms antes de hacer la petición
+      });
+
+      document.addEventListener("click", (event) => {
+          if (!event.target.closest(".position-relative")) {
+              autocompleteList.style.display = "none";
+          }
+      });
+  </script>
+  </body>
+</html>

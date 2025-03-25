@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Usamos boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Clients</title>  
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/clientes">CLIENTES</a>
+            </li>
+            <!-- Otras opciones del menú -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-4">
+      <div class="card border-secondary">
+        <div class="card-header">AGREGAR</div>
+        <div class="card-body">
+          <form action="/savet" method="POST">
+            <div class="mb-3">
+              <label for="Id_Hotel" class="form-label">Hotel</label>
+              <select name="Id_Hotel" id="Id_Hotel" class="form-select" aria-label="Elige una de las opciones">
+                <% hoteles.forEach(hotel => { %>
+                  <option value="<%= hotel.Id_Hotel %>"><%= hotel.Nombre %></option>
+                <% }); %>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="Id_Habitacion" class="form-label">Habitacion</label>
+              <select name="Id_Habitacion" id="Id_Habitacion" class="form-select" aria-label="Elige una de las opciones">
+                <!-- Las opciones se llenarán dinámicamente -->
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="Id_Actividad" class="form-label">Actividad</label>
+              <select name="Id_Actividad" id="Id_Actividad" class="form-select" aria-label="Elige una de las opciones">
+                <% actividades.forEach(actividad => { %>
+                  <option value="<%= actividad.Id_Actividades %>"><%= actividad.Actividad %></option>
+                <% }); %>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="Id_Servicios" class="form-label">Servicio</label>
+              <select name="Id_Servicios" id="Id_Servicios" class="form-select" aria-label="Elige una de las opciones">
+                <% servicio.forEach(servicios => { %>
+                  <option value="<%= servicios.Id_Servicio %>"><%= servicios.Servicio %></option>
+                <% }); %>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="Tipo_Habitacion" class="form-label">Tipo Habitacion</label>
+              <input type="text" class="form-control" id="Tipo_Habitacion" name="Tipo_Habitacion" tabindex="1" readonly>
+            </div>
+
+            <div class="mb-3">
+              <label for="Temporada" class="form-label">Temporada</label>
+              <input type="text" class="form-control" id="Temporada" name="Temporada" tabindex="1">
+            </div>
+
+            <div class="mb-3">
+              <label for="Precio" class="form-label">Precio</label>
+              <input type="number" class="form-control" id="Precio" name="Precio" tabindex="1">
+            </div>
+
+            <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
+            <a href="/tarifa/" class="btn btn-secondary">Cancelar</a>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const selectHotel = document.getElementById("Id_Hotel");
+        const selectHabitacion = document.getElementById("Id_Habitacion");
+        const inputTipoHabitacion = document.getElementById("Tipo_Habitacion");
+    
+        // Cuando el usuario selecciona un hotel
+        selectHotel.addEventListener("change", function () {
+          const idHotel = selectHotel.value;
+    
+          // Realizar la petición AJAX para obtener las habitaciones del hotel seleccionado
+          fetch(`/seleccionhabitacion/${idHotel}`)
+            .then(response => response.json())
+            .then(data => {
+              // Limpiar el select de habitaciones antes de agregar nuevas opciones
+              selectHabitacion.innerHTML = "";
+    
+              // Agregar opciones al select de habitaciones
+              data.forEach(habitacion => {
+                const option = document.createElement("option");
+                option.value = habitacion.Id_Habitaciones;
+                option.textContent = `${habitacion.Numero_Habitacion} - ${habitacion.Tipo}`;
+                option.setAttribute("data-tipo", habitacion.Tipo);  // Aseguramos de que guardamos el tipo en un atributo
+                selectHabitacion.appendChild(option);
+              });
+              
+              // Llamar a la función para actualizar el campo Tipo_Habitacion después de cargar las habitaciones
+              actualizarTipoHabitacion();
+            })
+            .catch(error => console.error("Error al obtener las habitaciones:", error));
+        });
+    
+        // Función para actualizar el campo Tipo_Habitacion
+        function actualizarTipoHabitacion() {
+          const selectedOption = selectHabitacion.options[selectHabitacion.selectedIndex];
+          inputTipoHabitacion.value = selectedOption ? selectedOption.getAttribute("data-tipo") : "";
+        }
+    
+        // Cuando el usuario selecciona una habitación, mostrar el tipo en el campo correspondiente
+        selectHabitacion.addEventListener("change", actualizarTipoHabitacion);
+      });
+    </script>
+    
+  </body>
+</html>

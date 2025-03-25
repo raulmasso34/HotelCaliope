@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas de Actividades</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4">
+            <h2 class="text-center mb-4">📊 Estadísticas de Actividades Reservadas</h2>
+            <p class="text-center">ID del Hotel: <strong><%= hotelId %></strong></p>
+
+            <canvas id="graficoActividades"></canvas>
+
+            <a href="/menu-estadistica-hotel/<%= hotelId %>" class="btn btn-secondary mt-3">⬅️ Volver al Menú</a>
+        </div>
+    </div>
+
+    <script>
+    // Datos enviados desde Node.js
+    const datos = JSON.parse('<%- JSON.stringify(datos) %>');// No tocar, funciona aunque dé error
+
+// Almacén de colores fijos por actividad
+const coloresFijos = JSON.parse(localStorage.getItem('coloresActividades')) || {};
+
+// Función para generar colores aleatorios en formato hexadecimal
+function generarColorAleatorio() {
+    return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+}
+
+// Asignar colores fijos a cada actividad
+datos.forEach(item => {
+    if (!coloresFijos[item.year]) {
+        coloresFijos[item.year] = generarColorAleatorio();
+    }
+});
+
+// Guardar en localStorage para persistencia
+localStorage.setItem('coloresActividades', JSON.stringify(coloresFijos));
+
+// Extraer etiquetas (actividades) y valores (cantidad de reservas)
+const etiquetas = datos.map(item => item.year);
+const valores = datos.map(item => item.total_reservas);
+
+// Calcular el máximo y aumentarlo en un 5%
+const maximoReservas = Math.max(...valores);
+const topeEjeY = Math.ceil(maximoReservas * 1.5); // Aumenta un 5% y redondea hacia arriba
+
+// Crear datasets individuales para cada actividad con colores fijos
+const datasets = datos.map(item => ({
+    label: item.year, // Nombre de la actividad en la leyenda
+    data: [item.total_reservas], // Se muestra como un solo dato
+    backgroundColor: coloresFijos[item.year], // Color fijo para cada actividad
+    borderWidth: 1
+}));
+
+// Configurar gráfico
+const ctx = document.getElementById('graficoActividades').getContext('2d');
+new Chart(ctx, {
+    type: 'bar',  // Tipo de gráfico
+    data: {
+        labels: ['Reservas'], // Se agrupa en una única barra con varias actividades
+        datasets: datasets // Se pasan los datasets generados dinámicamente
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: { 
+                beginAtZero: true,
+                max: topeEjeY // Aplica el nuevo tope del 5% superior
+            }
+        },
+        plugins: {
+            legend: {
+                display: true, // Muestra la leyenda con los colores generados
+                position: 'top' // Puedes cambiarlo a 'bottom', 'left' o 'right'
+            }
+        }
+    }
+});
+
+    </script>
+
+</body>
+</html>

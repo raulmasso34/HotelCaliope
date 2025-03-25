@@ -1,0 +1,187 @@
+  <!doctype html>
+  <html lang="en">
+    <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <!-- Bootstrap CSS -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- datatables -->
+      <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.bootstrap5.css">
+      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+          <title>Clients</title>  
+    </head>
+    <body>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+             
+              <li class="nav-item">
+                <% if (user && user.role === 'Hotel') { %>
+                  <a class="nav-link active" href="/hotel/<%= user.id_hotel %>">HOTEL</a>
+              <% } else if (user && user.role === 'General') { %>
+                <a class="nav-link active" href="/hoteles">HOTEL</a> %>
+              <% } %>
+              </li>
+              <li class="nav-item">
+                <% if (user && user.role === 'Hotel') { %>
+                  <a class="nav-link active" href="/oferta/<%= user.id_hotel %>">OFERTAS</a>
+              <% } else if (user && user.role === 'General') { %>
+                <a class="nav-link active" href="/ofertas">OFERTAS</a> %>
+              <% } %>
+              </li>
+              <li class="nav-item">
+                <% if (user && user.role === 'Hotel') { %>
+                  <a class="nav-link active" href="/actividad/<%= user.id_hotel %>">ACTIVIDADES</a>
+              <% } else if (user && user.role === 'General') { %>
+                <a class="nav-link active" href="/actividades">ACTIVIDADES</a> %>
+              <% } %>
+              </li>
+              <li class="nav-item active">
+                <% if (user && user.role === 'Hotel') { %>
+                  <a class="nav-link active" href="/servicios/<%= user.id_hotel %>">SERVICIO</a>
+              <% } else if (user && user.role === 'General') { %>
+                <a class="nav-link active" href="/servicio">SERVICIO</a> %>
+              <% } %>              </li>
+              <li class="nav-item">
+                <% if (user && user.role === 'Hotel') { %>
+                  <a class="nav-link active" href="/tarifas/<%= user.id_hotel %>">TARIFA</a>
+              <% } else if (user && user.role === 'General') { %>
+                <a class="nav-link active" href="/tarifa">TARIFA</a> %>
+              <% } %>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/pais/">PAIS</a>
+              </li>
+              <li class="nav-item">
+                <% if (user && user.role === 'Hotel') { %>
+                  <a class="nav-link active" href="/reserva/<%= user.id_hotel %>">RESERVAS</a>
+              <% } else if (user && user.role === 'General') { %>
+                <a class="nav-link active" href="/reservas">RESERVAS</a> %>
+              <% } %>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+  
+  
+
+      <div class="container">
+              <a href="/create" class="btn btn-outline-primary mt-4"> <i class="fa-solid fa-plus"></i></a>
+              <table id="users" class="table table-striped" class="table table-bordered table-striped text-center mt-4">
+                  <thead>
+                      <tr class="bg-primary text-white">
+                          <th scope="col">ID</th>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Apellido</th>
+                          <th scope="col">DNI</th>
+                          <th scope="col">Correo</th>
+                          <th scope="col">Telefono</th>
+                          <th scope="col">Usuario</th>
+                          <th scope="col">Contraseña</th>
+                          <th scope="col">País</th>
+                          <th scope="col">Ciudad</th>
+                          <th scope="col">Codigo Postal</th>
+                          <th scope="col">Acciones</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <% results.forEach((user)=> { %>
+                  
+
+                          <tr>
+                    
+                          <td><%= user.Id_Client %></td>
+                          <td><%= user.Nom %></td>
+                          <td><%= user.Cognom %></td>
+                          <td><%= user.DNI %></td>
+                          <td><%= user.CorreuElectronic %></td>
+                          <td><%= user.Telefon %></td>
+                          <td><%= user.Usuari %></td>
+                          <td>
+                              <span class="password-hidden">********</span>
+                              <button type="button" class="btn btn-sm btn-secondary toggle-password" data-password="<%= user.Password %>">
+                                  <i class="fa-solid fa-eye"></i>
+                              </button>
+                          </td>
+                          <td><%= user.Pais %></td>
+                          <td><%= user.Ciudad %></td>
+                          <td><%= user.CodigoPostal %></td>
+                          <td>
+                            <div class="d-flex gap-1">
+                              <a href="/edit/<%= user.Id_Client %>" class="btn btn-sm btn-warning" title="Edit">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                              </a>
+                              <a onclick="confirmar('<%= user.Id_Client %>')" class="btn btn-sm btn-danger" title="Delete">
+                                <i class="fa-solid fa-trash-can"></i>
+                              </a>
+                              <a href="/informacion/<%= user.Id_Client %>" class="btn btn-sm btn-info" title="Info">
+                                <i class="fa-solid fa-circle-info"></i> 
+                            </a>
+                            
+                            </div>
+                          </td>
+                          
+                          
+                            
+                      </tr>
+                <%  })%>
+                  </tbody>
+              </table>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
+      <script src="https://cdn.datatables.net/2.2.1/js/dataTables.js"></script>
+      <script src="https://cdn.datatables.net/2.2.1/js/dataTables.bootstrap5.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.14.0/dist/sweetalert2.all.min.js"></script>
+    <script>
+      function confirmar(Id_Client) {
+    Swal.fire({
+      title: "¿Quieres eliminar el cliente?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Eliminado!", "El cliente con ID " + Id_Client + " ha sido eliminado.", "success").then(() => {
+          // Aquí, redirige al servidor para eliminar el cliente
+          window.location.href = '/delete/' + Id_Client;  // Usa 'href' en lugar de 'location'
+        });
+      } else {
+        Swal.fire("Acción cancelada", "", "info");
+      }
+    });
+  }
+
+    </script>
+    <script>
+      // Inicializar DataTable
+      const table = new DataTable('#users');
+  
+      // Delegar el evento a un contenedor estático (el tbody)
+      $('#users tbody').on('click', '.toggle-password', function () {
+          const passwordSpan = $(this).prev('.password-hidden'); // Seleccionar el elemento de contraseña oculto
+          const isHidden = passwordSpan.text() === '********';
+          passwordSpan.text(isHidden ? $(this).data('password') : '********'); // Cambiar el texto
+          $(this).html(isHidden ? '<i class="fa-solid fa-eye-slash"></i>' : '<i class="fa-solid fa-eye"></i>'); // Cambiar el ícono
+      });
+  </script>
+  
+  
+    </body>
+  </html>

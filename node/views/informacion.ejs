@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estados de Reservas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .btn-recuperar, .btn-pagado, .btn-cancelar { width: 100px; }
+    </style>
+</head>
+<body>
+
+    <a href="/clientes" class="btn btn-sm btn-danger" title="Exit">
+        <i class="fa-solid fa-right-from-bracket"></i>
+    </a>
+
+    <div class="container">
+        <h1 class="my-4">Estados de las Reservas de Cliente <%= Nom %></h1>
+
+        <!-- Pestañas de Bootstrap -->
+        <ul class="nav nav-tabs" id="reservasTab" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" id="porPagar-tab" data-bs-toggle="tab" data-bs-target="#porPagar" type="button" role="tab">Por Pagar</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="pagado-tab" data-bs-toggle="tab" data-bs-target="#pagado" type="button" role="tab">Pagado</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="cancelado-tab" data-bs-toggle="tab" data-bs-target="#cancelado" type="button" role="tab">Cancelado</button>
+            </li>
+        </ul>
+
+        <!-- Contenido de las pestañas -->
+        <div class="tab-content" id="reservasTabContent">
+            
+            <!-- Pestaña "Por Pagar" -->
+            <div class="tab-pane fade show active" id="porPagar" role="tabpanel">
+                <table class="table table-bordered table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th>ID Reserva</th>
+                            <th>Cliente</th>
+                            <th>Actividad</th>
+                            <th>Habitación</th>
+                            <th>Hotel</th>
+                            <th>Tarifa</th>
+                            <th>Precio Total</th>
+                            <th>Check In</th>
+                            <th>Check Out</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% resultados.forEach(reserva => { if (reserva.Estado === 'Por pagar') { %>
+                            <tr>
+                                <td><%= reserva.Id_Reserva %></td>
+                                <td><%= reserva.Nom %></td>
+                                <td><%= reserva.Actividad %></td>
+                                <td><%= reserva.Tipo %></td>
+                                <td><%= reserva.Nombre %></td>
+                                <td><%= reserva.Temporada %></td>
+                                <td><%= reserva.Precio_Total %></td>
+                                <td><%= reserva.Checkin %></td>
+                                <td><%= reserva.Checkout %></td>
+                                <td>
+                                    <form action="/cliente/<%= clienteId %>/estado/<%= reserva.Id_Reserva %>" method="POST">
+                                        <button type="submit" class="btn btn-success btn-pagado" name="estado" value="Pagado">Pagar</button>
+                                        <button type="submit" class="btn btn-danger btn-cancelar" name="estado" value="Cancelado">Cancelar</button>
+                                    </form>
+                                    <form action="/editareserva/<%= reserva.Id_Reserva %>" method="POST">
+                                        <!-- Campos del formulario para editar la reserva -->
+                                        <button type="submit" class="btn btn-primary">Actualizar Reserva</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% } }); %>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pestaña "Pagado" -->
+            <div class="tab-pane fade" id="pagado" role="tabpanel">
+                <table class="table table-bordered table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th>ID Reserva</th>
+                            <th>Cliente</th>
+                            <th>Habitación</th>
+                            <th>Hotel</th>
+                            <th>Tarifa</th>
+                            <th>Precio Total</th>
+                            <th>Check In</th>
+                            <th>Check Out</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% resultados.forEach(reserva => { if (reserva.Estado === 'Pagado') { %>
+                            <tr>
+                                <td><%= reserva.Id_Reserva %></td>
+                                <td><%= reserva.Nom %></td>
+                                <td><%= reserva.Tipo %></td>
+                                <td><%= reserva.Nombre %></td>
+                                <td><%= reserva.Temporada %></td>
+                                <td><%= reserva.Precio_Total %></td>
+                                <td><%= reserva.Checkin %></td>
+                                <td><%= reserva.Checkout %></td>
+                                <td>
+                                    <form action="/cliente/<%= clienteId %>/estado/<%= reserva.Id_Reserva %>" method="POST">
+                                        <button type="submit" class="btn btn-danger btn-cancelar" name="estado" value="Cancelado">Cancelar</button>
+                                    </form>
+                                    <form action="/editareserva/<%= reserva.Id_Reserva %>" method="POST">
+                                        <!-- Campos del formulario para editar la reserva -->
+                                        <button type="submit" class="btn btn-primary">Actualizar Reserva</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% } }); %>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pestaña "Cancelado" -->
+            <div class="tab-pane fade" id="cancelado" role="tabpanel">
+                <table class="table table-bordered table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th>ID Reserva</th>
+                            <th>Cliente</th>
+                            <th>Habitación</th>
+                            <th>Hotel</th>
+                            <th>Tarifa</th>
+                            <th>Precio Total</th>
+                            <th>Check In</th>
+                            <th>Check Out</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% resultados.forEach(reserva => { if (reserva.Estado === 'Cancelado') { %>
+                            <tr>
+                                <td><%= reserva.Id_Reserva %></td>
+                                <td><%= reserva.Nom %></td>
+                                <td><%= reserva.Tipo %></td>
+                                <td><%= reserva.Nombre %></td>
+                                <td><%= reserva.Temporada %></td>
+                                <td><%= reserva.Precio_Total %></td>
+                                <td><%= reserva.Checkin %></td>
+                                <td><%= reserva.Checkout %></td>
+                                <td>
+                                    <form action="/cliente/<%= clienteId %>/estado/<%= reserva.Id_Reserva %>" method="POST">
+                                        <button type="submit" class="btn btn-success btn-recuperar" name="estado" value="Por pagar">Recuperar</button>
+                                    </form>
+                                    
+                                    <form action="/editareserva/<%= reserva.Id_Reserva %>" method="POST">
+                                        <!-- Campos del formulario para editar la reserva -->
+                                        <button type="submit" class="btn btn-primary">Actualizar Reserva</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% } }); %>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Scripts de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

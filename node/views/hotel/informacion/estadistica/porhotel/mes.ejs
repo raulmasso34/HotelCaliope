@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas de Reservas por Mes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4">
+            <h2 class="text-center mb-4">📊 Estadísticas de Reservas por Mes</h2>
+            <p class="text-center">ID del Hotel: <strong><%= hotelId %></strong></p>
+            <div id="leyendaMeses" style="text-align: center; margin-top: 20px;"></div>
+
+            <canvas id="graficoReservas"></canvas>
+
+            <a href="/menu-estadistica-hotel/<%= hotelId %>" class="btn btn-secondary mt-3">⬅️ Volver al Menú</a>
+        </div>
+    </div>
+    <script>
+        // Datos enviados desde Node.js
+        const datos = JSON.parse('<%- JSON.stringify(datos) %>'); // No tocar, funciona aunque dé error
+        
+        // Nombres de los meses
+        const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+        
+        // Almacén de colores fijos por mes
+        const coloresFijos = JSON.parse(localStorage.getItem('coloresMeses')) || {};
+        
+        // Función para generar colores aleatorios en formato hexadecimal
+        function generarColorAleatorio() {
+            return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+        }
+        
+        // Asignar colores fijos a cada mes
+        for (let i = 0; i < meses.length; i++) {
+            if (!coloresFijos[meses[i]]) {
+                coloresFijos[meses[i]] = generarColorAleatorio();  // Si no existe el color para el mes, lo generamos
+            }
+        }
+        
+        // Guardar en localStorage para persistencia
+        localStorage.setItem('coloresMeses', JSON.stringify(coloresFijos));
+        
+        // Extraer etiquetas (meses) y valores (cantidad de reservas)
+        const etiquetas = datos.map(item => meses[item.mes - 1]);  // Convertir el número de mes a nombre
+        const valores = datos.map(item => item.total_reservas);
+        
+        // Generar un color para cada barra (mes)
+        const coloresMeses = etiquetas.map(mes => coloresFijos[mes]);
+        
+        // Calcular el máximo y aumentarlo en un 5%
+        const maximoReservas = Math.max(...valores);
+        const topeEjeY = Math.ceil(maximoReservas * 1.05); // Aumenta un 5% y redondea hacia arriba
+        
+        // Crear el gráfico
+        const ctx = document.getElementById('graficoReservas').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',  // Tipo de gráfico
+            data: {
+                labels: etiquetas, // Los meses en el eje X
+                datasets: [{
+                    label: 'Reservas por Mes',
+                    data: valores, // Datos de cantidad de reservas
+                    backgroundColor: coloresMeses,  // Color fijo para cada mes
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        max: topeEjeY // Aplica el nuevo tope del 5% superior
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false // Desactivar leyenda ya que cada barra tiene su color
+                    }
+                }
+            }
+        });
+        
+        // Función para mostrar la leyenda de colores por mes en la parte superior
+        function mostrarLeyenda() {
+            const leyendaContainer = document.getElementById('leyendaMeses');
+            leyendaContainer.innerHTML = ''; // Limpiar cualquier leyenda previa
+        
+            etiquetas.forEach(mes => {
+                const color = coloresFijos[mes];
+                const leyendaItem = document.createElement('div');
+                leyendaItem.style.display = 'inline-block';
+                leyendaItem.style.marginRight = '15px';
+        
+                // Crear un círculo de color para cada mes
+                const colorCirculo = document.createElement('span');
+                colorCirculo.style.display = 'inline-block';
+                colorCirculo.style.width = '15px';
+                colorCirculo.style.height = '15px';
+                colorCirculo.style.backgroundColor = color;
+                colorCirculo.style.borderRadius = '50%';
+                colorCirculo.style.marginRight = '5px';
+        
+                // Crear el nombre del mes
+                const mesNombre = document.createElement('span');
+                mesNombre.textContent = mes;
+        
+                // Añadir los elementos al contenedor de leyenda
+                leyendaItem.appendChild(colorCirculo);
+                leyendaItem.appendChild(mesNombre);
+                leyendaContainer.appendChild(leyendaItem);
+            });
+        }
+        
+        // Llamar a la función para mostrar la leyenda
+        mostrarLeyenda();
+        
+        </script>
+
+
+</body>
+</html>

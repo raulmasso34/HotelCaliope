@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas por Temporada</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4">
+            <h2 class="text-center mb-4">📊 Estadísticas de Reservas por Temporada</h2>
+            <p class="text-center">ID del Hotel: <strong><%= hotelId %></strong></p>
+
+            <canvas id="graficoTemporadas"></canvas>
+
+            <a href="/menu-estadistica-hotel/<%= hotelId %>" class="btn btn-secondary mt-3">⬅️ Volver al Menú</a>
+        </div>
+    </div>
+
+    <script>
+        // Datos enviados desde Node.js
+        const datos = JSON.parse('<%- JSON.stringify(datos) %>'); // Solución para evitar errores en VSCode
+
+        // Almacén de colores fijos por temporada
+        const coloresFijos = JSON.parse(localStorage.getItem('coloresTemporadas')) || {};
+
+        // Función para generar colores aleatorios en formato hexadecimal
+        function generarColorAleatorio() {
+            return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+        }
+
+        // Asignar colores fijos a cada temporada
+        datos.forEach(item => {
+            if (!coloresFijos[item.Temporada]) {
+                coloresFijos[item.Temporada] = generarColorAleatorio();
+            }
+        });
+
+        // Guardar en localStorage para persistencia
+        localStorage.setItem('coloresTemporadas', JSON.stringify(coloresFijos));
+
+        // Extraer etiquetas (temporadas) y valores (cantidad de reservas)
+        const etiquetas = datos.map(item => item.Temporada);
+        const valores = datos.map(item => item.total_reservas);
+
+        // Calcular el máximo y aumentarlo en un 5%
+        const maximoReservas = Math.max(...valores);
+        const topeEjeY = Math.ceil(maximoReservas * 1.05); // Ahora sí es 5%
+
+        // Configurar gráfico
+        const ctx = document.getElementById('graficoTemporadas').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',  
+            data: {
+                labels: etiquetas, // Cada temporada será una etiqueta
+                datasets: [{
+                    label: 'Reservas por Temporada',
+                    data: valores,
+                    backgroundColor: etiquetas.map(temporada => coloresFijos[temporada]), // Usa colores asignados
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        max: topeEjeY
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true, // Muestra la leyenda con los colores generados
+                        position: 'top'
+                    }
+                }
+            }
+        });
+
+    </script>
+
+</body>
+</html>

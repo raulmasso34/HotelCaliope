@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <!-- Meta y Bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    <title>Habitaciones</title>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/hotel/<%= user.id_hotel %>"><i class="fa-solid fa-person-walking-arrow-loop-left"></i></a>
+            <% } else if (user && user.role === 'General') { %>
+                <a class="navbar-brand" href="/hoteles/"><i class="fa-solid fa-person-walking-arrow-loop-left"></i></a> %>
+            <% } %>
+ 
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="container mt-5">
+        <center><h1><%= NombreHotel %></h1></center>
+
+        <!-- Botón "Agregar Habitación" alineado a la derecha -->
+        <div class="d-flex justify-content-start my-3">
+            <a href="/createhab/<%= Id_Hotel %>" class="btn btn-outline-primary">
+                <i class="fa-solid fa-plus"></i> 
+            </a>
+        </div>
+
+        <!-- Tabla de habitaciones -->
+        <div class="table-responsive">
+            <table id="habitaciones" class="table table-striped table-bordered text-center">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>ID</th>
+                        <th>N° Habitación</th>
+                        <th>Tipo</th>
+                        <th>Capacidad</th>
+                        <th>Precio</th>
+                        <th>Hotel</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% results.forEach((habitacion) => { %>
+                        <tr>
+                            <td><%= habitacion.Id_Habitaciones %></td>
+                            <td><%= habitacion.Numero_Habitacion %></td>
+                            <td><%= habitacion.Tipo %></td>
+                            <td><%= habitacion.Capacidad %></td>
+                            <td><%= habitacion.Precio %></td>
+                            <td><%= habitacion.Nombre %></td>
+                            <td>
+                                <a href="/edithab/<%= habitacion.Id_Habitaciones %>" class="btn btn-sm btn-warning" title="Editar">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a onclick="confirmar('<%= habitacion.Id_Habitaciones %>')" class="btn btn-sm btn-danger" title="Eliminar">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.2.1/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.2.1/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.14.0/dist/sweetalert2.all.min.js"></script>
+
+    <script>
+        // Inicializar DataTable
+        new DataTable('#habitaciones');
+
+        // Confirmar eliminación
+        function confirmar(Id_Habitaciones) {
+            Swal.fire({
+                title: "¿Quieres eliminar la habitación?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Confirmar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire("Eliminado!", "La habitación con ID " + Id_Habitaciones + " ha sido eliminada.", "success").then(() => {
+                        window.location.href = '/deletehab/' + Id_Habitaciones;
+                    });
+                } else {
+                    Swal.fire("Acción cancelada", "", "info");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
