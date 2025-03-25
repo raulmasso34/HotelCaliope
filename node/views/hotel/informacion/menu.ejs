@@ -10,10 +10,14 @@
 
 </head>
 <body class="bg-light">
-
-    <a href="/hotel" class="btn btn-sm btn-danger" title="Exit">
-        <i class="fa-solid fa-right-from-bracket"></i>
-    </a>
+    <% if (user && user.role === 'Hotel') { %>
+        <a class="nav-link active" href="/hotel/<%= user.id_hotel %>">  <i class="fa-solid fa-right-from-bracket"></i></a>
+    <% } else if (user && user.role === 'General') { %>
+        <a href="/hoteles/" class="btn btn-sm btn-danger" title="Exit">
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </a>%>
+    <% } %>
+ 
     <div class="container mt-5">
         <div class="card shadow-lg p-4">
             <h2 class="text-center mb-4">Menú del Hotel</h2>

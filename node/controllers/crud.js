@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 
 //Clientes
 exports.save = async (req, res) => {
+const user = req.session.user;
+
     const Nom = req.body.Nom;
     const Cognom = req.body.Cognom;
     const DNI = req.body.DNI;
@@ -14,6 +16,7 @@ exports.save = async (req, res) => {
     const Ciudad = req.body.Ciudad;
     const CodigoPostal = req.body.CodigoPostal;
 
+    if (user.role === 'General'){
     try {
         // Hashear la contraseña
         const hashedPassword = await bcrypt.hash(Password, 10);
@@ -39,7 +42,7 @@ exports.save = async (req, res) => {
                     res.status(500).send('Error al guardar el cliente');
                 } else {
                     // Redirigir tras guardar
-                    res.redirect('/'); // Ajusta la ruta según la lógica de tu aplicación
+                    res.redirect('/clientes'); // Ajusta la ruta según la lógica de tu aplicación
                 }
             }
         );
@@ -47,11 +50,16 @@ exports.save = async (req, res) => {
         console.error('Error al hashear la contraseña:', error);
         res.status(500).send('Error en el servidor');
     }
+}else{
+    res.redirect('/login')
+}
 };
 
         
 
   exports.update = async (req, res) => {
+const user = req.session.user;
+
     const id = req.body.Id_Client; // Cambiar 'id' por 'Id_Client' para mantener coherencia.
     const Nom = req.body.Nom;
     const Cognom = req.body.Cognom;
@@ -64,6 +72,7 @@ exports.save = async (req, res) => {
     const Ciudad = req.body.Ciudad;
     const CodigoPostal = req.body.CodigoPostal;
 
+    if (user.role === 'General'){
     try {
         let hashedPassword = Password;
 
@@ -81,7 +90,7 @@ exports.save = async (req, res) => {
                     console.error('Error en la consulta SQL:', error);
                     res.status(500).send('Error en la base de datos');
                 } else {
-                    res.redirect('/');
+                    res.redirect('/clientes');
                 }
             }
         );
@@ -89,6 +98,10 @@ exports.save = async (req, res) => {
         console.error('Error al procesar la contraseña:', error);
         res.status(500).send('Error en el servidor');
     }
+
+    }else{
+    res.redirect('/login')
+}
 };
 
 
@@ -127,7 +140,7 @@ exports.updatehab = (req, res) => {
    //HOTEL
 
    exports.saveh = (req, res)=>{
-
+    const user = req.session.user;
     const Nombre = req.body.Nombre;
     const CorreoElectronico = req.body.CorreoElectronico;
     const Telefono = req.body.Telefono;
@@ -137,6 +150,7 @@ exports.updatehab = (req, res) => {
     const Ciudad = req.body.Ciudad;
     const Estrellas = req.body.Estrellas;
    
+    if (user.role === 'General' || user.role === 'Hotel'){
     conexion.query('INSERT INTO Hotel SET ?', 
        {
        Nombre:Nombre, 
@@ -150,17 +164,22 @@ exports.updatehab = (req, res) => {
    }, (error, results)=>{
        if(error){
            console.log(error);
-       }else{
-           res.redirect('/hotel/');
+       }else if(user.role === 'General'){
+           res.redirect('/hoteles/');
+       }else if(user.role === 'Hotel'){
+        res.redirect(`/hotel/${user.id_hotel}`)
        }
    })
     //console.log(nom + " - "+cognom+" - "+dni+" - "+correu+" - "+telefon+" - "+usuari+" - "+password+" - "+pais+" - "+ciudad+" - "+codigopostal);
     console.log(req.body);
-   
+}else{
+    res.redirect(`/login`);
+}
     
    };
    
    exports.updateh = (req, res) => {
+    const user = req.session.user;
        const id = req.body.Id_Hotel; // Cambiar 'id' por 'Id_Client' para mantener coherencia.
        const Nombre = req.body.Nombre;
        const CorreoElectronico = req.body.CorreoElectronico;
@@ -171,6 +190,7 @@ exports.updatehab = (req, res) => {
        const Ciudad = req.body.Ciudad;
        const Estrellas = req.body.Estrellas;
    
+       if (user.role === 'General' || user.role === 'Hotel'){
        conexion.query(
            'UPDATE Hotel SET Nombre = ?, CorreoElectronico = ?, Telefono = ?, Direccion = ?, CodigoPostal = ?, Id_Pais = ?, Ciudad = ?, Estrellas = ? WHERE Id_Hotel = ?',
            [Nombre, CorreoElectronico, Telefono, Direccion, CodigoPostal, Id_Pais, Ciudad, Estrellas,  id],
@@ -178,18 +198,23 @@ exports.updatehab = (req, res) => {
                if (error) {
                    console.error('Error en la consulta SQL:', error);
                    res.status(500).send('Error en la base de datos');
-               } else {
-                   res.redirect('/hotel/');
-               }
+                }else if(user.role === 'General'){
+                    res.redirect('/hoteles/');
+                }else if(user.role === 'Hotel'){
+                 res.redirect(`/hotel/${user.id_hotel}`)
+                }
            }
        );
+    }else{
+        res.redirect(`/login`);
+    }
    };
 
 
    //OFERTAS
 
    exports.saveo = (req, res)=>{
-
+    const user = req.session.user;
     const Nombre = req.body.Nombre;
     const Descripcion = req.body.Descripcion;
     const Tipo = req.body.Tipo;
@@ -202,7 +227,7 @@ exports.updatehab = (req, res) => {
     const Id_Habitacion = req.body.Id_Habitacion;
     const Id_Actividad = req.body.Id_Actividad;
 
-   
+    if (user.role === 'General' || user.role === 'Hotel'){
     conexion.query('INSERT INTO Ofertas SET ?', 
        {
        Nombre:Nombre, 
@@ -219,16 +244,21 @@ exports.updatehab = (req, res) => {
    }, (error, results)=>{
        if(error){
            console.log(error);
-       }else{
-           res.redirect('/ofertas/');
-       }
+        }else if(user.role === 'General'){
+            res.redirect('/ofertas/');
+        }else if(user.role === 'Hotel'){
+         res.redirect(`/oferta/${user.id_hotel}`)
+        }
    })
     //console.log(nom + " - "+cognom+" - "+dni+" - "+correu+" - "+telefon+" - "+usuari+" - "+password+" - "+pais+" - "+ciudad+" - "+codigopostal);
     console.log(req.body);
    
-    
+}else{
+    res.redirect(`/login`);
+}
    };
  exports.updateo = (req, res) => {
+    const user = req.session.user;
     const id = req.body.Id_Oferta; 
     const Nombre = req.body.Nombre;
     const Descripcion = req.body.Descripcion;
@@ -241,7 +271,7 @@ exports.updatehab = (req, res) => {
     const Id_Hotel = req.body.Id_Hotel; 
     const Id_Habitacion = req.body.Id_Habitacion === '' || req.body.Id_Habitacion === 'null' ? null : req.body.Id_Habitacion;
     const Id_Actividad = req.body.Id_Actividad;
-
+    if (user.role === 'General' || user.role === 'Hotel'){
     // Aquí ejecutamos la consulta
     conexion.query(
         'UPDATE Ofertas SET Nombre = ?, Descripcion = ?, Tipo = ?, Dia_Inicio = ?, Dia_Fin = ?, Precio_Original = ?, Precio_Oferta = ?, Estado = ?, Id_Hotel = ?, Id_Habitacion = ?, Id_Actividad = ? WHERE Id_Oferta = ?',
@@ -250,17 +280,23 @@ exports.updatehab = (req, res) => {
             if (error) {
                 console.error('Error en la consulta SQL:', error);
                 res.status(500).send('Error en la base de datos');
-            } else {
+            }else if(user.role === 'General'){
                 res.redirect('/ofertas/');
+            }else if(user.role === 'Hotel'){
+             res.redirect(`/oferta/${user.id_hotel}`)
             }
         }
     );
+}else{
+    res.redirect(`/login`);
+}
 };
 
 
  //ACTIVIDADES
 
  exports.savea = (req, res)=>{
+    const user = req.session.user;
     const Id_Hotel = req.body.Id_Hotel;
     const Dia_Inicio = req.body.Dia_Inicio;
     const Dia_Fin = req.body.Dia_Fin;  
@@ -272,7 +308,7 @@ exports.updatehab = (req, res) => {
     const Actividad = req.body.Actividad;
 
 
-   
+    if (user.role === 'General' || user.role === 'Hotel'){
     conexion.query('INSERT INTO Actividades SET ?', 
        {
        Id_Hotel:Id_Hotel,
@@ -288,16 +324,21 @@ exports.updatehab = (req, res) => {
    }, (error, results)=>{
        if(error){
            console.log(error);
-       }else{
-           res.redirect('/actividades/');
-       }
+       }else if(user.role === 'General'){
+        res.redirect('/actividades/');
+    }else if(user.role === 'Hotel'){
+     res.redirect(`/actividad/${user.id_hotel}`)
+    }
    })
     //console.log(nom + " - "+cognom+" - "+dni+" - "+correu+" - "+telefon+" - "+usuari+" - "+password+" - "+pais+" - "+ciudad+" - "+codigopostal);
     console.log(req.body);
-   
+}else{
+    res.redirect(`/login`);
+}
     
    };
  exports.updatea = (req, res) => {
+    const user = req.session.user;
     const id = req.body.Id_Actividades; 
     const Actividad = req.body.Actividad;
     const Id_Hotel = req.body.Id_Hotel;
@@ -309,6 +350,7 @@ exports.updatehab = (req, res) => {
     const Ubicacion = req.body.Ubicacion;
     const Descripcion = req.body.Descripcion;
 
+    if (user.role === 'General' || user.role === 'Hotel'){
     // Aquí ejecutamos la consulta
     conexion.query(
         'UPDATE Actividades SET Nombre = ?, Id_Hotel = ?, Dia_Inicio = ?, Dia_Fin = ?, Hora_Inicio = ?, Hora_Fin = ?, Capacidad_Maxima = ?, Ubicacion = ?, Descripcion = ? WHERE Id_Actividades = ?',
@@ -317,21 +359,27 @@ exports.updatehab = (req, res) => {
             if (error) {
                 console.error('Error en la consulta SQL:', error);
                 res.status(500).send('Error en la base de datos');
-            } else {
+            }else if(user.role === 'General'){
                 res.redirect('/actividades/');
+            }else if(user.role === 'Hotel'){
+             res.redirect(`/actividad/${user.id_hotel}`)
             }
         }
     );
+}else{
+    res.redirect(`/login`);
+}
 };
 
  //SERVICIO
 
  exports.saves = (req, res)=>{
+    const user = req.session.user;
     const Id_Hotel = req.body.Id_Hotel;
     const Servicio = req.body.Servicio;
     const Descripcion = req.body.Descripcion;  
     const Precio = req.body.Precio;
-   
+    if (user.role === 'General' || user.role === 'Hotel'){
     conexion.query('INSERT INTO Servicio SET ?', 
        {
        Id_Hotel:Id_Hotel,
@@ -342,22 +390,29 @@ exports.updatehab = (req, res) => {
    }, (error, results)=>{
        if(error){
            console.log(error);
-       }else{
-           res.redirect('/servicio/');
-       }
+        }else if(user.role === 'General'){
+            res.redirect('/servicio/');
+        }else if(user.role === 'Hotel'){
+         res.redirect(`/servicios/${user.id_hotel}`)
+        }
    })
     //console.log(nom + " - "+cognom+" - "+dni+" - "+correu+" - "+telefon+" - "+usuari+" - "+password+" - "+pais+" - "+ciudad+" - "+codigopostal);
     console.log(req.body);
-   
+}else{
+    res.redirect(`/login`);
+}
     
    };
  exports.updates = (req, res) => {
+    const user = req.session.user;
     const id = req.body.Id_Servicio; 
     const Id_Hotel = req.body.Id_Hotel;
     const Servicio = req.body.Servicio;
     const Descripcion = req.body.Descripcion;;  
     const Precio = req.body.Precio;
     
+    if (user.role === 'General' || user.role === 'Hotel'){
+
 
     // Aquí ejecutamos la consulta
     conexion.query(
@@ -367,17 +422,23 @@ exports.updatehab = (req, res) => {
             if (error) {
                 console.error('Error en la consulta SQL:', error);
                 res.status(500).send('Error en la base de datos');
-            } else {
+            }else if(user.role === 'General'){
                 res.redirect('/servicio/');
+            }else if(user.role === 'Hotel'){
+             res.redirect(`/servicios/${user.id_hotel}`)
             }
         }
     );
+}else{
+    res.redirect(`/login`);
+}
 };
 
 
 //Tarifa
 
 exports.savet = (req, res)=>{
+    const user = req.session.user;
     const Id_Hotel = req.body.Id_Hotel;
     const Id_Habitacion = req.body.Id_Habitacion;
     const Id_Actividad = req.body.Id_Actividad;  
@@ -386,7 +447,8 @@ exports.savet = (req, res)=>{
     const Temporada = req.body.Temporada;
     const Precio = req.body.Precio;
 
-   
+    if (user.role === 'General' || user.role === 'Hotel'){
+
     conexion.query('INSERT INTO Tarifa SET ?', 
        {
        Id_Hotel:Id_Hotel,
@@ -400,16 +462,21 @@ exports.savet = (req, res)=>{
    }, (error, results)=>{
        if(error){
            console.log(error);
-       }else{
-           res.redirect('/tarifa/');
-       }
+        }else if(user.role === 'General'){
+            res.redirect('/tarifa/');
+        }else if(user.role === 'Hotel'){
+         res.redirect(`/tarifas/${user.id_hotel}`)
+        }
    })
     //console.log(nom + " - "+cognom+" - "+dni+" - "+correu+" - "+telefon+" - "+usuari+" - "+password+" - "+pais+" - "+ciudad+" - "+codigopostal);
     console.log(req.body);
-   
+}else{
+    res.redirect(`/login`);
+}
     
    };
  exports.updatet = (req, res) => {
+    const user = req.session.user;
     const id = req.body.Id_Tarifa; 
     const Id_Hotel = req.body.Id_Hotel;
     const Id_Habitacion = req.body.Id_Habitacion;
@@ -419,7 +486,7 @@ exports.savet = (req, res)=>{
     const Temporada = req.body.Temporada;
     const Precio = req.body.Precio;
     
-
+    if (user.role === 'General' || user.role === 'Hotel'){
     // Aquí ejecutamos la consulta
     conexion.query(
         'UPDATE Tarifa SET Id_Hotel = ?, Id_Habitacion = ?,Id_Actividad = ?, Id_Servicios = ?, Tipo_Habitacion = ?, Temporada = ?,Precio = ? WHERE Id_Tarifa = ?',
@@ -428,11 +495,16 @@ exports.savet = (req, res)=>{
             if (error) {
                 console.error('Error en la consulta SQL:', error);
                 res.status(500).send('Error en la base de datos');
-            } else {
+            }else if(user.role === 'General'){
                 res.redirect('/tarifa/');
+            }else if(user.role === 'Hotel'){
+             res.redirect(`/tarifas/${user.id_hotel}`)
             }
         }
     );
+}else{
+    res.redirect(`/login`);
+}
 };
 
 // Controlador crud.js
@@ -491,9 +563,9 @@ exports.updatereserva = (req, res) => {
 //pais
 //PAIS:
 exports.savep = (req, res)=>{
-
+    const user = req.session.user;
     const Pais = req.body.Pais;
-
+    if (user.role === 'General'){
    
     conexion.query('INSERT INTO Pais SET ?', 
         {
@@ -501,21 +573,25 @@ exports.savep = (req, res)=>{
         }, (error, results)=>{
        if(error){
            console.log(error);
-       }else{
-           res.redirect('/pais/');
-       }
+        }else if(user.role === 'General'){
+            res.redirect('/pais/');
+        }
         })
         console.log(req.body);
-   
+    }else{
+        res.redirect(`/login`);
+    }
     };
 
 
 
     //  UPDATE PAIS
     exports.updatep = (req, res) => {
+        const user = req.session.user;
         const id = req.body.Id_Pais; 
         const nuevoNombrePais = req.body.Pais; // Suponiendo que el nombre del campo en el formulario es "Pais"
     
+        if (user.role === 'General'){
         // Aquí ejecutamos la consulta
         conexion.query(
             'UPDATE Pais SET Pais = ? WHERE Id_Pais = ?',
@@ -531,4 +607,7 @@ exports.savep = (req, res)=>{
                 res.redirect('/pais/');
             }
         );
+    }else{
+        res.redirect(`/login`);
+    }
     };

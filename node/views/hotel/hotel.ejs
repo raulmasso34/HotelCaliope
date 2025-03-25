@@ -27,22 +27,41 @@
             </li>
         
             <li class="nav-item">
-              <a class="nav-link active" href="/ofertas/">OFERTAS</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/oferta/<%= user.id_hotel %>">OFERTAS</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/ofertas">OFERTAS</a> %>
+            <% } %>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/actividades/">ACTIVIDADES</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/actividad/<%= user.id_hotel %>">ACTIVIDADES</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/actividades">ACTIVIDADES</a> %>
+            <% } %>
             </li>
             <li class="nav-item active">
-              <a class="nav-link active" href="/servicio/">SERVICIO</a>
-            </li>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/servicios/<%= user.id_hotel %>">SERVICIO</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/servicio">SERVICIO</a> %>
+            <% } %>              </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/tarifa/">TARIFA</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/tarifas/<%= user.id_hotel %>">TARIFA</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/tarifa">TARIFA</a> %>
+            <% } %>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="/pais/">PAIS</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/reservas/">RESERVAS</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/reserva/<%= user.id_hotel %>">RESERVAS</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/reservas">RESERVAS</a> %>
+            <% } %>
             </li>
           </ul>
           <form class="d-flex">
@@ -54,7 +73,12 @@
     </nav>
 
     <div class="container">
+           
+            <% if (user && user.role === 'Hotel') { %>
+              <a href="/hotel/<%= user.id_hotel %>" class="btn btn-outline-primary mt-4"> <i class="fa-solid fa-plus"></i></a>
+          <% } else if (user && user.role === 'General') { %>
             <a href="/createh" class="btn btn-outline-primary mt-4"> <i class="fa-solid fa-plus"></i></a>
+          <% } %>
             <table id="hoteles" class="table table-striped" class="table table-bordered table-striped text-center mt-4">
                 <thead>
                     <tr class="bg-primary text-white">
@@ -95,7 +119,7 @@
                           <a href="/habitaciones/<%= hotel.Id_Hotel %>" class="btn btn-sm btn-secondary" title="Habitaciones">
                             <i class="fa-solid fa-hotel"></i>
                         </a>
-                                           
+                                <div style="min-height: 15px;"></div> <!-- Espacio invisible -->            
                           </td>
                           
                     </tr>

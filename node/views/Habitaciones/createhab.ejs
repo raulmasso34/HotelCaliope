@@ -25,7 +25,11 @@
             </li>
           
             <li class="nav-item">
-              <a class="nav-link active" href="/hotel/">HOTEL</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/hotel/<%= user.id_hotel %>">HOTEL</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/hoteles">HOTEL</a> %>
+            <% } %>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="/ofertas/">OFERTAS</a>

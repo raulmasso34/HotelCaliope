@@ -25,10 +25,18 @@
             </li>
         
             <li class="nav-item">
-              <a class="nav-link active" href="/hotel/">HOTEL</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/hotel/<%= user.id_hotel %>">HOTEL</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/hoteles">HOTEL</a> %>
+            <% } %>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/ofertas/">OFERTAS</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/oferta/<%= user.id_hotel %>">OFERTAS</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/ofertas">OFERTAS</a> %>
+            <% } %>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="/actividades/">ACTIVIDADES</a>
@@ -85,7 +93,11 @@
                   <input type="text" class="form-control" id="Precio" name="Precio" tabindex="1" value="<%= servicio.Precio %>">
                 </div>
                 <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
+                <% if (user && user.role === 'Hotel') { %>
+                  <a class="btn btn-secondary" href="/servicios/<%= user.id_hotel %>">Cancelar</a>
+              <% } else if (user && user.role === 'General') { %>
                 <a href="/servicio/" class="btn btn-secondary">Cancelar</a>
+              <% } %>
               </form>
             </div>
           </div>

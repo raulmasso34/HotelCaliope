@@ -18,8 +18,16 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item"><a class="nav-link active" href="/clientes">CLIENTES</a></li>
           
-            <li class="nav-item"><a class="nav-link active" href="/hotel/">HOTEL</a></li>
-            <li class="nav-item"><a class="nav-link active" href="/ofertas/">OFERTAS</a></li>
+            <li class="nav-item">    <% if (user && user.role === 'Hotel') { %>
+              <a class="nav-link active" href="/hotel/<%= user.id_hotel %>">HOTEL</a>
+          <% } else if (user && user.role === 'General') { %>
+            <a class="nav-link active" href="/hoteles">HOTEL</a> %>
+          <% } %></li>
+            <li class="nav-item">          <% if (user && user.role === 'Hotel') { %>
+              <a class="nav-link active" href="/oferta/<%= user.id_hotel %>">OFERTAS</a>
+          <% } else if (user && user.role === 'General') { %>
+            <a class="nav-link active" href="/ofertas">OFERTAS</a> %>
+          <% } %></li>
             <li class="nav-item"><a class="nav-link active" href="/actividades/">ACTIVIDADES</a></li>
             <li class="nav-item"><a class="nav-link active" href="/servicio/">SERVICIO</a></li>
             <li class="nav-item"><a class="nav-link active" href="/tarifa/">TARIFA</a></li>
@@ -110,7 +118,11 @@
 
             <!-- Botones -->
             <button type="submit" class="btn btn-primary">Guardar</button>
+            <% if (user && user.role === 'Hotel') { %>
+              <a class="btn btn-secondary" href="/tarifas/<%= user.id_hotel %>">Cancelar</a>
+          <% } else if (user && user.role === 'General') { %>
             <a href="/tarifa/" class="btn btn-secondary">Cancelar</a>
+          <% } %>
           </form>
         </div>
       </div>

@@ -15,9 +15,13 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
         <div class="container-fluid">
-            <a class="navbar-brand" href="/hotel/"><i class="fa-solid fa-right-from-bracket"></i></a>
+            <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/hotel/<%= user.id_hotel %>"><i class="fa-solid fa-person-walking-arrow-loop-left"></i></a>
+            <% } else if (user && user.role === 'General') { %>
+                <a class="navbar-brand" href="/hoteles/"><i class="fa-solid fa-person-walking-arrow-loop-left"></i></a> %>
+            <% } %>
+ 
         </div>
     </nav>
 

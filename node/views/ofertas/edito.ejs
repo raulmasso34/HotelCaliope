@@ -25,10 +25,18 @@
             </li>
           
             <li class="nav-item">
-              <a class="nav-link active" href="/hotel/">HOTEL</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/hotel/<%= user.id_hotel %>">HOTEL</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/hoteles">HOTEL</a> %>
+            <% } %>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/ofertas/">OFERTAS</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/oferta/<%= user.id_hotel %>">OFERTAS</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/ofertas">OFERTAS</a> %>
+            <% } %>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="/actividades/">ACTIVIDADES</a>
@@ -74,13 +82,13 @@
                     </div>
                     <div class="mb-3">
                         <label for="Dia_Inicio" class="form-label">Dia Inicio</label>
-                        <input type="date" class="form-control" id="Dia_Inicio" name="Dia_Inicio" tabindex="1" value="<%= oferta.Dia_Inicio %>">
+                        <input type="date" class="form-control" id="Dia_Inicio" name="Dia_Inicio" value="<%= oferta.Dia_Inicio.toISOString().split('T')[0] %>">
+                        
                     </div>
 
                     <div class="mb-3">
                         <label for="Dia_Fin" class="form-label">Dia Fin</label>
-                        <input type="date" class="form-control" id="Dia_Fin" name="Dia_Fin" tabindex="1" value="<%= oferta.Dia_Fin %>">
-                    </div>
+                        <input type="date" class="form-control" id="Dia_Fin" name="Dia_Fin" value="<%= oferta.Dia_Fin.toISOString().split('T')[0] %>">                    </div>
 
                     <div class="mb-3">
                         <label for="Precio_Original" class="form-label">Precio Original</label>
@@ -135,7 +143,11 @@
                         
                       </div> 
                    <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
-                <a href="/ofertas/" class="btn btn-secondary">Cancelar</a>
+                   <% if (user && user.role === 'Hotel') { %>
+                    <a class="btn btn-secondary" href="/oferta/<%= user.id_hotel %>">Cancelar</a>
+                <% } else if (user && user.role === 'General') { %>
+                  <a href="/ofertas/" class="btn btn-secondary">Cancelar</a>
+                <% } %>
                 </form>
             </div>
         </div>

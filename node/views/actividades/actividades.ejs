@@ -27,25 +27,41 @@
             </li>
     
             <li class="nav-item">
-              <a class="nav-link active" href="/hotel/">HOTEL</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/hotel/<%= user.id_hotel %>">HOTEL</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/hoteles">HOTEL</a> %>
+            <% } %>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/ofertas/">OFERTAS</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/actividades/">ACTIVIDADES</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/oferta/<%= user.id_hotel %>">OFERTAS</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/ofertas">OFERTAS</a> %>
+            <% } %>
             </li>
             <li class="nav-item active">
-              <a class="nav-link active" href="/servicio/">SERVICIO</a>
-            </li>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/servicios/<%= user.id_hotel %>">SERVICIO</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/servicio">SERVICIO</a> %>
+            <% } %>              </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/tarifa/">TARIFA</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/tarifas/<%= user.id_hotel %>">TARIFA</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/tarifa">TARIFA</a> %>
+            <% } %>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="/pais/">PAIS</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/reservas/">RESERVAS</a>
+              <% if (user && user.role === 'Hotel') { %>
+                <a class="nav-link active" href="/reserva/<%= user.id_hotel %>">RESERVAS</a>
+            <% } else if (user && user.role === 'General') { %>
+              <a class="nav-link active" href="/reservas">RESERVAS</a> %>
+            <% } %>
             </li>
           </ul>
           <form class="d-flex">

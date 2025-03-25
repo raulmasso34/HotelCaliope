@@ -25,10 +25,18 @@
             </li>
         
             <li class="nav-item">
-              <a class="nav-link active" href="/hotel/">HOTEL</a>
+              <% if (client && client.role === 'Hotel') { %>
+                <a class="nav-link active" href="/hotel/<%= client.id_hotel %>">HOTEL</a>
+            <% } else if (client && client.role === 'General') { %>
+              <a class="nav-link active" href="/hoteles">HOTEL</a> %>
+            <% } %>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/ofertas/">OFERTAS</a>
+              <% if (client && client.role === 'Hotel') { %>
+                <a class="nav-link active" href="/oferta/<%= client.id_hotel %>">OFERTAS</a>
+            <% } else if (client && client.role === 'General') { %>
+              <a class="nav-link active" href="/ofertas">OFERTAS</a> %>
+            <% } %>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="/actividades/">ACTIVIDADES</a>
@@ -56,46 +64,46 @@
 
 
 
-      <% if (user) { %>
+      <% if (client) { %>
         <div class="container mt-4">
           <div class="card border-secondary">
             <div class="card-header">EDITAR</div>
             <div class="card-body">
               <form action="/update" method="POST">
-                <input type="hidden" id="Id_Client" name="Id_Client" value="<%= user.Id_Client %>">
+                <input type="hidden" id="Id_Client" name="Id_Client" value="<%= client.Id_Client %>">
                 <div class="mb-3">
                   <label for="Nom" class="form-label">Nombre</label>
-                  <input type="text" class="form-control" id="Nom" name="Nom" tabindex="1" value="<%= user.Nom %>">
+                  <input type="text" class="form-control" id="Nom" name="Nom" tabindex="1" value="<%= client.Nom %>">
                 </div>
                 <div class="mb-3">
                   <label for="Cognom" class="form-label">Apellido</label>
-                  <input type="text" class="form-control" id="Cognom" name="Cognom" tabindex="1" value="<%= user.Cognom %>">
+                  <input type="text" class="form-control" id="Cognom" name="Cognom" tabindex="1" value="<%= client.Cognom %>">
                 </div>
                 <div class="mb-3">
                   <label for="DNI" class="form-label">DNI</label>
-                  <input type="text" class="form-control" id="DNI" name="DNI" tabindex="1" value="<%= user.DNI %>">
+                  <input type="text" class="form-control" id="DNI" name="DNI" tabindex="1" value="<%= client.DNI %>">
                 </div>
                 <div class="mb-3">
                   <label for="CorreuElectronic" class="form-label">Correo</label>
-                  <input type="text" class="form-control" id="CorreuElectronic" name="CorreuElectronic" tabindex="1" value="<%= user.CorreuElectronic %>">
+                  <input type="text" class="form-control" id="CorreuElectronic" name="CorreuElectronic" tabindex="1" value="<%= client.CorreuElectronic %>">
                 </div>
                 <div class="mb-3">
                   <label for="Telefon" class="form-label">Teléfono</label>
-                  <input type="text" class="form-control" id="Telefon" name="Telefon" tabindex="1" value="<%= user.Telefon %>">
+                  <input type="text" class="form-control" id="Telefon" name="Telefon" tabindex="1" value="<%= client.Telefon %>">
                 </div>
                 <div class="mb-3">
                   <label for="Usuari" class="form-label">Usuario</label>
-                  <input type="text" class="form-control" id="Usuari" name="Usuari" tabindex="1" value="<%= user.Usuari %>">
+                  <input type="text" class="form-control" id="Usuari" name="Usuari" tabindex="1" value="<%= client.Usuari %>">
                 </div>
                 <div class="mb-3">
                   <label for="Password" class="form-label">Contraseña</label>
-                  <input type="password" class="form-control" id="Password" name="Password" tabindex="1" value="<%= user.Password %>">
+                  <input type="password" class="form-control" id="Password" name="Password" tabindex="1" value="<%= client.Password %>">
                 </div>
                 <div class="mb-3">
                   <label for="Id_Pais" class="form-label">País</label>
                   <select name="Id_Pais" id="Id_Pais" class="form-select">
                     <% countries.forEach(country => { %>
-                      <option value="<%= country.Id_Pais %>" <%= user.Id_Pais === country.Id_Pais ? 'selected' : '' %>>
+                      <option value="<%= country.Id_Pais %>" <%= client.Id_Pais === country.Id_Pais ? 'selected' : '' %>>
                         <%= country.Pais %>
                       </option>
                     <% }); %>
@@ -103,15 +111,15 @@
                 </div>
                 <div class="mb-3">
                   <label for="Ciudad" class="form-label">Ciudad</label>
-                  <input type="text" class="form-control" id="Ciudad" name="Ciudad" tabindex="1" value="<%= user.Ciudad %>">
+                  <input type="text" class="form-control" id="Ciudad" name="Ciudad" tabindex="1" value="<%= client.Ciudad %>">
                 </div>
                 <div class="mb-3">
                   <label for="CodigoPostal" class="form-label">Código Postal</label>
-                  <input type="text" class="form-control" id="CodigoPostal" name="CodigoPostal" tabindex="1" maxlength="5" value="<%= user.CodigoPostal %>">
+                  <input type="text" class="form-control" id="CodigoPostal" name="CodigoPostal" tabindex="1" maxlength="5" value="<%= client.CodigoPostal %>">
 
                 </div>
                 <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
-                <a href="/" class="btn btn-secondary">Cancelar</a>
+                <a href="/clientes" class="btn btn-secondary">Cancelar</a>
               </form>
             </div>
           </div>
