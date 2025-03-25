@@ -1,24 +1,22 @@
 <?php
 session_start();
-
-// Mostrar errores en desarrollo
+print_r($_SESSION); // Muestra toda la información almacenada en la sesión
+// Mostrar errores en desarrollo (puedes desactivar en producción)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once __DIR__ . '/../controller/hotel/hotelController.php';
 
-$hotelController = new HotelController();
-
-// Verificar si la reserva está en la sesión
-if (!isset($_SESSION['Reservas'])) {
+if (!isset($_SESSION['Reservas']) || empty($_SESSION['Reservas'])) {
     echo "Error: No se ha recibido la reserva en la sesión.";
     exit;
 }
 
+// ✅ Obtener datos de la reserva de la sesión
 $reserva = $_SESSION['Reservas'];
 
-// ✅ Recuperar datos con valores predeterminados
+// ✅ Recuperar datos con valores predeterminados para evitar errores
 $hotelId = $reserva['hotelId'] ?? 'No disponible';
 $habitacionId = $reserva['habitacionId'] ?? 'No disponible';
 $clienteId = $reserva['clienteId'] ?? 'No disponible';
@@ -28,17 +26,20 @@ $guests = $reserva['guests'] ?? 'No disponible';
 
 // ✅ Verificar y asignar método de pago
 $metodoPagoId = $reserva['metodoPagoId'] ?? null;
-$metodoPago = 'No disponible';
-if ($metodoPagoId !== null) {
-    $metodoPago = ($metodoPagoId == 1) ? 'Tarjeta de Crédito' : 'Otro Método';
-}
+$metodoPago = match ($metodoPagoId) {
+    1 => 'Tarjeta de Crédito',
+    2 => 'PayPal',
+    3 => 'Transferencia Bancaria',
+    default => 'No disponible'
+};
 
 // ✅ Formatear el precio total
-$precioTotal = isset($reserva['precioTotal']) && is_numeric($reserva['precioTotal']) 
-    ? '$' . number_format(floatval($reserva['precioTotal']), 2, '.', '') 
+$precioTotal = isset($reserva['precioTotal']) && is_numeric($reserva['precioTotal'])
+    ? '$' . number_format(floatval($reserva['precioTotal']), 2, '.', '')
     : 'No disponible';
 
-// Obtener detalles del hotel
+// ✅ Obtener detalles del hotel
+$hotelController = new HotelController();
 $hotelDetails = $hotelController->obtenerDetallesHotel($hotelId);
 $hotelNombre = $hotelDetails['Nombre'] ?? 'Hotel Desconocido';
 

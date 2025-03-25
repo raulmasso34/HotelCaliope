@@ -1,5 +1,8 @@
 <?php
-// Configuración de errores
+    
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -24,42 +27,37 @@ class PagoController {
     
     
     public function procesarPagoReserva($datos) {
-        
-        
         try {
-
-            
-            // ✅ 1. Validar los datos obligatorios
-            if (empty($datos['clienteId']) || empty($datos['habitacionId']) || empty($datos['hotelId']) || empty($datos['checkin']) || empty($datos['checkout']) || empty($datos['guests']) || empty($datos['paisId'])) {
-                throw new Exception("Error: Datos de la reserva incompletos.");
+            // ✅ 1. Validar datos obligatorios
+            $camposObligatorios = ['clienteId', 'habitacionId', 'hotelId', 'checkin', 'checkout', 'guests', 'paisId', 'metodoPagoId'];
+            foreach ($camposObligatorios as $campo) {
+                if (empty($datos[$campo])) {
+                    throw new Exception("Error: El campo '$campo' es obligatorio.");
+                }
             }
-    
+            
             // ✅ 2. Validar el método de pago
-            if (empty($datos['metodoPagoId']) || !is_numeric($datos['metodoPagoId'])) {
+            if (!is_numeric($datos['metodoPagoId'])) {
                 throw new Exception("Error: Método de pago inválido.");
             }
-    
-            // ✅ 3. Calcular precio de los servicios
+            
+            // ✅ 3. Calcular el precio total incluyendo servicios y actividades
             $precioTotalServicios = 0;
             if (!empty($datos['servicios']) && is_array($datos['servicios'])) {
-                foreach ($datos['servicios'] as $idServicio => $precio) {
+                foreach ($datos['servicios'] as $precio) {
                     $precioTotalServicios += floatval($precio);
                 }
             }
-    
-            // ✅ 4. Recalcular el precio total
+            
             $datos['precioServicio'] = $precioTotalServicios;
             $datos['precioTotal'] = floatval($datos['precioHabitacion']) + $precioTotalServicios;
-    
-            // ✅ Verificar cálculo antes de seguir
-         
-    
-            // ✅ 5. Insertar la reserva en la base de datos
+            
+            // ✅ 4. Insertar la reserva en la base de datos
             $idReserva = $this->reservaModel->insertarReserva(
                 $datos['clienteId'],
                 $datos['habitacionId'],
                 $datos['hotelId'],
-                !empty($datos['tarifaId']) ? $datos['tarifaId'] : null,
+                $datos['tarifaId'] ?? null,
                 $datos['precioHabitacion'],
                 $datos['precioActividad'] ?? 0,
                 $datos['precioTarifa'] ?? 0,
@@ -70,13 +68,13 @@ class PagoController {
                 $datos['guests'],
                 $datos['paisId']
             );
-    
+            
             if (!$idReserva) {
-                throw new Exception("Error al insertar la reserva.");
+                throw new Exception("Error: No se pudo crear la reserva en la base de datos.");
             }
-    
-            // ✅ 6. Insertar servicios en la tabla intermedia
-            if (!empty($datos['servicios']) && is_array($datos['servicios'])) {
+            
+            // ✅ 5. Asociar servicios y actividades
+            if (!empty($datos['servicios'])) {
                 foreach ($datos['servicios'] as $idServicio => $precio) {
                     if (!$this->reservaModel->asociarServicioAReserva($idReserva, $idServicio)) {
                         throw new Exception("Error al asociar el servicio ID: $idServicio.");
@@ -84,15 +82,13 @@ class PagoController {
                 }
             }
             
-            // ✅ Insertar actividades en la tabla intermedia
-            if (!empty($datos['actividades']) && is_array($datos['actividades'])) {
+            if (!empty($datos['actividades'])) {
                 foreach ($datos['actividades'] as $idActividad => $precio) {
                     $this->reservaModel->asociarActividadAReserva($idReserva, $idActividad, $precio);
                 }
             }
-
-    
-            // ✅ 7. Procesar el pago
+            
+            // ✅ 6. Procesar el pago
             $pagoExitoso = $this->pagoModel->procesarPago(
                 $datos['hotelId'],
                 $datos['clienteId'],
@@ -101,66 +97,42 @@ class PagoController {
                 date("Y-m-d H:i:s"),
                 intval($datos['metodoPagoId'])
             );
-    
+            
             if (!$pagoExitoso) {
                 throw new Exception("Error al procesar el pago.");
             }
-    
-            // ✅ 8. Actualizar el estado de la reserva
+            
+            // ✅ 7. Actualizar el estado de la reserva
             $this->pagoModel->actualizarEstadoReserva($idReserva, "Pagado");
-    
-            return ['success' => true, 'message' => 'Pago y reserva procesados con éxito.'];
+            
+            return ['success' => true, 'message' => 'Pago y reserva procesados con éxito.', 'idReserva' => $idReserva];
         } catch (Exception $e) {
             error_log("Error en PagoController: " . $e->getMessage());
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
-    
 }
 
-// ✅ Capturar datos del formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pagoController = new PagoController();
-
-    $datosReserva = [
-        'clienteId' => $_POST['clienteId'] ?? null,
-        'habitacionId' => $_POST['habitacionId'] ?? null,
-        'hotelId' => $_POST['hotelId'] ?? null,
-        'checkin' => $_POST['checkin'] ?? null,
-        'checkout' => $_POST['checkout'] ?? null,
-        'guests' => $_POST['guests'] ?? null,
-        'paisId' => $_POST['paisId'] ?? null,
-        'metodoPagoId' => isset($_POST['metodoPagoId']) ? intval($_POST['metodoPagoId']) : null,
-        'servicios' => [],
-        'actividades' => [],
-    ];
     
-    // 📌 Reestructurar los servicios para que sean clave => valor (ID => Precio)
-    if (!empty($_POST['servicios']) && is_array($_POST['servicios'])) {
-        foreach ($_POST['servicios'] as $idServicio) {
-            $datosReserva['servicios'][$idServicio] = 0; // Asigna un precio 0 si no hay dato
-        }
+    if (!isset($_SESSION['Reservas'])) {
+        die(json_encode(['success' => false, 'message' => 'Sesión expirada o datos no encontrados.']));
     }
     
-    // 📌 Reestructurar las actividades de la misma forma
-    if (!empty($_POST['actividades']) && is_array($_POST['actividades'])) {
-        foreach ($_POST['actividades'] as $idActividad) {
-            $datosReserva['actividades'][$idActividad] = 0; // Asigna un precio 0 si no hay dato
-        }
-    }
+    $reservaSession = $_SESSION['Reservas'];
     
-
-   
-
-    // ✅ Ejecutar el proceso de pago y reserva
+    $datosReserva = array_merge($reservaSession, $_POST);
+    
     $resultado = $pagoController->procesarPagoReserva($datosReserva);
-
-    // ✅ Manejo seguro de errores y redirección
+    
     if ($resultado['success']) {
-        header("Location: ../../vista/reserva_confirmada.php");
-     
-    };
-
- 
-
+        $_SESSION['idReserva'] = $resultado['idReserva'];
+        header("Location: http://localhost/HotelCaliope2/vista/reserva_confirmada.php");
+        exit();
+    } else {
+        $_SESSION['error_pago'] = $resultado['message'];
+        header("Location: http://localhost/HotelCaliope2/vista/pagos.php");
+        exit();
+    }
 }
