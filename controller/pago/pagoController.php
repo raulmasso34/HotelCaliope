@@ -128,11 +128,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if ($resultado['success']) {
         $_SESSION['idReserva'] = $resultado['idReserva'];
-        header("Location: http://localhost/HotelCaliope2/vista/reserva_confirmada.php");
+       // header("Location: http://localhost/HotelCaliope2/vista/reserva_confirmada.php");
+        header("Location: http://localhost/HotelCaliope/HotelCaliope-2/vista/pagos.php") ;
         exit();
     } else {
         $_SESSION['error_pago'] = $resultado['message'];
-        header("Location: http://localhost/HotelCaliope2/vista/pagos.php");
+      //  header("Location: http://localhost/HotelCaliope2/vista/pagos.php");
+        header("Location: http://localhost/HotelCaliope/HotelCaliope-2/vista/pagos.php") ;
         exit();
     }
 }

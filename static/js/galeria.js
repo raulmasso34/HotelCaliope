@@ -122,3 +122,50 @@ document.addEventListener('DOMContentLoaded', function() {
     // Iniciar todo
     initializeAll();
 });
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('hotelModal');
+    const closeBtn = document.querySelector('.close');
+    
+    // Manejador de clic para los enlaces "Ver hotel"
+    document.querySelectorAll('.view-more').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const hotelId = this.dataset.hotelId;
+            const directorio = this.dataset.directorio;
+            
+            // Cargar imágenes dinámicamente (ejemplo - adaptar a tu backend)
+            const images = cargarImagenesHotel(hotelId, directorio);
+            
+            actualizarGaleria(images);
+            modal.style.display = 'block';
+        });
+    });
+
+    // Cerrar modal
+    closeBtn.onclick = () => modal.style.display = 'none';
+    window.onclick = (e) => e.target == modal ? modal.style.display = 'none' : null;
+
+    function actualizarGaleria(imagenes) {
+        const carousel = document.getElementById('galleryCarousel');
+        carousel.innerHTML = '';
+        imagenes.forEach(img => {
+            const imgElement = document.createElement('img');
+            imgElement.src = img;
+            imgElement.alt = `Imagen del hotel`;
+            carousel.appendChild(imgElement);
+        });
+    }
+
+    function cargarImagenesHotel(hotelId, directorio) {
+        // Esta función debe ser implementada según tu backend
+        // Ejemplo estático:
+        return [
+            `../../static/img/${directorio}/hotel-${hotelId}-1.jpg`,
+            `../../static/img/${directorio}/hotel-${hotelId}-2.jpg`,
+            `../../static/img/${directorio}/hotel-${hotelId}-3.jpg`
+        ];
+    }
+});
