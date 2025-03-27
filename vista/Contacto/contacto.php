@@ -75,84 +75,140 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
 
-    <script src="https://kit.fontawesome.com/b8a838b99b.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Permanent+Marker&family=Shadows+Into+Light&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Patrick+Hand&family=Permanent+Marker&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/css/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-     crossorigin=""/>
-     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:wght@200..1000&family=Old+Standard+TT:wght@400;700&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
     <title>Document</title>
+    <link rel="stylesheet" href="../../static/css/GENERAL/header.css">
+    <link rel="stylesheet" href="../../static/css/GENERAL/footer.css">
     <link rel="stylesheet" href="../../static/css/contacto/contacto.css">
     <link rel="shortcut icon" href="../../static/img/favicon_io/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
 </head>
 
 <body>
-    <!-- Add this right after the <body> tag -->
-    <header class="main-header">
-    <!-- Navigation Bar -->
-    <nav class="nav-bar">
-        <div class="nav-left">
-            <a href="../index.php">
-                <img src="../../static/img/logo.png" alt="Hotel Caliope Logo" class="nav-logo">
-            </a>
+<header class="main-header">
+        <div class="carousel">
+            <img class="carousel-background" src="../../static/img/california/california.jpg" alt="Fondo 1">
+            <img class="carousel-background" src="../../static/img/Galicia/galicia1.jpg" alt="Fondo 2">
+            <img class="carousel-background" src="../../static/img/europa/pirineos.jpg" alt="Fondo 3">
         </div>
-        <div class="nav-right">
-            <a href="../Habitaciones/habitaciones.php">Habitaciones</a>
-            <div class="nav-dropdown">
-                <a href="#" class="dropbtn">Hoteles</a>
-                <div class="dropdown-content">
-                    <div class="dropdown-section">
-                        <h4>Europa</h4>
-                        <a href="../ciudades/Europa/Galicia.php">Galicia</a>
-                        <a href="../ciudades/Europa/Tossa.php">Tossa de Mar</a>
-                        <a href="../ciudades/Europa/Pirineos.php">Pirineos</a>
+        
+        <section class="main-up">
+            <div class="main-up-left">
+                <img src="../../static/img/logo_blanco.png" alt="Logo Hotel Calíope">
+            </div>
+
+            <div class="main-up-right">
+                <div class="links">
+                    <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                    
+                    <div class="dropdown">
+                        <a href="../../vista/hoteles.php" class="dropbtn">Hoteles</a>
+                        <div class="dropdown-content">
+                            <div class="dropdown-section">
+                                <h4>Europa</h4>
+                                <a href="../../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                                <a href="../../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                                <a href="../../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                            </div>
+                            <div class="dropdown-section">
+                                <h4>USA</h4>
+                                <a href="../../vista/ciudades/USA/Florida.php">Florida</a>
+                                <a href="../../vista/ciudades/USA/California.php">California</a>
+                                <a href="../../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="dropdown-section">
-                        <h4>USA</h4>
-                        <a href="../ciudades/USA/Florida.php">Florida</a>
-                        <a href="../ciudades/USA/California.php">California</a>
-                        <a href="../ciudades/USA/NuevaYork.php">Nueva York</a>
+
+                    <a href="../../vista/galeria/galeria.php">Galería</a>
+                    <a href="../../vista/ofertas/ofertas.php">Ofertas</a>
+                    <a href="../../vista/Contacto/contacto.php">Contacto</a>
+                    
+                    <!-- Contenedor del perfil -->
+                    <div class="dropdown-perfil">
+                        <a class="icon-perfil" href="javascript:void(0);">
+                            <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
+                        </a>
+                        <div class="dropdown-perfil-content">
+                            <a href="../../vista/Clientes/login.php">
+                                <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+                            </a>
+                            <a href="../../vista/Clientes/perfil.php">
+                                <i class="bi bi-person"></i> Perfil
+                            </a>
+                            <a href="../../controller/clients/LoginController.php?action=logout" style="color: red;"> 
+                                <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <a href="../galeria/galeria.php">Galería</a>
-            <a href="../ofertas/ofertas.php">Ofertas</a>
-            <a href="contacto.php" class="active">Contacto</a>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <div class="contact-hero">
-        <div class="hero-content">
-            <h1 class="animate-text">Contacta con Nosotros</h1>
-            <p class="animate-text-delay">Tu satisfacción es nuestra prioridad</p>
-            <div class="hero-buttons animate-text-delay">
-                <a href="#contact-form" class="hero-btn primary">Enviar Mensaje</a>
-                <a href="tel:+34999999999" class="hero-btn secondary">
-                    <i class="fas fa-phone"></i> Llamar Ahora
-                </a>
+            <!-- Menú hamburguesa -->
+            <div id="menu-toggle" class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
             </div>
-        </div>
-        <div class="hero-overlay"></div>
-    </div>
-    </header>
 
+            <!-- Menú móvil -->
+            <div class="mobile-menu">
+                <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                <a href="../../vista/galeria/galeria.php">Galería</a>
+                <a href="../../vista/ofertas/ofertas.php">Ofertas</a>
+                <a href="../../vista/Contacto/contacto.php">Contacto</a>
+                <a href="../../vista/Clientes/login.php">Iniciar sesión</a>
+                <a href="../../vista/Clientes/perfil.php">Perfil</a>
+                
+                <div class="dropdown-mobile">
+                    <a href="#" class="dropbtn">Hoteles</a>
+                    <div class="dropdown-content-mobile">
+                        <div class="dropdown-section">
+                            <h4>Europa</h4>
+                            <a href="../../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                            <a href="../../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                            <a href="../../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>USA</h4>
+                            <a href="../../vista/ciudades/USA/Florida.php">Florida</a>
+                            <a href="../../vista/ciudades/USA/California.php">California</a>
+                            <a href="../../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="main-center">
+            <div class="center-up">
+                <div class="center-up-up">
+                    <span style="font-size: 20px; color: rgb(230, 182, 11);">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </span>
+                </div>
+                <div class="center-up-down">
+                    <h5> <b>Contacta con nosotros para más información!</b></h5>
+                    <h1>CONTACTO</h1>
+                </div>
+            </div>
+        </section>
+        <div class="scroll-down">
+            <a href="#contact-section" class="scroll-down-arrow">
+                <i class="fa-solid fa-chevron-down"></i>
+            </a>
+        </div>
+    </header>
 
     <main class="contact-main">
         <!-- Contact Stats Section -->
@@ -188,8 +244,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </section>
 
+
+
+
         <!-- Contact Info Cards -->
-        <section class="contact-info">
+        <section class="contact-info" id="contact-section">
             <div class="info-container">
                 <div class="info-card">
                     <div class="card-icon">
@@ -281,74 +340,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
     </main>
 
-        <!-- Replace the map section with this footer -->
-    <footer class="contact-footer">
-        <div class="footer-top">
-            <div class="footer-grid">
-                <!-- About Section -->
-                <div class="footer-section">
-                    <img src="../../static/img/logo_blanco.png" alt="Hotel Caliope Logo" class="footer-logo">
-                    <p>Descubre el lujo y la comodidad en nuestros hoteles exclusivos. Una experiencia única en las mejores ubicaciones.</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Columna 1 - Logo y Descripción -->
+            <div class="footer-section">
+                <img src="../../static/img/logo_blanco.png" alt="Logo Hotel Calíope" class="footer-logo">
+                <p>Descubre el lujo y la comodidad en cada rincón del mundo con Hotel Calíope.</p>
+            </div>
 
-                <!-- Quick Links -->
-                <div class="footer-section">
-                    <h3>Enlaces Rápidos</h3>
-                    <ul class="footer-links">
-                        <li><a href="../Habitaciones/habitaciones.php">Habitaciones</a></li>
-                        <li><a href="../galeria/galeria.php">Galería</a></li>
-                        <li><a href="../ofertas/ofertas.php">Ofertas</a></li>
-                        <li><a href="contacto.php">Contacto</a></li>
-                    </ul>
-                </div>
+            <!-- Columna 2 - Enlaces rápidos -->
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a></li>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/hoteles.php">Hoteles</a></li>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/galeria/galeria.php">Galería</a></li>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/ofertas/ofertas.php">Ofertas</a></li>
+                </ul>
+            </div>
 
-                <!-- Our Hotels -->
-                <div class="footer-section">
-                    <h3>Nuestros Hoteles</h3>
-                    <ul class="footer-links">
-                        <li><a href="../ciudades/Europa/Galicia.php">Hotel Galicia</a></li>
-                        <li><a href="../ciudades/Europa/Tossa.php">Hotel Tossa de Mar</a></li>
-                        <li><a href="../ciudades/USA/Florida.php">Hotel Florida</a></li>
-                        <li><a href="../ciudades/USA/California.php">Hotel California</a></li>
-                    </ul>
-                </div>
+            <!-- Columna 3 - Contacto -->
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +34 123 456 789</li>
+                    <li><i class="fas fa-envelope"></i> info@hotelcaliope.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Calle Principal 123, Madrid</li>
+                </ul>
+            </div>
 
-                <!-- Newsletter -->
-                <div class="footer-section">
-                    <h3>Newsletter</h3>
-                    <p>Suscríbete para recibir nuestras mejores ofertas</p>
-                    <form class="newsletter-form">
-                        <div class="form-group">
-                            <input type="email" placeholder="Tu email" required>
-                            <button type="submit">
-                                <i class="fas fa-paper-plane"></i>
-                            </button>
-                        </div>
-                    </form>
+            <!-- Columna 4 - Redes Sociales -->
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
 
+        <!-- Sección Inferior -->
         <div class="footer-bottom">
-            <div class="footer-info">
-                <div class="copyright">
-                    <p>&copy; 2024 Hotel Caliope. Todos los derechos reservados.</p>
-                </div>
-                <div class="footer-bottom-links">
-                    <a href="../politicas/privacidad.php">Política de Privacidad</a>
-                    <a href="../politicas/cookies.php">Política de Cookies</a>
-                    <a href="../politicas/avisolegal.php">Aviso Legal</a>
-                </div>
+            <div class="footer-links">
+                <a href="../../vista/politicas/privacidad.php">Política de Privacidad</a>
+                <a href="../../vista/politicas/cookies.php">Política de Cookies</a>
+                <a href="../../vista/politicas/avisolegal.php">Aviso Legal</a>
             </div>
+            <p>&copy; 2025 Hotel Calíope. Todos los derechos reservados.</p>
         </div>
     </footer>
-
+        
 
 
     <script>
@@ -361,5 +404,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 .openPopup();
         });
     </script>
+
+
+        <script src="../../static/js/contacto.js"></script>
 </body>
 </html>

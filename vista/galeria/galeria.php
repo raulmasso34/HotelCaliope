@@ -47,6 +47,8 @@ if (!empty($hoteles)) {
      <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:wght@200..1000&family=Old+Standard+TT:wght@400;700&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/GENERAL/header.css">
+    <link rel="stylesheet" href="../../static/css/GENERAL/footer.css">
 </head>
 
 <body>
@@ -197,7 +199,6 @@ if (!empty($hoteles)) {
                         <h2>Hoteles en <?= htmlspecialchars($continente) ?></h2>
                         <div class="hotel-cards">
                             <?php foreach ($hoteles_por_continente[$continente] as $hotel) : 
-                                // Lógica de imágenes existente
                                 $imagenFinal = '';
                                 if (!empty($hotel['imagen'])) {
                                     $imagenFinal = "{$baseWebPath}/img/{$directorio}/".htmlspecialchars($hotel['imagen']);
@@ -229,7 +230,7 @@ if (!empty($hoteles)) {
                                         <p><?= htmlspecialchars($hotel['descripcion']) ?></p>
                                         <a href="#" 
                                         class="view-more" 
-                                        data-hotel-id="<?= $hotel['id'] ?>" 
+                                        data-nombre-archivo="<?= $nombreArchivo ?>" 
                                         data-directorio="<?= htmlspecialchars($directorio) ?>">
                                             Ver hotel
                                         </a>
@@ -247,16 +248,20 @@ if (!empty($hoteles)) {
         <!-- Modal Gallery -->
         <div id="hotelModal" class="modal">
             <div class="modal-content">
-                <span class="close">&times;</span>
-                <div class="gallery-carousel" id="galleryCarousel">
-                    <!-- Las imágenes se cargarán dinámicamente aquí -->
-                </div>
+            <span class="close">&times;</span>
+            <div class="carousel-container">
+                <div class="gallery-carousel" id="galleryCarousel"></div>
+                <div class="carousel-dots" id="carouselDots"></div>
+                <!-- Flechas de navegación -->
+                <button class="carousel-arrow prev">&#10094;</button>
+                <button class="carousel-arrow next">&#10095;</button>
             </div>
         </div>
     </div>
+    </div>
 
 
-    
+
     <footer class="footer">
     <div class="footer-content">
         <!-- Columna 1 - Logo y Descripción -->
