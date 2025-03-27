@@ -63,181 +63,195 @@ END
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ---------------------------CODIGO GUARDADO X SI ACASO-----------------
 
-  <header>
+   <header class="main-header">
+        <div class="carousel">
+            <img class="carousel-background" src="../../static/img/california/california.jpg" alt="Fondo 1">
+            <img class="carousel-background" src="../../static/img/Galicia/galicia1.jpg" alt="Fondo 2">
+            <img class="carousel-background" src="../../static/img/europa/pirineos.jpg" alt="Fondo 3">
+        </div>
+        
         <section class="main-up">
             <div class="main-up-left">
-                <a href="../vista/index.php"><img src="../static/img/logo_blanco.png" alt="Imagen secundaria"></a>
+                <img src="../../static/img/logo_blanco.png" alt="Logo Hotel Calíope">
             </div>
 
             <div class="main-up-right">
                 <div class="links">
-                    <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                    <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                    
                     <div class="dropdown">
-                        <a href="#" class="dropbtn">Hoteles</a>
+                        <a href="../../vista/hoteles.php" class="dropbtn">Hoteles</a>
                         <div class="dropdown-content">
                             <div class="dropdown-section">
                                 <h4>Europa</h4>
-                                <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
-                                <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
-                                <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                                <a href="../../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                                <a href="../../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                                <a href="../../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
                             </div>
                             <div class="dropdown-section">
                                 <h4>USA</h4>
-                                <a href="../vista/ciudades/USA/Florida.php">Florida</a>
-                                <a href="../vista/ciudades/USA/California.php">California</a>
-                                <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                                <a href="../../vista/ciudades/USA/Florida.php">Florida</a>
+                                <a href="../../vista/ciudades/USA/California.php">California</a>
+                                <a href="../../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
                             </div>
                         </div>
                     </div>
-                    <a href="../vista/galeria/galeria.php">Galería</a>
-                    <a href="../vista/ofertas/ofertas.php">Ofertas</a>
-                    <a href="../vista/Contacto/contacto.php">Contacto</a>
+
+                    <a href="../../vista/galeria/galeria.php">Galería</a>
+                    <a href="../../vista/ofertas/ofertas.php">Ofertas</a>
+                    <a href="../../vista/Contacto/contacto.php">Contacto</a>
+                    
+                    <!-- Contenedor del perfil -->
                     <div class="dropdown-perfil">
                         <a class="icon-perfil" href="javascript:void(0);">
                             <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
                         </a>
                         <div class="dropdown-perfil-content">
-                            <a href="../vista/Clientes/login.php">
+                            <a href="../../vista/Clientes/login.php">
                                 <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
                             </a>
-                            <a href="../vista/Clientes/perfil.php">
+                            <a href="../../vista/Clientes/perfil.php">
                                 <i class="bi bi-person"></i> Perfil
                             </a>
-                            <a href="../controller/clients/LoginController.php?action=logout">
-                                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                            <a href="../../controller/clients/LoginController.php?action=logout" style="color: red;"> 
+                                <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Menú hamburguesa (solo visible en pantallas pequeñas) -->
+            <!-- Menú hamburguesa -->
             <div id="menu-toggle" class="menu-toggle">
                 <div class="bar"></div>
                 <div class="bar"></div>
                 <div class="bar"></div>
             </div>
 
-            <!-- Menú desplegable -->
+            <!-- Menú móvil -->
             <div class="mobile-menu">
-                <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
-                <a href="../vista/galeria/galeria.php">Galería</a>
-                <a href="../vista/ofertas/ofertas.php">Ofertas</a>
-                <a href="../vista/Contacto/contacto.php">Contacto</a>
-                <a href="../vista/Clientes/login.php">Iniciar sesión</a>
-                <a href="../vista/Clientes/perfil.php">Perfil</a>
+                <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                <a href="../../vista/galeria/galeria.php">Galería</a>
+                <a href="../../vista/ofertas/ofertas.php">Ofertas</a>
+                <a href="../../vista/Contacto/contacto.php">Contacto</a>
+                <a href="../../vista/Clientes/login.php">Iniciar sesión</a>
+                <a href="../../vista/Clientes/perfil.php">Perfil</a>
+                
                 <div class="dropdown-mobile">
                     <a href="#" class="dropbtn">Hoteles</a>
                     <div class="dropdown-content-mobile">
                         <div class="dropdown-section">
                             <h4>Europa</h4>
-                            <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
-                            <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
-                            <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                            <a href="../../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                            <a href="../../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                            <a href="../../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
                         </div>
                         <div class="dropdown-section">
                             <h4>USA</h4>
-                            <a href="../vista/ciudades/USA/Florida.php">Florida</a>
-                            <a href="../vista/ciudades/USA/California.php">California</a>
-                            <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                            <a href="../../vista/ciudades/USA/Florida.php">Florida</a>
+                            <a href="../../vista/ciudades/USA/California.php">California</a>
+                            <a href="../../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <section class="main-center">
+            <div class="center-up">
+                <div class="center-up-up">
+                    <span style="font-size: 20px; color: rgb(230, 182, 11);">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </span>
+                </div>
+                <div class="center-up-down">
+                    <h5>Descubre Nuestros Hoteles</h5>
+                    <h1>Galería de Destinos Exclusivos</h1>
+                </div>
+            </div>
+        </section>
+        <div class="scroll-down">
+            <a href="#habitaciones-section" class="scroll-down-arrow">
+                <i class="fa-solid fa-chevron-down"></i>
+            </a>
+        </div>
     </header>
+    
 
-    --------------------------------------------------------------------------------
-     <footer class="main-footer">
-        <div class="footer-box">
-            <!-- Sección: Sobre el Hotel -->
-            <div class="footer-sec">
-                <h1>SOBRE LOS HOTELS</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.</p>
-                <a href="../vista/index.php"><img class="img-footer" src="../static/img/logo_blanco.png" alt=""></a>
-                <div class="language-selector">
-                <select id="language-select" onchange="changeLanguage()">
-                    <option value="es">Español</option>
-                    <option value="en">English</option>
-                    <option value="fr">Français</option>
-                </select>
-                </div>
+    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------FOOTER-----------------------------------------------------------------------------
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     <footer class="footer">
+        <div class="footer-content">
+            <!-- Columna 1 - Logo y Descripción -->
+            <div class="footer-section">
+                <img src="../../static/img/logo_blanco.png" alt="Logo Hotel Calíope" class="footer-logo">
+                <p>Descubre el lujo y la comodidad en cada rincón del mundo con Hotel Calíope.</p>
             </div>
 
-            <!-- Sección: Links -->
-            <div class="footer-sec">
-                <h1>LINKS</h1>
-                <div class="links-footer">
-                    <a href="#">Sobre nosotros</a>
-                    <a href="#">Servicios</a>
-                    <a href="#">Hoteles</a>
-                </div>
+            <!-- Columna 2 - Enlaces rápidos -->
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a></li>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/hoteles.php">Hoteles</a></li>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/galeria/galeria.php">Galería</a></li>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/ofertas/ofertas.php">Ofertas</a></li>
+                </ul>
             </div>
 
-            <!-- Sección: Contacto y Redes Sociales -->
-            <div class="footer-sec">
-                <h1>CONTACTO</h1>
+            <!-- Columna 3 - Contacto -->
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +34 123 456 789</li>
+                    <li><i class="fas fa-envelope"></i> info@hotelcaliope.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Calle Principal 123, Madrid</li>
+                </ul>
+            </div>
+
+            <!-- Columna 4 - Redes Sociales -->
+            <div class="footer-section">
+                <h3>Síguenos</h3>
                 <div class="social-links">
-                    <a href="#"><i class="bi bi-facebook"></i></a>
-                    <a href="#"><i class="bi bi-twitter"></i></a>
-                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
-    </footer>
 
+        <!-- Sección Inferior -->
+        <div class="footer-bottom">
+            <div class="footer-links">
+                <a href="../../vista/politicas/privacidad.php">Política de Privacidad</a>
+                <a href="../../vista/politicas/cookies.php">Política de Cookies</a>
+                <a href="../../vista/politicas/avisolegal.php">Aviso Legal</a>
+            </div>
+            <p>&copy; 2025 Hotel Calíope. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+        
 
 
 
@@ -608,98 +622,4 @@ if (!empty($actividadesSeleccionadas)) : ?>
 
 
 
-    header detalles:
-
-     <header>
-        <section class="main-up">
-            <div class="main-up-left">
-               <a href="../vista/index.php"> <img src="../static/img/logo_blanco.png" alt="Imagen secundaria"></a>
-            </div>
-
-            <div class="main-up-right">
-                <div class="links">
-                    <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
-                    
-                    <div class="dropdown">
-                        <a href="#" class="dropbtn">Hoteles</a>
-                        <div class="dropdown-content">
-                            <div class="dropdown-section">
-                                <h4>Europa</h4>
-                                <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
-                                <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
-                                <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
-                            </div>
-                            <div class="dropdown-section">
-                                <h4>USA</h4>
-                                <a href="../vista/ciudades/USA/Florida.php">Florida</a>
-                                <a href="../vista/ciudades/USA/California.php">California</a>
-                                <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <a href="../vista/galeria/galeria.php">Galería</a>
-                    <a href="../vista/ofertas/ofertas.php">Ofertas</a>
-                    <a href="../vista/Contacto/contacto.php">Contacto</a>
-                    
-                    <!-- Contenedor del perfil -->
-                    <div class="dropdown-perfil">
-                        <a class="icon-perfil" href="javascript:void(0);">
-                        <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
-                        
-                        </a>
-                        <div class="dropdown-perfil-content">
-                            <a href="../vista/Clientes/login.php">
-                                <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
-                            </a>
-                            <a href="../vista/Clientes/perfil.php">
-                                <i class="bi bi-person"></i> Perfil
-                            </a>
-                            <a href="../controller/clients/LoginController.php?action=logout">
-                                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
-                            </a>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- Menú hamburguesa (solo visible en pantallas pequeñas) -->
-            <div id="menu-toggle" class="menu-toggle">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-
-            <!-- Menú desplegable -->
-            <div class="mobile-menu">
-                <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
-                <a href="../vista/galeria/galeria.php">Galería</a>
-                <a href="../vista/ofertas/ofertas.php">Ofertas</a>
-                <a href="../vista/Contacto/contacto.php">Contacto</a>
-                <a href="../vista/Clientes/login.php">Iniciar sesión</a>
-                <a href="../vista/Clientes/perfil.php">Perfil</a>
-                
-                <!-- Enlace para Hoteles con dropdown -->
-                <div class="dropdown-mobile">
-                    <a href="#" class="dropbtn">Hoteles</a>
-                    <div class="dropdown-content-mobile">
-                        <div class="dropdown-section">
-                            <h4>Europa</h4>
-                            <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
-                            <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
-                            <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
-                        </div>
-                        <div class="dropdown-section">
-                            <h4>USA</h4>
-                            <a href="../vista/ciudades/USA/Florida.php">Florida</a>
-                            <a href="../vista/ciudades/USA/California.php">California</a>
-                            <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </section>
-    </header>
+     

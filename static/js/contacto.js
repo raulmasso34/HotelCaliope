@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             targetSection.scrollIntoView({
                 behavior: 'smooth',
-                block: 'start'
+                block: 'center'
             });
         });
 
