@@ -41,7 +41,14 @@ class ServiciosController {
             return null; // Retorna null si hay un error
         }
     }
-    
+
+    // Método para guardar los servicios seleccionados en la sesión
+    public function guardarServiciosSeleccionados($serviciosSeleccionados) {
+        // Verifica que el array de servicios no esté vacío
+        if (!empty($serviciosSeleccionados) && is_array($serviciosSeleccionados)) {
+            $_SESSION['Reservas']['servicios'] = $serviciosSeleccionados;
+        }
+    }
 }
     
 ?>

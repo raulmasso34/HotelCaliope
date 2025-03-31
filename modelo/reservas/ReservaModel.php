@@ -79,9 +79,9 @@ class ReservaModel {
 
     public function actualizarReservaConPago($reservaId, $idPago) {
         try {
-            $query = "UPDATE Reservas 
+            $query = `UPDATE Reservas 
                       SET Estado = 'Pagado', Id_Pago = ? 
-                      WHERE Id_Reserva = ?";
+                      WHERE Id_Reserva = ?`;
             
             $stmt = $this->conn->prepare($query);
             $stmt->bind_param("ii", $idPago, $reservaId);
@@ -121,10 +121,10 @@ class ReservaModel {
 
     public function procesarPago($reservaId, $metodoPagoId, $actividadId, $precioHabitacion, $precioActividad, $precioTotal) {
         try {
-            $sql = "UPDATE Reservas 
+            $sql = `UPDATE Reservas 
                     SET Estado = 'Pagado', Id_MetodoPago = ?, Id_Actividad = ?, 
                         Precio_Habitacion = ?, Precio_Actividad = ?, Precio_Total = ? 
-                    WHERE Id_Reserva = ?";
+                    WHERE Id_Reserva = ?` ;
             $stmt = $this->conn->prepare($sql);
             $stmt->bind_param("iiiiii", $metodoPagoId, $actividadId, $precioHabitacion, $precioActividad, $precioTotal, $reservaId);
             
@@ -314,22 +314,24 @@ class ReservaModel {
     
     
     
-    public function asociarActividadAReserva($idReserva, $idActividad, $precio) {
-        $query = "INSERT INTO Reservas_Actividades (Id_Reserva, Id_Actividad, Precio_Actividad) VALUES (?, ?, ?)";
-        $stmt = $this->conn->prepare($query);
-        
-        if (!$stmt) {
-            die("Error en la consulta: " . $this->conn->error);
-        }
-        
-        $stmt->bind_param("iid", $idReserva, $idActividad, $precio);
-        
-        if (!$stmt->execute()) {
-            die("Error al asociar actividad: " . $stmt->error);
-        }
-        
-        $stmt->close();
+public function asociarActividadAReserva($idReserva, $idActividad, $precio) {
+    $query = "INSERT INTO Reservas_Actividades (Id_Reserva, Id_Actividad, Precio_Actividad) VALUES (?, ?, ?)";
+    $stmt = $this->conn->prepare($query);
+    
+    if (!$stmt) {
+        die("Error en la consulta: " . $this->conn->error);
     }
+    
+    // Cambia el tipo 'i' (entero) a 'd' (decimal) para el precio
+    $stmt->bind_param("iid", $idReserva, $idActividad, $precio);  // 'i' para enteros, 'd' para decimales
+    
+    if (!$stmt->execute()) {
+        die("Error al asociar actividad: " . $stmt->error);
+    }
+    
+    $stmt->close();
+}
+
     
 
 

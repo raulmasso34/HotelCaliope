@@ -26,8 +26,8 @@ class PagoModel {
             $stmtCheck->close();
 
             // ✅ Insertar pago
-            $query = "INSERT INTO Pago (Id_Hotel, Id_Cliente, Id_Reserva, MetodoPago, Fecha_Pago, Id_MetodoPago) 
-                    VALUES (?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO Pago (Id_Hotel, Id_Cliente, Id_Reserva, MetodoPago, Fecha_Pago, Id_MetodoPago) VALUES (?, ?, ?, ?, ?, ?)";
+
             $stmt = $this->conn->prepare($query);
 
             if (!$stmt) {

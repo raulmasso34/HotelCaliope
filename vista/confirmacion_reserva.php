@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 
 
 // Conexión a la base de datos
@@ -7,6 +7,10 @@ $database = new Database();
 $db = $database->getConnection();
 session_start();
 
+var_dump($reservaSession);
+var_dump($_POST);
+var_dump($_SESSION['Reservas']);
+var_dump($_SESSION['user_id']);
 // Incluir controladores correctos
 require_once __DIR__ . '/../controller/reserva/reservaController.php';
 require_once __DIR__ . '/../controller/hotel/hotelController.php';
@@ -22,6 +26,7 @@ $habitacionController = new HabitacionController();
 $metodoPagoController = new MetodoPagoController();
 $actividadController = new ActividadController();
 $paisController = new PaisController();
+
 // Obtener ID de usuario de la sesión
 $user_id = $_SESSION['user_id'] ?? null; 
 
@@ -33,9 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $checkin = $_POST['checkin'] ?? null;
     $checkout = $_POST['checkout'] ?? null;
     $guests = $_POST['guests'] ?? null;
-    $paisId = $_POST['paisId'] ?? null;
-
-   
+    $paisId = $_POST['paisId'] ?? null;   
 
     // Obtener detalles del hotel desde HotelController
     $hotelDetails = $hotelController->obtenerDetallesHotel($hotelId);
@@ -52,15 +55,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Obtener el nombre del país desde HotelController
     $paisNombre = $paisController->obtenerNombrePais($paisId);
     $_SESSION['Reservas'] = [
-        'habitacionId' => $habitacionId,
-        'clienteId' => $clienteId,
-        'hotelId' => $hotelId,
-        'checkin' => $checkin,
-        'checkout' => $checkout,
-        'guests' => $guests,
-        'paisId' => $paisId,
-        'metodoPagoId' => $_POST['metodoPagoId'] ?? null // ✅ Usar solo metodoPagoId
-    ];
+    'habitacionId' => $habitacionId,
+    'clienteId' => $clienteId,
+    'hotelId' => $hotelId,
+    'checkin' => $checkin,
+    'checkout' => $checkout,
+    'guests' => $guests,
+    'paisId' => $paisId,
+    'metodoPagoId' => $_POST['metodoPagoId'] ?? null, // ✅ Usar solo metodoPagoId
+    'Precio' => $habitacionDetails['Precio'] ?? 0 // ✅ Agregar el precio de la habitación
+];
+
     
 }
 
@@ -107,8 +112,8 @@ $database->closeConnection();
             <input type="hidden" name="checkout" value="<?php echo $checkout; ?>">
             <input type="hidden" name="guests" value="<?php echo $guests; ?>">
             <input type="hidden" name="paisId" value="<?php echo $paisId; ?>">
-
-
+            <input type="hidden" name="Precio" value="<?php echo $habitacionDetails; ?>">
+    
             <div class="mb-3">
                 <label for="metodoPagoId" class="form-label">Selecciona un método de pago:</label>
                 <select class="form-select" name="metodoPagoId" id="metodoPagoId" required>

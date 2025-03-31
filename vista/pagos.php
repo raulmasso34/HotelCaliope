@@ -10,11 +10,13 @@ require_once __DIR__ . '/../controller/reserva/reservaController.php';
 require_once __DIR__ . '/../controller/pago/pagoController.php';
 require_once __DIR__ . '/../controller/actividad/actividadController.php';
 require_once __DIR__ . '/../controller/habitacion/habitacionController.php';
+require_once __DIR__ . '/../controller/servicios/serviciosController.php';
 
 $reservaController = new ReservaController();
 $pagoController = new PagoController();
 $habitacionController = new HabitacionController();
 $actividadController = new ActividadController();
+$servicioController = new ServiciosController();
 
 if (!isset($_SESSION['Reservas'])) {
     echo "<p class='text-danger'>Error: No se ha recibido la reserva en la sesión.</p>";
@@ -32,8 +34,8 @@ $checkout = $reserva['checkout'] ?? null;
 $guests = $reserva['guests'] ?? null;
 $metodoPagoId = $reserva['metodoPagoId'] ?? null;
 $paisId = $reserva['paisId'] ?? null;
-$precioTarifa = $reserva['precioTarifa'] ?? 0;
 $actividadesSeleccionadas = $reserva['actividades'] ?? []; // Manejo de múltiples actividades
+$serviciosSeleccionados = $reserva['servicios'] ?? [];
 
 // Obtener detalles de la habitación
 $habitacionDetails = $habitacionController->obtenerHabitacionPorId($habitacionId);
@@ -41,8 +43,8 @@ if (!$habitacionDetails || !isset($habitacionDetails['Precio'])) {
     die("<p class='text-danger'>Error: No se encontró la habitación o su precio no está definido.</p>");
 }
 
-// Obtener precio de la habitación
 $precioHabitacion = floatval($habitacionDetails['Precio']);
+$_SESSION['Reservas']['Precio_Habitacion'] = $precioHabitacion;
 
 // Calcular el número de noches
 $checkinDate = new DateTime($checkin);
@@ -50,7 +52,6 @@ $checkoutDate = new DateTime($checkout);
 $numeroNoches = $checkoutDate->diff($checkinDate)->days;
 
 // Calcular precio total de servicios
-$serviciosSeleccionados = $_SESSION['Reservas']['servicios'] ?? [];
 $totalServicios = 0;
 foreach ($serviciosSeleccionados as $precio) {
     if (!is_numeric($precio)) {
@@ -67,21 +68,18 @@ foreach ($actividadesSeleccionadas as $actividadId) {
 }
 
 // Calcular precio total
-$precioTotal = ($precioHabitacion * $numeroNoches) + $precioTarifa + $totalActividades + $totalServicios;
+$precioTotal = ($precioHabitacion * $numeroNoches) + $totalActividades + $totalServicios;
 
 // Guardar en sesión si existen
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['Reservas']['servicios'] = $_POST['servicios'] ?? [];
-    $_SESSION['Reservas']['actividades'] = $_POST['actividades'] ?? [];
+    $_SESSION['Reservas']['actividades'] = $_POST['Id_Actividades'] ?? [];
 }
 
 
 
-
-
-
 ?>
-
+<pre><?php print_r($_SESSION['Reservas']); ?></pre>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -90,6 +88,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../static/css/pagos.css">
     <link rel="stylesheet" href="../static/css/detalles.css">
     <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
+    <script>
+        function validarPago(event) {
+            const numeroTarjeta = document.querySelector('[name="numero_tarjeta"]').value;
+            const cvv = document.querySelector('[name="cvv"]').value;
+            const fechaExpiracion = document.querySelector('[name="fecha_expiracion"]').value;
+
+            if (!numeroTarjeta || !cvv || !fechaExpiracion) {
+                alert('Por favor, complete todos los campos del formulario de pago.');
+                event.preventDefault();
+            } else if (numeroTarjeta.length < 13 || numeroTarjeta.length > 19) {
+                alert('El número de tarjeta debe tener entre 13 y 19 dígitos.');
+                event.preventDefault();
+            } else if (cvv.length !== 3) {
+                alert('El CVV debe tener 3 dígitos.');
+                event.preventDefault();
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -113,11 +129,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <h3>Servicios Adicionales Seleccionados:</h3>
 <?php
-require_once __DIR__ ."/../controller/servicios/serviciosController.php";
-$servicioController = new ServiciosController();
-
-$serviciosSeleccionados = $_POST['servicios'] ?? []; // Si no hay selección, deja array vacío
-
 if (!empty($serviciosSeleccionados)) {
     echo "<ul>";
     foreach ($serviciosSeleccionados as $idServicio => $precio) {
@@ -135,21 +146,23 @@ if (!empty($serviciosSeleccionados)) {
 ?>
 
 <h3>Actividades Seleccionadas:</h3>
-<ul>
 <?php
-if (!empty($_SESSION['Reservas']['actividades'])) {
-    foreach ($_SESSION['Reservas']['actividades'] as $idActividad => $precio) {
-        $nombreActividad = $actividadController->obtenerNombreActividad($idActividad) ?? "Actividad no encontrada";
-        echo "<li>$nombreActividad - Precio: $" . number_format($precio, 2) . "</li>";
+if (!empty($actividadesSeleccionadas)) {
+    echo "<ul>";
+    foreach ($actividadesSeleccionadas as $idActividad => $precioActividad) {  // Obtener tanto ID como precio
+        $nombreActividad = $actividadController->obtenerNombreActividad($idActividad);
+        
+        if ($nombreActividad !== null) {
+            echo "<li>" . htmlspecialchars($nombreActividad) . " - $" . number_format($precioActividad, 2) . "</li>";
+        } else {
+            echo "<li>Actividad ID: " . htmlspecialchars($idActividad) . " (No encontrada)</li>";
+        }
     }
+    echo "</ul>";
 } else {
-    echo "<li>No se seleccionaron actividades.</li>";
+    echo "<p>No has seleccionado actividades.</p>";
 }
 ?>
-</ul>
-
-
-
 
 
 
@@ -157,7 +170,7 @@ if (!empty($_SESSION['Reservas']['actividades'])) {
 <p><strong>Precio Total con Servicios:</strong> $<?php echo number_format($precioTotal, 2); ?></p>
 
 <!-- Formulario de pago -->
-<form id="pagoForm" action="../controller/pago/pagoController.php" method="POST" onsubmit="mostrarPopup(event)">
+<form id="pagoForm" action="../controller/pago/pagoController.php" method="POST" onsubmit="validarPago(event)">
 
     <label for="numero_tarjeta">Número de Tarjeta:</label>
     <input type="text" name="numero_tarjeta" required><br>
@@ -170,6 +183,7 @@ if (!empty($_SESSION['Reservas']['actividades'])) {
 
     <!-- Datos de la reserva -->
     <input type="hidden" name="habitacionId" value="<?= htmlspecialchars($habitacionId); ?>">
+    <input type="hidden" name="precioHabitacion" value="<?= htmlspecialchars($precioHabitacion); ?>">
     <input type="hidden" name="clienteId" value="<?= htmlspecialchars($clienteId); ?>">
     <input type="hidden" name="hotelId" value="<?= htmlspecialchars($hotelId); ?>">
     <input type="hidden" name="paisId" value="<?= htmlspecialchars($paisId); ?>">
