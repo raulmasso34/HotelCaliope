@@ -1,804 +1,471 @@
-/* ======================= */
-/* Reglas generales */
-/* ======================= */
-* {
-    box-sizing: border-box;
+:root {
+    --primary-color: #2a3d66;
+    --secondary-color: #5a8ecf;
+    --accent-color: #d3ddff;
+    --text-dark: #333;
+    --text-light: #fff;
+    --gold: #c5a47e;
+    --background-light: #f7f9fc;
+    --transition: all 0.3s ease;
 }
 
+/* Estilos generales */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
     margin: 0;
-    padding: 0;
-    width: 100%;
-    height: max-content;
-    background-color: #e9ebef9e;
 }
 
-/* ======================= */
-/* Header principal */
-/* ======================= */
-.main-header {
-    position: relative;
-    width: 100%;
+/* Header */
+.rooms-header {
     height: 100vh;
-    overflow: hidden;
+    background: linear-gradient(rgba(42, 61, 102, 0.8), rgba(42, 61, 102, 0.8)),
+                url('https://example.com/header-bg.jpg') center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-light);
+    padding: 2rem;
+    position: relative;
 }
 
-.carousel-background {
+.header-content {
+    max-width: 800px;
+    position: relative;
+    z-index: 1;
+}
+
+.header-title {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.scroll-down {
     position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite;
+    cursor: pointer;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-30px); }
+    60% { transform: translateY(-15px); }
+}
+
+/* Grid de habitaciones */
+.rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    padding: 5rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.room-card {
+    background: var(--text-light);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: var(--transition);
+    will-change: transform;
+}
+
+.room-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.room-image {
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+}
+
+.room-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+.room-card:hover .room-image img {
+    transform: scale(1.05);
+}
+
+.room-details {
+    padding: 2rem;
+}
+
+.room-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.room-price {
+    font-size: 1.5rem;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.amenities-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+.amenities-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+}
+
+.amenities-list i {
+    color: var(--gold);
+    margin-right: 1rem;
+    font-size: 1.2rem;
+    min-width: 25px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: var(--primary-color);
+    color: var(--text-light);
+    text-decoration: none;
+    border-radius: 25px;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.btn:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+/* Modal de Lujo */
+.room-modal {
+    display: none;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-}
-
-.carousel-background:first-child {
-    opacity: 1;
-}
-
-.main-header-content {
-    position: relative;
-    z-index: 1;
-}
-
-/* ======================= */
-/* Barra de navegación */
-/* ======================= */
-.main-up {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    height: 100px;
-    margin: auto;
-    position: fixed; 
-    background-color: transparent; /* Fondo transparente al inicio */
-    transition: background 0.3s ease, box-shadow 0.3s ease;
+    background: rgba(0,0,0,0.9);
     z-index: 1000;
+    overflow-y: auto;
 }
 
-/* Logo */
-.main-up-left img {
-    height: 60px;
-}
-
-/* Contenedor de enlaces */
-.main-up-right .links {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-/* Enlaces de navegación */
-.links a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.1rem;
-    font-weight: 500;
-    transition: color 0.3s ease-in-out;
-    padding: 8px 15px;
-}
-
-.links a:hover {
-    color: #d3ddff; /* Dorado elegante */
-}
-.main-up.transparent {
-    background-color: rgba(0, 0, 0, 0);
-    box-shadow: none;
-}
-
-.main-up.scrolled {
-    background-color: #ffffff; /* Fondo blanco */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra elegante */
-}
-.main-up-left {
-    display: flex;
-    align-items: center;
-    margin-left: 8%;
-}
-
-.main-up-left img {
-    height: 60px;
-   
-}
-.main-up.scrolled .main-up-left img {
-    height: 60px;
-}
-.main-up-right {
-    display: flex;
-    align-items: center;
-    margin-right: 8%;
-}
-
-/* ======================= */
-/* Estilos del menú */
-/* ======================= */
-.links {
-    display: flex;
-    gap: 20px;
-}
-
-.links a {
-    text-decoration: none;
-    color: rgb(19, 32, 88);
-    font-weight: bold;
-    font-size: 20px;
-    transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.links a:hover {
-    color: rgb(3, 1, 39);
-    transform: scale(1.1);
-}
-
-/* ======================= */
-/* Estilos del dropdown */
-/* ======================= */
-.dropdown {
+.modal-luxury {
+    background: var(--text-light);
+    width: 85%;
+    max-width: 1200px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+    animation: modalSlide 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     position: relative;
-    display: inline-block;
-}
-
-.dropbtn {
-    cursor: pointer;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    padding: 10px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-section {
-    margin-bottom: 10px;
-}
-
-.dropdown-content a {
-    padding: 8px 12px;
-    display: block;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background 0.3s ease, padding-left 0.3s ease;
-}
-
-.dropdown-content a:hover {
-    background-color: #ddd;
-    padding-left: 16px;
-}
-
-/* ======================= */
-/* Icono de perfil */
-/* ======================= */
-.dropdown-perfil {
-    position: relative;
-    display: inline-block;
-}
-
-/* Icono de usuario */
-.icon-perfil {
-    font-size: 2.2rem;
-    color: #ffffff;
-    transition: color 0.3s ease-in-out, transform 0.3s ease;
-    cursor: pointer;
-}
-
-.icon-perfil:hover {
-    color: #cccccc;
-    transform: scale(1.1);
-}
-
-/* Contenedor del dropdown */
-.dropdown-perfil-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 90%; /* Reducido para acercarlo al icono */
-    background: #ffffff;
-    min-width: 200px;
-    box-shadow: 0px 10px 30px rgba(6, 3, 85, 0.584);
-    border-radius: 12px;
-    padding: 10px 0;
-    z-index: 1000;
-    transition: all 0.2s ease-in-out;
-    opacity: 0;
-    visibility: hidden;
-}
-
-/* Mantener visible cuando el cursor está en el icono o en el menú */
-.dropdown-perfil:hover .dropdown-perfil-content,
-.dropdown-perfil-content:hover {
-    display: block;
-    opacity: 1;
-    visibility: visible;
-}
-
-/* Enlaces dentro del dropdown */
-.dropdown-perfil-content a {
-    color: #333;
-    padding: 10px 16px;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background 0.3s ease, padding-left 0.3s ease;
-    border-radius: 8px;
-}
-
-/* Iconos en los enlaces */
-.dropdown-perfil-content a i {
-    margin-right: 10px;
-    font-size: 1.2rem;
-    color: #d1d7f2;
-}
-
-/* Efecto al pasar el cursor */
-.dropdown-perfil-content a:hover {
-    background-color: #d3ddff;
-    padding-left: 20px;
-}
-
-/* ======================= */
-/* Menú hamburguesa */
-/* ======================= */
-.menu-toggle {
-    display: none;
-    cursor: pointer;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 25px;
-    height: 20px;
-}
-
-.menu-toggle .bar {
-    height: 3px;
-    background-color: #333;
-    border-radius: 5px;
-}
-
-/* ======================= */
-/* Menú móvil */
-/* ======================= */
-.mobile-menu {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 100px;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    z-index: 10;
-}
-
-
-/* Menú hamburguesa visible en pantallas pequeñas */
-@media (max-width: 768px) {
-    /* Mostrar el icono del menú hamburguesa */
-    .menu-toggle {
-        display: flex;
-    }
-
-    /* Ocultar el menú principal */
-    .main-up-right {
-        display: none;
-    }
-
-    /* Mostrar el menú móvil cuando se activa */
-    .mobile-menu.active {
-        display: flex;
-    }
-
-    /* Enlaces dentro del menú hamburguesa */
-    .mobile-menu a {
-        font-size: 18px;
-        padding: 10px 0;
-        text-decoration: none;
-        color: #333;
-    }
-
-    /* Estilo para los enlaces al pasar el mouse */
-    .mobile-menu a:hover {
-        color: #000;
-        background-color: #f4f4f4;
-    }
-}
-
-
-/* ======================= */
-/* Icono de Perfil */
-/* ======================= */
-.icon-perfil {
-    cursor: pointer;
-    display: inline-block;
-    font-size: 24px;
-    color: #fff;
-    transition: transform 0.3s ease;
-}
-
-/* ======================= */
-/* Contenedor del Dropdown */
-/* ======================= */
-.dropdown-perfil {
-    position: relative;
-    display: inline-block;
-}
-
-/* ======================= */
-/* Menú desplegable */
-/* ======================= */
-.dropdown-perfil-content {
-    display: none;
-    position: absolute;
-    background-color: rgba(20, 24, 49, 0.8);
-    color: #000000;
-    min-width: 160px;
-    border-radius: 8px;
-    margin-top: 8px;
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
-    z-index: 1;
-}
-
-/* Mostrar el menú al pasar el ratón */
-.dropdown-perfil:hover .dropdown-perfil-content {
-    display: block;
-    opacity: 1;
-}
-
-/* ======================= */
-/* Enlaces dentro del menú */
-/* ======================= */
-.dropdown-perfil-content a {
-    color: #fff;
-    padding: 10px 15px;
-    text-decoration: none;
-    display: block;
-    font-size: 14px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
-}
-
-.dropdown-perfil-content a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-}
-
-/* ======================= */
-/* Estilo para "Cerrar sesión" */
-/* ======================= */
-.dropdown-perfil-content .logout-link:hover {
-    background-color: rgba(255, 0, 0, 0.2);
-    color: red;
-    border-radius: 5px;
-}
-
-/*------------------------------------------------------CENTRO IMG-------------------------------------------------*/
-
-.main-center {
-    z-index: 999;
     margin: 5% auto;
-    display: flex;
-    height: auto;
-    width: 80%;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 40px 20px;
+    z-index: 1001;
 }
 
-.center-up {
+@keyframes modalSlide {
+    from { transform: translateY(100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-carousel {
+    height: 450px;
+    position: relative;
+    background: var(--primary-color);
+}
+
+.carousel-inner {
+    position: relative;
+    height: 100%;
+}
+
+.carousel-inner img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    aspect-ratio: 16/9;
+}
+
+.carousel-inner img.active {
+    opacity: 1;
+}
+
+.carousel-controls {
+    position: absolute;
+    top: 50%;
     width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    transform: translateY(-50%);
+}
+
+.carousel-prev,
+.carousel-next {
+    background: rgba(0,0,0,0.3);
+    color: var(--text-light);
+    border: none;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
     align-items: center;
-    text-align: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
 }
 
-.center-up-up {
-    height: auto;
-    margin-top: 2%;
-    text-align: center;
-    width: 60%;
+.carousel-prev:hover,
+.carousel-next:hover {
+    background: rgba(0,0,0,0.5);
+    transform: scale(1.1);
 }
 
-.center-up-down {
-    height: auto;
-    width: 60%;
-    text-align: center;
+.carousel-dots {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    z-index: 2;
 }
 
-.center-up-down h1 {
-    font-size: 42px;
-    font-family: "Cormorant Garamond", serif;
+.carousel-dots .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carousel-dots .dot.active {
+    background: var(--gold);
+    transform: scale(1.3);
+}
+
+.luxury-columns {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 3rem;
+    padding: 3rem;
+}
+
+.luxury-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.luxury-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--accent-color);
+}
+
+.luxury-price {
+    font-size: 1.8rem;
+    color: var(--gold);
     font-weight: 700;
-    font-style: italic;
-    color: #2a3d66;
-    line-height: 1.2;
+}
+
+.luxury-rating {
+    color: var(--gold);
+    font-size: 1.2rem;
+}
+
+.luxury-features li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--accent-color);
+    font-size: 1.1rem;
+}
+
+.luxury-features i {
+    color: var(--gold);
+    min-width: 30px;
+    font-size: 1.3rem;
+}
+
+.luxury-services {
+    background: var(--background-light);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.luxury-services h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.luxury-services li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    font-size: 0.95rem;
+}
+
+.luxury-book {
+    background: var(--gold);
+    color: var(--text-light);
+    border: none;
+    padding: 1.2rem 2.5rem;
+    width: 100%;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.luxury-book:hover {
+    background: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(197, 164, 126, 0.3);
+}
+
+.close-luxury {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 2.5rem;
+    color: var(--text-light);
+    cursor: pointer;
+    z-index: 1000;
+    transition: var(--transition);
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.close-luxury:hover {
+    color: var(--gold);
+    transform: rotate(90deg);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .modal-luxury {
+        width: 95%;
+    }
 }
 
 @media (max-width: 992px) {
-    .main-center {
-        width: 90%;
-        padding: 30px;
+    .luxury-columns {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2rem;
     }
-    .center-up-up, .center-up-down {
-        width: 80%;
+    
+    .modal-carousel {
+        height: 400px;
     }
-    .center-up-down h1 {
-        font-size: 36px;
+    
+    .carousel-inner img {
+        height: 400px;
+    }
+    
+    .luxury-title {
+        font-size: 2.2rem;
     }
 }
 
 @media (max-width: 768px) {
-    .main-center {
+    .header-title {
+        font-size: 2.5rem;
+    }
+    
+    .rooms-grid {
+        padding: 3rem 1rem;
+        gap: 2rem;
+    }
+    
+    .modal-carousel {
+        height: 350px;
+    }
+    
+    .carousel-inner img {
+        height: 350px;
+    }
+    
+    .luxury-features li {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .modal-luxury {
         width: 100%;
-        padding: 20px;
+        margin: 0;
+        border-radius: 0;
     }
-    .center-up-up, .center-up-down {
-        width: 90%;
-    }
-    .center-up-down h1 {
-        font-size: 32px;
-    }
-}
-
-/*-----------------------------------------BOTONes RESERVA-----------------------------------------------------------*/
-
-.center-down {
-    height: 50%;
-    width: 100%;
-
-    margin-top: 7%;
-
-}
-
-/* Contenedor de la reserva */
-.reservation-form {
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 25px;
-   background-color: white;
-    border-radius: 15px;
-    opacity: 0.97;
-    overflow: hidden;
-}
-
-/* Diseño del formulario */
-form {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
-    opacity: 1;
-}
-
-/* Campos del formulario */
-.form-group {
-    flex: 1 1 18%;
-    display: flex;
-    flex-direction: column;
-}
-
-label {
-    margin-bottom: 8px;
-    color: #2a3d66;
-    font-weight: bold;
-    font-size: 1.1rem;
-    opacity: 1;
-}
-
-/* Estilo de entrada y selección */
-input, select {
-    padding: 16px;
-    font-size: 1rem;
-    border: 1px solid #cfd6e0;
-    border-radius: 8px;
-    background-color: #f7f9fc;
-    color: #333;
-    width: 100%;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-}
-
-input:focus, select:focus {
-    border-color: #5a8ecf;
-    box-shadow: 0 0 8px rgba(90, 142, 207, 0.3);
-}
-
-/* Estilo básico para el campo de fecha */
-input[type="date"] {
-    appearance: none;
-    -webkit-appearance: none;
-    padding: 14px 16px;
-    font-size: 1rem;
-    border: 2px solid #cfd6e0;
-    border-radius: 10px;
-    background: linear-gradient(to bottom right, #eaf1fc, #ffffff);
-    color: #333;
-    width: 100%;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-/* Estilo para el calendario desplegable */
-input[type="date"]::-webkit-calendar-picker-indicator {
-   
-    background-size: contain;
-    border: none;
-    cursor: pointer;
-    opacity: 0.7;
     
-    transition: opacity 0.3s;
-}
-
-input[type="date"]:hover::-webkit-calendar-picker-indicator {
-    opacity: 1;
-}
-
-/* Efecto de foco */
-input[type="date"]:focus {
-    border-color: #5a8ecf;
-    box-shadow: 0 0 12px rgba(90, 142, 207, 0.4);
-    background: linear-gradient(to bottom right, #f7faff, #ffffff);
-}
-
-
-/* Botón */
-button {
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(135deg, #5a8ecf, #345c8c);
-    color: #ffffff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: background 0.3s ease, transform 0.2s ease;
-    margin-top: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-button:hover {
-    background: linear-gradient(135deg, #345c8c, #5a8ecf);
-    transform: translateY(-2px);
-}
-
-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-/* Responsividad para pantallas pequeñas */
-@media (max-width: 1024px) {
-    .form-group {
-        flex: 1 1 22%; /* En pantallas intermedias, los campos ocuparán 22% */
+    .luxury-columns {
+        padding: 1.5rem;
     }
-}
-
-@media (max-width: 768px) {
-    form {
-        flex-direction: column; /* En pantallas más pequeñas, los campos se alinearán en columna */
-        gap: 10px; /* Menor espacio entre los campos */
-    }
-
-    .form-group {
-        flex: 1 1 100%; /* Los campos ocuparán todo el ancho disponible */
-    }
-}
-
-/* Estilos generales */
-.habitaciones {
-  
-    padding: 50px 0;
-    background-color: #f4f4f4;
-}
-
-.habitaciones h2 {
-    text-align: center;
-    font-size: 36px;
-    margin-bottom: 30px;
-
-}
-
-.habitaciones h3 {
-    font-size: 30px;
-    margin-bottom: 20px;
-    text-align: center;
-    font-weight: bold;
-    color: #333;
-}
-
-/* Contenedor general de las habitaciones */
-.swiper-container {
-    position: relative;
-    width: 70%;
-   
-   
-    margin: 0 auto;
-    overflow: hidden;  /* Oculta las habitaciones fuera de la vista */
-}
-
-/* Carrusel de habitaciones, en línea */
-.swiper-wrapper {
-    display: flex;
-    transition: transform 0.5s ease;  /* Desplazamiento suave */
-}
-
-/* Estilo para cada habitación */
-.swiper-slide {
-    flex: 0 0 33.33%; /* 3 habitaciones por fila */
-    padding: 15px; /* Espacio entre las habitaciones */
-    box-sizing: border-box;
-    background-color: #fff;
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    transition: transform 0.5s ease, box-shadow 0.3s ease;
-    /* Espacio entre habitaciones */
-    position: relative;
-}
-
-/* Efecto hover para las habitaciones */
-.swiper-slide:hover {
-    transform: scale(1.05); /* Aumenta el tamaño ligeramente al pasar el mouse */
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Sombra más fuerte */
-}
-
-/* Imagen dentro de la tarjeta */
-.habitacion-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-}
-
-/* Efecto hover en imagen */
-.swiper-slide:hover .habitacion-card img {
-    transform: scale(1.05); /* Aumenta ligeramente la imagen */
-}
-
-/* Información de la habitación */
-.habitacion-info {
-    padding: 15px;
-    text-align: center;
-}
-
-.habitacion-info h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    font-weight: bold;
-    color: #333;
-}
-
-.habitacion-info p {
-    font-size: 16px;
-    margin-bottom: 10px;
-    color: #555;
-}
-
-.habitacion-info p strong {
-    font-weight: bold;
-}
-
-/* Estilo de botón */
-.btn {
-    display: inline-block;
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
-}
-
-.btn:hover {
-    background-color: #0056b3;
-}
-
-/* Botones de navegación */
-.swiper-button-next,
-.swiper-button-prev {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    font-size: 24px;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    z-index: 10;
-    border-radius: 50%;
-    transition: background-color 0.3s ease;
-}
-
-.swiper-button-prev {
-    left: 20px;
-}
-
-.swiper-button-next {
-    right: 20px;
-}
-
-/* Efecto hover en los botones de navegación */
-.swiper-button-prev:hover, .swiper-button-next:hover {
-    background-color: rgba(0, 0, 0, 0.7);
-}
-
-
-.preg-comunes {
-    padding: 40px 0;
-    background-color: #f9f9f9;
-}
-
-.preg-comunes .container {
-    width: 40%;
-    margin: 0 auto;
-}
-
-.faq {
-    display: flex;
-    flex-direction: column;
-}
-
-.faq-item {
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: white;
-    overflow: hidden; /* Para que la animación de max-height funcione correctamente */
-}
-
-.faq-question {
-    width: 100%;
-    padding: 15px;
-    text-align: left;
-    background-color: #007bff;
-    color: white;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s ease-in-out;
-}
-
-.faq-question:hover {
-    background-color: #0056b3;
-}
-
-.faq-answer {
-    padding: 15px;
-    background-color: #f1f1f1;
-    border-top: 1px solid #ddd;
     
-    max-height: 0; 
-    overflow: hidden;
-    transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
-    padding: 0 15px;
-}
-
-.faq-item.active .faq-answer {
-    max-height: 150px; /* Ajusta este valor si el contenido de la respuesta es más grande */
-    padding: 15px;
-}
-
-
-
+    .luxury-title {
+        font-size: 1.8rem;
+    }
+    
+    .luxury-price {
+        font-size: 1.4rem;
+    }
+    
+    .carousel-prev,
+    .carousel-next {
+        padding: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+    
+    .room-image {
+        height: 200px;
+    }
+}   

@@ -56,17 +56,18 @@ $habitaciones = $controllerHab->obtenerHabitaciones() ?? [];
     <title>Hoteles Caliope</title>
     <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
 
-    <!-- Fuentes de Google -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+     <!-- Font Awesome para iconos -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:wght@200..1000&family=Old+Standard+TT:wght@400;700&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link rel="stylesheet" href="../../static/css/habitaciones/habitaciones.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/GENERAL/footer.css">
+    <link rel="stylesheet" href="../../static/css/GENERAL/header.css">
+  
 
 
 
@@ -76,329 +77,125 @@ $habitaciones = $controllerHab->obtenerHabitaciones() ?? [];
 </head>
 
 <body>
-    <header class="main-header">
-
-        <div class="carousel">
-            <img class="carousel-background" src="../../static/img/florida/florida3.jpg" alt="Fondo 1">
-            <img class="carousel-background" src="../../static/img/florida/florida4.jpg" alt="Fondo 2">
-            <img class="carousel-background" src="../../static/img/florida/florida5.jpg" alt="Fondo 3">
-        </div>
-        
-        <section class="main-up">
-            <div class="main-up-left">
-                <img src="../../static/img/logo.png" alt="Imagen secundaria">
+   
+    <main class="rooms-grid">
+        <!-- Suite Presidencial -->
+        <article class="room-card">
+            <div class="room-image">
+                <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Suite Presidencial">
             </div>
-
-            <div class="main-up-right">
-                <div class="links">
-                    <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
-                    
-                    <div class="dropdown">
-                        <a href="#" class="dropbtn">Hoteles</a>
-                        <div class="dropdown-content">
-                            <div class="dropdown-section">
-                                <h4>Europa</h4>
-                                <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
-                                <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
-                                <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
-                            </div>
-                            <div class="dropdown-section">
-                                <h4>USA</h4>
-                                <a href="../vista/ciudades/USA/Florida.php">Florida</a>
-                                <a href="../vista/ciudades/USA/California.php">California</a>
-                                <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <a href="../vista/galeria/galeria.php">Galería</a>
-                    <a href="../vista/ofertas/ofertas.php">Ofertas</a>
-                    <a href="../Contacto/contacto.php">Contacto</a>
-                    
-                    <!-- Contenedor del perfil -->
-                    <div class="dropdown-perfil">
-                        <a class="icon-perfil" href="javascript:void(0);">
-                        <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
-                        
-                        </a>
-                        <div class="dropdown-perfil-content">
-                            <a href="../vista/Clientes/login.php">
-                                <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
-                            </a>
-                            <a href="../vista/Clientes/perfil.php">
-                                <i class="bi bi-person"></i> Perfil
-                            </a>
-                            <a href="../controller/clients/LoginController.php?action=logout" style="color: red;"> 
-                                <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <div class="room-details">
+                <h2 class="room-title">Suite Presidencial</h2>
+                <p class="room-price">$1,200/noche</p>
+                <ul class="amenities-list">
+                    <li><i class="fas fa-hot-tub"></i> Jacuzzi privado con vista al mar</li>
+                    <li><i class="fas fa-wine-bottle"></i> Minibar premium incluido</li>
+                    <li><i class="fas fa-concierge-bell"></i> Servicio de mayordomo 24h</li>
+                    <li><i class="fas fa-umbrella-beach"></i> Terraza privada con acceso directo a la playa</li>
+                </ul>
+                <button class="btn view-details">Ver Detalles</button>
             </div>
-
-            <!-- Menú hamburguesa (solo visible en pantallas pequeñas) -->
-            <div id="menu-toggle" class="menu-toggle">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-
-            <!-- Menú desplegable -->
-            <div class="mobile-menu">
-                <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
-                <a href="../vista/galeria/galeria.php">Galería</a>
-                <a href="../vista/ofertas/ofertas.php">Ofertas</a>
-                <a href="../vista/Contacto/contacto.php">Contacto</a>
-                <a href="../vista/Clientes/login.php">Iniciar sesión</a>
-                <a href="../vista/Clientes/perfil.php">Perfil</a>
-                
-                <!-- Enlace para Hoteles con dropdown -->
-                <div class="dropdown-mobile">
-                    <a href="#" class="dropbtn">Hoteles</a>
-                    <div class="dropdown-content-mobile">
-                        <div class="dropdown-section">
-                            <h4>Europa</h4>
-                            <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
-                            <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
-                            <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
-                        </div>
-                        <div class="dropdown-section">
-                            <h4>USA</h4>
-                            <a href="../vista/ciudades/USA/Florida.php">Florida</a>
-                            <a href="../vista/ciudades/USA/California.php">California</a>
-                            <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </section>
-
-
-        <section class="main-center">
-            <div class="center-up">
-                <div class="center-up-up">
-                    <span style="font-size: 20px; color: rgb(230, 182, 11);">
-                        <i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star "></i>
-                    </span>
-                </div>
-                <div class="center-up-down">
-                    <h5>Lorem ipsum dolor sit amet.</h5>
-                    <H1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere, minima.</H1>
-                </div>
-            </div>
-            <div class="center-down">
-                <div class="form-reservas">
-                    <div class="reservation-form">
-                    <form id="reservationForm" action="../vista/reservas.php" method="post" class="reservation-form">
-                        <!-- Lugar -->
-                        <div class="form-group">
-                            <label for="location"><i class="fa-solid fa-map-marker-alt"></i> Lugar</label>
-                            <select id="location" name="location" class="form-select" required>
-                                <?php foreach ($paises as $pais): ?>
-                                    <option value="<?php echo $pais['Id_Pais']; ?>">
-                                        <?php echo $pais['Pais']; ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
-                        <!-- Fecha Check-in -->
-                        <div class="form-group">
-                            <label for="checkin"><i class="fa-solid fa-calendar-check"></i> Fecha de Check-in</label>
-                            <input type="date" id="checkin" name="checkin" class="form-control" min="<?= date('Y-m-d'); ?>" required>
-                        </div>
-
-                        <!-- Fecha Check-out -->
-                        <div class="form-group">
-                            <label for="checkout"><i class="fa-solid fa-calendar-xmark"></i> Fecha de Check-out</label>
-                            <input type="date" id="checkout" name="checkout" class="form-control" min="<?= date('Y-m-d'); ?>" required>
-                        </div>
-
-                        <!-- Número de Personas -->
-                        <div class="form-group">
-                            <label for="numero_personas"><i class="fa-solid fa-users"></i> Número de Personas</label>
-                            <input type="number" id="numero_personas" name="numero_personas" class="form-control" min="1"
-                                value="<?php echo isset($_SESSION['numero_personas']) ? $_SESSION['numero_personas'] : ''; ?>" required>
-                        </div>
-
-                        <!-- Botón de Reservar -->
-                        <div class="form-group">
-                            <button type="submit" id="submitBtn"><i class="fa-solid fa-bed"></i> Reservar</button>
-                        </div>
-                    </form>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-    </header>
+        </article>
     
-    <section class="habitaciones">
-        <div class="container">
-            <h2>Nuestras Habitaciones</h2>
+        <!-- Suite Ejecutiva -->
+        <article class="room-card">
+            <div class="room-image">
+                <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80" alt="Suite Ejecutiva">
+            </div>
+            <div class="room-details">
+                <h2 class="room-title">Suite Ejecutiva</h2>
+                <p class="room-price">$850/noche</p>
+                <ul class="amenities-list">
+                    <li><i class="fas fa-briefcase"></i> Escritorio ejecutivo ergonómico</li>
+                    <li><i class="fas fa-wifi"></i> WiFi de alta velocidad (1Gbps)</li>
+                    <li><i class="fas fa-cocktail"></i> Bar privado con licores premium</li>
+                    <li><i class="fas fa-car"></i> Estacionamiento VIP gratuito</li>
+                </ul>
+                <button class="btn view-details">Ver Detalles</button>
+            </div>
+        </article>
+    
+        <!-- Habitación Deluxe Familiar -->
+        <article class="room-card">
+            <div class="room-image">
+                <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Suite Familiar">
+            </div>
+            <div class="room-details">
+                <h2 class="room-title">Suite Familiar Deluxe</h2>
+                <p class="room-price">$950/noche</p>
+                <ul class="amenities-list">
+                    <li><i class="fas fa-child"></i> Área de juegos infantil</li>
+                    <li><i class="fas fa-swimming-pool"></i> Acceso a piscina climatizada</li>
+                    <li><i class="fas fa-utensils"></i> Menú infantil gourmet</li>
+                    <li><i class="fas fa-gamepad"></i> Consola de videojuegos premium</li>
+                </ul>
+                <button class="btn view-details">Ver Detalles</button>
+            </div>
+        </article>
+    
+        <!-- Suite Romántica -->
+        <article class="room-card">
+            <div class="room-image">
+                <img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Suite Romántica">
+            </div>
+            <div class="room-details">
+                <h2 class="room-title">Suite Romántica</h2>
+                <p class="room-price">$999/noche</p>
+                <ul class="amenities-list">
+                    <li><i class="fas fa-heart"></i> Decoración temática romántica</li>
+                    <li><i class="fas fa-spa"></i> Baño de burbujas con pétalos</li>
+                    <li><i class="fas fa-glass-cheers"></i> Cena romántica incluida</li>
+                    <li><i class="fas fa-moon"></i> Terraza privada con jacuzzi</li>
+                </ul>
+                <button class="btn view-details">Ver Detalles</button>
+            </div>
+        </article>
+    </main>
 
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <?php 
-                    // Agrupar habitaciones por tipo
-                    $habitacionesPorTipo = [];
-                    foreach ($habitaciones as $habitacion) {
-                        $tipo = $habitacion['Tipo'];
-                        if (!isset($habitacionesPorTipo[$tipo])) {
-                            $habitacionesPorTipo[$tipo] = [];
-                        }
-                        $habitacionesPorTipo[$tipo][] = $habitacion;
-                    }
-
-                    // Mostrar un slide por cada tipo de habitación
-                    foreach ($habitacionesPorTipo as $tipo => $listaHabitaciones):
-                        // Ruta base para las imágenes
-                        $basePath = "../../static/img/habitaciones/";
-
-                        // Obtener el tipo de habitación y convertirlo en minúsculas con guiones bajos
-                        $tipoHabitacion = strtolower(str_replace(' ', '_', $tipo));
-
-                        // Definir las posibles rutas de imagen
-                        $imagenes = [
-                            "{$basePath}{$tipoHabitacion}.jpg",
-                            "{$basePath}{$tipoHabitacion}1.jpg",   // Primera opción (imagen tipoHabitacion.jpg)
-                            "{$basePath}{$tipoHabitacion}2.jpg",
-                            "{$basePath}{$tipoHabitacion}3.jpg"
-                            , // Segunda opción (tipoHabitacion2.jpg)
-                            "{$basePath}default.jpg"             // Imagen por defecto
-                        ];
-
-                        // Variable para la imagen a mostrar (se define como una imagen predeterminada)
-                        $imagenPath = "{$basePath}default.jpg";  // Imagen por defecto en caso de que no se encuentren otras
-
-                        // Buscar la primera imagen existente en la lista
-                        foreach ($imagenes as $img) {
-                            if (file_exists($img)) {
-                                $imagenPath = $img;
-                                break;
-                            }
-                        }
-                        ?>
-                        <div class="swiper-slide">
-                            <div class="habitacion-card">
-                                <img src="<?php echo htmlspecialchars($imagenPath); ?>" alt="<?php echo htmlspecialchars($tipo); ?>" class="card-img-top">
-
-                                <div class="habitacion-info">
-                                    <h3><?php echo $tipo; ?></h3>
-                                    <p><strong>Capacidad:</strong> <?php echo $listaHabitaciones[0]['Capacidad']; ?> personas</p>
-                                    <p><strong>Precio:</strong> Desde $<?php echo $listaHabitaciones[0]['Precio']; ?> por noche</p>
-                                    <a href="reservar.php?tipo=<?php echo urlencode($tipo); ?>" class="btn">Ver más</a>
-                                </div>
-                            </div>
+    <!-- Modal de Lujo -->
+    <div class="room-modal">
+        <div class="modal-luxury">
+            <span class="close-luxury">&times;</span>
+            <div class="modal-carousel">
+                <div class="carousel-inner"><!-- Imágenes dinámicas --></div>
+                <div class="carousel-controls">
+                    <span class="carousel-prev" aria-label="Anterior">&#10094;</span>
+                    <span class="carousel-next" aria-label="Siguiente">&#10095;</span>
+                </div>
+                <div class="carousel-dots"><!-- Puntos dinámicos --></div>
+            </div>
+            <div class="modal-content-luxury">
+                <div class="luxury-columns">
+                    <div class="luxury-main">
+                        <h2 class="luxury-title"></h2>
+                        <div class="luxury-meta">
+                            <span class="luxury-price"></span>
+                            <div class="luxury-rating"></div>
                         </div>
-                    <?php endforeach; ?>
-                </div>
-
-                <!-- Botones personalizados con iconos de Bootstrap -->
-                <div class="swiper-button-prev">
-                    <i class="bi bi-chevron-left"></i>
-                </div>
-                <div class="swiper-button-next">
-                    <i class="bi bi-chevron-right"></i>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-
-    <section class="preg-comunes">
-        <div class="container">
-            <h2>Preguntas Frecuentes</h2>
-
-            <div class="faq">
-                <div class="faq-item">
-                    <button class="faq-question">
-                        ¿Cómo puedo hacer una reserva?
-                        <i class="bi bi-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Puede realizar una reserva a través de nuestra página web o llamando directamente al hotel. También puede enviar un correo electrónico con su solicitud.</p>
+                        <div class="luxury-details">
+                            <h3>Detalles Exclusivos</h3>
+                            <ul class="luxury-features"></ul>
+                        </div>
                     </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        ¿El desayuno está incluido?
-                        <i class="bi bi-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Sí, el desayuno está incluido en todas nuestras tarifas, servido de 7:00 AM a 10:00 AM.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        ¿Puedo cancelar mi reserva?
-                        <i class="bi bi-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Las cancelaciones se pueden hacer hasta 48 horas antes de la llegada sin ningún cargo. Pasado ese plazo, se aplicará una tarifa de cancelación.</p>
+                    <div class="luxury-sidebar">
+                        <div class="luxury-services">
+                            <h3>Servicios Premium</h3>
+                            <ul></ul>
+                        </div>
+                        <div class="luxury-cta">
+                            <button class="luxury-book">
+                                Reservar Ahora <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <footer class="main-footer">
-        <div class="footer-box">
-            <!-- Sección: Sobre el Hotel -->
-            <div class="footer-sec">
-                <h1>SOBRE LOS HOTELS</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.</p>
-                <a href="../vista/index.php"><img class="img-footer" src="../../static/img/logo_blanco.png" alt=""></a>
-                <div class="language-selector">
-                <select id="language-select" onchange="changeLanguage()">
-                    <option value="es">Español</option>
-                    <option value="en">English</option>
-                    <option value="fr">Français</option>
-                </select>
-                </div>
-            </div>
+   
 
-            <!-- Sección: Links -->
-            <div class="footer-sec">
-                <h1>LINKS</h1>
-                <div class="links-footer">
-                    <a href="#">Sobre nosotros</a>
-                    <a href="#">Servicios</a>
-                    <a href="#">Hoteles</a>
-                </div>
-            </div>
-
-            <!-- Sección: Contacto y Redes Sociales -->
-            <div class="footer-sec">
-                <h1>DÓNDE NOS ENCONTRAMOS</h1>
-                <div class="sec-tres">
-                    <p>Calle xxx 99999 <br> Lorem ipsum, España</p>
-                    <span class="contact-info">
-                        <i class="fa-solid fa-phone"></i> 999 999 999
-                    </span>
-                    <span class="contact-info">
-                        <i class="fa-solid fa-envelope"></i> hotelcalope@gmail.com
-                    </span>
-                    <div class="social-icons">
-                        <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="privacidad">
-            <p>Lorem ipsum dolor sit ame</p>
-        </div>
-        <div id="privacy-banner" class="privacy-banner">
-            <p>Este sitio web utiliza cookies para garantizar que obtengas la mejor experiencia. Consulta nuestra <a href="../vista/politicas/privacidad.php">Política de Privacidad</a>.</p>
-            <button id="accept-btn">Aceptar</button>
-        </div>
-
-    </footer>
+    
 
     <!-----------------------------------SCRIPTS---------------------------->
     <script src="../static/js/main.js"></script>

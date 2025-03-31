@@ -47,6 +47,8 @@ if (!empty($hoteles)) {
      <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:wght@200..1000&family=Old+Standard+TT:wght@400;700&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/GENERAL/header.css">
+    <link rel="stylesheet" href="../../static/css/GENERAL/footer.css">
 </head>
 
 <body>
@@ -55,8 +57,8 @@ if (!empty($hoteles)) {
     <header class="main-header">
         <div class="carousel">
             <img class="carousel-background" src="../../static/img/california/california.jpg" alt="Fondo 1">
-            <img class="carousel-background" src="../../static/img/galeria/galeria2.jpg" alt="Fondo 2">
-            <img class="carousel-background" src="../../static/img/galeria/galeria3.jpg" alt="Fondo 3">
+            <img class="carousel-background" src="../../static/img/Galicia/galicia1.jpg" alt="Fondo 2">
+            <img class="carousel-background" src="../../static/img/europa/pirineos.jpg" alt="Fondo 3">
         </div>
         
         <section class="main-up">
@@ -184,9 +186,8 @@ if (!empty($hoteles)) {
             <button class="filter-btn" data-filter="norteamerica">América del Norte</button>
         </div>
 
-       <div class="gallery-grid">
+        <div class="gallery-grid">
             <?php
-            // Definir rutas base
             $baseServerPath = '/var/www/html/HotelCaliope/HotelCaliope-2/static';
             $baseWebPath = '../../static';
             
@@ -198,16 +199,12 @@ if (!empty($hoteles)) {
                         <h2>Hoteles en <?= htmlspecialchars($continente) ?></h2>
                         <div class="hotel-cards">
                             <?php foreach ($hoteles_por_continente[$continente] as $hotel) : 
-                                // Lógica mejorada para imágenes
                                 $imagenFinal = '';
-                                
                                 if (!empty($hotel['imagen'])) {
                                     $imagenFinal = "{$baseWebPath}/img/{$directorio}/".htmlspecialchars($hotel['imagen']);
                                 } else {
                                     $nombreBase = str_replace('Hotel Caliope ', '', $hotel['nombre_hotel']);
                                     $nombreArchivo = strtolower(str_replace(' ', '-', $nombreBase));
-                                    
-                                    // Posibles nombres de archivo
                                     $posiblesImagenes = [
                                         "{$directorio}/{$nombreArchivo}.jpg",
                                         "{$directorio}/{$nombreArchivo}1.jpg",
@@ -216,7 +213,6 @@ if (!empty($hoteles)) {
                                         "{$directorio}/{$nombreArchivo}defaul.jpg"
                                     ];
                                     
-                                    // Buscar primera imagen existente
                                     foreach ($posiblesImagenes as $imagen) {
                                         $rutaCompleta = "{$baseServerPath}/img/{$imagen}";
                                         if (file_exists($rutaCompleta)) {
@@ -232,8 +228,10 @@ if (!empty($hoteles)) {
                                     <div class="hotel-info">
                                         <h3><?= htmlspecialchars($hotel['nombre_hotel']) ?></h3>
                                         <p><?= htmlspecialchars($hotel['descripcion']) ?></p>
-                                        <a href="/hoteles/<?= htmlspecialchars($directorio) ?>/<?= urlencode($hotel['pais']) ?>/<?= $hotel['id'] ?>" 
-                                        class="view-more">
+                                        <a href="#" 
+                                        class="view-more" 
+                                        data-nombre-archivo="<?= $nombreArchivo ?>" 
+                                        data-directorio="<?= htmlspecialchars($directorio) ?>">
                                             Ver hotel
                                         </a>
                                     </div>
@@ -245,7 +243,93 @@ if (!empty($hoteles)) {
                 endif;
             endforeach; 
             ?>
-        </div> <!-- Cierre faltante del div.gallery-container -->
+        </div>
+
+        <!-- Modal Gallery -->
+        <div id="hotelModal" class="modal">
+            <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="carousel-container">
+                <div class="gallery-carousel" id="galleryCarousel"></div>
+                <div class="carousel-dots" id="carouselDots"></div>
+                <!-- Flechas de navegación -->
+                <button class="carousel-arrow prev">&#10094;</button>
+                <button class="carousel-arrow next">&#10095;</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+    <footer class="footer">
+    <div class="footer-content">
+        <!-- Columna 1 - Logo y Descripción -->
+        <div class="footer-section">
+            <img src="../../static/img/logo_blanco.png" alt="Logo Hotel Calíope" class="footer-logo">
+            <p>Descubre el lujo y la comodidad en cada rincón del mundo con Hotel Calíope.</p>
+        </div>
+
+        <!-- Columna 2 - Enlaces rápidos -->
+        <div class="footer-section">
+            <h3>Enlaces Rápidos</h3>
+            <ul>
+                <li><i class="fas fa-angle-right"></i><a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a></li>
+                <li><i class="fas fa-angle-right"></i><a href="../../vista/hoteles.php">Hoteles</a></li>
+                <li><i class="fas fa-angle-right"></i><a href="../../vista/galeria/galeria.php">Galería</a></li>
+                <li><i class="fas fa-angle-right"></i><a href="../../vista/ofertas/ofertas.php">Ofertas</a></li>
+            </ul>
+        </div>
+
+        <!-- Columna 3 - Contacto -->
+        <div class="footer-section">
+            <h3>Contacto</h3>
+            <ul>
+                <li><i class="fas fa-phone"></i> +34 123 456 789</li>
+                <li><i class="fas fa-envelope"></i> info@hotelcaliope.com</li>
+                <li><i class="fas fa-map-marker-alt"></i> Calle Principal 123, Madrid</li>
+            </ul>
+        </div>
+
+        <!-- Columna 4 - Redes Sociales -->
+        <div class="footer-section">
+            <h3>Síguenos</h3>
+            <div class="social-links">
+                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección Inferior -->
+    <div class="footer-bottom">
+        <div class="footer-links">
+            <a href="../../vista/politicas/privacidad.php">Política de Privacidad</a>
+            <a href="../../vista/politicas/cookies.php">Política de Cookies</a>
+            <a href="../../vista/politicas/avisolegal.php">Aviso Legal</a>
+        </div>
+        <p>&copy; 2025 Hotel Calíope. Todos los derechos reservados.</p>
+    </div>
+</footer>
+        
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <script src="../../static/js/galeria.js"></script>
 </body>
