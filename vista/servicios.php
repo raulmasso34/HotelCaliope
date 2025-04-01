@@ -19,11 +19,6 @@ if (isset($_POST['metodoPagoId'])) {
     $_SESSION['Reservas']['metodoPagoId'] = $_POST['metodoPagoId'];
 }
 
-
-
-
-
-
 $hotelId = $_SESSION['hotelId'] ?? null;
 
 // Si no hay hotel seleccionado, mostrar error y salir
@@ -41,7 +36,6 @@ if (!isset($_SESSION['Reservas'])) {
 $_SESSION['Reservas']['servicios'] = $_POST['servicios'] ?? [];
 $_SESSION['Reservas']['actividades'] = $_POST['actividades'] ?? [];
 
-
 $reserva = $_SESSION['Reservas'] ?? [];
 
 // Extraer variables de la sesión
@@ -51,7 +45,12 @@ $checkout = $reserva['checkout'] ?? null;
 $guests = $reserva['guests'] ?? null;
 $paisId = $reserva['paisId'] ?? null;
 $metodoPagoId = $reserva['metodoPagoId'] ?? null;
+$precioHabitacion = $reserva['precioHabitacion'] ?? ($reserva['Precio_Habitacion'] ?? null);
 
+// Asignar precioHabitacion si aún no está definido
+if (!isset($_SESSION['Reservas']['precioHabitacion']) && isset($precioHabitacion)) {
+    $_SESSION['Reservas']['precioHabitacion'] = $precioHabitacion;
+}
 
 // Obtener servicios y actividades del hotel
 $servicios = $servicioController->obtenerServicios($hotelId);
@@ -65,13 +64,12 @@ if (!is_array($actividades)) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Guardar los servicios seleccionados en la sesión
+    $_SESSION['Reservas']['servicios'] = $_POST['servicios'] ?? [];
+
+    // Guardar las actividades seleccionadas en la sesión
     $_SESSION['Reservas']['actividades'] = $_POST['actividades'] ?? [];
 }
-
-
-
-
-
 
 
 ?>
@@ -88,9 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
     <h1>¿Quieres añadir algún servicio?</h1>
+    
     <form action="../vista/pagos.php" method="POST">
         <!-- Depuración: Ver si los datos se envían correctamente -->
-        
         
         <input type="hidden" name="habitacionId" value="<?php echo $_SESSION['Reservas']['habitacionId'] ?? ''; ?>">
         <input type="hidden" name="hotelId" value="<?php echo $_SESSION['hotelId']; ?>">
@@ -99,6 +97,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="hidden" name="guests" value="<?php echo $_SESSION['Reservas']['guests'] ?? ''; ?>">
         <input type="hidden" name="paisId" value="<?php echo $_SESSION['Reservas']['paisId'] ?? ''; ?>">
         <input type="hidden" name="metodoPagoId" value="<?php echo $_SESSION['Reservas']['metodoPagoId'] ?? ''; ?>">
+        <input type="hidden" name="precioHabitacion" value="<?php echo $_SESSION['Reservas']['precioHabitacion'] ?? ''; ?>">
+
+        <h2>Servicios disponibles</h2>
         <div class="servicios-container">
         <?php foreach ($servicios as $servicio) : ?>
             <label>
@@ -107,14 +108,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </label><br>
         <?php endforeach; ?>
         </div>
-       
-
-
+        
+        <h2>Actividades disponibles</h2>
         <div class="actividades-container">
             <?php foreach ($actividades as $actividad) : ?>
                 <label>
                 <input type="checkbox" name="actividades[<?php echo $actividad['Id_Actividades']; ?>]" value="<?php echo $actividad['Precio']; ?>">
-
                     <?php echo htmlspecialchars($actividad['Nombre']); ?> - $<?php echo number_format($actividad['Precio'], 2); ?>
                 </label><br>
             <?php endforeach; ?>
@@ -125,6 +124,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </form>
 
+    <hr>
+
+    <h2>Datos almacenados en la sesión</h2>
+    <pre><?php print_r($_SESSION['Reservas']); ?></pre>
 
 </body>
 </html>

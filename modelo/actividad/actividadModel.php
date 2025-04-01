@@ -43,7 +43,7 @@ class ActividadModel {
     }
     public function obtenerNombreActividad($actividadId) {
         try {
-            $sql = "SELECT Nombre,Precio FROM Actividades WHERE Id_Actividades = ?";
+            $sql = "SELECT Nombre, Precio FROM Actividades WHERE Id_Actividades = ?";
             $stmt = $this->conn->prepare($sql);
             
             if (!$stmt) {
@@ -81,13 +81,12 @@ class ActividadModel {
     }
 
     // Agregar una nueva actividad (Si es necesario)
-    public function agregarActividad($idHotel, $diaInicio, $diaFin, $horaInicio, $horaFin, $capacidadMaxima, $ubicacion, $descripcion, $precio) {
-        $sql = "INSERT INTO Actividades (Id_Hotel, Dia_Inicio, Dia_Fin, Hora_Inicio, Hora_Fin, Capacidad_Maxima, Ubicacion, Descripcion, Precio)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  /*  public function agregarActividad($idHotel, $diaInicio, $diaFin, $horaInicio, $horaFin, $capacidadMaxima, $ubicacion, $descripcion, $precio) {
+        $sql = "INSERT INTO Actividades (Id_Hotel, Dia_Inicio, Dia_Fin, Hora_Inicio, Hora_Fin, Capacidad_Maxima, Ubicacion, Descripcion, Precio)   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("issssissd", $idHotel, $diaInicio, $diaFin, $horaInicio, $horaFin, $capacidadMaxima, $ubicacion, $descripcion, $precio);
 
         return $stmt->execute();
-    }
+    }*/
 }
 ?>

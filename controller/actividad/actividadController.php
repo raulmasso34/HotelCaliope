@@ -21,7 +21,8 @@ class ActividadController {
         return $this->actividadModel->obtenerPrecioActividad($actividadId);
     }
 
-    public function obtenerNombreActividad($actividadId){
+    // Obtener el nombre de la actividad por su ID
+    public function obtenerNombreActividad($actividadId) {
         return $this->actividadModel->obtenerNombreActividad($actividadId);
     }
 
@@ -31,8 +32,17 @@ class ActividadController {
     }
 
     // Agregar una nueva actividad
-    public function agregarActividad($idHotel, $diaInicio, $diaFin, $horaInicio, $horaFin, $capacidadMaxima, $ubicacion, $descripcion, $precio) {
+   /* public function agregarActividad($idHotel, $diaInicio, $diaFin, $horaInicio, $horaFin, $capacidadMaxima, $ubicacion, $descripcion, $precio) {
         return $this->actividadModel->agregarActividad($idHotel, $diaInicio, $diaFin, $horaInicio, $horaFin, $capacidadMaxima, $ubicacion, $descripcion, $precio);
+    }*/
+
+    // Guardar las actividades seleccionadas en la sesión
+    public function guardarActividadesSeleccionadas($actividadesSeleccionadas) {
+        // Verifica que el array de actividades no esté vacío
+        if (!empty($actividadesSeleccionadas) && is_array($actividadesSeleccionadas)) {
+    $_SESSION['Reservas']['actividades'] = array_keys($actividadesSeleccionadas);
+}
+
     }
 }
 ?>
