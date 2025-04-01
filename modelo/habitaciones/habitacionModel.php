@@ -11,10 +11,17 @@ class HabitacionesModel {
 
 
     public function obtenerHabitaciones() {
-        $query = $this->conn->prepare("SELECT * FROM Habitaciones");
+        $sql = "SELECT h.*, 
+                       GROUP_CONCAT(s.Servicio ORDER BY s.Servicio SEPARATOR ', ') AS Servicios_Adicionales
+                FROM Habitaciones h
+                LEFT JOIN Servicio s ON h.Id_Hotel = s.Id_Hotel AND s.TipoServicio = 1  -- Solo servicios incluidos
+                GROUP BY h.Id_Habitaciones";
+    
+        $query = $this->conn->prepare($sql);
         $query->execute();
         return $query->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+    
 
     public function obtenerPrecioHabitacion($habitacionId) {
         $query = "SELECT Precio FROM Habitaciones WHERE Id_Habitaciones = ?";
@@ -30,7 +37,12 @@ class HabitacionesModel {
 
     public function obtenerHabitacionPorId($habitacionId) {
         try {
-            $sql = "SELECT * FROM Habitaciones WHERE Id_Habitaciones = ?";  
+            $sql = "SELECT h.*, 
+                     GROUP_CONCAT(s.Servicio SEPARATOR ', ') AS Servicios_Adicionales
+              FROM Habitaciones h
+              LEFT JOIN Servicio s ON h.Id_Hotel = s.Id_Hotel 
+              WHERE h.Id_Habitaciones = $habitacionId AND s.TipoServicio = 1
+              GROUP BY h.Id_Habitaciones";
             $stmt = $this->conn->prepare($sql);
             $stmt->bind_param("i", $habitacionId);
             $stmt->execute();
@@ -52,6 +64,18 @@ class HabitacionesModel {
     }
     
 
+    public function obtenerTiposHabitacion() {
+        $sql = "SELECT DISTINCT Tipo FROM Habitaciones";
+        $result = $this->conn->query($sql);
+        
+        $tipos = [];
+        while ($row = $result->fetch_assoc()) {
+            $tipos[] = $row['Tipo'];
+        }
+        
+        return $tipos; // Devuelve un array con los tipos de habitaciones únicos
+    }
+    
     public function obtenerHabitacionesPorHotel($hotelId) {
         if (!$this->conn) {
             error_log("Error: La conexión a la base de datos no está establecida.");
@@ -86,6 +110,7 @@ class HabitacionesModel {
     
         return $habitaciones;
     }
+    
     
 }
 ?>

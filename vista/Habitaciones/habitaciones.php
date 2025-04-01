@@ -1,208 +1,285 @@
 <?php
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-// Limpiar las variables de sesión si el usuario ha vuelto al formulario
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['reset']) && $_GET['reset'] == 'true') {
-    unset($_SESSION['location']);
-    unset($_SESSION['checkin']);
-    unset($_SESSION['checkout']);
-    unset($_SESSION['guests']);
-    unset($_SESSION['habitacionId']);
-}
-
-// Al enviar el formulario
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Guardar los datos del formulario en la sesión
-    $_SESSION['location'] = $_POST['location'];
-    $_SESSION['checkin'] = $_POST['checkin'];
-    $_SESSION['checkout'] = $_POST['checkout'];
-    $_SESSION['guests'] = $_POST['numero_personas'];
-    $_SESSION['habitacionId'] = $_POST['habitacionId'];
-
-    // Redirigir a la página de reservas para mostrar los detalles del hotel
-    header('Location: ../vista/reservas.php');
-    exit();
-}
-
-// Incluir el controlador
-require_once __DIR__ . '../../../controller/reserva/reservaController.php';
+require_once __DIR__ . '../../../config/Database.php';
 require_once __DIR__ . '../../../controller/habitacion/habitacionController.php';
 
-// Crear una instancia del controlador
-$controller = new ReservaController();
 $controllerHab = new HabitacionController();
-
-
-
-// Verificar si la instancia se ha creado correctamente
-if ($controller !== null) {
-    // Obtener los países a través del controlador
-    $paises = $controller->obtenerPaises();
-
-    // Verificar si se han obtenido los países y hacer algo con ellos
-    
-} 
-$habitaciones = $controllerHab->obtenerHabitaciones() ?? [];
+$habitaciones = $controllerHab->obtenerTodasLasHabitacionesAgrupadas();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Hoteles Caliope</title>
-    <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-
-     <!-- Font Awesome para iconos -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Mate+SC&family=Nunito+Sans:wght@200..1000&family=Old+Standard+TT:wght@400;700&family=Oswald:wght@200..700&family=Patrick+Hand&family=Permanent+Marker&family=Rancho&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../static/css/habitaciones/habitaciones.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../../static/css/GENERAL/footer.css">
-    <link rel="stylesheet" href="../../static/css/GENERAL/header.css">
-  
-
-
-
-    <!-- Scripts -->
-   
-    <script src="../../static/js/habitaciones/habitaciones.js"></script>
+    <title>Habitaciones - Hoteles Calíope</title>
+    <link rel="stylesheet" href="../../static/css/habitaciones/habitaciones.css?v=1.2">
+    <link rel="stylesheet" href="../../static/css/GENERAL/footer.css?v=1.1">
+    <link rel="stylesheet" href="../../static/css/GENERAL/header.css?v=1.1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
-   
-    <main class="rooms-grid">
-        <!-- Suite Presidencial -->
-        <article class="room-card">
-            <div class="room-image">
-                <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Suite Presidencial">
+
+    <header class="main-header">
+        <div class="carousel">
+            <img class="carousel-background" src="../../static/img/california/california.jpg" alt="Fondo 1">
+            <img class="carousel-background" src="../../static/img/Galicia/galicia1.jpg" alt="Fondo 2">
+            <img class="carousel-background" src="../../static/img/europa/pirineos.jpg" alt="Fondo 3">
+        </div>
+        
+        <section class="main-up">
+            <div class="main-up-left">
+                <img src="../../static/img/logo_blanco.png" alt="Logo Hotel Calíope">
             </div>
-            <div class="room-details">
-                <h2 class="room-title">Suite Presidencial</h2>
-                <p class="room-price">$1,200/noche</p>
-                <ul class="amenities-list">
-                    <li><i class="fas fa-hot-tub"></i> Jacuzzi privado con vista al mar</li>
-                    <li><i class="fas fa-wine-bottle"></i> Minibar premium incluido</li>
-                    <li><i class="fas fa-concierge-bell"></i> Servicio de mayordomo 24h</li>
-                    <li><i class="fas fa-umbrella-beach"></i> Terraza privada con acceso directo a la playa</li>
-                </ul>
-                <button class="btn view-details">Ver Detalles</button>
+
+            <div class="main-up-right">
+                <div class="links">
+                    <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                    
+                    <div class="dropdown">
+                        <a href="../../vista/hoteles.php" class="dropbtn">Hoteles</a>
+                        <div class="dropdown-content">
+                            <div class="dropdown-section">
+                                <h4>Europa</h4>
+                                <a href="../../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                                <a href="../../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                                <a href="../../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                            </div>
+                            <div class="dropdown-section">
+                                <h4>USA</h4>
+                                <a href="../../vista/ciudades/USA/Florida.php">Florida</a>
+                                <a href="../../vista/ciudades/USA/California.php">California</a>
+                                <a href="../../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="../../vista/galeria/galeria.php">Galería</a>
+                    <a href="../../vista/ofertas/ofertas.php">Ofertas</a>
+                    <a href="../../vista/Contacto/contacto.php">Contacto</a>
+                    
+                    <!-- Contenedor del perfil -->
+                    <div class="dropdown-perfil">
+                        <a class="icon-perfil" href="javascript:void(0);">
+                            <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
+                        </a>
+                        <div class="dropdown-perfil-content">
+                            <a href="../../vista/Clientes/login.php">
+                                <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+                            </a>
+                            <a href="../../vista/Clientes/perfil.php">
+                                <i class="bi bi-person"></i> Perfil
+                            </a>
+                            <a href="../../controller/clients/LoginController.php?action=logout" style="color: red;"> 
+                                <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </article>
-    
-        <!-- Suite Ejecutiva -->
-        <article class="room-card">
-            <div class="room-image">
-                <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80" alt="Suite Ejecutiva">
+
+            <!-- Menú hamburguesa -->
+            <div id="menu-toggle" class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
             </div>
-            <div class="room-details">
-                <h2 class="room-title">Suite Ejecutiva</h2>
-                <p class="room-price">$850/noche</p>
-                <ul class="amenities-list">
-                    <li><i class="fas fa-briefcase"></i> Escritorio ejecutivo ergonómico</li>
-                    <li><i class="fas fa-wifi"></i> WiFi de alta velocidad (1Gbps)</li>
-                    <li><i class="fas fa-cocktail"></i> Bar privado con licores premium</li>
-                    <li><i class="fas fa-car"></i> Estacionamiento VIP gratuito</li>
-                </ul>
-                <button class="btn view-details">Ver Detalles</button>
+
+            <!-- Menú móvil -->
+            <div class="mobile-menu">
+                <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                <a href="../../vista/galeria/galeria.php">Galería</a>
+                <a href="../../vista/ofertas/ofertas.php">Ofertas</a>
+                <a href="../../vista/Contacto/contacto.php">Contacto</a>
+                <a href="../../vista/Clientes/login.php">Iniciar sesión</a>
+                <a href="../../vista/Clientes/perfil.php">Perfil</a>
+                
+                <div class="dropdown-mobile">
+                    <a href="#" class="dropbtn">Hoteles</a>
+                    <div class="dropdown-content-mobile">
+                        <div class="dropdown-section">
+                            <h4>Europa</h4>
+                            <a href="../../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                            <a href="../../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                            <a href="../../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>USA</h4>
+                            <a href="../../vista/ciudades/USA/Florida.php">Florida</a>
+                            <a href="../../vista/ciudades/USA/California.php">California</a>
+                            <a href="../../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </article>
-    
-        <!-- Habitación Deluxe Familiar -->
-        <article class="room-card">
-            <div class="room-image">
-                <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Suite Familiar">
+        </section>
+
+        <section class="main-center">
+            <div class="center-up">
+                <div class="center-up-up">
+                    <span style="font-size: 20px; color: rgb(230, 182, 11);">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </span>
+                </div>
+                <div class="center-up-down">
+                    <h5> <b>Contacta con nosotros para más información!</b></h5>
+                    <h1>NUESTRAS HABITACIONES</h1>
+                </div>
             </div>
-            <div class="room-details">
-                <h2 class="room-title">Suite Familiar Deluxe</h2>
-                <p class="room-price">$950/noche</p>
-                <ul class="amenities-list">
-                    <li><i class="fas fa-child"></i> Área de juegos infantil</li>
-                    <li><i class="fas fa-swimming-pool"></i> Acceso a piscina climatizada</li>
-                    <li><i class="fas fa-utensils"></i> Menú infantil gourmet</li>
-                    <li><i class="fas fa-gamepad"></i> Consola de videojuegos premium</li>
-                </ul>
-                <button class="btn view-details">Ver Detalles</button>
+        </section>
+        <div class="scroll-down">
+            <a href="#rooms-container" class="scroll-down-arrow">
+                <i class="fa-solid fa-chevron-down"></i>
+            </a>
+        </div>
+    </header>
+
+
+
+
+
+
+
+
+
+
+
+    <main id="rooms-container" class="rooms-container">
+        <h1 class="section-title">Nuestras Habitaciones</h1>
+
+        <?php if (!empty($habitaciones)): ?>
+            <?php foreach ($habitaciones as $tipo => $listaHabitaciones): ?>
+                <section class="room-type-section">
+                    <h2 class="room-type-title"><?= htmlspecialchars($tipo ?? 'Sin Tipo') ?></h2>
+                    <div class="rooms-grid">
+                        <?php 
+                        $contador = 0;
+                        foreach ($listaHabitaciones as $habitacion): 
+                            if ($contador >= 1) break;
+                            $contador++;
+
+                            // Datos de la habitación
+                            $idHabitacion = $habitacion['Id_Habitaciones'] ?? 0;
+                            $numeroHabitacion = $habitacion['Numero_Habitacion'] ?? 'N/A';
+                            $tipoHabitacion = htmlspecialchars($habitacion['Tipo'] ?? 'Desconocido');
+                            $capacidad = $habitacion['Capacidad'] ?? 0;
+                            $precio = $habitacion['Precio'] ?? 100;
+                            $descripcion = htmlspecialchars($habitacion['Descripcion'] ?? 'Sin descripción');
+                            $servicios = isset($habitacion['Servicios_Adicionales']) 
+                                ? array_filter(explode(',', $habitacion['Servicios_Adicionales']), 'trim') 
+                                : [];
+
+                            // Lógica para imágenes
+                            $imagenes = [];
+                            if (!empty($habitacion['imagen_url'])) {
+                                $imagenes[] = htmlspecialchars($habitacion['imagen_url']);
+                            } else {
+                                $nombreBase = strtolower(str_replace(' ', '-', $tipoHabitacion));
+                                for ($i = 1; $i <= 3; $i++) {
+                                    $ruta = "../../static/img/habitaciones/{$nombreBase}{$i}.jpg";
+                                    if (file_exists($ruta)) $imagenes[] = $ruta;
+                                }
+                                if (empty($imagenes)) $imagenes[] = "../../static/img/habitaciones/default.jpg";
+                            }
+                        ?>
+                            <article class="room-card" 
+                                data-id="<?= $idHabitacion ?>"
+                                data-tipo="<?= $tipoHabitacion ?>"
+                                data-precio="<?= $precio ?>"
+                                data-descripcion="<?= $descripcion ?>"
+                                data-capacidad="<?= $capacidad ?>"
+                                data-servicios="<?= htmlspecialchars(json_encode($servicios)) ?>"
+                                data-imagenes="<?= htmlspecialchars(json_encode($imagenes)) ?>">
+                                
+                                <div class="room-image">
+                                    <img src="<?= $imagenes[0] ?>" 
+                                        alt="Habitación <?= $tipoHabitacion ?>" 
+                                        loading="lazy">
+                                </div>
+
+                                <div class="room-details">
+                                    <h3 class="room-title">Habitación <?= $tipoHabitacion ?></h3>
+                                    <p class="room-number">Número: <?= $numeroHabitacion ?></p>
+                                    <div class="price-container">
+                                        <p class="room-price">$<?= number_format($precio, 2) ?></p>
+                                        <span class="price-period">/noche</span>
+                                    </div>
+
+                                    <div class="room-info">
+                                        <p class="capacity">
+                                            <i class="fas fa-user-friends"></i>
+                                            <?= $capacidad ?> personas
+                                        </p>
+                                        <p class="description"><?= $descripcion ?></p>
+                                    </div>
+
+                                    <ul class="amenities-list">
+                                        <?php if (!empty($servicios)): ?>
+                                            <?php foreach ($servicios as $servicio): ?>
+                                                <li>
+                                                    <i class="fas fa-check-circle"></i>
+                                                    <?= htmlspecialchars(trim($servicio)) ?>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <li>No incluye servicios adicionales.</li>
+                                        <?php endif; ?>
+                                    </ul>
+
+                                    <button class="btn view-details">Ver Detalles</button>
+                                </div>
+                            </article>
+                        <?php endforeach; ?>
+                    </div>
+                </section>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="no-rooms">
+                <img src="../../static/img/empty-state.svg" alt="No hay habitaciones" class="empty-illustration">
+                <h2>No hay habitaciones disponibles en este momento</h2>
             </div>
-        </article>
-    
-        <!-- Suite Romántica -->
-        <article class="room-card">
-            <div class="room-image">
-                <img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Suite Romántica">
-            </div>
-            <div class="room-details">
-                <h2 class="room-title">Suite Romántica</h2>
-                <p class="room-price">$999/noche</p>
-                <ul class="amenities-list">
-                    <li><i class="fas fa-heart"></i> Decoración temática romántica</li>
-                    <li><i class="fas fa-spa"></i> Baño de burbujas con pétalos</li>
-                    <li><i class="fas fa-glass-cheers"></i> Cena romántica incluida</li>
-                    <li><i class="fas fa-moon"></i> Terraza privada con jacuzzi</li>
-                </ul>
-                <button class="btn view-details">Ver Detalles</button>
-            </div>
-        </article>
+        <?php endif; ?>
     </main>
 
-    <!-- Modal de Lujo -->
-    <div class="room-modal">
-        <div class="modal-luxury">
-            <span class="close-luxury">&times;</span>
+    <!-- Modal -->
+    <div class="room-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
             <div class="modal-carousel">
-                <div class="carousel-inner"><!-- Imágenes dinámicas --></div>
+                <div class="carousel-inner"></div>
                 <div class="carousel-controls">
-                    <span class="carousel-prev" aria-label="Anterior">&#10094;</span>
-                    <span class="carousel-next" aria-label="Siguiente">&#10095;</span>
+                    <button class="carousel-prev">&#10094;</button>
+                    <button class="carousel-next">&#10095;</button>
                 </div>
-                <div class="carousel-dots"><!-- Puntos dinámicos --></div>
+                <div class="carousel-dots"></div>
             </div>
-            <div class="modal-content-luxury">
-                <div class="luxury-columns">
-                    <div class="luxury-main">
-                        <h2 class="luxury-title"></h2>
-                        <div class="luxury-meta">
-                            <span class="luxury-price"></span>
-                            <div class="luxury-rating"></div>
-                        </div>
-                        <div class="luxury-details">
-                            <h3>Detalles Exclusivos</h3>
-                            <ul class="luxury-features"></ul>
-                        </div>
-                    </div>
-                    <div class="luxury-sidebar">
-                        <div class="luxury-services">
-                            <h3>Servicios Premium</h3>
-                            <ul></ul>
-                        </div>
-                        <div class="luxury-cta">
-                            <button class="luxury-book">
-                                Reservar Ahora <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
+            <div class="modal-details">
+                <h2 class="modal-title"></h2>
+                <div class="price-container">
+                    <span class="modal-price"></span>
+                    <span class="price-period">/noche</span>
                 </div>
+                <div class="modal-info">
+                    <p><i class="fas fa-user-friends"></i> <span class="modal-capacity"></span> personas</p>
+                    <p class="modal-description"></p>
+                </div>
+                <div class="modal-services">
+                    <h3>Servicios incluidos:</h3>
+                    <ul class="services-list"></ul>
+                </div>
+                <button class="btn book-now">Reservar ahora</button>
             </div>
         </div>
     </div>
 
-   
-
-    
-
-    <!-----------------------------------SCRIPTS---------------------------->
-    <script src="../static/js/main.js"></script>
-    <script src="../static/js/calendario.js"></script>
-
-
+    <!-- Scripts -->
     <script src="../../static/js/habitaciones/habitaciones.js"></script>
-
-    </body>
+</body>
 </html>

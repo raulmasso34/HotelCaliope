@@ -33,5 +33,24 @@ class HabitacionController {
     public function obtenerHabitacionesPorHotel($hotelId) {
         return $this->habitacionModel->obtenerHabitacionesPorHotel($hotelId);
     }
+
+    public function obtenerTodasLasHabitacionesAgrupadas() {
+        $habitaciones = $this->habitacionModel->obtenerHabitaciones();
+        $habitacionesAgrupadas = [];
+    
+        foreach ($habitaciones as $habitacion) {
+            $tipo = $habitacion['Tipo'];
+    
+            if (!isset($habitacionesAgrupadas[$tipo])) {
+                $habitacionesAgrupadas[$tipo] = [];
+            }
+    
+            $habitacionesAgrupadas[$tipo][] = $habitacion;
+        }
+    
+        return $habitacionesAgrupadas;
+    }
+    
+    
 }
 ?>
