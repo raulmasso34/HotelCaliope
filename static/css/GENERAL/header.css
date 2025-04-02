@@ -157,7 +157,7 @@ body {
 /* Estilos del Dropdown de Perfil */
 .dropdown-perfil {
     position: relative;
-    margin-left: 50%; /* Empuja el perfil hacia la derecha */
+    margin-left: 36%; /* Empuja el perfil hacia la derecha */
     padding-left: 20px; 
    /* Añade padding a la izquierda del icono */
 }

@@ -1,191 +1,220 @@
-// Datos mejorados para las habitaciones
-const roomsData = [
-    {
-        title: "Suite Presidencial",
-        price: 850,
-        images: [
-            'https://example.com/suite1-1.jpg',
-            'https://example.com/suite1-2.jpg',
-            'https://example.com/suite1-3.jpg'
-        ],
-        amenities: [
-            {icon: "fa-wifi", text: "WiFi Premium"},
-            {icon: "fa-hot-tub", text: "Jacuzzi Privado"},
-            {icon: "fa-umbrella-beach", text: "Vista al Mar"}
-        ],
-        services: [
-            "Conserjería 24h",
-            "Acceso ilimitado al spa",
-            "Traslado en limusina",
-            "Desayuno a la carta"
-        ],
-        specs: {
-            size: "120 m²",
-            capacity: "3 personas",
-            beds: "1 Cama King Size",
-            view: "Vista Panorámica al Mar"
-        },
-        rating: 5
-    },
-    // Añadir más habitaciones...
-];
+document.addEventListener('DOMContentLoaded', function () {
+    // Variables globales
+    const modal = document.getElementById('habitacionModal');
+    const closeBtn = document.querySelector('.close');
+    let currentSlide = 0;
+    let slideInterval;
+    const slideDuration = 5000;
 
-// Generar tarjetas de habitaciones
-function generateRoomCards() {
-    const grid = document.querySelector('.rooms-grid');
-    
-    roomsData.forEach(room => {
-        const amenitiesHTML = room.amenities.map(amenity => `
-            <li><i class="fas ${amenity.icon}"></i> ${amenity.text}</li>
-        `).join('');
-        
-        const cardHTML = `
-            <article class="room-card">
-                <div class="room-image">
-                    <img src="${room.images[0]}" alt="${room.title}">
-                </div>
-                <div class="room-details">
-                    <h2 class="room-title">${room.title}</h2>
-                    <p class="room-price">$${room.price}/noche</p>
-                    <ul class="amenities-list">${amenitiesHTML}</ul>
-                    <button class="btn view-details">Ver Detalles</button>
-                </div>
-            </article>
-        `;
-        
-        grid.insertAdjacentHTML('beforeend', cardHTML);
-    });
-}
+    // Filtro de continentes y tipos de habitación
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const sections = document.querySelectorAll('.gallery-section');
 
-// Lógica del Carrusel
-let currentSlide = 0;
-let slideInterval;
+    function initGalleryFilter() {
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
 
-function initCarousel(images) {
-    const carousel = document.querySelector('.carousel-inner');
-    const dotsContainer = document.querySelector('.carousel-dots');
+                const filter = button.dataset.filter.toLowerCase();
 
-    // Limpiar contenido previo
-    carousel.innerHTML = '';
-    dotsContainer.innerHTML = '';
+                sections.forEach(section => {
+                    const sectionFilter = section.classList.contains(filter);
+                    section.style.display = (filter === 'all' || sectionFilter) ? 'block' : 'none';
 
-    // Generar imágenes y puntos
-    images.forEach((img, index) => {
-        carousel.insertAdjacentHTML('beforeend', `
-            <img src="${img}" class="${index === 0 ? 'active' : ''}">
-        `);
-
-        dotsContainer.insertAdjacentHTML('beforeend', `
-            <div class="dot ${index === 0 ? 'active' : ''}" data-index="${index}"></div>
-        `);
-    });
-
-    // Asegurar que los botones de navegación existen antes de asignar eventos
-    setTimeout(() => {
-        document.querySelector('.carousel-prev').addEventListener('click', () => moveSlide(-1));
-        document.querySelector('.carousel-next').addEventListener('click', () => moveSlide(1));
-    }, 100); // Pequeño retraso para asegurar que los botones se han renderizado
-
-    // Asignar eventos a los puntos de navegación
-    document.querySelectorAll('.dot').forEach((dot) => {
-        dot.addEventListener('click', () => {
-            showSlide(parseInt(dot.dataset.index, 10));
+                    if (section.style.display === 'block') {
+                        section.style.animation = 'fadeIn 0.5s ease';
+                    }
+                });
+            });
         });
-    });
+    }
 
-    startSlideShow();
-}
+    // Modal y Carrusel
+    function initModalCarousel() {
+        document.querySelectorAll('.view-more').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const tipoHabitacion = this.dataset.tipoHabitacion;
+                const directorio = 'habitaciones';
 
-
-function showSlide(index) {
-    const slides = document.querySelectorAll('.carousel-inner img');
-    const dots = document.querySelectorAll('.dot');
-    
-    currentSlide = (index + slides.length) % slides.length;
-    
-    slides.forEach((slide, i) => slide.classList.toggle('active', i === currentSlide));
-    dots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
-}
-
-function moveSlide(direction) {
-    const slides = document.querySelectorAll('.carousel-inner img');
-    currentSlide = (currentSlide + direction + slides.length) % slides.length;
-    showSlide(currentSlide);
-    resetSlideShow();
-}
-
-function startSlideShow() {
-    if(slideInterval) clearInterval(slideInterval);
-    slideInterval = setInterval(() => moveSlide(1), 5000);
-}
-
-function resetSlideShow() {
-    startSlideShow();
-}
-
-// Mostrar detalles en el modal de lujo
-function showRoomDetails(roomIndex) {
-    const room = roomsData[roomIndex];
-    
-    // Actualizar contenido principal
-    document.querySelector('.luxury-title').textContent = room.title;
-    document.querySelector('.luxury-price').textContent = `$${room.price}/noche`;
-    document.querySelector('.luxury-rating').innerHTML = 
-        Array(room.rating).fill('<i class="fas fa-star"></i>').join('');
-    
-    // Actualizar características
-    const featuresList = document.querySelector('.luxury-features');
-    featuresList.innerHTML = `
-        <li><i class="fas fa-expand-arrows-alt"></i> ${room.specs.size}</li>
-        <li><i class="fas fa-bed"></i> ${room.specs.beds}</li>
-        <li><i class="fas fa-binoculars"></i> ${room.specs.view}</li>
-        <li><i class="fas fa-users"></i> ${room.specs.capacity}</li>
-    `;
-    
-    // Actualizar servicios
-    const servicesList = document.querySelector('.luxury-services ul');
-    servicesList.innerHTML = room.services.map(service => `
-        <li><i class="fas fa-check-circle"></i> ${service}</li>
-    `).join('');
-    
-    // Inicializar carrusel
-    initCarousel(room.images);
-    
-    // Mostrar modal
-    document.querySelector('.room-modal').style.display = 'block';
-}
-
-// Event Listeners
-document.addEventListener('DOMContentLoaded', () => {
-    generateRoomCards();
-    
-    // Scroll suave
-    document.querySelector('.scroll-down').addEventListener('click', () => {
-        window.scrollTo({
-            top: document.querySelector('.rooms-grid').offsetTop - 100,
-            behavior: 'smooth'
+                loadCarouselImages(tipoHabitacion, directorio);
+                modal.style.display = 'block';
+                startSlideShow();
+            });
         });
-    });
+    }
 
-    // Abrir modal
-    document.querySelector('.rooms-grid').addEventListener('click', (e) => {
-        if(e.target.closest('.view-details')) {
-            const card = e.target.closest('.room-card');
-            const roomIndex = [...document.querySelectorAll('.room-card')].indexOf(card);
-            showRoomDetails(roomIndex);
-        }
-    });
+    function loadCarouselImages(tipoHabitacion, directorio) {
+        const images = [
+            `../../static/img/${directorio}/${tipoHabitacion}.jpg`,
+            `../../static/img/${directorio}/${tipoHabitacion}1.jpg`,
+            `../../static/img/${directorio}/${tipoHabitacion}2.jpg`,
+            `../../static/img/${directorio}/${tipoHabitacion}3.jpg`
+        ];
 
-    // Cerrar modal
-    document.querySelector('.close-luxury').addEventListener('click', () => {
-        document.querySelector('.room-modal').style.display = 'none';
-        clearInterval(slideInterval);
-    });
+        const validImages = images.filter(img => {
+            const imgElement = new Image();
+            imgElement.src = img;
+            return new Promise(resolve => {
+                imgElement.onload = () => resolve(true);
+                imgElement.onerror = () => resolve(false);
+            });
+        });
 
-    window.addEventListener('click', (e) => {
-        if(e.target.classList.contains('room-modal')) {
-            document.querySelector('.room-modal').style.display = 'none';
+        initCarousel(validImages);
+    }
+
+    function initCarousel(images) {
+        const carousel = document.getElementById('galleryCarousel');
+        const dotsContainer = document.getElementById('carouselDots');
+
+        // Limpiar contenido previo
+        carousel.innerHTML = '';
+        dotsContainer.innerHTML = '';
+
+        images.forEach((img, index) => {
+            // Crear elementos de imagen
+            const imgElement = document.createElement('img');
+            imgElement.src = img;
+            imgElement.alt = "Imágenes de la habitación";
+            imgElement.classList.add('carousel-item');
+            if (index === 0) imgElement.classList.add('active');
+
+            // Crear puntos de navegación
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => showSlide(index));
+
+            // Añadir al DOM
+            carousel.appendChild(imgElement);
+            dotsContainer.appendChild(dot);
+        });
+
+        // Eventos de flechas
+        document.querySelectorAll('.carousel-arrow').forEach(arrow => {
+            arrow.addEventListener('click', (e) => {
+                const direction = e.target.classList.contains('next') ? 1 : -1;
+                moveSlide(direction);
+                resetSlideShow();
+            });
+        });
+    }
+
+    function showSlide(index) {
+        const slides = document.querySelectorAll('.carousel-item');
+        const dots = document.querySelectorAll('.dot');
+
+        currentSlide = (index + slides.length) % slides.length;
+
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === currentSlide);
+        });
+
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentSlide);
+        });
+    }
+
+    function moveSlide(direction) {
+        const slides = document.querySelectorAll('.carousel-item');
+        currentSlide = (currentSlide + direction + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    function startSlideShow() {
+        if (slideInterval) clearInterval(slideInterval);
+        slideInterval = setInterval(() => {
+            moveSlide(1);
+        }, slideDuration);
+    }
+
+    function resetSlideShow() {
+        startSlideShow();
+    }
+
+    // Cerrar Modal
+    function initModalClose() {
+        closeBtn.onclick = () => {
+            modal.style.display = 'none';
             clearInterval(slideInterval);
+        };
+
+        window.onclick = (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                clearInterval(slideInterval);
+            }
+        };
+    }
+
+    // Otras Funcionalidades
+    document.addEventListener('DOMContentLoaded', function () {
+        const scrollArrow = document.querySelector('.scroll-down-arrow');
+    
+        if (scrollArrow) {
+            scrollArrow.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetSection = document.querySelector('#gallery-section');
+                if (targetSection) {
+                    slowScrollTo(targetSection.offsetTop, 1500); // 1500 ms (1.5 segundos)
+                }
+            });
+        }
+    
+        function slowScrollTo(targetPosition, duration) {
+            const startPosition = window.scrollY;
+            const distance = targetPosition - startPosition;
+            const startTime = performance.now();
+    
+            function animation(currentTime) {
+                const elapsedTime = currentTime - startTime;
+                const progress = Math.min(elapsedTime / duration, 1);
+                window.scrollTo(0, startPosition + distance * easeOutQuad(progress));
+    
+                if (progress < 1) {
+                    requestAnimationFrame(animation);
+                }
+            }
+    
+            function easeOutQuad(t) {
+                return t * (2 - t); // Función de easing para un desplazamiento suave
+            }
+    
+            requestAnimationFrame(animation);
         }
     });
+    
+    
+
+    function initMobileMenu() {
+        const mobileMenuBtn = document.getElementById('menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                mobileMenuBtn.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    mobileMenuBtn.classList.remove('active');
+                }
+            });
+        }
+    }
+
+    // Inicialización General
+    function initializeAll() {
+        initGalleryFilter();
+        initModalCarousel();
+        initModalClose();
+        initSmoothScroll();
+        initMobileMenu();
+    }
+
+    initializeAll();
 });

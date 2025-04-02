@@ -1,6 +1,24 @@
 /* ======================= */
 /* Reglas generales */
 /* ======================= */
+
+:root {
+    --primary-color: #2a3d66;
+    --secondary-color: #5a8ecf;
+    --accent-color: #d3ddff;
+    --text-color: #333;
+    --background-light: #f7f9fc;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --primary-blue: #1e3d59;      /* Azul profundo principal */
+    --secondary-blue: #17263b;    /* Azul oscuro secundario */
+    --accent-blue: #2c5282;       /* Azul acento */
+    --light-blue: #edf2f7;        /* Azul claro */
+    --gold: #c5a47e;              /* Dorado para acentos */
+    --white: #ffffff;
+    --text-dark: #2d3748;
+    --text-light: #e2e8f0;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -2031,78 +2049,11 @@ button:active {
     background-color: #083065; /* Azul más oscuro al pasar el ratón */
 }
 
-/* Pie del formulario */
-.news-footer p {
-    font-size: 14px;
-    color: #555;
-    text-align: center;
-    margin-top: 20px;
-}
-
-.news-footer a {
-    color: #0b316b;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.news-footer a:hover {
-    text-decoration: underline;
-}
 
 
 
-/*-----------------------------------------------------------FOOTER-----------------------------------------------------*/
 
-.main-footer {
-    background-color: #333;
-    color: white;
-    padding: 40px 0;
-    
-    height: max-content;
-    font-family: Arial, sans-serif;
-}
 
-.footer-box {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    width: 80%;
-    margin: auto;
-    height: max-content;
-}
-
-.footer-sec {
-    width: 30%;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.footer-sec h1 {
-    font-size: 28px;
-    margin-bottom: 20px;
-    font-family: "Cormorant Garamond", serif;
-}
-
-.footer-sec p {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #ccc;
-    margin-bottom: 20px;
-    
-}
-
-.footer-sec .links-footer a {
-    display: block;
-    font-size: 20px;
-    color: #fff;
-    margin: 3% 0;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.footer-sec .links-footer a:hover {
-    color: #b9b9b9;
-}
 
 .language-selector {
     margin-top: 20px;
@@ -2123,11 +2074,7 @@ button:active {
     border-color: #f0f0f0;
 }
 
-.img-footer {
-    margin-top: 20px;
-    width: 150px;
-    height: auto;
-}
+
 
 .sec-tres {
     display: flex;
@@ -2243,4 +2190,3 @@ button:active {
 
 
 
-  

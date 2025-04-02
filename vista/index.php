@@ -61,6 +61,7 @@ if ($controller !== null) {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link rel="stylesheet" href="../static/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../static/css/GENERAL/footer.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <!-- Scripts -->
@@ -493,59 +494,56 @@ if ($controller !== null) {
     </section>
 
 
-    <footer class="main-footer">
-        <div class="footer-box">
-            <!-- Sección: Sobre el Hotel -->
-            <div class="footer-sec">
-                <h1>SOBRE LOS HOTELS</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.</p>
-                <a href="../vista/index.php"><img class="img-footer" src="../static/img/logo_blanco.png" alt=""></a>
-                <div class="language-selector">
-                <select id="language-select" onchange="changeLanguage()">
-                    <option value="es">Español</option>
-                    <option value="en">English</option>
-                    <option value="fr">Français</option>
-                </select>
-                </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Columna 1 - Logo y Descripción -->
+            <div class="footer-section">
+                <img src="../static/img/logo_blanco.png" alt="Logo Hotel Calíope" class="footer-logo">
+                <p>Descubre el lujo y la comodidad en cada rincón del mundo con Hotel Calíope.</p>
             </div>
 
-            <!-- Sección: Links -->
-            <div class="footer-sec">
-                <h1>LINKS</h1>
-                <div class="links-footer">
-                    <a href="#">Sobre nosotros</a>
-                    <a href="#">Servicios</a>
-                    <a href="#">Hoteles</a>
-                </div>
+            <!-- Columna 2 - Enlaces rápidos -->
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a></li>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/hoteles.php">Hoteles</a></li>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/galeria/galeria.php">Galería</a></li>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/ofertas/ofertas.php">Ofertas</a></li>
+                </ul>
             </div>
 
-            <!-- Sección: Contacto y Redes Sociales -->
-            <div class="footer-sec">
-                <h1>DÓNDE NOS ENCONTRAMOS</h1>
-                <div class="sec-tres">
-                    <p>Calle xxx 99999 <br> Lorem ipsum, España</p>
-                    <span class="contact-info">
-                        <i class="fa-solid fa-phone"></i> 999 999 999
-                    </span>
-                    <span class="contact-info">
-                        <i class="fa-solid fa-envelope"></i> hotelcalope@gmail.com
-                    </span>
-                    <div class="social-icons">
-                        <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    </div>
+            <!-- Columna 3 - Contacto -->
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +34 123 456 789</li>
+                    <li><i class="fas fa-envelope"></i> info@hotelcaliope.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Calle Principal 123, Madrid</li>
+                </ul>
+            </div>
+
+            <!-- Columna 4 - Redes Sociales -->
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
-        <div class="privacidad">
-            <p>Lorem ipsum dolor sit ame</p>
-        </div>
-        <div id="privacy-banner" class="privacy-banner">
-            <p>Este sitio web utiliza cookies para garantizar que obtengas la mejor experiencia. Consulta nuestra <a href="../vista/politicas/privacidad.php">Política de Privacidad</a>.</p>
-            <button id="accept-btn">Aceptar</button>
-        </div>
 
+        <!-- Sección Inferior -->
+        <div class="footer-bottom">
+            <div class="footer-links">
+                <a href="../../vista/politicas/privacidad.php">Política de Privacidad</a>
+                <a href="../../vista/politicas/cookies.php">Política de Cookies</a>
+                <a href="../../vista/politicas/avisolegal.php">Aviso Legal</a>
+            </div>
+            <p>&copy; 2025 Hotel Calíope. Todos los derechos reservados.</p>
+        </div>
     </footer>
 
     <!-----------------------------------SCRIPTS---------------------------->
