@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Cerrar conexión
 $database->closeConnection();
 ?>
- -->
+
 
 <!DOCTYPE html>
 <html lang="es">

@@ -11,16 +11,22 @@ class HabitacionesModel {
 
 
     public function obtenerHabitaciones() {
-        $sql = "SELECT h.*, 
-                       GROUP_CONCAT(s.Servicio ORDER BY s.Servicio SEPARATOR ', ') AS Servicios_Adicionales
-                FROM Habitaciones h
-                LEFT JOIN Servicio s ON h.Id_Hotel = s.Id_Hotel AND s.TipoServicio = 1  -- Solo servicios incluidos
-                GROUP BY h.Id_Habitaciones";
-    
+        $sql = "
+        SELECT h.Id_Habitaciones, h.Numero_Habitacion, h.Tipo, h.Capacidad, h.Precio, h.Descripcion, 
+               GROUP_CONCAT(s.Servicio ORDER BY s.Servicio SEPARATOR ', ') AS Servicios_Adicionales,
+               ho.Nombre AS Hotel, ho.Direccion, p.Pais AS Pais, c.Nombre AS Continente, c.Id_Continente
+        FROM Habitaciones h
+        LEFT JOIN Servicio s ON h.Id_Hotel = s.Id_Hotel AND s.TipoServicio = 1  -- Solo servicios incluidos
+        JOIN Hotel ho ON h.Id_Hotel = ho.Id_Hotel
+        JOIN Pais p ON ho.Id_Pais = p.Id_Pais
+        JOIN Continentes c ON p.Id_Continente = c.Id_Continente
+        GROUP BY h.Id_Habitaciones";
+        
         $query = $this->conn->prepare($sql);
         $query->execute();
         return $query->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+    
     
 
     public function obtenerPrecioHabitacion($habitacionId) {
@@ -34,17 +40,62 @@ class HabitacionesModel {
         }
          // Retorna 0 si no encuentra la habitación
     }
+   // Método en HabitacionesModel
+   public function obtenerHabPorContinente($continenteId) {
+        try {
+            $query = "
+            SELECT h.Id_Habitaciones, h.Numero_Habitacion, h.Tipo, h.Capacidad, h.Precio, h.Descripcion, 
+                h.Servicios_Adicionales, ho.Nombre AS Hotel, ho.Direccion, p.Pais AS Pais, 
+                c.Id_Continente, c.Nombre AS Continente
+            FROM Habitaciones h
+            JOIN Hotel ho ON h.Id_Hotel = ho.Id_Hotel
+            JOIN Pais p ON ho.Id_Pais = p.Id_Pais
+            JOIN Continentes c ON p.Id_Continente = c.Id_Continente
+            WHERE c.Id_Continente = ?  
+            ORDER BY h.Numero_Habitacion
+            ";
+            
+            // Preparar la consulta
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("i", $continenteId); // Asignar el parámetro
+            $stmt->execute();
 
+            // Obtener resultados
+            $result = $stmt->get_result();
+
+            // Verificar si hay resultados
+            if ($result->num_rows > 0) {
+                $habitaciones = [];
+                while ($row = $result->fetch_assoc()) {
+                    $habitaciones[] = $row; // Guardar cada habitación
+                }
+                return $habitaciones;
+            } else {
+                return null; // Si no hay resultados, devolver null
+            }
+        } catch (Exception $e) {
+            error_log("Error al obtener habitaciones por continente: " . $e->getMessage());
+            return null;
+        }
+    }
+
+
+
+    
+
+
+    
     public function obtenerHabitacionPorId($habitacionId) {
         try {
             $sql = "SELECT h.*, 
                      GROUP_CONCAT(s.Servicio SEPARATOR ', ') AS Servicios_Adicionales
               FROM Habitaciones h
               LEFT JOIN Servicio s ON h.Id_Hotel = s.Id_Hotel 
-              WHERE h.Id_Habitaciones = $habitacionId AND s.TipoServicio = 1
+              WHERE h.Id_Habitaciones = ? AND s.TipoServicio = 1
               GROUP BY h.Id_Habitaciones";
+              
             $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("i", $habitacionId);
+            $stmt->bind_param("i", $habitacionId); // Ahora sí hay un "?" en la consulta
             $stmt->execute();
     
             $result = $stmt->get_result();
@@ -62,6 +113,7 @@ class HabitacionesModel {
             return null;
         }
     }
+    
     
 
     public function obtenerTiposHabitacion() {

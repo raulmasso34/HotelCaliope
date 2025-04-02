@@ -34,6 +34,7 @@ class HabitacionController {
         return $this->habitacionModel->obtenerHabitacionesPorHotel($hotelId);
     }
 
+    // Obtener todas las habitaciones agrupadas por tipo
     public function obtenerTodasLasHabitacionesAgrupadas() {
         $habitaciones = $this->habitacionModel->obtenerHabitaciones();
         $habitacionesAgrupadas = [];
@@ -50,7 +51,18 @@ class HabitacionController {
     
         return $habitacionesAgrupadas;
     }
-    
-    
+
+    // Obtener habitaciones por continente
+   // Método en HabitacionController
+public function obtenerHabPorContinente($continenteId) {
+    // Verificar que el parámetro continenteId no sea nulo o incorrecto
+    if ($continenteId == null || $continenteId <= 0) {
+        return null;
+    }
+
+    // Llamar al modelo para obtener las habitaciones
+    return $this->habitacionModel->obtenerHabPorContinente($continenteId);
+}
+
 }
 ?>
