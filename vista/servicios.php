@@ -117,6 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php echo htmlspecialchars($actividad['Nombre']); ?> - $<?php echo number_format($actividad['Precio'], 2); ?>
                 </label><br>
             <?php endforeach; ?>
+       
         </div>
 
         <div class="continuar-btn">

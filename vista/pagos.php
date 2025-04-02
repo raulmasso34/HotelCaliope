@@ -76,9 +76,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['Reservas']['actividades'] = $_POST['Id_Actividades'] ?? [];
 }
 
+echo "<pre>";
+print_r($actividadesSeleccionadas);
+echo "</pre>";
 
 
 ?>
+
 <pre><?php print_r($_SESSION['Reservas']); ?></pre>
 <!DOCTYPE html>
 <html lang="es">

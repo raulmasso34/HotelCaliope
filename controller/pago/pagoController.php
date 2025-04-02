@@ -92,8 +92,11 @@ class PagoController {
 
             if (!empty($datos['actividades'])) {
                 foreach ($datos['actividades'] as $idActividad => $precio) {
-                    $this->reservaModel->asociarActividadAReserva($idReserva, $idActividad, $precio);
+                    if (!$this->reservaModel->asociarActividadAReserva($idReserva, $idActividad,$precio)) {
+                        throw new Exception("Error al asociar el actividad ID:" );
+                    }
                 }
+                
             }
             
 
@@ -168,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['idReserva'] = $resultado['idReserva'];
 
     // Redirigir a reserva_confirmada.php con el ID de la reserva
-    header("Location: ../vista/pagos.php");
+    header("Location: /HotelCaliope2/vista/pagos.php");
     exit();
 } else {
     die(json_encode($resultado));

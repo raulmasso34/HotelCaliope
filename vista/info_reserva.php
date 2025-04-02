@@ -71,7 +71,7 @@ if (isset($_GET['id'])) {
         $precio_total_calculado = $precio_habitacion * $numero_noches * $numero_personas;
 
         // Manejo de la cancelación
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reservaId'])) {
+     /*   if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reservaId'])) {
             $reservaId = $_POST['reservaId'];
             if ($reservaController->cancelar($reservaId)) {
                 // Redirigir o mostrar mensaje de éxito
@@ -80,7 +80,7 @@ if (isset($_GET['id'])) {
             } else {
                 echo "Error al cancelar la reserva.";
             }
-        }
+        }*/
 
     } else {
         echo "<p>La reserva no se encontró. Por favor, verifica el ID.</p>";

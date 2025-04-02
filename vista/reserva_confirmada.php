@@ -1,8 +1,6 @@
 <?php
 session_start();
-if (!isset($_GET['idReserva'])) {
-    die("Error: No se recibió el ID de la reserva.");
-}
+
 
 $idReserva = $_GET['idReserva'];
 
@@ -19,7 +17,7 @@ require_once __DIR__ . '/../controller/hotel/hotelController.php';
 // ✅ Verificar si se ha recibido el ID de la reserva
 if (!isset($_GET['idReserva'])) {
     die("Error: No se ha recibido el ID de la reserva.");
-}
+} 
 
 $idReserva = $_GET['idReserva'];
 
