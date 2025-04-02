@@ -3,8 +3,8 @@
     const conexion = mysql.createConnection({
         host: 'localhost',
         user: 'root',
-      //  password: 'password',
-          password: 'P@ssw0rd',
+      password: 'password',
+         // password: 'P@ssw0rd',
         database: 'HotelCaliope'
     })
 
