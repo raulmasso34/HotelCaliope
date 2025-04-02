@@ -54,6 +54,130 @@ if (!empty($hoteles)) {
 <body>
 
 
+    <header class="main-header">
+        <div class="carousel">
+            <img class="carousel-background" src="../../static/img/california/california.jpg" alt="Fondo 1">
+            <img class="carousel-background" src="../../static/img/Galicia/galicia1.jpg" alt="Fondo 2">
+            <img class="carousel-background" src="../../static/img/europa/pirineos.jpg" alt="Fondo 3">
+        </div>
+        
+        <section class="main-up">
+            <div class="main-up-left">
+                <img src="../../static/img/logo_blanco.png" alt="Logo Hotel Calíope">
+            </div>
+
+            <div class="main-up-right">
+                <div class="links">
+                    <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                    
+                    <div class="dropdown">
+                        <a href="../../vista/hoteles.php" class="dropbtn">Hoteles</a>
+                        <div class="dropdown-content">
+                            <div class="dropdown-section">
+                                <h4>Europa</h4>
+                                <a href="../../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                                <a href="../../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                                <a href="../../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                            </div>
+                            <div class="dropdown-section">
+                                <h4>USA</h4>
+                                <a href="../../vista/ciudades/USA/Florida.php">Florida</a>
+                                <a href="../../vista/ciudades/USA/California.php">California</a>
+                                <a href="../../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="../../vista/galeria/galeria.php">Galería</a>
+                    <a href="../../vista/ofertas/ofertas.php">Ofertas</a>
+                    <a href="../../vista/Contacto/contacto.php">Contacto</a>
+                    
+                    <!-- Contenedor del perfil -->
+                    <div class="dropdown-perfil">
+                        <a class="icon-perfil" href="javascript:void(0);">
+                            <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
+                        </a>
+                        <div class="dropdown-perfil-content">
+                            <a href="../../vista/Clientes/login.php">
+                                <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+                            </a>
+                            <a href="../../vista/Clientes/perfil.php">
+                                <i class="bi bi-person"></i> Perfil
+                            </a>
+                            <a href="../../controller/clients/LoginController.php?action=logout" style="color: red;"> 
+                                <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menú hamburguesa -->
+            <div id="menu-toggle" class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+
+            <!-- Menú móvil -->
+            <div class="mobile-menu">
+                <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                <a href="../../vista/galeria/galeria.php">Galería</a>
+                <a href="../../vista/ofertas/ofertas.php">Ofertas</a>
+                <a href="../../vista/Contacto/contacto.php">Contacto</a>
+                <a href="../../vista/Clientes/login.php">Iniciar sesión</a>
+                <a href="../../vista/Clientes/perfil.php">Perfil</a>
+                
+                <div class="dropdown-mobile">
+                    <a href="#" class="dropbtn">Hoteles</a>
+                    <div class="dropdown-content-mobile">
+                        <div class="dropdown-section">
+                            <h4>Europa</h4>
+                            <a href="../../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                            <a href="../../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                            <a href="../../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>USA</h4>
+                            <a href="../../vista/ciudades/USA/Florida.php">Florida</a>
+                            <a href="../../vista/ciudades/USA/California.php">California</a>
+                            <a href="../../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="main-center">
+            <div class="center-up">
+                <div class="center-up-up">
+                    <span style="font-size: 20px; color: rgb(230, 182, 11);">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </span>
+                </div>
+                <div class="center-up-down">
+                    <h5>Descubre Nuestros Hoteles</h5>
+                    <h1>Galería de Destinos Exclusivos</h1>
+                </div>
+            </div>
+        </section>
+        <div class="scroll-down">
+            <a href="#gallery-section" class="scroll-down-arrow">
+                <i class="fa-solid fa-chevron-down"></i>
+            </a>
+        </div>
+    </header>
+
+
+
+
+
+
+
     
     <div class="gallery-container">
         <div class="filter-buttons">
