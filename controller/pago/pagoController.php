@@ -90,13 +90,23 @@ class PagoController {
                 }
             }
 
+                    // In your PagoController class, replace the activities section with this:
             if (!empty($datos['actividades'])) {
                 foreach ($datos['actividades'] as $idActividad => $precio) {
-                    if (!$this->reservaModel->asociarActividadAReserva($idReserva, $idActividad,$precio)) {
-                        throw new Exception("Error al asociar el actividad ID:" );
+                    // Add debugging to see what values are being processed
+                    error_log("Asociando actividad - ID: '$idActividad', Precio: '$precio'");
+                    
+                    // Validar que el ID de actividad sea válido
+                    if (empty($idActividad) || !is_numeric($idActividad)) {
+                        error_log("ID de actividad inválido: " . var_export($idActividad, true));
+                        throw new Exception("Error: ID de actividad inválido o vacío.");
+                    }
+                    
+                    // Intentar asociar la actividad
+                    if (!$this->reservaModel->asociarActividadAReserva($idReserva, $idActividad, $precio)) {
+                        throw new Exception("Error al asociar la actividad ID: " . $idActividad);
                     }
                 }
-                
             }
             
 
@@ -167,15 +177,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Procesar el pago
     $resultado = $pagoController->procesarPagoReserva($datosReserva);
 
-   if ($resultado['success']) {
-    $_SESSION['idReserva'] = $resultado['idReserva'];
-
-    // Redirigir a reserva_confirmada.php con el ID de la reserva
-    header("Location: /HotelCaliope2/vista/pagos.php");
-    exit();
-} else {
-    die(json_encode($resultado));
-}
+    if ($resultado['success']) {
+        $_SESSION['idReserva'] = $resultado['idReserva'];
+        
+        // Verificar si el formulario de pago fue enviado
+        if (isset($_POST['pago_enviado'])) {
+            // Si el pago ya fue procesado, redirigir a la página de confirmación
+            header("Location: ../../vista/reserva_confirmada.php?idReserva=" . $resultado['idReserva']);
+            exit();
+        } else {
+            // Si es la primera vez (reserva exitosa pero sin pago), redirigir a pagos
+            header("Location: ../vista/pagos.php?idReserva=" . $resultado['idReserva']);
+            exit();
+        }
+    } else {
+        die(json_encode($resultado));
+    }
     
 }
 

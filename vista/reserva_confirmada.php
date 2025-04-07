@@ -4,9 +4,6 @@ session_start();
 
 $idReserva = $_GET['idReserva'];
 
-echo "<h1>Reserva Confirmada</h1>";
-echo "<p>Su reserva con ID <strong>$idReserva</strong> ha sido confirmada.</p>";
-
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -69,11 +66,7 @@ $hotelNombre = $hotelDetails['Nombre'] ?? 'Hotel Desconocido';
 // ✅ Obtener actividades y servicios seleccionados
 $actividades = $reserva['actividades'] ?? [];
 $servicios = $reserva['servicios'] ?? [];
-// Mostrar toda la información de la sesión en formato legible
-echo "<h2 class='h5 border-bottom pb-2 mt-3'>Contenido de la sesión</h2>";
-echo "<pre>";
-print_r($_SESSION); // Muestra la información de la sesión
-echo "</pre>";
+
 ?>
 
 <!DOCTYPE html>
