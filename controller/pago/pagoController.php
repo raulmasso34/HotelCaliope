@@ -49,6 +49,7 @@ class PagoController {
 
             $precioHabitacion = floatval($datos['precioHabitacion']);
             $precioTotalServicios = 0;
+            $precioTotalActividad = 0;
 
             if (!empty($datos['servicios']) && is_array($datos['servicios'])) {
                 foreach ($datos['servicios'] as $precio) {
@@ -56,9 +57,16 @@ class PagoController {
                 }
             }
 
+            if (!empty($datos['actividades']) && is_array($datos['actividades'])) {
+                foreach ($datos['actividades'] as $precio) {
+                    $precioTotalActividad += floatval($precio);
+                }
+            }
+
             // Actualizar los precios en los datos de la reserva
             $datos['precioServicio'] = $precioTotalServicios;
-            $datos['precioTotal'] = $precioHabitacion + $precioTotalServicios;
+            $datos['precioActividad'] = $precioTotalActividad;
+            $datos['precioTotal'] = $precioHabitacion + $precioTotalServicios + $precioTotalActividad;
 
             // ✅ 4. Insertar la reserva en la base de datos
             $idReserva = $this->reservaModel->insertarReserva(
