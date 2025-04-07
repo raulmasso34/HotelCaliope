@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/actividades.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <!-- datatables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.bootstrap5.css">
@@ -14,63 +15,119 @@
         <title>reservas</title>  
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/clientes">CLIENTES</a>
-            </li>
-            <li class="nav-item">
-              <% if (user && user.role === 'Hotel') { %>
-                <a class="nav-link active" href="/hotel/<%= user.id_hotel %>">HOTEL</a>
-            <% } else if (user && user.role === 'General') { %>
-              <a class="nav-link active" href="/hoteles">HOTEL</a> %>
-            <% } %>
-            </li>
-            <li class="nav-item">
-              <% if (user && user.role === 'Hotel') { %>
-                <a class="nav-link active" href="/oferta/<%= user.id_hotel %>">OFERTAS</a>
-            <% } else if (user && user.role === 'General') { %>
-              <a class="nav-link active" href="/ofertas">OFERTAS</a> %>
-            <% } %>
-            </li>
-            <li class="nav-item">
-              <% if (user && user.role === 'Hotel') { %>
-                <a class="nav-link active" href="/actividad/<%= user.id_hotel %>">ACTIVIDADES</a>
-            <% } else if (user && user.role === 'General') { %>
-              <a class="nav-link active" href="/actividades">ACTIVIDADES</a> %>
-            <% } %>
-            </li>
-            <li class="nav-item active">
-              <% if (user && user.role === 'Hotel') { %>
-                <a class="nav-link active" href="/servicios/<%= user.id_hotel %>">SERVICIO</a>
-            <% } else if (user && user.role === 'General') { %>
-              <a class="nav-link active" href="/servicio">SERVICIO</a> %>
-            <% } %>              </li>
-            <li class="nav-item">
-              <% if (user && user.role === 'Hotel') { %>
-                <a class="nav-link active" href="/tarifas/<%= user.id_hotel %>">TARIFA</a>
-            <% } else if (user && user.role === 'General') { %>
-              <a class="nav-link active" href="/tarifa">TARIFA</a> %>
-            <% } %>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/pais/">PAIS</a>
-            </li>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <div class="admin-sidebar">
+          <div class="sidebar-header">
+              <h2>PAIS</h2>
+              <div class="admin-section">PANEL DE CONTROL</div>
+          </div>
+          
+          <nav class="sidebar-menu">
+              <div class="menu-group">
+                  <div class="menu-title">GESTIÓN</div>
+                  <div class="menu-item-container">
+                      <% if (user && user.role === 'Hotel') { %>
+                          <a class="menu-item <%= currentPage === 'hotel' ? 'active' : '' %>" href="/hotel/<%= user.id_hotel %>">
+                              <i class="fa-solid fa-hotel"></i> Hotel
+                              <i class="fa-solid fa-chevron-right ms-auto"></i>
+                          </a>
+                          
+                          <div class="submenu">
+                              <a href="/hotel/informacion/estadistica/todoshoteles/menu-todo<%= user.id_hotel %>" class="submenu-item">
+                                  <i class="fa-solid fa-chart-pie"></i> Estadísticas
+                              </a>
+                              <a href="/historico/ofertas/<%= user.id_hotel %>" class="submenu-item">
+                                  <i class="fa-solid fa-clock-rotate-left"></i> Histórico
+                              </a>
+                          </div>
+                      <% } else if (user && user.role === 'General') { %>
+                          <a class="menu-item" href="/hoteles">
+                              <i class="fa-solid fa-hotel"></i> Hoteles
+                              <i class="fa-solid fa-chevron-right ms-auto"></i>
+                          </a>
+                          <div class="submenu">
+                              <a href="/no" class="submenu-item">
+                                  <i class="fa-solid fa-chart-pie"></i> Estadísticas
+                              </a>
+                              <a href="/historico/ofertas" class="submenu-item">
+                                  <i class="fa-solid fa-clock-rotate-left"></i> Histórico
+                              </a>
+                          </div>
+                          
+                      <% } %>
+                  </div>
 
-          </ul>
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-        </div>
+                
+                  <% if (user && user.role === 'Hotel') { %>
+                      <a class="menu-item" href="/oferta/<%= user.id_hotel %>">
+                          <i class="fa-solid fa-tag"></i> Ofertas
+                      </a>
+                  <% } else if (user && user.role === 'General') { %>
+                      <a class="menu-item" href="/ofertas">
+                          <i class="fa-solid fa-tag"></i> Ofertas
+                      </a>
+                  <% } %>
+
+                  <% if (user && user.role === 'Hotel') { %>
+                      <a class="menu-item" href="/actividad/<%= user.id_hotel %>">
+                          <i class="fa-solid fa-person-hiking"></i> Actividades
+                      </a>
+                  <% } else if (user && user.role === 'General') { %>
+                      <a class="menu-item" href="/actividades">
+                          <i class="fa-solid fa-person-hiking"></i> Actividades
+                      </a>
+                  <% } %>
+
+                  <% if (user && user.role === 'Hotel') { %>
+                      <a class="menu-item" href="/servicios/<%= user.id_hotel %>">
+                          <i class="fa-solid fa-bell-concierge"></i> Servicio
+                      </a>
+                  <% } else if (user && user.role === 'General') { %>
+                      <a class="menu-item" href="/servicio">
+                          <i class="fa-solid fa-bell-concierge"></i> Servicio
+                      </a>
+                  <% } %>
+
+                  <% if (user && user.role === 'Hotel') { %>
+                      <a class="menu-item" href="/tarifas/<%= user.id_hotel %>">
+                          <i class="fa-solid fa-money-bill-wave"></i> Tarifa
+                      </a>
+                  <% } else if (user && user.role === 'General') { %>
+                      <a class="menu-item" href="/tarifa">
+                          <i class="fa-solid fa-money-bill-wave"></i> Tarifa
+                      </a>
+                  <% } %>
+
+                  <a class="menu-item" href="/pais/">
+                      <i class="fa-solid fa-earth-americas"></i> País
+                  </a>
+
+                  <% if (user && user.role === 'Hotel') { %>
+                      <a class="menu-item" href="/reserva/<%= user.id_hotel %>">
+                          <i class="fa-solid fa-calendar-days"></i>  Reservas
+                      </a>
+                  <% } else if (user && user.role === 'General') { %>
+                      <a class="menu-item" href="/reservas">
+                          <i class="fa-solid fa-calendar-days"></i> Reservas
+                      </a>
+                  <% } %>
+              </div>
+
+              <div class="menu-group">
+                  <div class="menu-title">CUENTA</div>
+                  <a class="menu-item" href="/logout">
+                      <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                  </a>
+              </div>
+              <!-- Añade este botón en el sidebar (debajo del logo) -->
+              <div class="theme-switcher mb-4">
+                  <button id="themeToggle" class="btn btn-sm btn-outline-secondary">
+                      <i class="fa-solid fa-moon"></i>
+                  </button>
+              </div>
+          </nav>
       </div>
-    </nav>
 
 
     <div class="container">
@@ -144,6 +201,33 @@
 }
 
   </script>
+   <script>// Añade este script COLOR DARK
+    document.addEventListener('DOMContentLoaded', function() {
+ const themeToggle = document.getElementById('themeToggle');
+ const body = document.documentElement;
+ 
+ // Cargar tema guardado o detectar preferencia del sistema
+ const savedTheme = localStorage.getItem('theme') || 
+                   (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+ body.setAttribute('data-theme', savedTheme);
+ updateToggleIcon(savedTheme);
+
+ themeToggle.addEventListener('click', () => {
+     const currentTheme = body.getAttribute('data-theme');
+     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+     
+     body.setAttribute('data-theme', newTheme);
+     localStorage.setItem('theme', newTheme);
+     updateToggleIcon(newTheme);
+ });
+
+ function updateToggleIcon(theme) {
+     const icon = themeToggle.querySelector('i');
+     icon.className = theme === 'light' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+     themeToggle.title = theme === 'light' ? 'Cambiar a tema oscuro' : 'Cambiar a tema claro';
+ }
+});
+</script>
   
   </body>
 </html>
