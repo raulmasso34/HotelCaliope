@@ -1,0 +1,134 @@
+:root {
+    --primary-color: #2a3d66;
+    --secondary-color: #5a8ecf;
+    --accent-color: #d3ddff;
+    --text-color: #333;
+    --background-light: #f7f9fc;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --primary-blue: #1e3d59;      /* Azul profundo principal */
+    --secondary-blue: #17263b;    /* Azul oscuro secundario */
+    --accent-blue: #2c5282;       /* Azul acento */
+    --light-blue: #edf2f7;        /* Azul claro */
+    --gold: #c5a47e;              /* Dorado para acentos */
+    --white: #ffffff;
+    --text-dark: #2d3748;
+    --text-light: #e2e8f0;
+}
+
+    /* Estilos generales */
+    body {
+        background-color: var(--light-blue);
+        color: var(--text-dark);
+        transition: var(--transition-smooth);
+    }
+
+    /* Navbar */
+    .navbar {
+        background-color: var(--primary-blue) !important;
+        border-bottom: 2px solid var(--gold);
+    }
+
+    .navbar-brand,
+    .nav-link {
+        color: var(--text-light) !important;
+        transition: var(--transition-smooth);
+    }
+
+    .nav-link:hover {
+        color: var(--gold) !important;
+    }
+
+    /* Card */
+    .card {
+        background-color: var(--white);
+        border: 2px solid var(--primary-blue);
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: var(--primary-blue);
+        color: var(--text-light);
+        font-weight: 600;
+        border-bottom: 2px solid var(--gold);
+    }
+
+    /* Formulario */
+    .form-label {
+        color: var(--primary-blue);
+        font-weight: 500;
+    }
+
+    .form-control,
+    .form-select {
+        border: 1px solid var(--primary-blue);
+        border-radius: 4px;
+        transition: var(--transition-smooth);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--gold);
+        box-shadow: 0 0 0 0.25rem rgba(197, 164, 126, 0.25);
+    }
+
+    /* Botones */
+    .btn-primary {
+        background-color: var(--primary-blue);
+        border-color: var(--primary-blue);
+        padding: 0.5rem 1.5rem;
+        transition: var(--transition-smooth);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--secondary-blue);
+        border-color: var(--secondary-blue);
+        transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+        background-color: var(--accent-blue);
+        border-color: var(--accent-blue);
+        color: var(--text-light);
+    }
+
+    .btn-outline-success {
+        border-color: var(--gold);
+        color: var(--gold);
+    }
+
+    .btn-outline-success:hover {
+        background-color: var(--primary-blue);
+        border-color: var(--gold);
+        color: var(--text-light);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .container {
+            padding: 0 15px;
+        }
+        
+        .card {
+            margin-top: 1rem;
+        }
+        
+        .navbar-collapse {
+            background-color: var(--primary-blue);
+            padding: 1rem;
+        }
+        
+        .form-control {
+            font-size: 0.9rem;
+        }
+    }
+
+    /* Efectos adicionales */
+    select:hover {
+        cursor: pointer;
+        background-color: var(--light-blue);
+    }
+
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
