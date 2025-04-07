@@ -1,0 +1,327 @@
+:root {
+    /* Light Theme (Mejorado) */
+    --bg-color: #ffffff;
+   
+    --sidebar-bg: #1e3d59;
+    --table-header-bg: #2a3042;
+    --primary-color: #2563eb;
+    --menu-hover: rgba(255, 255, 255, 0.1);
+    --menu-title-color: #8f9bb3;
+    --menu-item-color: #cbd5e1;
+    --container-bg: #f8fafc;
+    --border-color: #e2e8f0;
+    --text-color: #2d3748; /* Gris oscuro legible */
+    --search-bg: #ffffff; /* Fondo blanco */
+    --sidebar-text: #ffffff;
+}
+
+[data-theme="dark"] {
+    /* Dark Theme (Optimizado) */
+    --bg-color: #0f172a;
+    --text-color: #f8fafc;
+    --sidebar-bg: #1e293b;
+    --table-header-bg: #334155;
+    --primary-color: #3b82f6;
+    --menu-hover: rgba(255, 255, 255, 0.05);
+    --menu-title-color: #94a3b8;
+    --menu-item-color: #cbd5e1;
+    --container-bg: #1e293b;
+    --border-color: #475569;
+    --search-bg: #1e293b;
+    --sidebar-text: #f1f5f9;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.admin-container {
+    display: flex;
+    min-height: 100vh;
+    background: var(--container-bg);
+}
+
+.admin-sidebar {
+    width: 280px;
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    border-right: 1px solid rgb(218, 204, 204);
+    padding: 25px;
+    position: fixed;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.sidebar-header {
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-header h2 {
+    color: var(--sidebar-text);
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+.admin-section {
+    color: var(--menu-title-color);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+.sidebar-menu {
+    margin-top: 30px;
+}
+
+.menu-group {
+    margin-bottom: 35px;
+}
+
+.menu-title {
+    color: var(--menu-title-color);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    color: var(--menu-item-color);
+    text-decoration: none;
+    padding: 12px 16px;
+    margin: 6px 0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    gap: 12px;
+}
+
+.menu-item i {
+    width: 24px;
+    font-size: 1rem;
+    color: inherit;
+}
+
+.menu-item:hover {
+    background: var(--menu-hover);
+    color: var(--sidebar-text);
+    transform: translateX(4px);
+}
+
+.admin-main {
+    flex: 1;
+    margin-left: 280px;
+    padding: 30px;
+    transition: all 0.3s ease;
+}
+
+.search-container {
+    max-width: 400px;
+    margin-bottom: 2rem;
+}
+
+.search-input {
+    background: var(--search-bg);
+    border: 2px solid var(--border-color);
+    color: var(--text-color);
+    padding: 12px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.search-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.table {
+    background: var(--search-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-color); /* Aseguramos herencia de color */
+}
+
+.table thead th {
+    background-color: var(--table-header-bg) !important;
+    color: var(--sidebar-text) !important;
+    padding: 16px;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.table tbody td {
+    padding: 14px 16px;
+    vertical-align: middle;
+    border-color: var(--border-color) !important;
+    color: var(--text-color) !important; /* Forzamos color del texto */
+}
+
+.btn-outline-primary {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: var(--sidebar-text);
+    transform: translateY(-1px);
+}
+
+.password-hidden {
+    color: var(--text-color);
+    opacity: 0.9;
+    font-family: monospace;
+}
+
+/* Botones de acción */
+.btn-warning {
+    background-color: #8f6f10;
+    border-color: #eab308;
+    color: #ffffff;
+}
+
+.btn-danger {
+    background-color: #771e1e;
+    border-color: #ef4444;
+    color: white;
+}
+
+.btn-info {
+    background-color: #162e53;
+    border-color: #3b82f6;
+    color: white;
+}
+
+
+/*------------------------------------------SUB MENU ESTADISTICAS DE HOTEL*/
+
+/* Contenedor principal del menú */
+.menu-item-container {
+    position: relative;
+    margin: 5px 0;
+}
+
+/* Submenu desplegable */
+.submenu {
+    position: absolute;
+    top: calc(100% + 5px); /* Separación del elemento padre */
+    left: 0;
+    min-width: 100%;
+    background: var(--sidebar-bg);
+    border-radius: 8px;
+    padding: 8px 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    border: 1px solid var(--border-color);
+    transform: translateY(-10px);
+}
+
+/* Mostrar submenu al hacer hover */
+.menu-item-container:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Items del submenu */
+.submenu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    color: var(--menu-item-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.submenu-item:hover {
+    background: var(--menu-hover);
+    color: var(--sidebar-text);
+    padding-left: 20px;
+}
+
+/* Flecha indicadora */
+.fa-chevron-right {
+    transition: transform 0.3s ease;
+    font-size: 0.75rem;
+    margin-left: auto;
+    color: var(--menu-item-color);
+}
+
+.menu-item-container:hover .fa-chevron-right {
+    transform: rotate(180deg);
+    color: var(--sidebar-text);
+}
+
+/* Espaciado entre elementos del menú */
+.menu-group {
+    margin-bottom: 15px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .submenu {
+        position: static;
+        box-shadow: none;
+        margin-top: 5px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+    
+    .menu-item-container:hover .submenu {
+        max-height: 200px;
+        transform: none;
+    }
+    
+    .submenu-item {
+        padding-left: 30px;
+    }
+    
+    .fa-chevron-right {
+        display: none;
+    }
+}
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-container {
+        flex-direction: column;
+    }
+    
+    .admin-sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+        padding: 20px;
+    }
+    
+    .admin-main {
+        margin-left: 0;
+        padding: 20px;
+    }
+    
+    .menu-item {
+        padding: 10px 12px;
+    }
+    
+    .table thead th {
+        padding: 12px;
+    }
+}
