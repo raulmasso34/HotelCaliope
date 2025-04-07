@@ -314,24 +314,28 @@ class ReservaModel {
     
     
     
-public function asociarActividadAReserva($idReserva, $idActividad, $precio) {
-    $query = "INSERT INTO Reservas_Actividades (Id_Reserva, Id_Actividad, Precio_Actividad) VALUES (?, ?, ?)";
-    $stmt = $this->conn->prepare($query);
-    
-    if (!$stmt) {
-        die("Error en la consulta: " . $this->conn->error);
+    public function asociarActividadAReserva($idReserva, $idActividad, $precio) {
+        try {
+            $query = "INSERT INTO Reservas_Actividades (Id_Reserva, Id_Actividad, Precio_Actividad) VALUES (?, ?, ?)";
+            $stmt = $this->conn->prepare($query);
+            
+            if (!$stmt) {
+                throw new Exception("Error en la consulta: " . $this->conn->error);
+            }
+            
+            $stmt->bind_param("iid", $idReserva, $idActividad, $precio);
+            
+            if (!$stmt->execute()) {
+                throw new Exception("Error al asociar actividad: " . $stmt->error);
+            }
+            
+            $stmt->close();
+            return true;
+        } catch (Exception $e) {
+            error_log("Error en asociarActividadAReserva: " . $e->getMessage());
+            return false;
+        }
     }
-    
-    // Cambia el tipo 'i' (entero) a 'd' (decimal) para el precio
-    $stmt->bind_param("iid", $idReserva, $idActividad, $precio);  // 'i' para enteros, 'd' para decimales
-    
-    if (!$stmt->execute()) {
-        die("Error al asociar actividad: " . $stmt->error);
-    }
-    
-    $stmt->close();
-}
-
     
 
 
