@@ -1,0 +1,121 @@
+:root {
+    /* Light Theme (Mejorado) */
+    --bg-color: #ffffff;
+   
+    --sidebar-bg: #1e3d59;
+    --table-header-bg: #2a3042;
+    --primary-color: #2563eb;
+    --menu-hover: rgba(255, 255, 255, 0.1);
+    --menu-title-color: #8f9bb3;
+    --menu-item-color: #cbd5e1;
+    --container-bg: #f8fafc;
+    --border-color: #e2e8f0;
+    --text-color: #2d3748; /* Gris oscuro legible */
+    --search-bg: #ffffff; /* Fondo blanco */
+    --sidebar-text: #ffffff;
+}
+
+[data-theme="dark"] {
+    /* Dark Theme (Optimizado) */
+    --bg-color: #0f172a;
+    --text-color: #f8fafc;
+    --sidebar-bg: #1e293b;
+    --table-header-bg: #334155;
+    --primary-color: #3b82f6;
+    --menu-hover: rgba(255, 255, 255, 0.05);
+    --menu-title-color: #94a3b8;
+    --menu-item-color: #cbd5e1;
+    --container-bg: #1e293b;
+    --border-color: #475569;
+    --search-bg: #1e293b;
+    --sidebar-text: #f1f5f9;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    position: relative;
+}
+
+/* Contenedor principal */
+.container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Tarjeta del menú */
+.card {
+    background-color: var(--container-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Botones */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--sidebar-text);
+    padding: 1rem 2rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    filter: brightness(90%);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: var(--menu-title-color);
+    border-color: var(--menu-title-color);
+    color: var(--sidebar-text);
+    padding: 1rem 2rem;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    filter: brightness(90%);
+    transform: translateY(-2px);
+}
+
+/* Botón de salida */
+.btn-danger {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    padding: 0.5rem 1rem;
+}
+
+/* Textos */
+h2 {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+strong {
+    color: var(--primary-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .d-flex {
+        flex-direction: column;
+        gap: 1.5rem !important;
+    }
+    
+    .btn-lg {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .card {
+        margin: 0 1rem;
+    }
+}

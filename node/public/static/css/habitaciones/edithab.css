@@ -1,0 +1,160 @@
+:root {
+    --primary-color: #2a3d66;
+    --secondary-color: #5a8ecf;
+    --accent-color: #d3ddff;
+    --text-color: #333;
+    --background-light: #f7f9fc;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --primary-blue: #1e3d59;      /* Azul profundo principal */
+    --secondary-blue: #17263b;    /* Azul oscuro secundario */
+    --accent-blue: #2c5282;       /* Azul acento */
+    --light-blue: #edf2f7;        /* Azul claro */
+    --gold: #c5a47e;              /* Dorado para acentos */
+    --white: #ffffff;
+    --text-dark: #2d3748;
+    --text-light: #e2e8f0;
+}
+
+
+    /* Estilos generales */
+    body {
+        background-color: var(--light-blue);
+        color: var(--text-dark);
+        min-height: 100vh;
+    }
+
+    /* Navbar */
+    .navbar {
+        background-color: var(--primary-blue) !important;
+        border-bottom: 2px solid var(--gold);
+    }
+
+    .navbar-brand,
+    .nav-link {
+        color: var(--text-light) !important;
+        transition: var(--transition-smooth);
+        position: relative;
+    }
+
+    .nav-link:hover {
+        color: var(--gold) !important;
+    }
+
+    .nav-link.active::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--gold);
+    }
+
+    /* Card */
+    .card {
+        background: var(--white);
+        border: 2px solid var(--primary-blue);
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background: var(--primary-blue);
+        color: var(--text-light);
+        font-size: 1.25rem;
+        border-bottom: 2px solid var(--gold);
+    }
+
+    /* Formulario */
+    .form-label {
+        color: var(--primary-blue);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control,
+    .form-select {
+        border: 2px solid var(--primary-blue);
+        border-radius: 6px;
+        padding: 0.75rem;
+        transition: var(--transition-smooth);
+        background-color: var(--white);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--gold);
+        box-shadow: 0 0 0 3px rgba(197, 164, 126, 0.25);
+    }
+
+    /* Botones */
+    .btn-primary {
+        background: var(--primary-blue);
+        border: 2px solid var(--primary-blue);
+        color: var(--text-light);
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        transition: var(--transition-smooth);
+    }
+
+    .btn-primary:hover {
+        background: var(--secondary-blue);
+        border-color: var(--secondary-blue);
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background: var(--accent-blue);
+        border: 2px solid var(--accent-blue);
+        color: var(--text-light);
+    }
+
+    .btn-outline-success {
+        border-color: var(--gold);
+        color: var(--gold);
+    }
+
+    .btn-outline-success:hover {
+        background: var(--primary-blue);
+        color: var(--text-light);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+        .navbar-collapse {
+            background: var(--primary-blue);
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .card {
+            margin: 1rem;
+        }
+        
+        .form-control {
+            font-size: 0.9rem;
+        }
+    }
+
+    /* Efectos especiales */
+    select.form-select {
+        cursor: pointer;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='%232a3d66' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 16px 12px;
+    }
+
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
