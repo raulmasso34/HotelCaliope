@@ -62,6 +62,7 @@ if ($controller !== null) {
     <link rel="stylesheet" href="../static/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../static/css/GENERAL/footer.css">
+    <link rel="stylesheet" href="../static/css/GENERAL/header.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <!-- Scripts -->
@@ -230,39 +231,7 @@ if ($controller !== null) {
         </section>
     </header>
 
-    <div class="main-main">
-        <div class="main-box">
-            <div class="main-box-box">
-                <div class="stars-main">
-                    <span style="font-size: 20px;  color: rgb(230, 182, 11);">
-                    <i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star "></i>
-                    </span>
-                </div>
-                <div class="main-title">
-                    <h3>LOREM IST AME TUU </h3>
-                    <h1>Lorem ipsum dolor </h1>
-                </div>
-                <div class="main-txt">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem adipisci soluta alias voluptatem facere? Vitae iure ratione saepe quos blanditiis fugiat molestias, maxime reprehenderit harum. Quod molestiae consectetur perferendis deserunt.</p>
-
-                    <div class="main-botones">
-                        <button>VER MAS</button>
-                        <button>Reservar</button>
-                    </div>
-                   
-                </div>
-            </div>
-            <div class="main-box-right">
-                <div class="img-left">
-                    <img class="img-main" src="../static/img/florida/florida1.jpg" alt="">
-                </div>
-                <div class="img-right">
-                    <img class="img-main" src="../static/img/florida/florida3.jpg" alt="">
-                </div>
-                    
-            </div>
-        </div>
-    </div>
+  
 
     <!-------------------------------HOTLES------------------------->
 
@@ -366,33 +335,78 @@ if ($controller !== null) {
             </div>
         </div>
     </section>
+        <!------------------------PROMOCIONES------------------------>
 
-    <section class="promociones">
-        <div class="promociones-box">
-            <div class="prom">
+        <section class="promociones">
+            <div class="promo-header">
                 <h6>HOTEL CALIOPE</h6>
-                <h5>PROMOCIONES</h5>
-                <p>¡Vive la experiencia Calíope con nuestras promociones exclusivas!
-                    Disfruta de noches inolvidables con descuentos únicos, beneficios especiales y sorpresas diseñadas para ti.<br><br><br>
-                    🌟 Relájate más, paga menos.<br><br>
-                    🌴 Tu escape perfecto, ahora al mejor precio.<br><br><br>
-                    ¡No dejes pasar esta oportunidad!</p>
+                <h2>PROMOCIONES DESTACADAS</h2>
+                <p>¡Vive la experiencia Calíope con nuestras promociones exclusivas! Descuentos, beneficios y escapadas únicas te esperan.</p>
             </div>
-            <div class="prom-white">
-                <img class="img-prom" src="../static/img/florida/florida2.jpg" alt="">
-                <h4>Oferta 1</h4>
-                <H6> 23€/Noche</H6>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim et laudantium accusamus veniam </p>
-            </div>
-            <div class="prom-white">
-                <img class="img-prom" src="../static/img/florida/florida2.jpg" alt="">
-                <h4>Oferta 2</h4>
-                <H6> 53€/Noche</H6>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim et laudantium accusamus veniam </p>
-            </div>
-        </div>
 
-    </section>
+            <div class="promo-container">
+                <button class="promo-btn prev">←</button>
+
+                <div class="promo-slider" id="promoSlider">
+                <div class="promo-card">
+                    <img src="../static/img/florida/florida2.jpg" alt="Oferta 1">
+                    <div class="promo-info">
+                    <h4>Oferta Romántica</h4>
+                    <h6>23€/Noche</h6>
+                    <p>Escápate con tu persona favorita y disfruta de un ambiente exclusivo con cava y desayuno incluido.</p>
+                    </div>
+                </div>
+
+                <div class="promo-card">
+                    <img src="../static/img/florida/florida2.jpg" alt="Oferta 2">
+                    <div class="promo-info">
+                    <h4>Relax Total</h4>
+                    <h6>53€/Noche</h6>
+                    <p>Incluye acceso al spa, masaje relajante y cena para dos personas en nuestro restaurante panorámico.</p>
+                    </div>
+                </div>
+
+                <div class="promo-card">
+                    <img src="../static/img/florida/florida2.jpg" alt="Oferta 3">
+                    <div class="promo-info">
+                    <h4>Escapada Familiar</h4>
+                    <h6>39€/Noche</h6>
+                    <p>Ideal para familias: habitaciones conectadas, actividades infantiles y cena gratuita para menores de 12.</p>
+                    </div>
+                </div>
+                <div class="promo-card">
+                    <img src="../static/img/florida/florida2.jpg" alt="Oferta 2">
+                    <div class="promo-info">
+                    <h4>Relax Total</h4>
+                    <h6>53€/Noche</h6>
+                    <p>Incluye acceso al spa, masaje relajante y cena para dos personas en nuestro restaurante panorámico.</p>
+                    </div>
+                </div>
+                <div class="promo-card">
+                    <img src="../static/img/florida/florida2.jpg" alt="Oferta 2">
+                    <div class="promo-info">
+                    <h4>Relax Total</h4>
+                    <h6>53€/Noche</h6>
+                    <p>Incluye acceso al spa, masaje relajante y cena para dos personas en nuestro restaurante panorámico.</p>
+                    </div>
+                </div>
+                <div class="promo-card">
+                    <img src="../static/img/florida/florida2.jpg" alt="Oferta 2">
+                    <div class="promo-info">
+                    <h4>Relax Total</h4>
+                    <h6>53€/Noche</h6>
+                    <p>Incluye acceso al spa, masaje relajante y cena para dos personas en nuestro restaurante panorámico.</p>
+                    </div>
+                </div>
+
+                <!-- Puedes seguir añadiendo más promo-card aquí -->
+                </div>
+
+                <button class="promo-btn next">→</button>
+            </div>
+        </section>
+
+
 
     <!--------------------------------OPINIONES------------------------>
 
@@ -422,28 +436,41 @@ if ($controller !== null) {
             </div>
         </div>
     </section>
+    
+
+
+    <!-------------------------------DESCUBRIR------------------------->
 
 
     <section class="descubrir">
-        <div class="descubrir-box">
-            <div class="descubrir-sub">
-                <img class="desc-img" src="../static/img/florida/florida3.jpg" alt="">
+    <div class="descubrir-box">
+        <!-- Servicio 1 -->
+        <div class="descubrir-row">
+            <div class="descubrir-img">
+                <img src="../static/img/florida/florida3.jpg" alt="Imagen servicio 1">
             </div>
-            <div class="descubrir-sub">
+            <div class="descubrir-info">
                 <h5>DISCOVER</h5>
-                <h3> SERVICIO 1</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam ab dolore consequuntur impedit tempore culpa aperiam aspernatur illo blanditiis repellat fuga sunt quisquam ad eum vel magnam quos exercitationem, necessitatibus omnis quam quis. Dolore obcaecati nostrum in harum deleniti laudantium magnam repudiandae iusto quae evenie</p>
-            </div>
-            <div class="descubrir-sub">
-                <h5>DISCOVER</h5>
-                <h3> SERVICIO 2</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam ab dolore consequuntur impedit tempore culpa aperiam aspernatur illo blanditiis repellat fuga sunt quisquam ad eum vel magnam quos exercitationem, necessitatibus omnis quam quis. Dolore obcaecati nostrum in harum deleniti laudantium magnam repudiandae iusto quae eaa</p>
-            </div>
-            <div class="descubrir-sub">
-                <img class="desc-img" src="../static/img/california/california.jpg" alt="">
+                <h3>SERVICIO 1</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam ab dolore consequuntur impedit tempore culpa aperiam aspernatur illo blanditiis repellat fuga sunt quisquam ad eum vel magnam quos exercitationem.</p>
             </div>
         </div>
-    </section>
+
+        <!-- Servicio 2 (invertido) -->
+        <div class="descubrir-row reverse">
+            <div class="descubrir-img">
+                <img src="../static/img/california/california.jpg" alt="Imagen servicio 2">
+            </div>
+            <div class="descubrir-info">
+                <h5>DISCOVER</h5>
+                <h3>SERVICIO 2</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam ab dolore consequuntur impedit tempore culpa aperiam aspernatur illo blanditiis repellat fuga sunt quisquam ad eum vel magnam quos exercitationem.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 
     <section class="mapa">
         <div class="mapa-box">
@@ -453,45 +480,53 @@ if ($controller !== null) {
         </div>
        
     </section>
+    <section class="contacto-alt">
+        <div class="contacto-alt-box">
+            <!-- Info de contacto -->
+            <div class="contacto-alt-sub info">
+                <h3>¿Tienes dudas?</h3>
+                <p>Estamos aquí para ayudarte. Puedes llamarnos, escribirnos o visitarnos. Nuestro equipo estará encantado de asistirte.</p>
 
-    <section class="contacto">
-        <div class="contacto-box">
-            <div class="contacto-sub">
-               
-                <h3>No nos pierdas de vista</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam eligendi, aperiam itaque tempora perferendis consequatur?</p>
-                <br> <br>
-
-                <i class="fa-solid fa-phone fa-2xl"> 111 222 346</i>
-            </div>
-            
-            <div class="contacto-sub">
-                <div class="newsletter-sub">
-                    <div class="news-title">
-                        <h1>Inicia Sesión</h1>
-                        <p>Accede a tu cuenta para disfrutar de beneficios exclusivos.</p>
+                <div class="contact-info">
+                    <div class="info-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>Llámanos: <strong>111 222 346</strong></span>
                     </div>
-                    <form class="news-content" method="POST" action="../controller/clients/LoginController.php">
-                        <label for="Usuari">Usuario:</label>
-                        <input type="text" name="Usuari" id="Usuari" required>
 
-                        <label for="DNI">DNI:</label>
-                        <input type="text" name="DNI" id="DNI" required>
+                    <div class="info-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>Email: <strong>info@hotelcaliope.com</strong></span>
+                    </div>
 
-                        <label for="Password">Contraseña:</label>
-                        <input type="password" name="Password" id="Password" required>
+                    <div class="info-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Dirección: <strong>Calle Mar Azul, 123, Barcelona</strong></span>
+                    </div>
 
-                        <button class="login-btn" type="submit">Iniciar sesión</button>
-                    </form>
-                    <div class="news-footer">
-                        <p>¿No tienes cuenta? <a href="../vista/Clientes/registre.php">Regístrate aquí</a></p>
+                    <div class="info-item">
+                    <i class="fa-solid fa-clock"></i>
+                    <span>Horario de atención: <strong>09:00 - 20:00</strong> (Lunes a Sábado)</span>
                     </div>
                 </div>
             </div>
+
+
+            <!-- Formulario -->
+            <div class="contacto-alt-sub form">
+            <h1>Inicia Sesión</h1>
+            <p class="subtext">Beneficios exclusivos esperan por ti.</p>
+            <form method="POST" action="../controller/clients/LoginController.php">
+                <input type="text" name="Usuari" id="Usuari" placeholder="Usuario" required>
+                <input type="text" name="DNI" id="DNI" placeholder="DNI" required>
+                <input type="password" name="Password" id="Password" placeholder="Contraseña" required>
+                <button class="login-btn" type="submit">Entrar</button>
+            </form>
+            <p class="register-text">¿No tienes cuenta? <a href="../vista/Clientes/registre.php">Regístrate aquí</a></p>
+            </div>
         </div>
-
-
     </section>
+
+
 
 
     <footer class="footer">
@@ -549,5 +584,76 @@ if ($controller !== null) {
     <!-----------------------------------SCRIPTS---------------------------->
     <script src="../static/js/main.js"></script>
     <script src="../static/js/calendario.js"></script>
+
+    <script>
+     document.addEventListener("DOMContentLoaded", () => {
+    const dots = document.querySelectorAll('.dot');
+    const opinions = document.querySelectorAll('.opinion');
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            const index = dot.dataset.index;
+            opinions.forEach(op => op.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active'));
+            opinions[index].classList.add('active');
+            dot.classList.add('active');
+        });
+    });
+
+    // Inicializar la primera opinión como activa por defecto
+    opinions[0].classList.add('active');
+    dots[0].classList.add('active');
+
+    // Promociones - Slider con botones
+    const slider = document.getElementById('promoSlider');
+    const nextBtn = document.querySelector('.next');
+    const prevBtn = document.querySelector('.prev');
+
+    if (slider && nextBtn && prevBtn) {
+        nextBtn.addEventListener('click', () => {
+            slider.scrollBy({
+                left: slider.offsetWidth,
+                behavior: 'smooth'
+            });
+        });
+
+        prevBtn.addEventListener('click', () => {
+            slider.scrollBy({
+                left: -slider.offsetWidth,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // Efecto de ocultar la imagen al hacer scroll
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            document.body.classList.add('scrolled');
+        } else {
+            document.body.classList.remove('scrolled');
+        }
+    });
+});
+
+    </script>
+
+
+
+
+<script>
+    // Parallax suave del fondo
+    window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        const bg = document.querySelector('.opiniones::before'); // No se puede seleccionar pseudo-elementos directamente
+        const section = document.querySelector('.opiniones');
+
+        // Alternativa: aplicar el efecto directamente en la sección
+        section.style.setProperty('--scroll-offset', `${scrollY * 0.4}px`);
+    });
+</script>
+
+
+
+
 </body>
 </html>
