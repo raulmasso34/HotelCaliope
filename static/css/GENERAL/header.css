@@ -291,13 +291,14 @@ body {
 }
 
 
-/* Carousel */
+/* Estilos para el carrusel */
 .carousel {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    z-index: 0; /* Asegura que el carrusel esté en el fondo */
 }
 
 .carousel-background {
@@ -307,12 +308,34 @@ body {
     object-fit: cover;
     opacity: 0;
     transition: opacity 1.5s ease;
+    z-index: 1; /* Asegura que las imágenes estén por debajo del contenido */
 }
 
-.carousel-background:first-child {
+/* Animación de las imágenes del carrusel */
+.carousel-background:nth-child(1) {
     opacity: 1;
+    animation: fadeInOut 15s infinite 0s;
+}
+.carousel-background:nth-child(2) {
+    opacity: 0;
+    animation: fadeInOut 15s infinite 5s;
+}
+.carousel-background:nth-child(3) {
+    opacity: 0;
+    animation: fadeInOut 15s infinite 10s;
 }
 
+/* Animación de desvanecimiento de las imágenes */
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 1;
+    }
+    33%, 66% {
+        opacity: 0;
+    }
+}
+
+/* Gradiente encima de las imágenes */
 .carousel::after {
     content: '';
     position: absolute;
@@ -322,12 +345,31 @@ body {
     height: 100%;
     background: linear-gradient(
         45deg,
-        rgba(30, 61, 89, 0.8),
-        rgba(44, 82, 130, 0.7)
+        rgba(30, 61, 89, 0.6),  /* Opacidad del gradiente */
+        rgba(44, 82, 130, 0.5)  /* Opacidad del gradiente */
     );
+    z-index: 2;  /* El gradiente estará encima de las imágenes */
 }
 
-/* Estilos para las estrellas */
+/* Estilos del contenido */
+.main-center {
+    position: relative;
+    z-index: 5; /* El contenido estará por encima del carrusel y del gradiente */
+    height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.center-up {
+    max-width: 800px;
+    padding: 20px;
+    color: var(--text-light);
+}
+
 .center-up-up {
     position: relative;
     z-index: 2;
@@ -342,15 +384,6 @@ body {
     filter: drop-shadow(0 0 2px rgba(230, 182, 11, 0.8));
 }
 
-.main-center {
-    position: relative;
-    z-index: 2; /* Asegura que esté sobre el carrusel */
-    height: calc(100vh - 80px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
 .center-up-down h5 {
     color: var(--gold);
     font-size: 1.8rem;
@@ -367,41 +400,6 @@ body {
     line-height: 1.2;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
     margin-bottom: 30px;
-}
-.main-center {
-    position: relative;
-    height: calc(100vh - 80px);
-    display: flex;
-  
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 0 20px;
-    z-index: 5;
-}
-
-
-.center-up {
-    max-width: 800px;
-    padding: 20px;
-    color: var(--text-light);
-}
-
-
-.carousel::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        45deg,
-        rgba(30, 61, 89, 0.6),  /* Reducir opacidad */
-        rgba(44, 82, 130, 0.5)  /* Reducir opacidad */
-    );
-    z-index: 1;
 }
 
 /* Flecha de scroll */
@@ -447,4 +445,3 @@ body {
         transform: translateY(-5px);
     }
 }
-
