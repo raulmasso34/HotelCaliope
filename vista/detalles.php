@@ -28,7 +28,13 @@ if (!isset($_SESSION['location'], $_SESSION['checkin'], $_SESSION['checkout'], $
 $hotelId = $_GET['hotelId'];
 
 $hotelDetails = $hotelController->obtenerDetallesHotel($hotelId);
-$habitaciones = $habitacionController->obtenerHabitacionesPorHotel($hotelId);
+$habitacionesConPrecio = $habitacionController->obtenerHabitacionesConPrecioPorTemporada($_SESSION['checkin'], $_SESSION['checkout']);
+
+// Filtrar solo las habitaciones del hotel actual
+$habitaciones = array_filter($habitacionesConPrecio, function($hab) use ($hotelId) {
+    return $hab['Id_Hotel'] == $hotelId;
+});
+
 
 if (!$hotelDetails) {
     echo "Detalles del hotel no disponibles.";
@@ -107,7 +113,7 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
 
                                 <div class="card-body">
                                     <h3 class="card-title"><?php echo htmlspecialchars($habitacion['Tipo']); ?></h3>
-                                    <p><strong>Precio:</strong> <?php echo htmlspecialchars($habitacion['Precio']); ?> €</p>
+                                    <p><strong>Precio:</strong> <?php echo htmlspecialchars($habitacion['PrecioFinal']); ?> €</p>
                                     <p><strong>Descripción:</strong> <?php echo htmlspecialchars($habitacion['Descripcion'] ?? 'Descripción no disponible'); ?></p>
                                     
                                     <!-- Botón para abrir el modal -->
@@ -124,6 +130,8 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
                                         <input type="hidden" name="checkout" value="<?php echo $_SESSION['checkout']; ?>">
                                         <input type="hidden" name="guests" value="<?php echo $_SESSION['guests']; ?>">
                                         <input type="hidden" name="paisId" value="<?php echo $_SESSION['location']; ?>">
+                                        <input type="hidden" name="precioFinal" value="<?php echo htmlspecialchars($habitacion['PrecioFinal']); ?>">
+
                                         <button type="submit" class="btn btn-primary w-100 mt-2">Reservar</button>
                                     </form>
                                 </div>

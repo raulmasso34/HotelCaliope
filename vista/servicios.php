@@ -98,18 +98,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="hidden" name="precioHabitacion" value="<?php echo $_SESSION['Reservas']['precioHabitacion'] ?? ''; ?>">
 
         <h2>Servicios disponibles</h2>
-        <div class="servicios-container">
-        <?php foreach ($servicios as $servicio) : ?>
-            <label>
-                <input type="checkbox" name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" value="<?php echo $servicio['Precio']; ?>"
-                    <?php if (isset($_SESSION['Reservas']['servicios'][$servicio['Id_Servicio']])) : ?>
-                        checked
-                    <?php endif; ?>
-                >
-                <?php echo htmlspecialchars($servicio['Servicio']); ?> - $<?php echo number_format($servicio['Precio'], 2); ?>
-            </label><br>
-        <?php endforeach; ?>
-        </div>
+<div class="servicios-container">
+<?php foreach ($servicios as $servicio) : ?>
+    <?php if ($servicio['TipoServicio'] == 1): ?>
+        <!-- Servicios obligatorios: seleccionados automáticamente y ocultos -->
+        <input type="hidden" name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" value="<?php echo $servicio['Precio']; ?>">
+        <?php 
+        // También los guardamos directamente en la sesión para asegurarnos que van a pagarse
+        $_SESSION['Reservas']['servicios'][$servicio['Id_Servicio']] = $servicio['Precio'];
+        ?>
+    <?php else: ?>
+        <label>
+            <input type="checkbox" name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" value="<?php echo $servicio['Precio']; ?>"
+                <?php if (isset($_SESSION['Reservas']['servicios'][$servicio['Id_Servicio']])) : ?>
+                    checked
+                <?php endif; ?>
+            >
+            <?php echo htmlspecialchars($servicio['Servicio']); ?> - $<?php echo number_format($servicio['Precio'], 2); ?>
+        </label><br>
+    <?php endif; ?>
+<?php endforeach; ?>
+</div>
+
         
         <h2>Actividades disponibles</h2>
         <div class="actividades-container">
