@@ -236,8 +236,8 @@ if (!empty($actividadesSeleccionadas)) {
     <input type="hidden" name="pago_enviado" value="1">
     
     <!-- Incluir también el ID de reserva si es necesario -->
-    <input type="hidden" name="idReserva" value="<?php echo $_GET['idReserva']; ?>">
-    <!-- Datos de la reserva -->
+<!--     <input type="hidden" name="idReserva" value="<?php echo $_GET['idReserva']; ?>">
+ -->    <!-- Datos de la reserva -->
     <input type="hidden" name="habitacionId" value="<?= htmlspecialchars($habitacionId); ?>">
     
     

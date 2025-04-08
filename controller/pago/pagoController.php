@@ -149,7 +149,6 @@ class PagoController {
         }
     }
 }
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pagoController = new PagoController();
     
@@ -158,49 +157,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die(json_encode(['success' => false, 'message' => 'Sesión expirada o datos no encontrados.']));
     }
 
-    $reservaSession = $_SESSION['Reservas'];
-
     // Guardar las actividades y servicios seleccionados en la sesión
     $_SESSION['Reservas']['actividades'] = $_POST['actividades'] ?? [];
     $_SESSION['Reservas']['servicios'] = $_POST['servicios'] ?? [];
 
     // Combinamos los datos de la reserva y los del POST
-    $datosReserva = array_merge($reservaSession, $_POST);
+    $datosReserva = array_merge($_SESSION['Reservas'], $_POST);
 
-    // ✅ Verificar si `precioHabitacion` está en la sesión o en el POST antes de procesar el pago
-    if (!isset($datosReserva['precioHabitacion']) && isset($datosReserva['Precio_Habitacion'])) {
-        $datosReserva['precioHabitacion'] = $datosReserva['Precio_Habitacion'];
-    }
+    // ✅ Verifica si el usuario realmente envió el formulario de pago
+    if (isset($_POST['pago_enviado'])) {
 
-    if (!isset($datosReserva['precioHabitacion'])) {
-        error_log("Error: precioHabitacion no está definido en la sesión ni en POST");
+        // Asegúrate de tener el precio de la habitación
+        if (!isset($datosReserva['precioHabitacion']) && isset($datosReserva['Precio_Habitacion'])) {
+            $datosReserva['precioHabitacion'] = $datosReserva['Precio_Habitacion'];
+        }
 
-        // 🔍 Depurar: Imprimir el contenido de la sesión y del POST
-        error_log("Contenido de \$_SESSION['Reservas']: " . print_r($_SESSION['Reservas'], true));
-        error_log("Contenido de \$_POST: " . print_r($_POST, true));
+        if (!isset($datosReserva['precioHabitacion'])) {
+            error_log("Error: precioHabitacion no está definido en la sesión ni en POST");
+            error_log("Contenido de \$_SESSION['Reservas']: " . print_r($_SESSION['Reservas'], true));
+            error_log("Contenido de \$_POST: " . print_r($_POST, true));
+            die(json_encode(['success' => false, 'message' => 'Error: No se ha recibido el precio de la habitación.']));
+        }
 
-        die(json_encode(['success' => false, 'message' => 'Error: No se ha recibido el precio de la habitación.']));
-    }
+        // ✅ Procesar el pago y crear la reserva
+        $resultado = $pagoController->procesarPagoReserva($datosReserva);
 
-    // Procesar el pago
-    $resultado = $pagoController->procesarPagoReserva($datosReserva);
-
-    if ($resultado['success']) {
-        $_SESSION['idReserva'] = $resultado['idReserva'];
-        
-        // Verificar si el formulario de pago fue enviado
-        if (isset($_POST['pago_enviado'])) {
-            // Si el pago ya fue procesado, redirigir a la página de confirmación
+        if ($resultado['success']) {
+            $_SESSION['idReserva'] = $resultado['idReserva'];
             header("Location: ../../vista/reserva_confirmada.php?idReserva=" . $resultado['idReserva']);
             exit();
         } else {
-            // Si es la primera vez (reserva exitosa pero sin pago), redirigir a pagos
-            header("Location: ../vista/pagos.php?idReserva=" . $resultado['idReserva']);
-            exit();
+            die(json_encode($resultado));
         }
+
     } else {
-        die(json_encode($resultado));
+        // ⚠️ El formulario de pago NO se ha enviado, redirige a la página de pagos
+        header("Location: ../vista/pagos.php");
+        exit();
     }
-    
 }
+
 

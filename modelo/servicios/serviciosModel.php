@@ -14,7 +14,7 @@ class ServiciosModel {
 
     
     public function obtenerServicios() {
-        $sql = "SELECT * FROM Servicio WHERE Id_Hotel = ?";
+        $sql = "SELECT * FROM Servicio WHERE Id_Hotel = ? AND TipoServicio = 0"; // Filtra solo los servicios con TipoServicio = 1
         $stmt = $this->conn->prepare($sql);
         
         // Usamos bind_param para pasar el valor de $_SESSION['hotelId'] como parámetro
@@ -28,6 +28,7 @@ class ServiciosModel {
         $servicios = $result->fetch_all(MYSQLI_ASSOC);  // Devuelve todos los servicios como un array
         return $servicios;  // Devuelve los servicios del hotel
     }
+    
 
     public function obtenerNombreServicios($hotelId) {
         try {

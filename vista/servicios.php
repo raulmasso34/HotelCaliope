@@ -71,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['Reservas']['actividades'] = $_POST['actividades'] ?? [];
 }
 
-
 ?>
 
 <!DOCTYPE html>
@@ -88,8 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h1>¿Quieres añadir algún servicio?</h1>
     
     <form action="../vista/pagos.php" method="POST">
-        <!-- Depuración: Ver si los datos se envían correctamente -->
-        
+        <!-- Datos ocultos para asegurar la continuidad -->
         <input type="hidden" name="habitacionId" value="<?php echo $_SESSION['Reservas']['habitacionId'] ?? ''; ?>">
         <input type="hidden" name="hotelId" value="<?php echo $_SESSION['hotelId']; ?>">
         <input type="hidden" name="checkin" value="<?php echo $_SESSION['Reservas']['checkin'] ?? ''; ?>">
@@ -103,7 +101,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="servicios-container">
         <?php foreach ($servicios as $servicio) : ?>
             <label>
-                <input type="checkbox" name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" value="<?php echo $servicio['Precio']; ?>">
+                <input type="checkbox" name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" value="<?php echo $servicio['Precio']; ?>"
+                    <?php if (isset($_SESSION['Reservas']['servicios'][$servicio['Id_Servicio']])) : ?>
+                        checked
+                    <?php endif; ?>
+                >
                 <?php echo htmlspecialchars($servicio['Servicio']); ?> - $<?php echo number_format($servicio['Precio'], 2); ?>
             </label><br>
         <?php endforeach; ?>
@@ -113,11 +115,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="actividades-container">
             <?php foreach ($actividades as $actividad) : ?>
                 <label>
-                <input type="checkbox" name="actividades[<?php echo $actividad['Id_Actividades']; ?>]" value="<?php echo $actividad['Precio']; ?>">
+                <input type="checkbox" name="actividades[<?php echo $actividad['Id_Actividades']; ?>]" value="<?php echo $actividad['Precio']; ?>"
+                    <?php if (isset($_SESSION['Reservas']['actividades'][$actividad['Id_Actividades']])) : ?>
+                        checked
+                    <?php endif; ?>
+                >
                     <?php echo htmlspecialchars($actividad['Nombre']); ?> - $<?php echo number_format($actividad['Precio'], 2); ?>
                 </label><br>
             <?php endforeach; ?>
-       
         </div>
 
         <div class="continuar-btn">
