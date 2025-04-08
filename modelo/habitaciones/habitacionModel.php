@@ -40,6 +40,47 @@ class HabitacionesModel {
         }
          // Retorna 0 si no encuentra la habitación
     }
+
+
+    
+
+    
+    public function obtenerHabitacionesConPrecioPorTemporada($checkin, $checkout) {
+        $sql = "
+        SELECT h.Id_Habitaciones, h.Numero_Habitacion, h.Tipo, h.Capacidad, h.Precio AS PrecioBase, 
+       ho.Nombre AS Hotel, ho.Direccion, p.Pais AS Pais, c.Nombre AS Continente,
+       t.Nombre AS Temporada, t.PrecioMultiplicador, h.Id_Hotel,h.Descripcion
+FROM Habitaciones h
+JOIN Hotel ho ON h.Id_Hotel = ho.Id_Hotel
+JOIN Pais p ON ho.Id_Pais = p.Id_Pais
+JOIN Continentes c ON p.Id_Continente = c.Id_Continente
+LEFT JOIN Temporadas t ON (? BETWEEN t.Fecha_Inicio AND t.Fecha_Fin) 
+                       OR (? BETWEEN t.Fecha_Inicio AND t.Fecha_Fin)
+";
+        
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ss", $checkin, $checkout);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $habitaciones = [];
+        while ($row = $result->fetch_assoc()) {
+            $multiplicador = floatval($row['PrecioMultiplicador']) ?: 1.0;
+            $precioFinal = floatval($row['PrecioBase']) * $multiplicador;
+    
+            $row['PrecioFinal'] = $precioFinal;
+            $habitaciones[] = $row;
+        }
+    
+        return $habitaciones;
+    }
+    
+    
+    
+
+    
+
+
    // Método en HabitacionesModel
    public function obtenerHabPorContinente($continenteId) {
         try {
