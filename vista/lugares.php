@@ -56,6 +56,8 @@ $database->closeConnection();
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <link rel="stylesheet" href="../static/css/GENERAL/footer.css">
+    <link rel="stylesheet" href="../static/css/GENERAL/header.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hoteles de Lujo</title>
@@ -74,6 +76,13 @@ $database->closeConnection();
 </head>
 <body class="bg-light text-dark">
 
+    
+
+
+
+
+
+
     <div class="container my-5">
         <h1 class="text-center text-uppercase fw-bold mb-5" style="color: #2C3E50; font-size: 2.8rem;">Nuestros Hoteles</h1>
 
@@ -81,7 +90,7 @@ $database->closeConnection();
             <?php if (count($hoteles) > 0): ?>
                 <?php foreach ($hoteles as $hotel): ?>
                     <div class="col-md-6 col-lg-4">
-                        <a href="detalles.php?hotelId=<?php echo $hotel['Id_Hotel']; ?>" class="text-decoration-none">
+                        <a href="reservaHab.php?hotelId=<?php echo $hotel['Id_Hotel']; ?>" class="text-decoration-none">
                             <div class="card hotel-card shadow-sm">
                                 <div class="hotel-image">
                                 <?php
