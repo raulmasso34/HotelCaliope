@@ -128,6 +128,8 @@ $metodoPago = match ($metodoPagoId) {
     default => 'No disponible'
 };
 
+
+
 // ✅ Calcular total
 $precioTotal = $subtotalHabitacion + $totalServicios + $totalActividades;
 $precioTotalFormateado = number_format($precioTotal, 2, '.', ',');

@@ -22,6 +22,7 @@ if (!isset($_SESSION['Reservas'])) {
     echo "<p class='text-danger'>Error: No se ha recibido la reserva en la sesión.</p>";
     exit;
 }
+var_dump($_SESSION['precioTotal']);
 
 $reserva = $_SESSION['Reservas'];
 
@@ -151,6 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </section>
 </header>
+<pre><?php print_r($_SESSION['Reservas']); ?></pre>
 
 <h1>Pagar Reserva</h1>
 

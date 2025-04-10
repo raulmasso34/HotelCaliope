@@ -5,6 +5,12 @@ $database = new Database();
 $db = $database->getConnection();
 session_start();
 
+
+if (isset($_POST['precioFinal'])) {
+    $_SESSION['precioTotal'] = $_POST['precioFinal'];
+}
+
+
 // Incluir controladores correctos
 require_once __DIR__ . '/../controller/reserva/reservaController.php';
 require_once __DIR__ . '/../controller/hotel/hotelController.php';
@@ -21,6 +27,8 @@ $metodoPagoController = new MetodoPagoController();
 $actividadController = new ActividadController();
 $paisController = new PaisController();
 
+
+var_dump($_SESSION['precioTotal']);
 // Obtener ID de usuario de la sesión
 $user_id = $_SESSION['user_id'] ?? null;
 
@@ -33,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $checkout = $_POST['checkout'] ?? null;
     $guests = $_POST['guests'] ?? null;
     $paisId = $_POST['paisId'] ?? null;   
+    
 
     // Obtener detalles del hotel desde HotelController
     $hotelDetails = $hotelController->obtenerDetallesHotel($hotelId);
@@ -51,32 +60,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Obtener multiplicador de temporada (usando el nombre correcto)
 // Obtener multiplicador de temporada
+// Obtener multiplicador de temporada
 $temporada = $habitacionController->obtenerHabitacionesConPrecioPorTemporada($checkin, $checkout);
 
 // Verificar si PrecioMultiplicador existe
-$precioMultiplicador = isset($temporada['PrecioMultiplicador']) ? (float)$temporada['PrecioMultiplicador'] : 1;
+
 
 // Obtener detalles de la habitación
 $habitacionDetails = $habitacionController->obtenerHabitacionPorId($habitacionId);
 
 // Verificar si PrecioFinal existe en los detalles de la habitación
-$precioFinal = isset($habitacionDetails['PrecioFinal']) ? (float)$habitacionDetails['PrecioFinal'] : 0; 
+$precioFinal = $_SESSION['precioTotal'];
+
 
 // Cálculo del precio final con el multiplicador de temporada
 $precioBase = (float)$habitacionDetails['Precio']; // Asegúrate de convertir a float
-$precioFinalConTemporada = $precioBase * $precioMultiplicador;
-
-// Verificación del cálculo
-var_dump($precioFinalConTemporada);
 
 // Calcular el precio total en base a las noches
 $fechaCheckin = new DateTime($checkin);
 $fechaCheckout = new DateTime($checkout);
 $intervalo = $fechaCheckin->diff($fechaCheckout);
 $noches = $intervalo->days;
-$precioTotal = $precioFinalConTemporada * $noches;
+$precioTotal = $precioFinal * $noches;
 
-// Guardar todos los datos en la sesión
+// Guardar los valores correctamente en la sesión
 $_SESSION['Reservas'] = [
     'habitacionId' => $habitacionId,
     'clienteId' => $clienteId,
@@ -87,15 +94,18 @@ $_SESSION['Reservas'] = [
     'paisId' => $paisId,
     'metodoPagoId' => $_POST['metodoPagoId'] ?? null,
     'PrecioFinal' => $precioFinal, 
-    'PrecioTotal' => $precioTotal 
+    'PrecioTotal' => $precioTotal
 ];
+
 
 }
 
+var_dump($_SESSION['Reservas']);
 // Cerrar conexión
 $database->closeConnection();
 
  // Verifica que contiene 'PrecioMultiplicador'
+
 
 ?>
 
@@ -122,7 +132,10 @@ $database->closeConnection();
         <h2 class="mt-4">Detalles del Hotel</h2>
         <p><strong>Hotel:</strong> <?php echo htmlspecialchars($hotelDetails['Nombre']); ?></p>
         <p><strong>Habitación seleccionada:</strong> <?php echo htmlspecialchars($habitacionDetails['Tipo']); ?></p>
-        <p><strong>Precio por noche:</strong> <span id="precioPorNoche"><?php echo htmlspecialchars($precioFinal); ?></span> €</p>
+        <p><strong>Precio por noche:</strong> <span id="precioPorNoche"><?php echo htmlspecialchars($_SESSION['Reservas']['PrecioFinal']); ?></span> €</p>
+
+
+
         <p><strong>Descripción:</strong> <?php echo htmlspecialchars($habitacionDetails['Descripcion'] ?? 'Descripción no disponible'); ?></p>
 
         <h3 class="mt-3">Precio Total: 
