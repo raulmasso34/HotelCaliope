@@ -58,7 +58,8 @@ $hotelNombre = $hotel['Nombre'] ?? 'Desconocido';
 $habitacionController = new habitacionController();
 $habitacion = $habitacionController->obtenerHabitacionPorId($habitacionId);
 $habitacionDetalle = $habitacion['Tipo'] ?? 'Desconocido';
-$precioHabitacion = isset($habitacion['PrecioTota']) ? floatval($habitacion['Precio']) : 0;
+$precioHabitacion = $_SESSION['precioTotal'];
+
 
 // ✅ Calcular subtotal habitación
 $subtotalHabitacion = $precioHabitacion * $numeroNoches;
