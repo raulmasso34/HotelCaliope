@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['habitacionId'] = $_POST['habitacionId'];
 
     // Redirigir a la página de reservas para mostrar los detalles del hotel
-    header('Location: ../vista/reservas.php');
+    header('Location: ../vista/lugares.php');
     exit();
 }
 
@@ -189,7 +189,7 @@ if ($controller !== null) {
             <div class="center-down">
                 <div class="form-reservas">
                     <div class="reservation-form">
-                    <form id="reservationForm" action="../vista/reservas.php" method="post" class="reservation-form">
+                    <form id="reservationForm" action="../vista/lugares.php" method="post" class="reservation-form">
                         <!-- Lugar -->
                         <div class="form-group">
                             <label for="location"><i class="fa-solid fa-map-marker-alt"></i> Lugar</label>
@@ -342,7 +342,7 @@ if ($controller !== null) {
         <section class="promociones">
             <div class="promo-header">
                 <h6>HOTEL CALIOPE</h6>
-                <h2>PROMOCIONES DESTACADAS</h2>
+                <h2>HABITACIONES DESTACADAS</h2>
                 <p>¡Vive la experiencia Calíope con nuestras promociones exclusivas! Descuentos, beneficios y escapadas únicas te esperan.</p>
             </div>
 
