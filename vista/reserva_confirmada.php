@@ -156,7 +156,7 @@ $_SESSION['Reservas'] = array_merge($_SESSION['Reservas'] ?? [], [
 <body class="bg-light">
     <div class="container py-5">
         <div class="card shadow-lg p-4 text-center mx-auto" style="max-width: 600px;">
-            <h1 class="text-success">¡Reserva Confirmada!</h1>
+            <h1 class="text-success">¡Reserva Confirmada!</h1> 
             <p class="lead">Gracias por tu pago. Tu reserva ha sido realizada con éxito.</p>
 
             <div class="mt-4 text-start">
