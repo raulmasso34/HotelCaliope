@@ -6,7 +6,7 @@ class Database {
     //   private $password = "P@ssw0rd";
 
    private $password = "P@ssw0rd";
-
+//hola
 
   // private $password = "password";  // Cambia esto según tu configuración
    private $dbname = "HotelCaliope"; // Cambia esto según tu base de datos
