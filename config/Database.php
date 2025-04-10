@@ -5,12 +5,12 @@ class Database {
 
     //   private $password = "P@ssw0rd";
 
-   private $password = "P@ssw0rd";
+  // private $password = "P@ssw0rd";
 
 
-  // private $password = "password";  // Cambia esto según tu configuración
-   private $dbname = "HotelCaliope"; // Cambia esto según tu base de datos
-   // private $dbname = "HotelCaliope2"; 
+  private $password = "password";  // Cambia esto según tu configuración
+   //private $dbname = "HotelCaliope"; // Cambia esto según tu base de datos
+    private $dbname = "HotelCaliope2"; 
     public $connection;
 
     public function getConnection() {
