@@ -74,12 +74,7 @@ if ($controller !== null) {
 <body>
     <header class="main-header">
 
-        <div class="carousel">
-            <img class="carousel-background" src="../static/img/florida/florida3.jpg" alt="Fondo 1">
-            <img class="carousel-background" src="../static/img/florida/florida4.jpg" alt="Fondo 2">
-            <img class="carousel-background" src="../static/img/florida/florida5.jpg" alt="Fondo 3">
-        </div>
-        
+    
         <section class="main-up">
             <div class="main-up-left">
                 <img src="../static/img/logo.png" alt="Imagen secundaria">
@@ -173,6 +168,13 @@ if ($controller !== null) {
 
 
         <section class="main-center">
+            
+            <img class="carousel-background" src="../static/img/florida/florida3.jpg" alt="Fondo 1">
+            <img class="carousel-background" src="../static/img/florida/florida4.jpg" alt="Fondo 2">
+            <img class="carousel-background" src="../static/img/florida/florida5.jpg" alt="Fondo 3">
+
+
+
             <div class="center-up">
                 <div class="center-up-up">
                     <span style="font-size: 20px; color: rgb(230, 182, 11);">
@@ -180,8 +182,8 @@ if ($controller !== null) {
                     </span>
                 </div>
                 <div class="center-up-down">
-                    <h5>Lorem ipsum dolor sit amet.</h5>
-                    <H1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere, minima.</H1>
+                    <h5>EXPERIENCIAS QUE TRASPASAN LO ORDINARIO</h5>
+                    <H1>Descubre nuestros hoteles de lujo</H1>
                 </div>
             </div>
             <div class="center-down">
@@ -650,6 +652,23 @@ if ($controller !== null) {
         // Alternativa: aplicar el efecto directamente en la sección
         section.style.setProperty('--scroll-offset', `${scrollY * 0.4}px`);
     });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const images = document.querySelectorAll('.carousel-background');
+  let currentImage = 0;
+  
+  function changeBackground() {
+    images[currentImage].style.opacity = 0;
+    currentImage = (currentImage + 1) % images.length;
+    images[currentImage].style.opacity = 1;
+    
+    setTimeout(changeBackground, 5000); // Cambia cada 5 segundos
+  }
+  
+  setTimeout(changeBackground, 5000); // Inicia el carrusel
+});
 </script>
 
 
