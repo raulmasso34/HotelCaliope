@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['habitacionId'] = $_POST['habitacionId'];
 
     // Redirigir a la página de reservas para mostrar los detalles del hotel
-    header('Location: ../vista/reservas.php');
+    header('Location: ../vista/lugares.php');
     exit();
 }
 
@@ -173,7 +173,7 @@ if ($controller !== null) {
             <div class="center-down">
                 <div class="form-reservas">
                     <div class="reservation-form">
-                        <form id="reservationForm" action="../vista/reservas.php" method="post">
+                        <form id="reservationForm" action="../vista/lugares.php" method="post">
                             <!-- Campo de selección de lugar -->
                             <div class="form-group">
                                 <label for="location">Lugar</label>

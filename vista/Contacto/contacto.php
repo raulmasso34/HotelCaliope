@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['habitacionId'] = $_POST['habitacionId'];
 
     // Redirigir a la página de reservas para mostrar los detalles del hotel
-    header('Location: ../vista/reservas.php');
+    header('Location: ../vista/lugares.php');
     exit();
 }
 

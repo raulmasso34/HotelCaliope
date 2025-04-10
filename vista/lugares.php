@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['guests'] = $_POST['numero_personas'];
     $_SESSION['habitacionId'] = $_POST['habitacionId'];
 
-    header('Location: ../vista/reservas.php');
+    header('Location: ../vista/lugares.php');
     exit();
 }
 
