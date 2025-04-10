@@ -44,8 +44,8 @@ if (!$habitacionDetails || !isset($habitacionDetails['Precio'])) {
     die("<p class='text-danger'>Error: No se encontró la habitación o su precio no está definido.</p>");
 }
 
-$precioHabitacion = floatval($habitacionDetails['Precio']);
-$_SESSION['Reservas']['Precio_Habitacion'] = $precioHabitacion;
+$precioHabitacion = $_SESSION['precioTotal'];
+$_SESSION['Reservas']['precioTotal'] = $precioHabitacion;
 
 // Calcular el número de noches
 $checkinDate = new DateTime($checkin);

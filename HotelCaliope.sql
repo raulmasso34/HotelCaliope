@@ -62,8 +62,9 @@ CREATE TABLE `Administrador` (
   `Usuari` char(255) DEFAULT NULL,
   `Password` char(255) DEFAULT NULL,
   `Paraula_verificacio` char(10) DEFAULT NULL,
+  `Role` enum('General','Hotel') DEFAULT NULL,
   PRIMARY KEY (`Id_Administrador`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,6 +73,7 @@ CREATE TABLE `Administrador` (
 
 LOCK TABLES `Administrador` WRITE;
 /*!40000 ALTER TABLE `Administrador` DISABLE KEYS */;
+INSERT INTO `Administrador` VALUES (1,'admin','admin',NULL,NULL);
 /*!40000 ALTER TABLE `Administrador` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,7 +173,7 @@ CREATE TABLE `Habitaciones` (
 
 LOCK TABLES `Habitaciones` WRITE;
 /*!40000 ALTER TABLE `Habitaciones` DISABLE KEYS */;
-INSERT INTO `Habitaciones` VALUES (1,101,'Individual',1,100,1,1,'Habitación individual con una cama.','WiFi gratuito'),(2,102,'Doble',2,999,1,1,'Habitación doble con dos camas.','WiFi gratuito, Desayuno incluido'),(3,201,'Triple',3,200,1,2,'Habitación triple con vista al mar.','WiFi gratuito'),(4,202,'Cuádruple',4,250,1,2,'Habitación cuádruple con balcón.','WiFi gratuito, Desayuno incluido'),(5,301,'Individual',1,110,2,1,'Habitación individual con decoración moderna.','WiFi gratuito'),(6,302,'Doble',2,160,2,1,'Habitación doble con minibar.','WiFi gratuito, Desayuno incluido'),(7,401,'Triple',3,210,3,2,'Habitación triple con vistas a la ciudad.','WiFi gratuito'),(8,402,'Cuádruple',4,260,3,2,'Habitación cuádruple con cocina.','WiFi gratuito, Desayuno incluido'),(9,501,'Individual',1,120,4,1,'Habitación individual con escritorio.','WiFi gratuito'),(10,502,'Doble',2,170,4,1,'Habitación doble con vista al jardín.','WiFi gratuito, Desayuno incluido'),(11,601,'Triple',3,220,5,2,'Habitación triple con jacuzzi.','WiFi gratuito, Desayuno incluido'),(12,602,'Cuádruple',4,280,5,2,'Habitación cuádruple amplia.','WiFi gratuito, Desayuno incluido'),(13,701,'Individual',1,130,6,1,'Habitación individual con balcón.','WiFi gratuito'),(14,702,'Doble',2,190,6,1,'Habitación doble con vistas al jardín.','WiFi gratuito, Desayuno incluido');
+INSERT INTO `Habitaciones` VALUES (1,101,'Individual',1,100,1,1,'Habitación individual con una cama.','WiFi gratuito'),(2,102,'Doble',2,999,1,1,'Habitación doble con dos camas.','WiFi gratuito, Desayuno incluido'),(3,201,'Triple',3,200,1,2,'Habitación triple con vista al mar.','WiFi gratuito'),(4,202,'Cuádruple',4,250,1,2,'Habitación cuádruple con balcón.','WiFi gratuito, Desayuno incluido'),(5,301,'Individual',1,110,2,1,'Habitación individual con decoración moderna.','WiFi gratuito'),(6,302,'Doble',2,160,2,1,'Habitación doble con minibar.','WiFi gratuito, Desayuno incluido'),(7,401,'Triple',3,210,3,2,'Habitación triple con vistas a la ciudad.','WiFi gratuito'),(8,402,'Cuádruple',4,260,3,2,'Habitación cuádruple con cocina.','WiFi gratuito, Desayuno incluido'),(9,501,'Individual',1,120,4,1,'Habitación individual con escritorio.','WiFi gratuito'),(10,502,'Suite',2,170,4,1,'Habitación doble con vista al jardín.','WiFi gratuito, Desayuno incluido'),(11,601,'Triple',3,220,5,2,'Habitación triple con jacuzzi.','WiFi gratuito, Desayuno incluido'),(12,602,'Cuádruple',4,280,5,2,'Habitación cuádruple amplia.','WiFi gratuito, Desayuno incluido'),(13,701,'Luxury',1,130,6,1,'Habitación individual con balcón.','WiFi gratuito'),(14,702,'Doble',2,190,6,1,'Habitación doble con vistas al jardín.','WiFi gratuito, Desayuno incluido');
 /*!40000 ALTER TABLE `Habitaciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -302,7 +304,7 @@ CREATE TABLE `Pago` (
   CONSTRAINT `pagohotel` FOREIGN KEY (`Id_Hotel`) REFERENCES `Hotel` (`Id_Hotel`) ON DELETE CASCADE,
   CONSTRAINT `pagometodo` FOREIGN KEY (`Id_MetodoPago`) REFERENCES `MetodoPago` (`Id_MetodoPago`),
   CONSTRAINT `pagoreserva` FOREIGN KEY (`Id_Reserva`) REFERENCES `Reservas` (`Id_Reserva`)
-) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=242 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -311,7 +313,7 @@ CREATE TABLE `Pago` (
 
 LOCK TABLES `Pago` WRITE;
 /*!40000 ALTER TABLE `Pago` DISABLE KEYS */;
-INSERT INTO `Pago` VALUES (167,1,19,196,'Tarjeta de Crédito','2025-03-13 20:05:13',1),(168,2,19,197,'Tarjeta de Crédito','2025-03-13 20:06:52',1),(169,2,19,198,'Tarjeta de Crédito','2025-03-13 20:12:49',1),(181,4,19,211,'Tarjeta de Crédito','2025-03-19 19:33:16',1),(185,1,19,212,'Tarjeta de Crédito','2025-03-19 19:44:46',1),(187,1,19,214,'Tarjeta de Crédito','2025-03-19 20:07:49',1);
+INSERT INTO `Pago` VALUES (208,4,19,258,'Método no válido','2025-04-07 16:57:30',1),(209,4,19,259,'Método no válido','2025-04-07 17:00:52',1),(210,4,19,260,'Método no válido','2025-04-07 17:01:18',1),(211,4,19,261,'Método no válido','2025-04-07 17:02:39',1),(212,4,19,262,'Método no válido','2025-04-07 17:03:24',1),(213,4,19,263,'Método no válido','2025-04-07 17:04:07',1),(214,4,19,264,'Método no válido','2025-04-07 17:07:30',1),(215,4,19,265,'Método no válido','2025-04-07 17:08:04',1),(216,4,19,266,'Método no válido','2025-04-07 17:08:15',1),(217,4,19,267,'Método no válido','2025-04-07 17:14:50',1),(218,4,19,268,'Método no válido','2025-04-07 17:15:25',1),(219,4,19,269,'Método no válido','2025-04-07 17:16:12',1),(220,3,19,270,'Método no válido','2025-04-07 17:17:27',1),(221,3,19,271,'Método no válido','2025-04-07 17:18:18',1),(222,1,19,272,'Método no válido','2025-04-07 17:27:49',1),(223,1,19,273,'Método no válido','2025-04-07 17:28:46',1),(224,2,19,274,'Método no válido','2025-04-07 17:30:13',1),(225,2,19,275,'Método no válido','2025-04-07 17:30:41',1),(226,3,19,276,'Método no válido','2025-04-07 18:44:33',1),(227,3,19,277,'Método no válido','2025-04-07 18:46:00',1),(228,2,19,278,'Método no válido','2025-04-07 18:48:52',1),(229,2,19,279,'Método no válido','2025-04-07 18:49:18',1),(232,3,19,282,'Método no válido','2025-04-07 19:02:21',1),(233,2,19,283,'Método no válido','2025-04-07 19:04:34',1),(234,1,19,284,'Método no válido','2025-04-07 19:05:35',1),(235,1,19,285,'Método no válido','2025-04-07 19:46:31',1),(237,1,19,287,'Método no válido','2025-04-07 21:00:58',1),(238,5,19,288,'Método no válido','2025-04-07 21:05:38',1),(239,4,19,289,'Método no válido','2025-04-08 16:09:03',1),(241,5,19,291,'Método no válido','2025-04-10 18:43:01',1);
 /*!40000 ALTER TABLE `Pago` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -343,6 +345,35 @@ INSERT INTO `Pais` VALUES (1,'España',1),(2,'USA',7),(3,'Afganistán',3),(4,'Al
 UNLOCK TABLES;
 
 --
+-- Table structure for table `PreciosTemporada`
+--
+
+DROP TABLE IF EXISTS `PreciosTemporada`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `PreciosTemporada` (
+  `Id_Precio` int NOT NULL AUTO_INCREMENT,
+  `Id_Habitacion` int DEFAULT NULL,
+  `Id_Temporada` int DEFAULT NULL,
+  `Precio` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`Id_Precio`),
+  KEY `Id_Habitacion` (`Id_Habitacion`),
+  KEY `Id_Temporada` (`Id_Temporada`),
+  CONSTRAINT `PreciosTemporada_ibfk_1` FOREIGN KEY (`Id_Habitacion`) REFERENCES `Habitaciones` (`Id_Habitaciones`),
+  CONSTRAINT `PreciosTemporada_ibfk_2` FOREIGN KEY (`Id_Temporada`) REFERENCES `Temporadas` (`Id_Temporada`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `PreciosTemporada`
+--
+
+LOCK TABLES `PreciosTemporada` WRITE;
+/*!40000 ALTER TABLE `PreciosTemporada` DISABLE KEYS */;
+/*!40000 ALTER TABLE `PreciosTemporada` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Reserva_Servicio`
 --
 
@@ -365,7 +396,7 @@ CREATE TABLE `Reserva_Servicio` (
 
 LOCK TABLES `Reserva_Servicio` WRITE;
 /*!40000 ALTER TABLE `Reserva_Servicio` DISABLE KEYS */;
-INSERT INTO `Reserva_Servicio` VALUES (196,1),(197,5),(198,5),(211,15);
+INSERT INTO `Reserva_Servicio` VALUES (287,2),(284,3),(272,4),(273,4),(285,4),(274,8),(275,8),(276,9),(277,9),(270,10),(271,10),(289,15),(258,16),(259,16),(260,16),(261,16),(262,16),(263,16),(264,16),(265,16),(288,20),(291,20),(283,28),(282,30),(266,31),(267,31),(268,31),(269,31),(289,31),(289,32),(291,33),(291,34);
 /*!40000 ALTER TABLE `Reserva_Servicio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -417,7 +448,7 @@ CREATE TABLE `Reservas` (
   CONSTRAINT `hotelreserv` FOREIGN KEY (`Id_Hotel`) REFERENCES `Hotel` (`Id_Hotel`) ON DELETE CASCADE,
   CONSTRAINT `servicios` FOREIGN KEY (`Id_Servicio`) REFERENCES `Servicio` (`Id_Servicio`) ON DELETE CASCADE,
   CONSTRAINT `tarifas` FOREIGN KEY (`Id_Tarifa`) REFERENCES `Tarifa` (`Id_Tarifa`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=215 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=292 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -426,7 +457,7 @@ CREATE TABLE `Reservas` (
 
 LOCK TABLES `Reservas` WRITE;
 /*!40000 ALTER TABLE `Reservas` DISABLE KEYS */;
-INSERT INTO `Reservas` VALUES (196,19,1,1,NULL,NULL,100,0,0,0,200,'2025-04-02','2025-04-04',2,'1','Pagado',NULL,'No llego'),(197,19,5,2,NULL,NULL,110,0,0,0,220,'2025-04-04','2025-04-06',2,'1','Pagado',NULL,'No llego'),(198,19,5,2,NULL,NULL,110,0,0,12,232,'2025-04-08','2025-04-10',2,'1','Pagado',NULL,'No llego'),(211,19,9,4,NULL,NULL,120,0,0,20,260,'2025-03-28','2025-03-30',2,'2','Pagado',NULL,'No llego'),(212,19,2,1,NULL,NULL,999,0,0,0,2997,'2025-04-04','2025-04-07',2,'1','Pagado',NULL,'No llego'),(214,19,1,1,NULL,NULL,100,0,0,0,700,'2025-03-21','2025-03-28',2,'1','Pagado',NULL,'No llego');
+INSERT INTO `Reservas` VALUES (258,19,9,4,NULL,NULL,0,0,0,10,10,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(259,19,9,4,NULL,NULL,0,0,0,10,10,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(260,19,9,4,NULL,NULL,0,0,0,10,10,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(261,19,9,4,NULL,NULL,0,0,0,10,10,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(262,19,9,4,NULL,NULL,0,0,0,10,10,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(263,19,9,4,NULL,NULL,120,0,0,10,250,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(264,19,9,4,NULL,NULL,120,0,0,10,250,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(265,19,9,4,NULL,NULL,120,0,0,10,250,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(266,19,9,4,NULL,NULL,120,0,0,0,240,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(267,19,9,4,NULL,NULL,120,0,0,0,240,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(268,19,9,4,NULL,NULL,120,0,0,0,240,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(269,19,9,4,NULL,NULL,120,0,0,0,240,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(270,19,8,3,NULL,NULL,0,0,0,60,60,'2025-05-11','2025-05-12',1,'1','Pagado',NULL,'No llego'),(271,19,8,3,NULL,NULL,260,0,0,60,320,'2025-05-11','2025-05-12',1,'1','Pagado',NULL,'No llego'),(272,19,1,1,NULL,NULL,0,20,0,5,25,'2025-04-16','2025-04-22',1,'1','Pagado',NULL,'No llego'),(273,19,1,1,NULL,NULL,100,20,0,5,625,'2025-04-16','2025-04-22',1,'1','Pagado',NULL,'No llego'),(274,19,6,2,NULL,NULL,0,35,0,7,42,'2025-04-14','2025-04-16',1,'1','Pagado',NULL,'No llego'),(275,19,6,2,NULL,NULL,160,35,0,7,362,'2025-04-14','2025-04-16',1,'1','Pagado',NULL,'No llego'),(276,19,8,3,NULL,NULL,0,60,0,18,78,'2025-04-14','2025-04-16',1,'1','Pagado',NULL,'No llego'),(277,19,8,3,NULL,NULL,260,60,0,18,598,'2025-04-14','2025-04-16',1,'1','Pagado',NULL,'No llego'),(278,19,5,2,NULL,NULL,0,20,0,0,20,'2025-04-15','2025-04-22',2,'1','Pagado',NULL,'No llego'),(279,19,5,2,NULL,NULL,110,20,0,0,790,'2025-04-15','2025-04-22',2,'1','Pagado',NULL,'No llego'),(282,19,7,3,NULL,NULL,210,15,0,0,225,'2025-04-15','2025-04-16',4,'1','Pagado',NULL,'No llego'),(283,19,5,2,NULL,NULL,110,20,0,0,240,'2025-04-23','2025-04-25',2,'1','Pagado',NULL,'No llego'),(284,19,2,1,NULL,NULL,999,20,0,10,1029,'2025-04-15','2025-04-16',2,'1','Pagado',NULL,'No llego'),(285,19,4,1,NULL,NULL,250,20,0,5,275,'2025-04-15','2025-04-16',1,'1','Pagado',NULL,'No llego'),(287,19,3,1,NULL,NULL,200,20,0,50,470,'2025-04-15','2025-04-17',2,'1','Pagado',NULL,'No llego'),(288,19,11,5,NULL,NULL,220,40,0,15,275,'2025-04-15','2025-04-16',1,'2','Pagado',NULL,'No llego'),(289,19,10,4,NULL,NULL,170,45,0,20,405,'2025-04-09','2025-04-11',1,'2','Pagado',NULL,'No llego'),(291,19,11,5,NULL,NULL,374,40,0,15,1177,'2025-04-12','2025-04-15',1,'2','Pagado',NULL,'No llego');
 /*!40000 ALTER TABLE `Reservas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -440,7 +471,7 @@ DROP TABLE IF EXISTS `Reservas_Actividades`;
 CREATE TABLE `Reservas_Actividades` (
   `Id_Reserva` int NOT NULL,
   `Id_Actividad` int NOT NULL,
-  `Precio_Actividad` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `Precio_Actividad` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`Id_Reserva`,`Id_Actividad`),
   KEY `fk_reservas_actividades_actividad` (`Id_Actividad`),
   CONSTRAINT `fk_reservas_actividades_actividad` FOREIGN KEY (`Id_Actividad`) REFERENCES `Actividades` (`Id_Actividades`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -454,7 +485,7 @@ CREATE TABLE `Reservas_Actividades` (
 
 LOCK TABLES `Reservas_Actividades` WRITE;
 /*!40000 ALTER TABLE `Reservas_Actividades` DISABLE KEYS */;
-INSERT INTO `Reservas_Actividades` VALUES (211,58,50.00);
+INSERT INTO `Reservas_Actividades` VALUES (258,41,30.00),(259,41,30.00),(260,35,45.00),(261,41,30.00),(262,41,30.00),(263,41,30.00),(264,41,30.00),(265,35,45.00),(266,35,45.00),(267,35,45.00),(268,35,45.00),(269,35,45.00),(270,40,15.00),(271,40,15.00),(272,38,20.00),(273,38,20.00),(274,39,35.00),(275,39,35.00),(276,34,60.00),(277,34,60.00),(278,33,20.00),(279,33,20.00),(282,40,15.00),(283,33,20.00),(284,38,20.00),(285,38,20.00),(287,38,20.00),(288,42,40.00),(289,35,45.00),(291,42,40.00);
 /*!40000 ALTER TABLE `Reservas_Actividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -471,10 +502,11 @@ CREATE TABLE `Servicio` (
   `Servicio` varchar(255) DEFAULT NULL,
   `Descripcion` varchar(255) DEFAULT NULL,
   `Precio` decimal(10,2) NOT NULL DEFAULT '10.00',
+  `TipoServicio` tinyint DEFAULT NULL,
   PRIMARY KEY (`Id_Servicio`),
   KEY `hotel_idx` (`Id_Hotel`),
-  CONSTRAINT `fk_servicio_hotel` FOREIGN KEY (`Id_Hotel`) REFERENCES `Hotel` (`Id_Hotel`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk_servicio_hotel` FOREIGN KEY (`Id_Hotel`) REFERENCES `Hotel` (`Id_Hotel`) ON DELETE SET NULL ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -483,7 +515,7 @@ CREATE TABLE `Servicio` (
 
 LOCK TABLES `Servicio` WRITE;
 /*!40000 ALTER TABLE `Servicio` DISABLE KEYS */;
-INSERT INTO `Servicio` VALUES (1,1,'Limpieza','Servicio de limpieza diaria de habitaciones',15.00),(2,1,'Spa','Acceso a la zona de spa y masajes relajantes',50.00),(3,1,'Parking','Estacionamiento privado para huéspedes',10.00),(4,1,'Taxi','Servicio de taxi disponible 24/7',5.00),(5,2,'Limpieza','Servicio de limpieza diaria de habitaciones',12.00),(6,2,'Spa','Acceso a la zona de spa y tratamientos faciales',55.00),(7,2,'Parking','Estacionamiento con vigilancia 24 horas',12.00),(8,2,'Taxi','Transporte al aeropuerto y dentro de la ciudad',7.00),(9,3,'Limpieza','Limpieza de habitaciones con cambio de sábanas',18.00),(10,3,'Spa','Circuito termal y masajes relajantes',60.00),(11,3,'Parking','Estacionamiento cubierto para huéspedes',15.00),(12,3,'Taxi','Servicio de traslado a zonas turísticas',8.00),(13,4,'Limpieza','Servicio de limpieza y lavandería',20.00),(14,4,'Spa','Acceso al spa con sauna y jacuzzi',65.00),(15,4,'Parking','Aparcamiento privado con seguridad',20.00),(16,4,'Taxi','Chofer privado bajo demanda',10.00),(17,5,'Limpieza','Limpieza profunda diaria de habitaciones',22.00),(18,5,'Spa','Sesiones de spa con tratamientos exclusivos',70.00),(19,5,'Parking','Estacionamiento gratuito para huéspedes',10.00),(20,5,'Taxi','Transporte de lujo disponible',15.00),(21,6,'Limpieza','Servicio de limpieza estándar',10.00),(22,6,'Spa','Baños termales y masajes',45.00),(23,6,'Parking','Zona de aparcamiento al aire libre',8.00),(24,6,'Taxi','Servicio de traslado a cualquier destino',6.00);
+INSERT INTO `Servicio` VALUES (1,1,'Limpieza','Servicio de limpieza diaria de habitaciones',15.00,0),(2,1,'Spa','Acceso a la zona de spa y masajes relajantes',50.00,0),(3,1,'Parking','Estacionamiento privado para huéspedes',10.00,0),(4,1,'Taxi','Servicio de taxi disponible 24/7',5.00,0),(5,2,'Limpieza','Servicio de limpieza diaria de habitaciones',12.00,0),(6,2,'Spa','Acceso a la zona de spa y tratamientos faciales',55.00,0),(7,2,'Parking','Estacionamiento con vigilancia 24 horas',12.00,0),(8,2,'Taxi','Transporte al aeropuerto y dentro de la ciudad',7.00,0),(9,3,'Limpieza','Limpieza de habitaciones con cambio de sábanas',18.00,0),(10,3,'Spa','Circuito termal y masajes relajantes',60.00,0),(11,3,'Parking','Estacionamiento cubierto para huéspedes',15.00,0),(12,3,'Taxi','Servicio de traslado a zonas turísticas',8.00,0),(13,4,'Limpieza','Servicio de limpieza y lavandería',20.00,0),(14,4,'Spa','Acceso al spa con sauna y jacuzzi',65.00,0),(15,4,'Parking','Aparcamiento privado con seguridad',20.00,0),(16,4,'Taxi','Chofer privado bajo demanda',10.00,0),(17,5,'Limpieza','Limpieza profunda diaria de habitaciones',22.00,0),(18,5,'Spa','Sesiones de spa con tratamientos exclusivos',70.00,0),(19,5,'Parking','Estacionamiento gratuito para huéspedes',10.00,0),(20,5,'Taxi','Transporte de lujo disponible',15.00,0),(21,6,'Limpieza','Servicio de limpieza estándar',10.00,0),(22,6,'Spa','Baños termales y masajes',45.00,0),(23,6,'Parking','Zona de aparcamiento al aire libre',8.00,0),(24,6,'Taxi','Servicio de traslado a cualquier destino',6.00,0),(25,1,'WiFi gratuito','Internet de alta velocidad sin costo',0.00,1),(26,1,'Desayuno incluido','Desayuno buffet todas las mañanas',0.00,1),(27,2,'WiFi gratuito','Internet de alta velocidad sin costo',0.00,1),(28,2,'Desayuno incluido','Desayuno buffet todas las mañanas',0.00,1),(29,3,'WiFi gratuito','Internet de alta velocidad sin costo',0.00,1),(30,3,'Desayuno incluido','Desayuno buffet todas las mañanas',0.00,1),(31,4,'WiFi gratuito','Internet de alta velocidad sin costo',0.00,1),(32,4,'Desayuno incluido','Desayuno buffet todas las mañanas',0.00,1),(33,5,'WiFi gratuito','Internet de alta velocidad sin costo',0.00,1),(34,5,'Desayuno incluido','Desayuno buffet todas las mañanas',0.00,1),(35,6,'WiFi gratuito','Internet de alta velocidad sin costo',0.00,1),(36,6,'Desayuno incluido','Desayuno buffet todas las mañanas',0.00,1);
 /*!40000 ALTER TABLE `Servicio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -554,6 +586,36 @@ LOCK TABLES `TarifaReserva` WRITE;
 /*!40000 ALTER TABLE `TarifaReserva` DISABLE KEYS */;
 /*!40000 ALTER TABLE `TarifaReserva` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `Temporadas`
+--
+
+DROP TABLE IF EXISTS `Temporadas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Temporadas` (
+  `Id_Temporada` int NOT NULL AUTO_INCREMENT,
+  `Nombre` varchar(100) NOT NULL,
+  `Fecha_Inicio` date NOT NULL,
+  `Fecha_Fin` date NOT NULL,
+  `Estacion` enum('Primavera','Verano','Otoño','Invierno') NOT NULL,
+  `Nivel` enum('Alta','Media','Baja') NOT NULL,
+  `PrecioMultiplicador` decimal(5,2) DEFAULT '1.00',
+  `Variante` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`Id_Temporada`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Temporadas`
+--
+
+LOCK TABLES `Temporadas` WRITE;
+/*!40000 ALTER TABLE `Temporadas` DISABLE KEYS */;
+INSERT INTO `Temporadas` VALUES (1,'Navidad y Fin de Año','2025-12-20','2026-01-05','Invierno','Alta',1.40,NULL),(2,'Invierno Tranquilo','2025-01-06','2025-03-15','Invierno','Baja',0.85,NULL),(3,'Primavera Media','2025-03-16','2025-06-15','Primavera','Media',1.70,NULL),(4,'Verano Vacacional','2025-06-16','2025-08-31','Verano','Alta',1.30,NULL),(5,'Otoño Relajado','2025-09-01','2025-11-30','Otoño','Baja',0.90,NULL);
+/*!40000 ALTER TABLE `Temporadas` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -564,4 +626,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-25 17:16:59
+-- Dump completed on 2025-04-10 18:47:19
