@@ -132,6 +132,7 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
                                         <input type="hidden" name="paisId" value="<?php echo $_SESSION['location']; ?>">
                                         <input type="hidden" name="precioFinal" value="<?php echo htmlspecialchars($habitacion['PrecioFinal']); ?>">
 
+
                                         <button type="submit" class="btn btn-primary w-100 mt-2">Reservar</button>
                                     </form>
                                 </div>
