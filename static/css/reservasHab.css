@@ -1,0 +1,827 @@
+/* Estilos generales */
+
+:root {
+    --primary-color: #2a3d66;
+    --secondary-color: #5a8ecf;
+    --accent-color: #d3ddff;
+    --text-color: #333;
+    --background-light: #f7f9fc;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --primary-blue: #1e3d59;
+    --secondary-blue: #17263b;
+    --accent-blue: #2c5282;
+    --light-blue: #edf2f7;
+    --gold: #c5a47e;
+    --white: #ffffff;
+    --text-dark: #2d3748;
+    --text-light: #e2e8f0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+:root {
+    --primary-blue: #003b5c;
+    --secondary-blue: #005f87;
+    --accent-gold: #c9a66b;
+    --light-gray: #f5f5f5;
+    --medium-gray: #e0e0e0;
+    --dark-gray: #333333;
+    --success-green: #4caf50;
+}
+
+/* Header de Reservas */
+.booking-header {
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-container {
+    width: 95%;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-logo img {
+    height: 60px;
+    width: auto;
+    transition: opacity 0.3s;
+}
+
+.brand-logo:hover img {
+    opacity: 0.9;
+}
+
+/* Barra de Progreso */
+.booking-progress {
+    display: flex;
+    gap: 15px;
+}
+
+.progress-step {
+    text-align: center;
+    min-width: 60px;
+}
+
+.progress-step span {
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: var(--light-gray);
+    color: var(--dark-gray);
+    border-radius: 50%;
+    margin: 0 auto 5px;
+    line-height: 30px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.progress-step p {
+    color: var(--dark-gray);
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.progress-step.completed span {
+    background: var(--primary-blue);
+    color: white;
+}
+
+.progress-step.completed p {
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+/* Asistencia */
+.header-assistance {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.assistance-link {
+    color: var(--primary-blue);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.assistance-link:hover {
+    color: var(--secondary-blue);
+}
+
+.secure-badge {
+    background: var(--light-gray);
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--success-green);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .booking-progress {
+        gap: 10px;
+    }
+    
+    .progress-step {
+        min-width: 50px;
+    }
+    
+    .progress-step p {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .booking-progress {
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+    
+    .progress-step p {
+        display: none;
+    }
+    
+    .header-assistance {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+    }
+    
+    .secure-badge span {
+        display: none;
+    }
+}
+
+
+/* Contenedor del header */
+
+/* Contenedor de enlaces */
+.main-up-right .links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Enlaces de navegación */
+.links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out;
+    padding: 8px 15px;
+}
+
+.links a:hover {
+    color: #d3ddff; /* Dorado elegante */
+}
+
+/* Dropdown general */
+.dropdown {
+    position: relative;
+}
+
+.dropbtn {
+    color: rgb(30, 13, 127);
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 8px 15px;
+    display: inline-block;
+    transition: color 0.3s ease-in-out;
+}
+
+.dropbtn:hover {
+    color: #152496;
+}
+
+/* Contenido del dropdown */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: white;
+    min-width: 200px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    top: 40px;
+    left: 0;
+    z-index: 1000;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Secciones dentro del dropdown */
+.dropdown-section {
+    padding: 10px;
+}
+
+.dropdown-section h4 {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.dropdown-content a {
+    display: block;
+    color: #34495e;
+    padding: 8px 15px;
+    text-decoration: none;
+    transition: background 0.3s ease-in-out;
+}
+
+.dropdown-content a:hover {
+    background: #151f51;
+    color: white;
+}
+
+/* Ícono de perfil */
+.icon-perfil {
+    color: white;
+    transition: color 0.3s ease-in-out;
+}
+
+.icon-perfil:hover {
+    color: #d4af37;
+}
+
+/* Dropdown de perfil */
+.dropdown-perfil {
+    position: relative;
+}
+
+.dropdown-perfil-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: white;
+    min-width: 180px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    top: 40px;
+    z-index: 1000;
+}
+
+.dropdown-perfil:hover .dropdown-perfil-content {
+    display: block;
+}
+
+.dropdown-perfil-content a {
+    display: block;
+    color: #34495e;
+    padding: 10px;
+    text-decoration: none;
+    transition: background 0.3s ease-in-out;
+}
+
+.dropdown-perfil-content a:hover {
+    background: #032254;
+    color: white;
+}
+
+/* Menú hamburguesa */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.bar {
+    width: 30px;
+    height: 4px;
+    background: white;
+    margin: 5px 0;
+    border-radius: 2px;
+}
+
+/* Menú desplegable en móvil */
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: white;
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 10px 0;
+    z-index: 1000;
+}
+.dropdown-perfil-content a {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre el icono y el texto */
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.mobile-menu a {
+    color: #2c3e50;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: block;
+    font-size: 1rem;
+    transition: background 0.3s ease-in-out;
+}
+
+.mobile-menu a:hover {
+    background: #3749d4;
+    color: white;
+}
+
+/* Estilos del dropdown en móvil */
+.dropdown-content-mobile {
+    display: none;
+    padding-left: 20px;
+}
+
+.dropdown-mobile:hover .dropdown-content-mobile {
+    display: block;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .main-up-right {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .mobile-menu.show {
+        display: flex;
+    }
+}
+
+
+/* Contenedor principal */
+.container {
+    width: 85%; /* Aumenta el ancho del contenedor */
+    margin: 5% auto; /* Centrado y con margen superior */
+}
+
+/* Contenedor de habitaciones */
+:root {
+    --primary-color: #2a3d66;
+    --secondary-color: #5a8ecf;
+    --accent-color: #d3ddff;
+    --text-color: #333;
+    --background-light: #f7f9fc;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --primary-blue: #1e3d59;
+    --secondary-blue: #17263b;
+    --accent-blue: #2c5282;
+    --light-blue: #edf2f7;
+    --gold: #c5a47e;
+    --white: #ffffff;
+    --text-dark: #2d3748;
+    --text-light: #e2e8f0;
+  }
+  
+  /* Estilos generales */
+  body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--light-blue);
+      color: var(--text-dark);
+      line-height: 1.6;
+  }
+  
+  .hotel-reservation-container {
+      max-width: 1400px;
+      padding: 0 20px;
+  }
+  
+  /* Breadcrumb */
+  .breadcrumb {
+      background-color: transparent;
+      padding: 0;
+  }
+  
+  .breadcrumb-item a {
+      color: var(--secondary-blue);
+      text-decoration: none;
+  }
+  
+  .breadcrumb-item.active {
+      color: var(--gold);
+  }
+  
+  /* Sidebar de reserva */
+  .reservation-sidebar {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(23, 38, 59, 0.08);
+      border: none;
+      position: sticky;
+      top: 20px;
+      height: fit-content;
+  }
+  
+  .reservation-sidebar h2 {
+      color: var(--primary-blue);
+      font-size: 1.5rem;
+      font-weight: 600;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--gold);
+      margin-bottom: 25px;
+  }
+  
+  .reservation-detail-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(30, 61, 89, 0.1);
+  }
+  
+  .reservation-detail-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+  }
+  
+  .reservation-detail-item i {
+      color: var(--gold);
+      font-size: 1.2rem;
+      margin-top: 3px;
+  }
+  
+  .reservation-detail-item h6 {
+      color: var(--secondary-blue);
+      font-weight: 500;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+  }
+  
+  .reservation-detail-item p {
+      color: var(--text-dark);
+      margin-bottom: 0;
+      font-size: 1rem;
+      font-weight: 500;
+  }
+  
+  /* Información del hotel en sidebar */
+  .hotel-info-sidebar {
+      background: var(--white);
+      border: none;
+      box-shadow: 0 4px 20px rgba(23, 38, 59, 0.08);
+  }
+  
+  .hotel-info-sidebar .card-title {
+      color: var(--primary-blue);
+      font-weight: 600;
+      border-bottom: 1px solid rgba(30, 61, 89, 0.1);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+  }
+  
+  .hotel-info-sidebar .card-text {
+      margin-bottom: 10px;
+      color: var(--text-dark);
+  }
+  
+  .hotel-info-sidebar .card-text i {
+      color: var(--gold);
+      margin-right: 8px;
+      width: 20px;
+  }
+  
+  /* Encabezado del hotel */
+  .hotel-header {
+      background-color: var(--white);
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(23, 38, 59, 0.05);
+      margin-bottom: 30px;
+  }
+  
+  .hotel-title {
+      color: var(--primary-blue);
+      font-weight: 700;
+      margin-bottom: 5px;
+  }
+  
+  .hotel-rating {
+      margin-bottom: 10px;
+  }
+  
+  .hotel-location {
+      color: var(--secondary-blue);
+      margin-bottom: 0;
+  }
+  
+  .hotel-location i {
+      color: var(--gold);
+      margin-right: 5px;
+  }
+  
+  /* Títulos de sección */
+  .section-title {
+      color: var(--primary-blue);
+      font-weight: 600;
+      margin-bottom: 25px;
+      position: relative;
+      padding-bottom: 10px;
+  }
+  
+  .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--gold);
+  }
+  
+  /* Tarjetas de habitaciones */
+  .habitacion-card {
+      border: none;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: var(--transition-smooth);
+      background: var(--white);
+      box-shadow: 0 5px 15px rgba(23, 38, 59, 0.08);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+  }
+  
+  .habitacion-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(23, 38, 59, 0.12);
+  }
+  
+  .habitacion-imagen {
+      height: 220px;
+      overflow: hidden;
+      position: relative;
+  }
+  
+  .habitacion-imagen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+  }
+  
+  .habitacion-card:hover .habitacion-imagen img {
+      transform: scale(1.05);
+  }
+  
+  .price-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: rgba(30, 61, 89, 0.9);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-body {
+      padding: 25px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+  }
+  
+  .card-title {
+      font-weight: 600;
+      color: var(--primary-blue);
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+  }
+  
+  .room-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+  }
+  
+  .room-features .feature {
+      background-color: var(--light-blue);
+      color: var(--secondary-blue);
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+  }
+  
+  .room-features .feature i {
+      margin-right: 5px;
+      font-size: 0.9rem;
+  }
+  
+  .card-text {
+      color: var(--text-dark);
+      margin-bottom: 15px;
+  }
+  
+  /* Botones */
+  .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: var(--transition-smooth);
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+  }
+  
+  .btn-details {
+      background: var(--secondary-blue);
+      color: var(--white);
+  }
+  
+  .btn-details:hover {
+      background: var(--primary-blue);
+      color: var(--white);
+  }
+  
+  .btn-primary {
+      background: var(--gold);
+      color: var(--secondary-blue);
+      font-weight: 600;
+  }
+  
+  .btn-primary:hover {
+      background: #b8936e;
+      color: var(--white);
+  }
+  
+  /* Modal */
+  .modal-content {
+      border-radius: 15px;
+      overflow: hidden;
+      border: none;
+  }
+  
+  .modal-header {
+      background-color: var(--primary-blue);
+      color: var(--white);
+      border-bottom: 2px solid var(--gold);
+  }
+  
+  .modal-title {
+      font-weight: 600;
+  }
+  
+  .btn-close {
+      filter: invert(1);
+  }
+  
+  .carousel-inner {
+      border-radius: 10px;
+      overflow: hidden;
+  }
+  
+  .carousel-control-prev, .carousel-control-next {
+      width: 5%;
+  }
+  
+  .carousel-control-prev-icon, .carousel-control-next-icon {
+      background-color: rgba(30, 61, 89, 0.7);
+      border-radius: 50%;
+      padding: 15px;
+  }
+  
+  .modal-imagen {
+      max-height: 400px;
+      object-fit: cover;
+  }
+  
+  .service-list {
+      list-style: none;
+      padding-left: 0;
+  }
+  
+  .service-list li {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+  }
+  
+  .service-list li i {
+      color: var(--gold);
+      margin-right: 10px;
+      font-size: 1.1rem;
+  }
+  
+  .price-summary {
+      background-color: var(--light-blue);
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid rgba(30, 61, 89, 0.1);
+  }
+  
+  .price-summary h6 {
+      color: var(--primary-blue);
+      font-weight: 600;
+      margin-bottom: 15px;
+      border-bottom: 1px solid rgba(30, 61, 89, 0.1);
+      padding-bottom: 10px;
+  }
+  
+  /* Alertas */
+  .alert {
+      border-radius: 10px;
+  }
+  
+  .alert i {
+      margin-right: 8px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 992px) {
+      .reservation-sidebar, .hotel-info-sidebar {
+          position: static;
+          margin-bottom: 40px;
+      }
+      
+      .hotel-header {
+          text-align: center;
+      }
+      
+      .section-title {
+          text-align: center;
+      }
+      
+      .section-title::after {
+          left: 50%;
+          transform: translateX(-50%);
+      }
+  }
+  
+  @media (max-width: 768px) {
+      .habitacion-imagen {
+          height: 180px;
+      }
+      
+      .card-body {
+          padding: 20px;
+      }
+      
+      .hotel-header {
+          padding: 15px;
+      }
+  }
+  
+  /* Animaciones */
+  @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .habitacion-card {
+      animation: fadeIn 0.6s ease forwards;
+      opacity: 0;
+  }
+  
+  /* Retraso en la animación para cada tarjeta */
+  .habitacion-card:nth-child(1) { animation-delay: 0.1s; }
+  .habitacion-card:nth-child(2) { animation-delay: 0.2s; }
+  .habitacion-card:nth-child(3) { animation-delay: 0.3s; }
+  .habitacion-card:nth-child(4) { animation-delay: 0.4s; }
+  .habitacion-card:nth-child(5) { animation-delay: 0.5s; }

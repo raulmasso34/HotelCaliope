@@ -77,7 +77,7 @@ if ($controller !== null) {
     
         <section class="main-up">
             <div class="main-up-left">
-                <img src="../static/img/logo.png" alt="Imagen secundaria">
+                <img src="../static/img/logo_blanco.png" alt="Imagen secundaria">
             </div>
 
             <div class="main-up-right">
@@ -243,56 +243,67 @@ if ($controller !== null) {
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat sequi nisi repudiandae atque? Cupiditate ipsum natus optio ab quasi ex?</p>
         </div>
         <div class="hoteles-box">
+            <!-- Hotel 1 -->
             <div class="hoteles-nu-gen">
                 <div class="sub-hoteles-nu">
                     <img class="sub-img" src="../static/img/california/california.jpg" alt="">
                 </div>
                 <div class="sub-hoteles-nu">
-                    <h1>
-                       Florida
-                    </h1>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi blanditiis odio eaque beatae quod, porro repellendus fugit, vero deleniti sint consectetur id quasi distinctio itaque ratione magni maiores tenetur! Molestias!</p>
+                    <h1>Florida</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi blanditiis odio eaque beatae quod...</p>
                     <div class="hoteles-boton">
-                    <button>VER MAS</button>
-                    <button>RESERVAR</button>
+                        <button class="ver-mas-btn" data-hotel="florida">VER MÁS</button>
+                        <button>RESERVAR</button>
                     </div>
-                   
                 </div>
             </div>
+
+            <!-- Hotel 2 -->
             <div class="hoteles-nu-gen">
                 <div class="sub-hoteles-nu">
                     <img class="sub-img" src="../static/img/california/california.jpg" alt="">
                 </div>
                 <div class="sub-hoteles-nu">
-                    <h1>
-                       California
-                    </h1>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi blanditiis odio eaque beatae quod, porro repellendus fugit, vero deleniti sint consectetur id quasi distinctio itaque ratione magni maiores tenetur! Molestias!</p>
+                    <h1>California</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi blanditiis odio eaque beatae quod...</p>
                     <div class="hoteles-boton">
-                    <button>VER MAS</button>
-                    <button>RESERVAR</button>
+                        <button class="ver-mas-btn" data-hotel="california">VER MÁS</button>
+                        <button>RESERVAR</button>
                     </div>
-                   
                 </div>
             </div>
+
+            <!-- Hotel 3 -->
             <div class="hoteles-nu-gen">
                 <div class="sub-hoteles-nu">
                     <img class="sub-img" src="../static/img/california/california.jpg" alt="">
                 </div>
                 <div class="sub-hoteles-nu">
-                    <h1>
-                       New York
-                    </h1>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi blanditiis odio eaque beatae quod, porro repellendus fugit, vero deleniti sint consectetur id quasi distinctio itaque ratione magni maiores tenetur! Molestias!</p>
+                    <h1>New York</h1>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi blanditiis odio eaque beatae quod...</p>
                     <div class="hoteles-boton">
-                    <button>VER MAS</button>
-                    <button>RESERVAR</button>
+                        <button class="ver-mas-btn" data-hotel="new-york">VER MÁS</button>
+                        <button>RESERVAR</button>
                     </div>
-                   
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Modal -->
+ <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <img src="../static/img/logo.png" alt="Logo" class="modal-logo">
+                <h2 id="modal-title">Detalles del hotel</h2>
+            </div>
+            <p id="modal-description">Aquí vendrá más información sobre el hotel...</p>
+        </div>
+    </div>
+
+
 
     <!--------------------------BENEFICIOS-------------------------------->
 
@@ -302,41 +313,48 @@ if ($controller !== null) {
                 <h1>BENEFICIOS</h1>
             </div>
             <div class="ben-ben">
+
                 <div class="ben-sub">
                     <i class="fa-solid fa-utensils fa-xl"></i>
-                    <h1>BENEFIT </h1>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A officia, cum impedit doloremque perferendis dolore, tempora dolorem, quis asperiores non minima obcaecati corporis delectus! Sit beatae, cumque velit laudantium odio autem corrupti error quasi at unde assumenda saepe architecto modi.</p>
+                    <h1>Gastronomía de Primera</h1>
+                    <p>Disfruta de una experiencia culinaria excepcional con nuestra variedad de restaurantes y bares. Platos locales e internacionales preparados por chefs expertos para satisfacer todos los gustos.</p>
                 </div>
+
                 <div class="ben-sub">
-                
-                <i class="fa-solid fa-umbrella-beach fa-xl"></i>
-                <h1>BENEFIT </h1>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A officia, cum impedit doloremque perferendis dolore, tempora dolorem, quis asperiores non minima obcaecati corporis delectus! Sit beatae, cumque velit laudantium odio autem corrupti error quasi at unde assumenda saepe architecto modi.</p>
+                    <i class="fa-solid fa-mountain-sun fa-xl"></i>
+                    <h1>Entornos Únicos</h1>
+                    <p>Ubicados en destinos emblemáticos como el corazón de la ciudad o rodeados de naturaleza en la montaña. Cada hotel ofrece una experiencia auténtica y adaptada al entorno, ideal para desconectar o descubrir nuevos lugares.</p>
                 </div>
+
+
                 <div class="ben-sub">
                     <i class="fa-solid fa-gem fa-xl"></i>
-                    <h1>BENEFIT </h1>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A officia, cum impedit doloremque perferendis dolore, tempora dolorem, quis asperiores non minima obcaecati corporis delectus! Sit beatae, cumque velit laudantium odio autem corrupti error quasi at unde assumenda saepe architecto modi.</p>
+                    <h1>Lujo y Confort</h1>
+                    <p>Cada detalle ha sido pensado para tu comodidad. Habitaciones elegantes, amenities de alta gama y un ambiente exclusivo que eleva tu estancia a otro nivel.</p>
                 </div>
+
                 <div class="ben-sub">
                     <i class="fa-solid fa-briefcase fa-xl"></i>
-                    <h1>BENEFIT </h1>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A officia, cum impedit doloremque perferendis dolore, tempora dolorem, quis asperiores non minima obcaecati corporis delectus! Sit beatae, cumque velit laudantium odio autem corrupti error quasi at unde assumenda saepe architecto modi.</p>
+                    <h1>Espacios para Negocios</h1>
+                    <p>Salas de reuniones completamente equipadas, Wi-Fi de alta velocidad y atención personalizada para que tus viajes de trabajo sean tan productivos como placenteros.</p>
                 </div>
+
                 <div class="ben-sub">
                     <i class="fa-solid fa-trophy fa-xl"></i>
-                    <h1>BENEFIT </h1>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A officia, cum impedit doloremque perferendis dolore, tempora dolorem, quis asperiores non minima obcaecati corporis delectus! Sit beatae, cumque velit laudantium odio autem corrupti error quasi at unde assumenda saepe architecto modi.</p>
+                    <h1> Entretenimiento</h1>
+                    <p>Desde deportes acuáticos hasta espectáculos en vivo, siempre hay algo que hacer. Nuestro equipo de animación se encarga de que cada día esté lleno de diversión.</p>
                 </div>
+
                 <div class="ben-sub">
                     <i class="fa-solid fa-bed fa-xl"></i>
-                    <h1>BENEFIT </h1>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A officia, cum impedit doloremque perferendis dolore, tempora dolorem, quis asperiores non minima obcaecati corporis delectus! Sit beatae, cumque velit laudantium odio autem corrupti error quasi at unde assumenda saepe architecto modi.</p>
-
+                    <h1>Descanso Garantizado</h1>
+                    <p>Camas ultra cómodas, cortinas blackout y aislamiento acústico. Aquí, el descanso es prioridad para que te despiertes renovado cada mañana.</p>
                 </div>
+
             </div>
         </div>
     </section>
+
         <!------------------------PROMOCIONES------------------------>
 
         <section class="promociones">
@@ -445,32 +463,35 @@ if ($controller !== null) {
 
 
     <section class="descubrir">
-    <div class="descubrir-box">
-        <!-- Servicio 1 -->
-        <div class="descubrir-row">
-            <div class="descubrir-img">
-                <img src="../static/img/florida/florida3.jpg" alt="Imagen servicio 1">
-            </div>
-            <div class="descubrir-info">
-                <h5>DISCOVER</h5>
-                <h3>SERVICIO 1</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam ab dolore consequuntur impedit tempore culpa aperiam aspernatur illo blanditiis repellat fuga sunt quisquam ad eum vel magnam quos exercitationem.</p>
-            </div>
-        </div>
+        <div class="descubrir-box">
 
-        <!-- Servicio 2 (invertido) -->
-        <div class="descubrir-row reverse">
-            <div class="descubrir-img">
-                <img src="../static/img/california/california.jpg" alt="Imagen servicio 2">
+            <!-- Servicio 1 -->
+            <div class="descubrir-row">
+                <div class="descubrir-img">
+                    <img src="../static/img/florida/florida3.jpg" alt="Imagen servicio 1">
+                </div>
+                <div class="descubrir-info">
+                    <h5>DESCUBRE</h5>
+                    <h3>SPA Y BIENESTAR</h3>
+                    <p>Relájate y rejuvenece con nuestros exclusivos tratamientos de spa, diseñados para tu bienestar. Desde masajes relajantes hasta terapias de belleza, nuestra zona de bienestar te ofrece una experiencia única para desconectar y recargar energías.</p>
+                </div>
             </div>
-            <div class="descubrir-info">
-                <h5>DISCOVER</h5>
-                <h3>SERVICIO 2</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam ab dolore consequuntur impedit tempore culpa aperiam aspernatur illo blanditiis repellat fuga sunt quisquam ad eum vel magnam quos exercitationem.</p>
+
+            <!-- Servicio 2 (invertido) -->
+            <div class="descubrir-row reverse">
+                <div class="descubrir-img">
+                    <img src="../static/img/california/california.jpg" alt="Imagen servicio 2">
+                </div>
+                <div class="descubrir-info">
+                    <h5>DESCUBRE</h5>
+                    <h3>TOURS Y AVENTURAS</h3>
+                    <p>Explora los alrededores con nuestras opciones de tours y actividades de aventura. Desde senderismo en los Pirineos hasta paseos urbanos por Nueva York, nuestras excursiones están diseñadas para los amantes de la naturaleza y la cultura local.</p>
+                </div>
             </div>
+
         </div>
-    </div>
-</section>
+    </section>
+
 
 
 
@@ -671,6 +692,67 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+
+<script>
+   // Obtener el modal
+var modal = document.getElementById("modal");
+
+// Obtener los botones "Ver más"
+var btns = document.querySelectorAll(".ver-mas-btn");
+
+// Obtener el <span> (x) que cierra el modal
+var span = document.getElementsByClassName("close")[0];
+
+// Cuando el usuario haga clic en un botón "Ver más"
+btns.forEach(function(btn) {
+    btn.onclick = function() {
+        var hotel = this.getAttribute('data-hotel');
+        var title = "";
+        var description = "";
+
+        // Personalizar el modal según el hotel
+        if (hotel === "florida") {
+            title = "Florida";
+            description = "Descubre nuestro hotel en Florida, un lugar ideal para disfrutar del sol, la playa y todo lo que este destino tiene para ofrecer. Ofrecemos lujosas habitaciones, restaurantes de alta calidad y un servicio excepcional.";
+        } else if (hotel === "california") {
+            title = "California";
+            description = "En California, disfruta de la vibrante vida urbana de Los Ángeles o de la tranquilidad de nuestras ubicaciones cercanas a la playa. Un destino único para tus vacaciones o viajes de negocio.";
+        } else if (hotel === "new-york") {
+            title = "New York";
+            description = "Experimenta el bullicio de Nueva York, un hotel donde la comodidad se encuentra en el centro de la ciudad. Ideal para quienes buscan explorar los íconicos lugares de la Gran Manzana.";
+        }
+
+        // Cambiar el contenido del modal
+        document.getElementById("modal-title").innerText = title;
+        document.getElementById("modal-description").innerText = description;
+
+        // Mostrar el modal con animación
+        modal.style.display = "block";
+        setTimeout(function() {
+            modal.querySelector('.modal-content').classList.add('show');
+        }, 10);
+    }
+});
+
+// Cuando el usuario haga clic en <span> (x), cerrar el modal
+span.onclick = function() {
+    modal.querySelector('.modal-content').classList.remove('show');
+    setTimeout(function() {
+        modal.style.display = "none";
+    }, 300);
+}
+
+// Cuando el usuario haga clic fuera del modal, cerrarlo
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.querySelector('.modal-content').classList.remove('show');
+        setTimeout(function() {
+            modal.style.display = "none";
+        }, 300);
+    }
+}
+
+</script>
 
 
 

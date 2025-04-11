@@ -3,6 +3,8 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+// Definir la ruta base del proyecto
+define('BASE_PATH', realpath(dirname(__FILE__) . '/../'));   
 
 require_once __DIR__ . '/../controller/reserva/reservaController.php';
 require_once __DIR__ . '/../controller/hotel/hotelController.php';
@@ -10,9 +12,6 @@ require_once __DIR__ . '/../controller/habitacion/habitacionController.php';
 
 $hotelController = new HotelController();
 $habitacionController = new HabitacionController();
-
-$hotelController = new HotelController();
-
 $reservaController = new ReservaController();
 
 if (!isset($_SESSION['user_id'])) {
@@ -35,18 +34,22 @@ $habitaciones = array_filter($habitacionesConPrecio, function($hab) use ($hotelI
     return $hab['Id_Hotel'] == $hotelId;
 });
 
-
 if (!$hotelDetails) {
     echo "Detalles del hotel no disponibles.";
     exit;
 }
-
 
 $checkinDate = new DateTime($_SESSION['checkin']);
 $checkoutDate = new DateTime($_SESSION['checkout']);
 
 $checkinFormatted = $checkinDate->format('d/m/Y');
 $checkoutFormatted = $checkoutDate->format('d/m/Y');
+
+$currentStep = 2; // Paso actual en el proceso de reserva
+$pageTitle = "Selecciona tu Habitación";
+
+// Incluir el header común usando la ruta absoluta
+include BASE_PATH . '/vista/common-header.php';
 ?>
 
 <!DOCTYPE html>
@@ -54,87 +57,154 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles del Hotel</title>
+    <title><?php echo htmlspecialchars($hotelDetails['Nombre'] ?? 'Hotel') ?> - Habitaciones</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Enlace a Bootstrap Icons -->
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-
-    
     <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="../static/css/detalles.css">
-    
+    <link rel="stylesheet" href="../static/css/reservasHab.css">
     <!-- Ícono -->
     <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 <body>
 
+<div class="container-fluid hotel-reservation-container">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mt-4">
+        <ol class="breadcrumb">
+           
+            <li class="breadcrumb-item active" aria-current="page">Habitaciones</li>
+        </ol>
+    </nav>
 
-   
-    <div class="container my-5">
-        <div class="card p-4 shadow-lg detalles-container">
-            <h1 class="text-center mb-4">Detalles de la Reserva</h1>
-            <p><strong>Ubicación seleccionada:</strong> <?php echo htmlspecialchars($_SESSION['location']); ?></p>
-            <p><strong>Fecha de Check-in:</strong> <?php echo htmlspecialchars($checkinFormatted); ?></p>
-            <p><strong>Fecha de Check-out:</strong> <?php echo htmlspecialchars($checkoutFormatted); ?></p>
-            <p><strong>Número de personas:</strong> <?php echo htmlspecialchars($_SESSION['guests']); ?></p>
+    <div class="row">
+        <!-- Sidebar de detalles de reserva -->
+        <div class="col-lg-3 mb-4">
+            <div class="card p-4 reservation-sidebar">
+                <h2 class="text-center mb-4">Detalles de su Reserva</h2>
+                <div class="reservation-detail-item">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    <div>
+                        <h6>Ubicación</h6>
+                        <p><?php echo htmlspecialchars($_SESSION['location']); ?></p>
+                    </div>
+                </div>
+                <div class="reservation-detail-item">
+                    <i class="bi bi-calendar-check"></i>
+                    <div>
+                        <h6>Check-in</h6>
+                        <p><?php echo htmlspecialchars($checkinFormatted); ?></p>
+                    </div>
+                </div>
+                <div class="reservation-detail-item">
+                    <i class="bi bi-calendar-x"></i>
+                    <div>
+                        <h6>Check-out</h6>
+                        <p><?php echo htmlspecialchars($checkoutFormatted); ?></p>
+                    </div>
+                </div>
+                <div class="reservation-detail-item">
+                    <i class="bi bi-people-fill"></i>
+                    <div>
+                        <h6>Huéspedes</h6>
+                        <p><?php echo htmlspecialchars($_SESSION['guests']); ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información del hotel -->
+            <div class="card mt-4 hotel-info-sidebar">
+                <div class="card-body">
+                    <h5 class="card-title"><?php echo htmlspecialchars($hotelDetails['Nombre'] ?? 'Hotel'); ?></h5>
+                    <p class="card-text"><i class="bi bi-star-fill text-warning"></i> <?php echo htmlspecialchars($hotelDetails['Categoria'] ?? ''); ?> Estrellas</p>
+                    <p class="card-text"><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($hotelDetails['Direccion'] ?? ''); ?></p>
+                    <p class="card-text"><i class="bi bi-telephone"></i> <?php echo htmlspecialchars($hotelDetails['Telefono'] ?? ''); ?></p>
+                </div>
+            </div>
         </div>
 
-        <h2 class="text-center mt-5">Habitaciones Disponibles</h2>
-        <div class="row habitaciones-container">
+        <!-- Contenido principal -->
+        <div class="col-lg-9">
+            <!-- Encabezado del hotel -->
+            <div class="hotel-header mb-5">
+                <h1 class="hotel-title"><?php echo htmlspecialchars($hotelDetails['Nombre'] ?? 'Hotel'); ?></h1>
+                <div class="hotel-rating">
+                    <?php 
+                    $stars = $hotelDetails['Categoria'] ?? 0;
+                    for ($i = 0; $i < 5; $i++): 
+                    ?>
+                        <i class="bi bi-star-fill <?php echo $i < $stars ? 'text-warning' : 'text-secondary'; ?>"></i>
+                    <?php endfor; ?>
+                </div>
+                <p class="hotel-location"><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($hotelDetails['Direccion'] ?? ''); ?></p>
+            </div>
+
+            <!-- Habitaciones disponibles -->
+            <h2 class="section-title">Habitaciones Disponibles</h2>
+            
             <?php if (!empty($habitaciones)): ?>
-                <?php foreach ($habitaciones as $habitacion): ?>
-                   
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card habitacion-card shadow-sm">
-                            <div class="habitacion-imagen">
-                                <?php
-                                // Posibles imágenes de la habitación
-                                $basePath = "../static/img/habitaciones/";
-                                $tipoHabitacion = strtolower(str_replace(' ', '_', $habitacion['Tipo']));
-                                
-                                $imagenes = [
-                                    "{$basePath}{$tipoHabitacion}.jpg",
-                                    "{$basePath}{$tipoHabitacion}2.jpg", // Segunda imagen
-                                    "{$basePath}individual1.jpg" // Imagen por defecto
-                                ];
-
-                                // Seleccionar la primera imagen existente
-                                foreach ($imagenes as $img) {
-                                    if (file_exists($img)) {
-                                        $imagenPath = $img;
-                                        break;
-                                    }
-                                }
-                                ?>
-                                <img src="<?php echo $imagenPath; ?>" alt="<?php echo htmlspecialchars($habitacion['Tipo']); ?>" class="card-img-top">
-                            </div>
-
-                                <div class="card-body">
-                                    <h3 class="card-title"><?php echo htmlspecialchars($habitacion['Tipo']); ?></h3>
-                                    <p><strong>Precio:</strong> <?php echo htmlspecialchars($habitacion['PrecioFinal']); ?> €</p>
-                                    <p><strong>Descripción:</strong> <?php echo htmlspecialchars($habitacion['Descripcion'] ?? 'Descripción no disponible'); ?></p>
+                <div class="row habitaciones-container">
+                    <?php foreach ($habitaciones as $habitacion): ?>
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card habitacion-card shadow-sm h-100">
+                                <div class="habitacion-imagen">
+                                    <?php
+                                    $basePath = "../static/img/habitaciones/";
+                                    $tipoHabitacion = strtolower(str_replace(' ', '_', $habitacion['Tipo']));
                                     
-                                    <!-- Botón para abrir el modal -->
-                                    <button type="button" class="btn btn-info w-100 mt-2" data-bs-toggle="modal" data-bs-target="#modal<?php echo $habitacion['Id_Habitaciones']; ?>">
-                                        Ver más
-                                    </button>
+                                    $imagenes = [
+                                        "{$basePath}{$tipoHabitacion}.jpg",
+                                        "{$basePath}{$tipoHabitacion}2.jpg",
+                                        "{$basePath}individual1.jpg"
+                                    ];
 
-                                    <!-- Formulario de reserva -->
-                                    <form action="../vista/confirmacion_reserva.php" method="POST">
-                                        <input type="hidden" name="habitacionId" value="<?php echo $habitacion['Id_Habitaciones']; ?>">
-                                        <input type="hidden" name="clienteId" value="<?php echo $_SESSION['user_id']; ?>">
-                                        <input type="hidden" name="hotelId" value="<?php echo $hotelId; ?>">
-                                        <input type="hidden" name="checkin" value="<?php echo $_SESSION['checkin']; ?>">
-                                        <input type="hidden" name="checkout" value="<?php echo $_SESSION['checkout']; ?>">
-                                        <input type="hidden" name="guests" value="<?php echo $_SESSION['guests']; ?>">
-                                        <input type="hidden" name="paisId" value="<?php echo $_SESSION['location']; ?>">
-                                        <input type="hidden" name="precioFinal" value="<?php echo htmlspecialchars($habitacion['PrecioFinal']); ?>">
+                                    foreach ($imagenes as $img) {
+                                        if (file_exists($img)) {
+                                            $imagenPath = $img;
+                                            break;
+                                        }
+                                    }
+                                    ?>
+                                    <img src="<?php echo $imagenPath; ?>" class="card-img-top" alt="<?php echo htmlspecialchars($habitacion['Tipo']); ?>">
+                                    <div class="price-badge">
+                                        <?php echo htmlspecialchars($habitacion['PrecioFinal']); ?> €
+                                    </div>
+                                </div>
 
+                                <div class="card-body d-flex flex-column">
+                                    <h3 class="card-title"><?php echo htmlspecialchars($habitacion['Tipo']); ?></h3>
+                                    <div class="room-features mb-3">
+                                        <span class="feature"><i class="bi bi-people"></i> <?php echo htmlspecialchars($habitacion['Capacidad']); ?> personas</span>
+                                        <?php if (!empty($habitacion['Servicio'])): ?>
+                                            <span class="feature"><i class="bi bi-check-circle"></i> <?php echo htmlspecialchars($habitacion['Servicio']); ?></span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <p class="card-text flex-grow-1"><?php echo htmlspecialchars($habitacion['Descripcion'] ?? 'Descripción no disponible'); ?></p>
+                                    
+                                    <div class="mt-auto">
+                                        <!-- Botón para abrir el modal -->
+                                        <button type="button" class="btn btn-details w-100 mb-2" data-bs-toggle="modal" data-bs-target="#modal<?php echo $habitacion['Id_Habitaciones']; ?>">
+                                            <i class="bi bi-eye"></i> Ver detalles
+                                        </button>
 
-                                        <button type="submit" class="btn btn-primary w-100 mt-2">Reservar</button>
-                                    </form>
+                                        <!-- Formulario de reserva -->
+                                        <form action="../vista/confirmacion_reserva.php" method="POST">
+                                            <input type="hidden" name="habitacionId" value="<?php echo $habitacion['Id_Habitaciones']; ?>">
+                                            <input type="hidden" name="clienteId" value="<?php echo $_SESSION['user_id']; ?>">
+                                            <input type="hidden" name="hotelId" value="<?php echo $hotelId; ?>">
+                                            <input type="hidden" name="checkin" value="<?php echo $_SESSION['checkin']; ?>">
+                                            <input type="hidden" name="checkout" value="<?php echo $_SESSION['checkout']; ?>">
+                                            <input type="hidden" name="guests" value="<?php echo $_SESSION['guests']; ?>">
+                                            <input type="hidden" name="paisId" value="<?php echo $_SESSION['location']; ?>">
+                                            <input type="hidden" name="precioFinal" value="<?php echo htmlspecialchars($habitacion['PrecioFinal']); ?>">
+
+                                            <button type="submit" class="btn btn-primary w-100">
+                                                <i class="bi bi-bookmark-check"></i> Reservar ahora
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -149,7 +219,7 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
                                     </div>
                                     <div class="modal-body">
                                         <div id="carousel<?php echo $habitacion['Id_Habitaciones']; ?>" class="carousel slide" data-bs-ride="carousel">
-                                            <div class="carousel-inner">
+                                            <div class="carousel-inner rounded">
                                                 <?php
                                                 $imagenes = [
                                                     "../static/img/habitaciones/" . strtolower(str_replace(' ', '_', $habitacion['Tipo'])) . "1.jpg",
@@ -164,7 +234,7 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
                                                         <img src="<?php echo $imagen; ?>" class="d-block w-100 modal-imagen" alt="Imagen de la habitación">
                                                     </div>
                                                 <?php 
-                                                $primeraImagen = false;
+                                                    $primeraImagen = false;
                                                 endforeach; 
                                                 ?>
                                             </div>
@@ -178,30 +248,75 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
                                             </button>
                                         </div>
 
-                                        <p class="mt-3"><strong>Descripción:</strong> <?php echo htmlspecialchars($habitacion['Descripcion']); ?></p>
-                                        <p><strong>Capacidad:</strong> <?php echo htmlspecialchars($habitacion['Capacidad']); ?> personas</p>
-                                        <p><strong>Servicios:</strong> 
-                                            <?php echo isset($habitacion['Servicio']) && !is_null($habitacion['Servicio']) 
-                                                ? htmlspecialchars($habitacion['Servicio']) 
-                                                : "No especificado"; ?>
-                                        </p>
+                                        <div class="row mt-4">
+                                            <div class="col-md-8">
+                                                <h6>Descripción</h6>
+                                                <p><?php echo htmlspecialchars($habitacion['Descripcion']); ?></p>
+                                                
+                                                <h6 class="mt-3">Servicios incluidos</h6>
+                                                <ul class="service-list">
+                                                    <?php if (!empty($habitacion['Servicio'])): ?>
+                                                        <li><i class="bi bi-check-circle"></i> <?php echo htmlspecialchars($habitacion['Servicio']); ?></li>
+                                                    <?php endif; ?>
+                                                    <li><i class="bi bi-check-circle"></i> Capacidad: <?php echo htmlspecialchars($habitacion['Capacidad']); ?> personas</li>
+                                                    <li><i class="bi bi-check-circle"></i> Wifi gratuito</li>
+                                                    <li><i class="bi bi-check-circle"></i> Aire acondicionado</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="price-summary">
+                                                    <h6>Resumen de precios</h6>
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>Precio por noche:</span>
+                                                        <span><?php echo htmlspecialchars($habitacion['PrecioFinal']); ?> €</span>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>Noches:</span>
+                                                        <span><?php echo $checkinDate->diff($checkoutDate)->days; ?></span>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="d-flex justify-content-between fw-bold">
+                                                        <span>Total:</span>
+                                                        <span><?php echo htmlspecialchars($habitacion['PrecioFinal'] * $checkinDate->diff($checkoutDate)->days); ?> €</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form action="../vista/confirmacion_reserva.php" method="POST" class="w-100">
+                                            <input type="hidden" name="habitacionId" value="<?php echo $habitacion['Id_Habitaciones']; ?>">
+                                            <input type="hidden" name="clienteId" value="<?php echo $_SESSION['user_id']; ?>">
+                                            <input type="hidden" name="hotelId" value="<?php echo $hotelId; ?>">
+                                            <input type="hidden" name="checkin" value="<?php echo $_SESSION['checkin']; ?>">
+                                            <input type="hidden" name="checkout" value="<?php echo $_SESSION['checkout']; ?>">
+                                            <input type="hidden" name="guests" value="<?php echo $_SESSION['guests']; ?>">
+                                            <input type="hidden" name="paisId" value="<?php echo $_SESSION['location']; ?>">
+                                            <input type="hidden" name="precioFinal" value="<?php echo htmlspecialchars($habitacion['PrecioFinal']); ?>">
 
+                                            <button type="submit" class="btn btn-primary w-100">
+                                                <i class="bi bi-bookmark-check"></i> Confirmar Reserva
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                   
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </div>
             <?php else: ?>
-                <p class="text-center">No hay habitaciones disponibles en este hotel.</p>
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i> No hay habitaciones disponibles en este hotel para las fechas seleccionadas.
+                </div>
             <?php endif; ?>
         </div>
     </div>
+</div>
 
-    <script src="../static/js/detalles.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Script personalizado -->
+<script src="../static/js/detalles.js"></script>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

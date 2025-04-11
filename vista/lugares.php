@@ -5,6 +5,8 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+// Definir la ruta base del proyecto
+define('BASE_PATH', realpath(dirname(__FILE__) . '/../'));   
 
 include '../config/Database.php';
 require_once __DIR__ . '/../controller/reserva/reservaController.php';
@@ -48,6 +50,12 @@ if (!$location) {
 
 $hoteles = $hotelController->obtenerHotelesPorPais($location);
 
+$currentStep = 1; // Paso actual en el proceso de reserva
+$pageTitle = "Selecciona tu Hotel";
+
+// Incluir el header común usando la ruta absoluta
+include BASE_PATH . '/vista/common-header.php';
+
 
 $database->closeConnection();
 ?>
@@ -66,7 +74,7 @@ $database->closeConnection();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="../static/css/reserva.css">
+    <link rel="stylesheet" href="../static/css/lugares.css">
     
     <!-- Ícono -->
     <link rel="shortcut icon" href="../static/img/favicon_io/favicon.ico" type="image/x-icon">
@@ -75,13 +83,6 @@ $database->closeConnection();
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body class="bg-light text-dark">
-
-    
-
-
-
-
-
 
     <div class="container my-5">
         <h1 class="text-center text-uppercase fw-bold mb-5" style="color: #2C3E50; font-size: 2.8rem;">Nuestros Hoteles</h1>
