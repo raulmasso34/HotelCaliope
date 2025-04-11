@@ -74,11 +74,11 @@ include BASE_PATH . '/vista/common-header.php';
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mt-4">
         <ol class="breadcrumb">
-           
+            <li class="breadcrumb-item"><a href="../vista/index.php">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="../vista/hoteles.php?location=<?php echo urlencode($_SESSION['location']); ?>">Hoteles</a></li>
             <li class="breadcrumb-item active" aria-current="page">Habitaciones</li>
         </ol>
     </nav>
-
 
     <div class="row">
         <!-- Sidebar de detalles de reserva -->
@@ -124,20 +124,6 @@ include BASE_PATH . '/vista/common-header.php';
                     <p class="card-text"><i class="bi bi-telephone"></i> <?php echo htmlspecialchars($hotelDetails['Telefono'] ?? ''); ?></p>
                 </div>
             </div>
-
-
-   
-    <div class="container my-5">
-        <div class="card p-4 shadow-lg detalles-container">
-            <h1 class="text-center mb-4">Detalles de la Reserva</h1>
-            <p><strong>Ubicación seleccionada:</strong> <?php echo htmlspecialchars($paisNombre) ?: 'País no disponible'; ?></p>
-            <p><strong>Hotel:</strong> <?php echo htmlspecialchars($hotelDetails['Nombre']); ?></p>
-
-            <p><strong>Fecha de Check-in:</strong> <?php echo htmlspecialchars($checkinFormatted); ?></p>
-            <p><strong>Fecha de Check-out:</strong> <?php echo htmlspecialchars($checkoutFormatted); ?></p>
-            <p><strong>Número de personas:</strong> <?php echo htmlspecialchars($_SESSION['guests']); ?></p>
-
-
         </div>
 
         <!-- Contenido principal -->
