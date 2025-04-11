@@ -234,7 +234,7 @@ include BASE_PATH . '/vista/common-header.php';
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100">
-                            <i class="fas fa-arrow-right me-2"></i>Continuar a Servicios
+                            <i class="fas fa-arrow-right me-2"></i>Continuar
                         </button>
                     </form>
                 </div>
