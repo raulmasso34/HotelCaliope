@@ -6,24 +6,9 @@ error_reporting(E_ALL);
 // Definir la ruta base del proyecto
 define('BASE_PATH', realpath(dirname(__FILE__) . '/../'));   
 
-
-
-
-// Incluir controladores correctos
 require_once __DIR__ . '/../controller/reserva/reservaController.php';
 require_once __DIR__ . '/../controller/hotel/hotelController.php';
 require_once __DIR__ . '/../controller/habitacion/habitacionController.php';
-require_once __DIR__ . '/../controller/metodoPago/metodoPagoController.php';
-require_once __DIR__ . '/../controller/actividad/actividadController.php';
-require_once __DIR__ . '/../controller/pais/paisController.php';
-
-// Crear instancias de los controladores
-
-
-
-$metodoPagoController = new MetodoPagoController();
-$actividadController = new ActividadController();
-$paisController = new PaisController();
 
 $hotelController = new HotelController();
 $habitacionController = new HabitacionController();
@@ -38,12 +23,11 @@ if (!isset($_SESSION['location'], $_SESSION['checkin'], $_SESSION['checkout'], $
     header("Location: ../vista/index.php");
     exit;
 }
+
 $hotelId = $_GET['hotelId'];
 
 $hotelDetails = $hotelController->obtenerDetallesHotel($hotelId);
 $habitacionesConPrecio = $habitacionController->obtenerHabitacionesConPrecioPorTemporada($_SESSION['checkin'], $_SESSION['checkout']);
-
-
 
 // Filtrar solo las habitaciones del hotel actual
 $habitaciones = array_filter($habitacionesConPrecio, function($hab) use ($hotelId) {
@@ -54,13 +38,10 @@ if (!$hotelDetails) {
     echo "Detalles del hotel no disponibles.";
     exit;
 }
-$paisId = $_SESSION['location'] ?? null; 
-$hotelDetails = $hotelController->obtenerDetallesHotel($hotelId);
-
 
 $checkinDate = new DateTime($_SESSION['checkin']);
 $checkoutDate = new DateTime($_SESSION['checkout']);
-$paisNombre = $paisController->obtenerNombrePais($paisId);
+
 $checkinFormatted = $checkinDate->format('d/m/Y');
 $checkoutFormatted = $checkoutDate->format('d/m/Y');
 
@@ -98,7 +79,10 @@ include BASE_PATH . '/vista/common-header.php';
         </ol>
     </nav>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f0f90a381b8fae8a5220baf9bd87109313217cb1
     <div class="row">
         <!-- Sidebar de detalles de reserva -->
         <div class="col-lg-3 mb-4">
@@ -143,6 +127,7 @@ include BASE_PATH . '/vista/common-header.php';
                     <p class="card-text"><i class="bi bi-telephone"></i> <?php echo htmlspecialchars($hotelDetails['Telefono'] ?? ''); ?></p>
                 </div>
             </div>
+<<<<<<< HEAD
 
    
     <div class="container my-5">
@@ -155,6 +140,8 @@ include BASE_PATH . '/vista/common-header.php';
             <p><strong>Fecha de Check-out:</strong> <?php echo htmlspecialchars($checkoutFormatted); ?></p>
             <p><strong>Número de personas:</strong> <?php echo htmlspecialchars($_SESSION['guests']); ?></p>
 
+=======
+>>>>>>> f0f90a381b8fae8a5220baf9bd87109313217cb1
         </div>
 
         <!-- Contenido principal -->
