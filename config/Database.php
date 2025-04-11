@@ -4,6 +4,9 @@ class Database {
     private $username = "root"; // Nombre de usuario de la base de datos
 
     //   private $password = "P@ssw0rd";
+    
+   private $password = "P@ssw0rd";
+//holas
 
 
   private $password = "password";  // Cambia esto según tu configuración
