@@ -4,14 +4,29 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+
+
+
+// Incluir controladores correctos
 require_once __DIR__ . '/../controller/reserva/reservaController.php';
 require_once __DIR__ . '/../controller/hotel/hotelController.php';
 require_once __DIR__ . '/../controller/habitacion/habitacionController.php';
+require_once __DIR__ . '/../controller/metodoPago/metodoPagoController.php';
+require_once __DIR__ . '/../controller/actividad/actividadController.php';
+require_once __DIR__ . '/../controller/pais/paisController.php';
+
+// Crear instancias de los controladores
+
+
+
+$metodoPagoController = new MetodoPagoController();
+$actividadController = new ActividadController();
+$paisController = new PaisController();
 
 $hotelController = new HotelController();
 $habitacionController = new HabitacionController();
 
-$hotelController = new HotelController();
+
 
 $reservaController = new ReservaController();
 
@@ -24,11 +39,12 @@ if (!isset($_SESSION['location'], $_SESSION['checkin'], $_SESSION['checkout'], $
     header("Location: ../vista/index.php");
     exit;
 }
-
 $hotelId = $_GET['hotelId'];
 
 $hotelDetails = $hotelController->obtenerDetallesHotel($hotelId);
 $habitacionesConPrecio = $habitacionController->obtenerHabitacionesConPrecioPorTemporada($_SESSION['checkin'], $_SESSION['checkout']);
+
+
 
 // Filtrar solo las habitaciones del hotel actual
 $habitaciones = array_filter($habitacionesConPrecio, function($hab) use ($hotelId) {
@@ -40,11 +56,12 @@ if (!$hotelDetails) {
     echo "Detalles del hotel no disponibles.";
     exit;
 }
-
+$paisId = $_SESSION['location'] ?? null; 
+$hotelDetails = $hotelController->obtenerDetallesHotel($hotelId);
 
 $checkinDate = new DateTime($_SESSION['checkin']);
 $checkoutDate = new DateTime($_SESSION['checkout']);
-
+$paisNombre = $paisController->obtenerNombrePais($paisId);
 $checkinFormatted = $checkinDate->format('d/m/Y');
 $checkoutFormatted = $checkoutDate->format('d/m/Y');
 ?>
@@ -75,7 +92,9 @@ $checkoutFormatted = $checkoutDate->format('d/m/Y');
     <div class="container my-5">
         <div class="card p-4 shadow-lg detalles-container">
             <h1 class="text-center mb-4">Detalles de la Reserva</h1>
-            <p><strong>Ubicación seleccionada:</strong> <?php echo htmlspecialchars($_SESSION['location']); ?></p>
+            <p><strong>Ubicación seleccionada:</strong> <?php echo htmlspecialchars($paisNombre) ?: 'País no disponible'; ?></p>
+            <p><strong>Hotel:</strong> <?php echo htmlspecialchars($hotelDetails['Nombre']); ?></p>
+
             <p><strong>Fecha de Check-in:</strong> <?php echo htmlspecialchars($checkinFormatted); ?></p>
             <p><strong>Fecha de Check-out:</strong> <?php echo htmlspecialchars($checkoutFormatted); ?></p>
             <p><strong>Número de personas:</strong> <?php echo htmlspecialchars($_SESSION['guests']); ?></p>

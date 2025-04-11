@@ -15,6 +15,39 @@ class ReservaController {
         return $this->reservaModel->obtenerPaises();
         
     }
+    public function obtenerDetalles($id_reserva) {
+        return $this->reservaModel->obtenerDetalleReserva($id_reserva);
+    }
+
+   /*  public function verDetalleReserva($id_reserva) {
+        $reserva = $this->reservaModel->obtenerReservasPorId($id_reserva);
+
+        if ($reserva) {
+            $checkinDate = new DateTime($reserva['Checkin']);
+            $checkoutDate = new DateTime($reserva['Checkout']);
+            $numero_noches = $checkinDate->diff($checkoutDate)->days;
+
+            $precio_total_calculado = $reserva['Precio_Habitacion'] * $numero_noches * $reserva['Numero_Personas'];
+
+            return [
+                'reserva' => $reserva,
+                'checkin' => $checkinDate,
+                'checkout' => $checkoutDate,
+                'noches' => $numero_noches,
+                'precio_total' => $precio_total_calculado
+            ];
+        }
+
+        return null;
+    } */
+
+    public function calcularPrecioTotal($precioHabitacion, $checkin, $checkout, $numPersonas) {
+        $checkinDate = new DateTime($checkin);
+        $checkoutDate = new DateTime($checkout);
+        $noches = $checkinDate->diff($checkoutDate)->days;
+
+        return $precioHabitacion * $noches * $numPersonas;
+    }
 
     public function insertarReserva($datos) {
         $idCliente = $datos['idCliente'];

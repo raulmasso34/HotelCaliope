@@ -44,22 +44,24 @@ class HabitacionesModel {
 
     
 
-    
-    public function obtenerHabitacionesConPrecioPorTemporada($checkin, $checkout) {
+    public function obtenerHabitacionesConPrecioPorTemporada($checkin, $checkout, $capacidad) {
         $sql = "
-        SELECT h.Id_Habitaciones, h.Numero_Habitacion, h.Tipo, h.Capacidad, h.Precio AS PrecioBase, 
-       ho.Nombre AS Hotel, ho.Direccion, p.Pais AS Pais, c.Nombre AS Continente,
-       t.Nombre AS Temporada, t.PrecioMultiplicador, h.Id_Hotel,h.Descripcion
-FROM Habitaciones h
-JOIN Hotel ho ON h.Id_Hotel = ho.Id_Hotel
-JOIN Pais p ON ho.Id_Pais = p.Id_Pais
-JOIN Continentes c ON p.Id_Continente = c.Id_Continente
-LEFT JOIN Temporadas t ON (? BETWEEN t.Fecha_Inicio AND t.Fecha_Fin) 
-                       OR (? BETWEEN t.Fecha_Inicio AND t.Fecha_Fin)
-";
-        
+            SELECT h.Id_Habitaciones, h.Numero_Habitacion, h.Tipo, h.Capacidad, h.Precio AS PrecioBase, 
+                   ho.Nombre AS Hotel, ho.Direccion, p.Pais AS Pais, c.Nombre AS Continente,
+                   t.Nombre AS Temporada, t.PrecioMultiplicador, h.Id_Hotel, h.Descripcion
+            FROM Habitaciones h
+            JOIN Hotel ho ON h.Id_Hotel = ho.Id_Hotel
+            JOIN Pais p ON ho.Id_Pais = p.Id_Pais
+            JOIN Continentes c ON p.Id_Continente = c.Id_Continente
+            LEFT JOIN Temporadas t 
+                ON (? BETWEEN t.Fecha_Inicio AND t.Fecha_Fin) 
+                OR (? BETWEEN t.Fecha_Inicio AND t.Fecha_Fin)
+            WHERE h.Capacidad >= ?
+        ";
+    
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ss", $checkin, $checkout);
+        $stmt->bind_param("ssi", $checkin, $checkout, $capacidad);
+    
         $stmt->execute();
         $result = $stmt->get_result();
     
@@ -74,6 +76,10 @@ LEFT JOIN Temporadas t ON (? BETWEEN t.Fecha_Inicio AND t.Fecha_Fin)
     
         return $habitaciones;
     }
+    
+    
+    
+    
     
     
     
@@ -178,6 +184,7 @@ LEFT JOIN Temporadas t ON (? BETWEEN t.Fecha_Inicio AND t.Fecha_Fin)
         $fechaActual = date('Y-m-d');
         $checkin = $_SESSION['checkin'];  
         $checkout = $_SESSION['checkout']; 
+        $personas = $_SESSION['guests']; 
     
         $query = "SELECT * FROM Habitaciones 
                   WHERE Id_Hotel = ?
@@ -186,7 +193,7 @@ LEFT JOIN Temporadas t ON (? BETWEEN t.Fecha_Inicio AND t.Fecha_Fin)
                       WHERE (Checkin BETWEEN ? AND ?) 
                       OR (Checkout BETWEEN ? AND ?)
                       OR (Checkin <= ? AND Checkout >= ?)
-                  )"; 
+                  ) AND Capacidad >= ?"; 
     
         $stmt = $this->conn->prepare($query);
         if (!$stmt) {
@@ -194,7 +201,7 @@ LEFT JOIN Temporadas t ON (? BETWEEN t.Fecha_Inicio AND t.Fecha_Fin)
             return [];
         }
     
-        $stmt->bind_param("issssss", $hotelId, $checkin, $checkout, $checkin, $checkout, $checkin, $checkout);
+        $stmt->bind_param("issssss", $hotelId, $checkin, $checkout, $checkin, $checkout, $checkin, $checkout, $personas);
         $stmt->execute();
         $result = $stmt->get_result();
     

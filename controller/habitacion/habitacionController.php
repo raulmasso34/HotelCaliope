@@ -20,14 +20,11 @@ class HabitacionController {
     }
 
     // Obtener habitaciones con precio ajustado según la temporada
-public function obtenerHabitacionesConPrecioPorTemporada($checkin, $checkout) {
-    // Validación básica
-    if (!$checkin || !$checkout) {
-        return [];  // O podrías lanzar una excepción o retornar null
+    public function obtenerHabitacionesConPrecioPorTemporada($checkin, $checkout) {
+        $capacidad = $_SESSION['guests'] ?? 1;
+        return $this->habitacionModel->obtenerHabitacionesConPrecioPorTemporada($checkin, $checkout, $capacidad);
     }
-
-    return $this->habitacionModel->obtenerHabitacionesConPrecioPorTemporada($checkin, $checkout);
-}
+    
 
 
     // Obtener precio de una habitación por ID
