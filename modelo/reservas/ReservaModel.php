@@ -311,6 +311,7 @@ class ReservaModel {
             throw new Exception("Error al insertar servicio en reserva: " . $stmt->error);
         }
     }
+
     
     public function obtenerDetalleReserva($id_reserva) {
         $sql = "SELECT 
