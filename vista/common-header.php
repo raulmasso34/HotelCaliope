@@ -11,7 +11,7 @@
     <header class="booking-header">
         <div class="header-container">
             <!-- Logo -->
-            <a href="/HotelCaliope2/index.php" class="brand-logo">
+            <a href="../vista/index.php" class="brand-logo">
                 <img src="../static/img/logo.png" alt="Logo Hotel Calíope" width="150">
             </a>
             
