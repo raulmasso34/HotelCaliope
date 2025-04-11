@@ -312,6 +312,38 @@ class ReservaModel {
         }
     }
     
+    public function obtenerDetalleReserva($id_reserva) {
+        $sql = "SELECT 
+                    r.Id_Reserva, 
+                    c.Nom AS Nombre_Cliente, 
+                    h.Nombre AS Nombre_Hotel, 
+                    ha.Tipo AS Tipo_Habitacion, 
+                    ha.Numero_Habitacion AS Numero_Habitacion, 
+                    p.Pais AS Nombre_Pais, 
+                    r.Precio_Habitacion, 
+                    r.Checkin, 
+                    r.Checkout, 
+                    r.Numero_Personas,
+                    r.Precio_Actividad,
+                    r.Precio_Servicio,
+                    r.Precio_Total
+                FROM Reservas r
+                LEFT JOIN Clients c ON r.Id_Cliente = c.Id_Client
+                LEFT JOIN Hotel h ON r.Id_Hotel = h.Id_Hotel
+                LEFT JOIN Habitaciones ha ON r.Id_Habitacion = ha.Id_Habitaciones
+                LEFT JOIN Pais p ON r.Id_Pais = p.Id_Pais
+                WHERE r.Id_Reserva = ?";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $id_reserva);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
+
+
+
     
     
     public function asociarActividadAReserva($idReserva, $idActividad, $precio) {
