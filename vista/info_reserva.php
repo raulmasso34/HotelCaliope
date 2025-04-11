@@ -12,6 +12,18 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+// ✅ Proceso de cancelación por POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reservaId'])) {
+    $reservaId = intval($_POST['reservaId']);
+    if ($reservaController->cancelar($reservaId)) {
+        header('Location: Clientes/perfil.php?cancelada=1');
+        exit;
+    } else {
+        echo "<div class='alert alert-danger'>Error al cancelar la reserva.</div>";
+    }
+}
+
+// ✅ Verificación de ID
 if (!isset($_GET['id'])) {
     echo "<p>ID de reserva no proporcionado.</p>";
     exit;
@@ -62,7 +74,38 @@ $checkoutDate = new DateTime($reserva['Checkout']);
         <tr><td>Check-out</td><td><?= $checkoutDate->format('d/m/Y') ?></td></tr>
     </table>
 
-    <a href="Clientes/perfil.php" class="btn btn-secondary">Volver</a>
+    <!-- Botón para cancelar -->
+    <h2>Cancelar Reserva</h2>
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">
+        Cancelar reserva
+    </button>
+
+    <!-- Modal de confirmación -->
+    <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">¿Estás seguro?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            Esta acción eliminará tu reserva permanentemente.
+          </div>
+          <div class="modal-footer">
+            <form method="POST">
+                <input type="hidden" name="reservaId" value="<?= htmlspecialchars($reserva['Id_Reserva']) ?>">
+                <button type="submit" class="btn btn-danger">Sí, cancelar</button>
+            </form>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="Clientes/perfil.php" class="btn btn-secondary mt-3">Volver</a>
 </div>
+
+<!-- Bootstrap JS (modal) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

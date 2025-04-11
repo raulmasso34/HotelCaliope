@@ -15,6 +15,11 @@ class ReservaController {
         return $this->reservaModel->obtenerPaises();
         
     }
+
+    public function cancelar($id_reserva) {
+        return $this->reservaModel->cancelarReserva($id_reserva);
+    }
+    
     public function obtenerDetalles($id_reserva) {
         return $this->reservaModel->obtenerDetalleReserva($id_reserva);
     }
