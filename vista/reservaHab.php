@@ -79,10 +79,7 @@ include BASE_PATH . '/vista/common-header.php';
         </ol>
     </nav>
 
-<<<<<<< HEAD
 
-=======
->>>>>>> f0f90a381b8fae8a5220baf9bd87109313217cb1
     <div class="row">
         <!-- Sidebar de detalles de reserva -->
         <div class="col-lg-3 mb-4">
@@ -127,7 +124,7 @@ include BASE_PATH . '/vista/common-header.php';
                     <p class="card-text"><i class="bi bi-telephone"></i> <?php echo htmlspecialchars($hotelDetails['Telefono'] ?? ''); ?></p>
                 </div>
             </div>
-<<<<<<< HEAD
+
 
    
     <div class="container my-5">
@@ -140,8 +137,7 @@ include BASE_PATH . '/vista/common-header.php';
             <p><strong>Fecha de Check-out:</strong> <?php echo htmlspecialchars($checkoutFormatted); ?></p>
             <p><strong>Número de personas:</strong> <?php echo htmlspecialchars($_SESSION['guests']); ?></p>
 
-=======
->>>>>>> f0f90a381b8fae8a5220baf9bd87109313217cb1
+
         </div>
 
         <!-- Contenido principal -->

@@ -56,7 +56,7 @@ class HabitacionesModel {
             LEFT JOIN Temporadas t 
                 ON (? BETWEEN t.Fecha_Inicio AND t.Fecha_Fin) 
                 OR (? BETWEEN t.Fecha_Inicio AND t.Fecha_Fin)
-            WHERE h.Capacidad >= ?
+            WHERE h.Capacidad = ?
         ";
     
         $stmt = $this->conn->prepare($sql);
