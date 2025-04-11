@@ -217,7 +217,7 @@ if ($controller !== null) {
                         <!-- Número de Personas -->
                         <div class="form-group">
                             <label for="numero_personas"><i class="fa-solid fa-users"></i> Número de Personas</label>
-                            <input type="number" id="numero_personas" name="numero_personas" class="form-control" min="1"
+                            <input type="number" id="numero_personas" name="numero_personas" class="form-control" min="1" max="5"
                                 value="<?php echo isset($_SESSION['numero_personas']) ? $_SESSION['numero_personas'] : ''; ?>" required>
                         </div>
 
