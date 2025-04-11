@@ -27,12 +27,6 @@ $paisController = new PaisController();
 
 $hotelController = new HotelController();
 $habitacionController = new HabitacionController();
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 5acbb3e4d62e5b099a070000c18cdd382e1362bf
 $reservaController = new ReservaController();
 
 if (!isset($_SESSION['user_id'])) {
@@ -104,7 +98,7 @@ include BASE_PATH . '/vista/common-header.php';
         </ol>
     </nav>
 
-<<<<<<< HEAD
+
     <div class="row">
         <!-- Sidebar de detalles de reserva -->
         <div class="col-lg-3 mb-4">
@@ -149,7 +143,7 @@ include BASE_PATH . '/vista/common-header.php';
                     <p class="card-text"><i class="bi bi-telephone"></i> <?php echo htmlspecialchars($hotelDetails['Telefono'] ?? ''); ?></p>
                 </div>
             </div>
-=======
+
    
     <div class="container my-5">
         <div class="card p-4 shadow-lg detalles-container">
@@ -160,7 +154,7 @@ include BASE_PATH . '/vista/common-header.php';
             <p><strong>Fecha de Check-in:</strong> <?php echo htmlspecialchars($checkinFormatted); ?></p>
             <p><strong>Fecha de Check-out:</strong> <?php echo htmlspecialchars($checkoutFormatted); ?></p>
             <p><strong>Número de personas:</strong> <?php echo htmlspecialchars($_SESSION['guests']); ?></p>
->>>>>>> 5acbb3e4d62e5b099a070000c18cdd382e1362bf
+
         </div>
 
         <!-- Contenido principal -->
