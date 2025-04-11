@@ -1,4 +1,5 @@
 <?php
+define('BASE_PATH', realpath(dirname(__FILE__) . '/../'));  
 // Conexión a la base de datos
 include '../config/Database.php';
 $database = new Database();
@@ -28,7 +29,6 @@ $actividadController = new ActividadController();
 $paisController = new PaisController();
 
 
-var_dump($_SESSION['precioTotal']);
 // Obtener ID de usuario de la sesión
 $user_id = $_SESSION['user_id'] ?? null;
 
@@ -100,12 +100,17 @@ $_SESSION['Reservas'] = [
 
 }
 
-var_dump($_SESSION['Reservas']);
+
 // Cerrar conexión
 $database->closeConnection();
 
  // Verifica que contiene 'PrecioMultiplicador'
 
+ $currentStep = 3; // Paso actual en el proceso de reserva
+$pageTitle = "Selecciona tu Hotel";
+
+// Incluir el header común usando la ruta absoluta
+include BASE_PATH . '/vista/common-header.php';
 
 ?>
 
@@ -121,56 +126,120 @@ $database->closeConnection();
     <link rel="stylesheet" href="../static/css/confirmacion_reserva.css">
 </head>
 <body>
+    <div class="reservation-container">
+        <div class="reservation-header">
+            <h1><i class="fas fa-concierge-bell me-2"></i>Confirmación de Reserva</h1>
+            <p class="mb-0">Revise los detalles de su estancia</p>
+        </div>
+        
+        <div class="reservation-body">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h2 class="section-title"><i class="fas fa-info-circle me-2"></i>Detalles de la Reserva</h2>
+                    
+                    <div class="detail-card">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Ubicación seleccionada:</strong> 
+                                <p><?php echo htmlspecialchars($paisNombre) ?: 'País no disponible'; ?></p>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="far fa-calendar-check"></i>
+                            <div>
+                                <strong>Fechas de estancia:</strong>
+                                <p><?php echo htmlspecialchars($checkin); ?> al <?php echo htmlspecialchars($checkout); ?></p>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fas fa-user-friends"></i>
+                            <div>
+                                <strong>Huéspedes:</strong>
+                                <p><?php echo htmlspecialchars($guests); ?> persona(s)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h2 class="section-title"><i class="fas fa-hotel me-2"></i>Detalles del Alojamiento</h2>
+                    
+                    <div class="detail-card">
+                        <div class="detail-item">
+                            <i class="fas fa-hotel"></i>
+                            <div>
+                                <strong>Hotel:</strong>
+                                <p><?php echo htmlspecialchars($hotelDetails['Nombre']); ?></p>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fas fa-bed"></i>
+                            <div>
+                                <strong>Habitación:</strong>
+                                <p><?php echo htmlspecialchars($habitacionDetails['Tipo']); ?></p>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fas fa-tag"></i>
+                            <div>
+                                <strong>Precio por noche:</strong>
+                                <p><span id="precioPorNoche"><?php echo htmlspecialchars($_SESSION['Reservas']['PrecioFinal']); ?></span> €</p>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <i class="fas fa-align-left"></i>
+                            <div>
+                                <strong>Descripción:</strong>
+                                <p><?php echo htmlspecialchars($habitacionDetails['Descripcion'] ?? 'Descripción no disponible'); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="price-display">
+                        <h3>Total de su estancia</h3>
+                        <div class="total-price"><span id="precioTotal"><?php echo htmlspecialchars($_SESSION['Reservas']['PrecioTotal']); ?></span> €</div>
+                        <p class="mb-0"><?php echo $noches; ?> noches</p>
+                    </div>
+                    
+                    <form action="../vista/servicios.php" method="POST">
+                        <input type="hidden" name="habitacionId" value="<?php echo $habitacionId; ?>">
+                        <input type="hidden" name="clienteId" value="<?php echo $clienteId; ?>">
+                        <input type="hidden" name="hotelId" value="<?php echo $hotelId; ?>">
+                        <input type="hidden" name="checkin" value="<?php echo $checkin; ?>">
+                        <input type="hidden" name="checkout" value="<?php echo $checkout; ?>">
+                        <input type="hidden" name="guests" value="<?php echo $guests; ?>">
+                        <input type="hidden" name="paisId" value="<?php echo $paisId; ?>">
+                        <input type="hidden" name="PrecioFinal" value="<?php echo $precioFinal; ?>"> 
+                        <input type="hidden" name="PrecioTotal" value="<?php echo $_SESSION['Reservas']['PrecioTotal']; ?>"> 
 
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Confirmar Reserva</h1>
-        <p><strong>Ubicación seleccionada:</strong> <?php echo htmlspecialchars($paisNombre) ?: 'País no disponible'; ?></p>
-        <p><strong>Fecha de Check-in:</strong> <?php echo htmlspecialchars($checkin); ?></p>
-        <p><strong>Fecha de Check-out:</strong> <?php echo htmlspecialchars($checkout); ?></p>
-        <p><strong>Número de personas:</strong> <?php echo htmlspecialchars($guests); ?></p>
+                        <div class="mb-4">
+                            <label for="metodoPagoId" class="form-label">Método de Pago</label>
+                            <select class="form-select" name="metodoPagoId" id="metodoPagoId" required>
+                                <?php if (!empty($metodosPago)): ?>
+                                    <?php foreach ($metodosPago as $metodo): ?>
+                                        <option value="<?php echo $metodo['Id_MetodoPago']; ?>">
+                                            <?php echo htmlspecialchars($metodo['Tipo']); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <option value="">No hay métodos de pago disponibles</option>
+                                <?php endif; ?>
+                            </select>
+                        </div>
 
-        <h2 class="mt-4">Detalles del Hotel</h2>
-        <p><strong>Hotel:</strong> <?php echo htmlspecialchars($hotelDetails['Nombre']); ?></p>
-        <p><strong>Habitación seleccionada:</strong> <?php echo htmlspecialchars($habitacionDetails['Tipo']); ?></p>
-        <p><strong>Precio por noche:</strong> <span id="precioPorNoche"><?php echo htmlspecialchars($_SESSION['Reservas']['PrecioFinal']); ?></span> €</p>
-
-
-
-        <p><strong>Descripción:</strong> <?php echo htmlspecialchars($habitacionDetails['Descripcion'] ?? 'Descripción no disponible'); ?></p>
-
-        <h3 class="mt-3">Precio Total: 
-            <span id="precioTotal"><?php echo htmlspecialchars($_SESSION['Reservas']['PrecioTotal']); ?></span> €
-        </h3>
-
-        <form action="../vista/servicios.php" method="POST">
-            <input type="hidden" name="habitacionId" value="<?php echo $habitacionId; ?>">
-            <input type="hidden" name="clienteId" value="<?php echo $clienteId; ?>">
-            <input type="hidden" name="hotelId" value="<?php echo $hotelId; ?>">
-            <input type="hidden" name="checkin" value="<?php echo $checkin; ?>">
-            <input type="hidden" name="checkout" value="<?php echo $checkout; ?>">
-            <input type="hidden" name="guests" value="<?php echo $guests; ?>">
-            <input type="hidden" name="paisId" value="<?php echo $paisId; ?>">
-            <input type="hidden" name="PrecioFinal" value="<?php echo $precioFinal; ?>"> 
-            <input type="hidden" name="PrecioTotal" value="<?php echo $_SESSION['Reservas']['PrecioTotal']; ?>"> 
-
-            <div class="mb-3">
-                <label for="metodoPagoId" class="form-label">Selecciona un método de pago:</label>
-                <select class="form-select" name="metodoPagoId" id="metodoPagoId" required>
-                    <?php if (!empty($metodosPago)): ?>
-                        <?php foreach ($metodosPago as $metodo): ?>
-                            <option value="<?php echo $metodo['Id_MetodoPago']; ?>">
-                                <?php echo htmlspecialchars($metodo['Tipo']); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <option value="">No hay métodos de pago disponibles</option>
-                    <?php endif; ?>
-                </select>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-arrow-right me-2"></i>Continuar a Servicios
+                        </button>
+                    </form>
+                </div>
             </div>
-
-            <button type="submit" class="btn btn-primary w-100">Continuar a Selección de Servicios</button>
-        </form>
-
+        </div>
     </div>
 
     <script src="../static/js/confirmacion_reservas.js"></script>

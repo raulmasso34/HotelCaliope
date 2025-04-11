@@ -169,9 +169,7 @@ class HabitacionesModel {
             $stmt->close();
     
             // 🚨 Verifica si la consulta devuelve datos correctos
-            echo "<pre>";
-            print_r($habitacion);
-            echo "</pre>";
+           
     
             return $habitacion;
         } catch (Exception $e) {
