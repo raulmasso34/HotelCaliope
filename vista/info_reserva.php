@@ -76,30 +76,29 @@ $checkoutDate = new DateTime($reserva['Checkout']);
 
     <!-- Botón para cancelar -->
     <h2>Cancelar Reserva</h2>
-    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">
-        Cancelar reserva
-    </button>
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancelar reserva</button>
 
-    <!-- Modal de confirmación -->
+    <!-- Modal -->
     <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">¿Estás seguro?</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-          </div>
-          <div class="modal-body">
-            Esta acción eliminará tu reserva permanentemente.
-          </div>
-          <div class="modal-footer">
-            <form method="POST">
-                <input type="hidden" name="reservaId" value="<?= htmlspecialchars($reserva['Id_Reserva']) ?>">
-                <button type="submit" class="btn btn-danger">Sí, cancelar</button>
-            </form>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-          </div>
+        <div class="modal-dialog modal-dialog-centered custom-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><img src="../static/img/logo_blanco.png" width="60" class="me-2"> Confirmar Cancelación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="fs-5">¿Estás seguro de que deseas cancelar esta reserva?</p>
+                    <p class="text-danger-custom">Esta acción no se puede deshacer.</p>
+                </div>
+                <div class="modal-footer">
+                    <form method="POST" action="">
+                        <input type="hidden" name="reservaId" value="<?= htmlspecialchars($reserva['Id_Reserva']) ?>">
+                        <button type="submit" class="btn btn-danger">Sí, cancelar</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, volver</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <a href="Clientes/perfil.php" class="btn btn-secondary mt-3">Volver</a>
