@@ -3,6 +3,7 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+define('BASE_PATH', realpath(dirname(__FILE__) . '/../')); 
 
 require_once __DIR__ . '/../config/Database.php'; 
 require_once __DIR__ . '/../controller/hotel/hotelController.php';
@@ -143,57 +144,132 @@ $_SESSION['Reservas'] = array_merge($_SESSION['Reservas'] ?? [], [
     'Precio_Total' => $precioTotal,
     'Noches' => $numeroNoches
 ]);
+
+$currentStep = 5; // Paso actual en el proceso de reserva
+$pageTitle = "Selecciona tu Hotel";
+
+// Incluir el header común usando la ruta absoluta
+include BASE_PATH . '/vista/common-header.php';
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Reserva Confirmada</title>
+    <title>Confirmación de Reserva - Luxury Stays</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../static/css/resrerva_confimada.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-    <div class="container py-5">
-        <div class="card shadow-lg p-4 text-center mx-auto" style="max-width: 600px;">
-            <h1 class="text-success">¡Reserva Confirmada!</h1> 
-            <p class="lead">Gracias por tu pago. Tu reserva ha sido realizada con éxito.</p>
+<body>
+    <div class="reserva-container">
+        <!-- Header de Confirmación -->
+        <div class="reserva-header">
+            <div class="header-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h1>¡Reserva Confirmada!</h1>
+            <p class="header-sub">Recibirás un email de confirmación en tu correo electrónico</p>
+        </div>
 
-            <div class="mt-4 text-start">
-                <h2 class="h5 border-bottom pb-2">Detalles de la Reserva</h2>
-                <p><strong>Hotel:</strong> <?= htmlspecialchars($hotelNombre) ?></p>
-                <p><strong>Habitación:</strong> <?= htmlspecialchars($habitacionDetalle) ?></p>
-                <p><strong>Cliente:</strong> <?= $nombreCliente ?></p>
-                <p><strong>Check-in:</strong> <?= $checkinFormatted ?></p>
-                <p><strong>Check-out:</strong> <?= $checkoutFormatted ?></p>
-                <p><strong>Invitados:</strong> <?= htmlspecialchars($guests) ?></p>
-                <p><strong>Método de Pago:</strong> <?= htmlspecialchars($metodoPago) ?></p>
-                <p><strong>Total Pagado:</strong> <span class="fw-bold">$<?= $precioTotalFormateado ?></span></p>
+        <!-- Contenido Principal -->
+        <div class="reserva-grid">
+            <!-- Columna Izquierda - Detalles Principales -->
+            <div class="reserva-col principal">
+                <div class="reserva-card">
+                    <h2 class="card-title"><i class="fas fa-hotel"></i> Detalles del Alojamiento</h2>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Hotel:</span>
+                            <span class="detail-value"><?= htmlspecialchars($hotelNombre) ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Habitación:</span>
+                            <span class="detail-value"><?= htmlspecialchars($habitacionDetalle) ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Fechas:</span>
+                            <span class="detail-value"><?= $checkinFormatted ?> - <?= $checkoutFormatted ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Huéspedes:</span>
+                            <span class="detail-value"><?= htmlspecialchars($guests) ?> personas</span>
+                        </div>
+                    </div>
+                </div>
 
-                <?php if (!empty($detallesActividades)) : ?>
-                <h2 class="h5 border-bottom pb-2 mt-4">Actividades Reservadas</h2>
-                    <ul>
-                        <?php foreach ($detallesActividades as $actividad) : ?>
-                            <li>Actividad: <?= htmlspecialchars($actividad['nombre']) ?> - Precio: $<?= number_format(floatval($actividad['precio']), 2) ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php else : ?>
-                    <p>No se seleccionaron actividades.</p>
-                <?php endif; ?>
-
-                <h2 class="h5 border-bottom pb-2 mt-3">Servicios Adicionales</h2>
-                <?php if (!empty($detallesServicios)) : ?>
-                    <ul>
-                        <?php foreach ($detallesServicios as $servicio) : ?>
-                            <li>Servicio: <?= htmlspecialchars($servicio['nombre']) ?> - Precio: $<?= number_format(floatval($servicio['precio']), 2) ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php else : ?>
-                    <p>No se seleccionaron servicios.</p>
-                <?php endif; ?>
+                <div class="reserva-card">
+                    <h2 class="card-title"><i class="fas fa-receipt"></i> Resumen de Pago</h2>
+                    <div class="payment-summary">
+                        <div class="payment-item total">
+                            <span>Total Pagado:</span>
+                            <span class="price">$<?= $precioTotalFormateado ?></span>
+                        </div>
+                        <div class="payment-item method">
+                            <span>Método de Pago:</span>
+                            <span class="method-detail">
+                                <i class="fas fa-credit-card"></i>
+                                <?= htmlspecialchars($metodoPago) ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <a href="../vista/index.php" class="btn btn-primary mt-4">Volver al inicio</a>
+            <!-- Columna Derecha - Servicios Adicionales -->
+            <div class="reserva-col secundaria">
+                <?php if (!empty($detallesActividades)) : ?>
+                <div class="reserva-card">
+                    <h2 class="card-title"><i class="fas fa-ticket-alt"></i> Actividades Incluidas</h2>
+                    <div class="services-list">
+                        <?php foreach ($detallesActividades as $actividad) : ?>
+                        <div class="service-item">
+                            <div class="service-icon">
+                                <i class="fas fa-map-marked-alt"></i>
+                            </div>
+                            <div class="service-detail">
+                                <h3><?= htmlspecialchars($actividad['nombre']) ?></h3>
+                                <div class="service-price">$<?= number_format(floatval($actividad['precio']), 2) ?></div>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <?php if (!empty($detallesServicios)) : ?>
+                <div class="reserva-card">
+                    <h2 class="card-title"><i class="fas fa-concierge-bell"></i> Servicios Adicionales</h2>
+                    <div class="services-list">
+                        <?php foreach ($detallesServicios as $servicio) : ?>
+                        <div class="service-item">
+                            <div class="service-icon">
+                                <i class="fas fa-spa"></i>
+                            </div>
+                            <div class="service-detail">
+                                <h3><?= htmlspecialchars($servicio['nombre']) ?></h3>
+                                <div class="service-price">$<?= number_format(floatval($servicio['precio']), 2) ?></div>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <!-- Footer de la Reserva -->
+        <div class="reserva-footer">
+            <div class="footer-action">
+                <a href="../vista/index.php" class="btn-lujo">
+                    <i class="fas fa-home"></i> Volver al Inicio
+                </a>
+            </div>
+            <div class="footer-info">
+                <p>¿Necesitas ayuda? <a href="mailto:soporte@hotelcaliope.com">soporte@hotelcaliope.com</a></p>
+          
+            </div>
         </div>
     </div>
 </body>

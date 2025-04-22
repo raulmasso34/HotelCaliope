@@ -1,73 +1,362 @@
-/* styles.css */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f1f8ff;
-    margin: 0;
-    padding: 0;
+
+
+:root {
+    --primary-blue: #003b5c;
+    --secondary-blue: #005f87;
+    --accent-gold: #c9a66b;
+    --light-gray: #f5f5f5;
+    --medium-gray: #e0e0e0;
+    --dark-gray: #333333;
+    --success-green: #4caf50;
+    --primary-color: #2a3d66;
+    --secondary-color: #5a8ecf;
+    --accent-color: #d3ddff;
+    --text-color: #333;
+    --background-light: #f7f9fc;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --primary-blue: #1e3d59;
+    --secondary-blue: #17263b;
+    --accent-blue: #2c5282;
+    --light-blue: #edf2f7;
+    --gold: #c5a47e;
+    --white: #ffffff;
+    --text-dark: #2d3748;
+    --text-light: #e2e8f0;
 }
 
-.container {
-    width: 80%;
-    margin: 50px auto;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 40px;
+/* Header de Reservas */
+.booking-header {
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-container {
+    width: 95%;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-logo img {
+    height: 60px;
+    width: auto;
+    transition: opacity 0.3s;
+}
+
+.brand-logo:hover img {
+    opacity: 0.9;
+}
+
+/* Barra de Progreso */
+.booking-progress {
+    display: flex;
+    gap: 15px;
+}
+
+.progress-step {
+    text-align: center;
+    min-width: 60px;
+}
+
+.progress-step span {
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: var(--light-gray);
+    color: var(--dark-gray);
+    border-radius: 50%;
+    margin: 0 auto 5px;
+    line-height: 30px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.progress-step p {
+    color: var(--dark-gray);
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.progress-step.completed span {
+    background: var(--primary-blue);
+    color: white;
+}
+
+.progress-step.completed p {
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+/* Asistencia */
+.header-assistance {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.assistance-link {
+    color: var(--primary-blue);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.assistance-link:hover {
+    color: var(--secondary-blue);
+}
+
+.secure-badge {
+    background: var(--light-gray);
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--success-green);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .booking-progress {
+        gap: 10px;
+    }
+    
+    .progress-step {
+        min-width: 50px;
+    }
+    
+    .progress-step p {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .booking-progress {
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+    
+    .progress-step p {
+        display: none;
+    }
+    
+    .header-assistance {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+    }
+    
+    .secure-badge span {
+        display: none;
+    }
+}
+
+
+
+
+
+
+/* styles.css */
+/* ESTILOS DE LUJO - RESERVA CONFIRMADA */
+
+:root {
+    --primary-blue: #1e3d59;
+    --secondary-blue: #2c5282;
+    --accent-gold: #c5a47e;
+    --light-bg: #f8f9fa;
+    --text-dark: #2d3748;
+    --text-light: #6c757d;
+    --transition: all 0.3s ease;
+}
+
+.reserva-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.reserva-header {
+    text-align: center;
+    padding: 3rem 0;
+    background: linear-gradient(45deg, var(--primary-blue), var(--secondary-blue));
+    color: white;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.header-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    color: var(--accent-gold);
+}
+
+.reserva-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.header-sub {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.reserva-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 992px) {
+    .reserva-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.reserva-card {
+    background: white;
+    border-radius: 0.8rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    color: var(--primary-blue);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.detail-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.detail-item {
+    padding: 0.75rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+}
+
+.detail-label {
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+.detail-value {
+    color: var(--text-dark);
+    text-align: right;
+}
+
+.payment-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.payment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+}
+
+.price {
+    font-size: 1.5rem;
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+.services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.service-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--light-bg);
+    border-radius: 0.5rem;
+    transition: var(--transition);
+}
+
+.service-item:hover {
+    transform: translateX(5px);
+}
+
+.service-icon {
+    font-size: 1.5rem;
+    color: var(--accent-gold);
+    width: 40px;
     text-align: center;
 }
 
-h1 {
-    font-size: 2.5em;
-    color: #004d99;
-    margin-bottom: 20px;
+.service-detail h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text-dark);
 }
 
-h2 {
-    font-size: 1.8em;
-    color: #0066cc;
-    margin-bottom: 20px;
+.service-price {
+    color: var(--secondary-blue);
+    font-weight: 500;
 }
 
-p {
-    font-size: 1.2em;
-    color: #333333;
-    line-height: 1.6;
-}
-
-strong {
-    color: #004d99;
-}
-
-.details {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-a {
-    display: inline-block;
-    margin-top: 20px;
-    font-size: 1.2em;
-    color: #0066cc;
-    text-decoration: none;
-    border: 2px solid #0066cc;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-}
-
-a:hover {
-    background-color: #0066cc;
-    color: #ffffff;
-}
-
-.container a {
+.btn-lujo {
+    background: var(--primary-blue);
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
     text-decoration: none;
 }
 
-.container p a {
-    font-weight: bold;
+.btn-lujo:hover {
+    background: var(--secondary-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(30, 61, 89, 0.2);
 }
 
+.reserva-footer {
+    margin-top: 3rem;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.footer-info {
+    margin-top: 1rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
