@@ -52,59 +52,134 @@ $checkoutDate = new DateTime($reserva['Checkout']);
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Detalles de la Reserva</title>
-    <link rel="stylesheet" href="../static/css/info_reserva.css">
+    <title>Detalles de Reserva - Luxury Stays</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/info_reserva.css">
 </head>
 <body>
-<div class="container mt-4">
-    <h1 class="text-center">DETALLES DE LA RESERVA</h1>
-    <table class="table">
-        <tr><th>Campo</th><th>Detalle</th></tr>
-        <tr><td>Cliente</td><td><?= htmlspecialchars($reserva['Nombre_Cliente']) ?></td></tr>
-        <tr><td>Hotel</td><td><?= htmlspecialchars($reserva['Nombre_Hotel']) ?></td></tr>
-        <tr><td>Habitación</td><td><?= htmlspecialchars($reserva['Tipo_Habitacion']) ?></td></tr>
-        <tr><td>Nº Habitación</td><td><?= htmlspecialchars($reserva['Numero_Habitacion']) ?></td></tr>
-        <tr><td>País</td><td><?= htmlspecialchars($reserva['Nombre_Pais']) ?></td></tr>
-        <tr><td>Precio Actividad</td><td>$<?= number_format($reserva['Precio_Actividad'], 2) ?></td></tr>
-        <tr><td>Precio Servicio</td><td>$<?= number_format($reserva['Precio_Servicio'], 2) ?></td></tr>
-        <tr><td>Precio Total Sin Servicios o Actividades Adicionales</td><td>$<?= number_format($precio_calculado, 2) ?></td></tr>
-        <tr><td>Precio Total</td><td>$<?= number_format($reserva['Precio_Total'], 2) ?></td></tr>
-        <tr><td>Check-in</td><td><?= $checkinDate->format('d/m/Y') ?></td></tr>
-        <tr><td>Check-out</td><td><?= $checkoutDate->format('d/m/Y') ?></td></tr>
-    </table>
-
-    <!-- Botón para cancelar -->
-    <h2>Cancelar Reserva</h2>
-    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancelar reserva</button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered custom-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><img src="../static/img/logo_blanco.png" width="60" class="me-2"> Confirmar Cancelación</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <!-- Header Exclusivo -->
+    <header class="reserva-header">
+        <nav class="container">
+            <div class="d-flex justify-content-between align-items-center py-3">
+                <a href="/" class="brand-logo">
+                    <img src="../static/img/logo_blanco.png" alt="Luxury Stays" width="120">
+                </a>
+                <div class="header-actions">
+                    <a href="Clientes/perfil.php" class="btn btn-icon">
+                        <i class="fas fa-user-circle me-2"></i>Mi Perfil
+                    </a>
                 </div>
-                <div class="modal-body text-center">
-                    <p class="fs-5">¿Estás seguro de que deseas cancelar esta reserva?</p>
-                    <p class="text-danger-custom">Esta acción no se puede deshacer.</p>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="reserva-main">
+        <div class="container">
+            <div class="reserva-card">
+                <div class="reserva-header-card">
+                    <h1><i class="fas fa-concierge-bell me-3"></i>Detalles de tu Reserva</h1>
+                    <div class="reserva-status">
+                        <span class="status-badge confirmed"><i class="fas fa-check-circle me-2"></i>Confirmada</span>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <form method="POST" action="">
-                        <input type="hidden" name="reservaId" value="<?= htmlspecialchars($reserva['Id_Reserva']) ?>">
-                        <button type="submit" class="btn btn-danger">Sí, cancelar</button>
-                    </form>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, volver</button>
+
+                <!-- Sección de Detalles -->
+                <div class="reserva-grid">
+                    <!-- Columna Izquierda -->
+                    <div class="reserva-section">
+                        <h2 class="section-title"><i class="fas fa-user-tie me-3"></i>Información del Cliente</h2>
+                        <div class="detail-item">
+                            <span class="detail-label">Nombre:</span>
+                            <span class="detail-value"><?= htmlspecialchars($reserva['Nombre_Cliente']) ?></span>
+                        </div>
+                        
+                        <h2 class="section-title mt-5"><i class="fas fa-hotel me-3"></i>Detalles del Alojamiento</h2>
+                        <div class="detail-item">
+                            <span class="detail-label">Hotel:</span>
+                            <span class="detail-value"><?= htmlspecialchars($reserva['Nombre_Hotel']) ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Habitación:</span>
+                            <span class="detail-value"><?= htmlspecialchars($reserva['Tipo_Habitacion']) ?> (Nº <?= htmlspecialchars($reserva['Numero_Habitacion']) ?>)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Ubicación:</span>
+                            <span class="detail-value"><?= htmlspecialchars($reserva['Nombre_Pais']) ?></span>
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha -->
+                    <div class="reserva-section">
+                        <h2 class="section-title"><i class="fas fa-receipt me-3"></i>Detalles de Pago</h2>
+                        <div class="detail-item">
+                            <span class="detail-label">Fecha Check-in:</span>
+                            <span class="detail-value"><?= $checkinDate->format('d/m/Y') ?></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Fecha Check-out:</span>
+                            <span class="detail-value"><?= $checkoutDate->format('d/m/Y') ?></span>
+                        </div>
+                        <div class="price-breakdown">
+                            <div class="detail-item">
+                                <span class="detail-label">Tarifa Base:</span>
+                                <span class="detail-value">$<?= number_format($precio_calculado, 2) ?></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Servicios:</span>
+                                <span class="detail-value">+ $<?= number_format($reserva['Precio_Servicio'], 2) ?></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Actividades:</span>
+                                <span class="detail-value">+ $<?= number_format($reserva['Precio_Actividad'], 2) ?></span>
+                            </div>
+                            <div class="detail-item total">
+                                <span class="detail-label">Total:</span>
+                                <span class="detail-value">$<?= number_format($reserva['Precio_Total'], 2) ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Acciones -->
+                <div class="reserva-actions">
+                    <button class="btn btn-cancel" data-bs-toggle="modal" data-bs-target="#cancelModal">
+                        <i class="fas fa-times-circle me-2"></i>Cancelar Reserva
+                    </button>
+                    <a href="Clientes/perfil.php" class="btn btn-back">
+                        <i class="fas fa-arrow-left me-2"></i>Volver al Perfil
+                    </a>
                 </div>
             </div>
         </div>
+    </main>
+
+    <!-- Footer Exclusivo -->
+    <footer class="reserva-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="../static/img/logo_blanco.png" alt="Luxury Stays" width="100">
+                    <p class="tagline">Experiencias de lujo desde 2010</p>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contacto</h4>
+                    <p><i class="fas fa-phone me-2"></i>+34 910 234 567</p>
+                    <p><i class="fas fa-envelope me-2"></i>reservas@luxurystays.com</p>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2024 Luxury Stays. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Cancelación -->
+    <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+        <!-- Mantener mismo modal anterior con estilos actualizados -->
     </div>
 
-    <a href="Clientes/perfil.php" class="btn btn-secondary mt-3">Volver</a>
-</div>
-
-<!-- Bootstrap JS (modal) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

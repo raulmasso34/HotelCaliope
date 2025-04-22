@@ -25,9 +25,6 @@ error_reporting(E_ALL);
             <label for="Usuari">Usuario:</label>
             <input type="text" name="Usuari" id="Usuari" required>
 
-            <label for="DNI">DNI:</label>
-            <input type="text" name="DNI" id="DNI" required>
-
             <label for="Password">Contraseña:</label>
             <input type="password" name="Password" id="Password" required>
 

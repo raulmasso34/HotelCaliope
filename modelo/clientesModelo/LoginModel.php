@@ -9,20 +9,19 @@ class LoginModel {
     }
 
     // Función de autenticación
-    public function authenticate($username, $password, $dni) {
+    public function authenticate($username, $password) {
         // Validar que los campos no estén vacíos
-        if (empty($username) || empty($password) || empty($dni)) {
-            echo "Todos los campos son obligatorios.";
+        if (empty($username) || empty($password)) {
             return false;
         }
-
-        // Consulta para obtener el usuario por su nombre de usuario y DNI
-        $sql = "SELECT * FROM Clients WHERE Usuari = ? AND DNI = ?";  // Se añade la verificación del DNI
-
+    
+        // Consulta para obtener el usuario solo por su nombre de usuario
+        $sql = "SELECT * FROM Clients WHERE Usuari = ?";
+    
         // Preparar la consulta
         if ($stmt = $this->conn->prepare($sql)) {
             // Asociar los parámetros de la consulta
-            $stmt->bind_param("ss", $username, $dni);  // Ambos parámetros son cadenas (s = string)
+            $stmt->bind_param("s", $username);  // Un solo parámetro (s = string)
             $stmt->execute();  // Ejecutar la consulta
     
             // Obtener los resultados
@@ -34,20 +33,13 @@ class LoginModel {
                 if (password_verify($password, $user['Password'])) {
                     // La autenticación fue exitosa, devolver los datos del usuario
                     return $user;
-                } else {
-                    // La contraseña es incorrecta
-                    echo "Contraseña incorrecta.";
                 }
-            } else {
-                // El usuario no existe
-                echo "Usuario no encontrado.";
             }
-        } else {
-            // Error al preparar la consulta SQL
-            echo "Error al preparar la consulta SQL.";
+            
+            $stmt->close();
         }
     
-        return false;  // Si no se encontró el usuario, el DNI no coincide o la contraseña no es válida
+        return false;  // Si no se encontró el usuario o la contraseña no es válida
     }
 }
 ?>

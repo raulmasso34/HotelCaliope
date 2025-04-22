@@ -46,20 +46,13 @@ $db->closeConnection();
     <link rel="stylesheet" href="../../static/css/InicioSesion.css">
     <link rel="shortcut icon" href="../../static/img/favicon_io/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Agregar Font Awesome -->
-
-    <style>
-        .reservation-button {
-            margin-bottom: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    
     <div class="profile-container">
-    <a href="../index.php" class="icono-salida" title="Volver atrás">
-                <i class="fas fa-sign-out-alt"></i> <!-- Icono de salida -->
-            </a>
+        <a href="../index.php" class="icono-salida" title="Volver atrás">
+            <i class="fas fa-sign-out-alt"></i>
+        </a>
         
         <h1 class="profile-title">Perfil de <?php echo htmlspecialchars($profile['Nom']) . " " . htmlspecialchars($profile['Cognom']); ?></h1>
         
@@ -72,7 +65,6 @@ $db->closeConnection();
             <p><strong>Código Postal:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['CodigoPostal']); ?></span></p>
         </div>
 
-        <!-- Mostrar las reservas -->
         <div class="reservas-info">
             <h2>Reservas:</h2>
             <div class="reservas-principales">
@@ -83,12 +75,12 @@ $db->closeConnection();
                 if (isset($reservations) && !empty($reservations)) {
                     foreach ($reservations as $reservation) {
                         if ($reservation['Estado'] == 'Cancelada') {
-                            continue; // Omitir reservas canceladas
+                            continue;
                         }
                         if ($count >= 3) {
-                            break; // Mostrar solo las primeras 3 reservas
+                            break;
                         }
-                        $tieneReservasActivas = true; // Al menos una reserva activa
+                        $tieneReservasActivas = true;
 
                         echo "<div class='reservation-button'>";
                         echo "<a href='../info_reserva.php?id=" . urlencode($reservation['Id_Reserva']) . "' class='btn-reserva'>";
@@ -107,11 +99,10 @@ $db->closeConnection();
 
             <div id="more-reservations" style="display: none;">
                 <?php
-                // Mostrar reservas adicionales
                 if (isset($reservations) && !empty($reservations)) {
                     foreach ($reservations as $reservation) {
                         if ($reservation['Estado'] == 'Cancelada') {
-                            continue; // Omitir reservas canceladas
+                            continue;
                         }
                         if ($count >= 3) {
                             echo "<div class='reservation-button'>";
@@ -127,18 +118,16 @@ $db->closeConnection();
             </div>
 
             <button id="show-more" class="btn-show btn-show-more">
-                <i class="bi bi-plus"></i> <!-- Ícono de más -->
+                <i class="bi bi-plus"></i>
             </button>
             <button id="show-less" class="btn-show btn-show-less" style="display: none;">
-                <i class="bi bi-dash"></i> <!-- Ícono de menos -->
+                <i class="bi bi-dash"></i>
             </button>
-            
-
-
-
         </div>
     </div>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../../static/js/perfil/pefil.js"></script>
 </body>
 </html>

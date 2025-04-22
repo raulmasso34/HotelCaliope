@@ -68,10 +68,11 @@ if (!empty($hoteles)) {
 
             <div class="main-up-right">
                 <div class="links">
+                <a href="../../vista/index.php">Home</a>
                     <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
                     
                     <div class="dropdown">
-                        <a href="../../vista/hoteles.php" class="dropbtn">Hoteles</a>
+                        <a href="#" class="dropbtn">Hoteles</a>
                         <div class="dropdown-content">
                             <div class="dropdown-section">
                                 <h4>Europa</h4>
@@ -89,7 +90,7 @@ if (!empty($hoteles)) {
                     </div>
 
                     <a href="../../vista/galeria/galeria.php">Galería</a>
-                    <a href="../../vista/ofertas/ofertas.php">Ofertas</a>
+                    
                     <a href="../../vista/Contacto/contacto.php">Contacto</a>
                     
                     <!-- Contenedor del perfil -->
@@ -123,7 +124,7 @@ if (!empty($hoteles)) {
             <div class="mobile-menu">
                 <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
                 <a href="../../vista/galeria/galeria.php">Galería</a>
-                <a href="../../vista/ofertas/ofertas.php">Ofertas</a>
+       
                 <a href="../../vista/Contacto/contacto.php">Contacto</a>
                 <a href="../../vista/Clientes/login.php">Iniciar sesión</a>
                 <a href="../../vista/Clientes/perfil.php">Perfil</a>
@@ -171,11 +172,6 @@ if (!empty($hoteles)) {
             </a>
         </div>
     </header>
-
-
-
-
-
 
 
     
@@ -277,7 +273,7 @@ if (!empty($hoteles)) {
                 <li><i class="fas fa-angle-right"></i><a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a></li>
                 <li><i class="fas fa-angle-right"></i><a href="../../vista/hoteles.php">Hoteles</a></li>
                 <li><i class="fas fa-angle-right"></i><a href="../../vista/galeria/galeria.php">Galería</a></li>
-                <li><i class="fas fa-angle-right"></i><a href="../../vista/ofertas/ofertas.php">Ofertas</a></li>
+
             </ul>
         </div>
 
