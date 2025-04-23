@@ -8,88 +8,98 @@
     <link rel="shortcut icon" href="../../static/img/favicon_io/favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <div class="registro-container">
-        <!-- Logo y título -->
-        <div class="registro-header">
-            <img src="../../static/img/logo.png" alt="Hotel Logo" class="registro-logo">
-            <h2>¡Regístrate en nuestro hotel!</h2>
+    <div class="signup-container">
+        <!-- Cabecera -->
+        <div class="signup-header">
+            <img src="../../static/img/logo.png" alt="Hotel Logo" class="signup-header__logo">
+            <h2 class="signup-header__title">¡Regístrate en nuestro hotel!</h2>
         </div>
         
-        <!-- Formulario de Registro -->
-        <form action="../../controller/clients/RegistreController.php" method="POST" id="registerForm">
-            <div class="registro-form-row">
-                <div class="registro-form-group">
-                    <label for="nom">Nombre:</label>
-                    <input type="text" id="nom" name="Nom" required>
+        <!-- Formulario -->
+        <form action="../../controller/clients/RegistreController.php" method="POST" class="signup-form" id="registerForm">
+            <!-- Fila 1 - Nombre y Apellido -->
+            <div class="signup-form__row">
+                <div class="signup-form__group">
+                    <label for="nom" class="signup-form__label">Nombre:</label>
+                    <input type="text" id="nom" name="Nom" class="signup-form__input" required>
                 </div>
 
-                <div class="registro-form-group">
-                    <label for="cognom">Apellido:</label>
-                    <input type="text" id="cognom" name="Cognom" required>
-                </div>
-            </div>
-
-            <div class="registro-form-row">
-                <div class="registro-form-group">
-                    <label for="dni">DNI:</label>
-                    <input type="text" id="dni" name="DNI" required>
-                </div>
-
-                <div class="registro-form-group">
-                    <label for="email">Correo Electrónico:</label>
-                    <input type="email" id="email" name="CorreuElectronic" required>
+                <div class="signup-form__group">
+                    <label for="cognom" class="signup-form__label">Apellido:</label>
+                    <input type="text" id="cognom" name="Cognom" class="signup-form__input" required>
                 </div>
             </div>
 
-            <div class="registro-form-row">
-                <div class="registro-form-group">
-                    <label for="telefon">Teléfono:</label>
-                    <input type="text" id="telefon" name="Telefon">
+            <!-- Fila 2 - DNI y Email -->
+            <div class="signup-form__row">
+                <div class="signup-form__group">
+                    <label for="dni" class="signup-form__label">DNI/NIE/Pasaporte:</label>
+                    <input type="text" id="dni" name="DNI" class="signup-form__input" required>
                 </div>
 
-                <div class="registro-form-group">
-                    <label for="usuario">Usuario:</label>
-                    <input type="text" id="usuario" name="Usuari" required>
-                </div>
-            </div>
-
-            <div class="registro-form-row">
-                <div class="registro-form-group">
-                    <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="Password" required>
-                </div>
-
-                <div class="registro-form-group">
-                    <label for="ciudad">Ciudad:</label>
-                    <input type="text" id="ciudad" name="Ciudad">
+                <div class="signup-form__group">
+                    <label for="email" class="signup-form__label">Correo Electrónico:</label>
+                    <input type="email" id="email" name="CorreuElectronic" class="signup-form__input" required>
                 </div>
             </div>
 
-            <div class="registro-form-row">
-                <div class="registro-form-group">
-                    <label for="codigoPostal">Código Postal:</label>
-                    <input type="text" id="codigoPostal" name="CodigoPostal">
+            <!-- Fila 3 - Teléfono y Usuario -->
+            <div class="signup-form__row">
+                <div class="signup-form__group">
+                    <label for="telefon" class="signup-form__label">Teléfono:</label>
+                    <input type="text" id="telefon" name="Telefon" class="signup-form__input">
+                </div>
+
+                <div class="signup-form__group">
+                    <label for="usuario" class="signup-form__label">Usuario:</label>
+                    <input type="text" id="usuario" name="Usuari" class="signup-form__input" required>
                 </div>
             </div>
 
-            <!-- CAPTCHA Fake -->
-            <input type="checkbox" id="captcha" name="captcha" value="1">
-            <label for="captcha">No soy un robot</label><br>
+            <!-- Fila 4 - Contraseña y Ciudad -->
+            <div class="signup-form__row">
+                <div class="signup-form__group">
+                    <label for="password" class="signup-form__label">Contraseña:</label>
+                    <input type="password" id="password" name="Password" class="signup-form__input" required>
+                </div>
 
-            <button class="registre-btn" type="submit">Registrarse</button>
+                <div class="signup-form__group">
+                    <label for="ciudad" class="signup-form__label">Ciudad:</label>
+                    <input type="text" id="ciudad" name="Ciudad" class="signup-form__input">
+                </div>
+            </div>
+
+            <!-- Fila 5 - Código Postal -->
+            <div class="signup-form__row">
+                <div class="signup-form__group">
+                    <label for="codigoPostal" class="signup-form__label">Código Postal:</label>
+                    <input type="text" id="codigoPostal" name="CodigoPostal" class="signup-form__input">
+                </div>
+            </div>
+
+            <!-- CAPTCHA -->
+            <div class="signup-captcha">
+                <input type="checkbox" id="captcha" name="captcha" value="1" class="signup-captcha__checkbox">
+                <label for="captcha" class="signup-captcha__label">No soy un robot</label>
+            </div>
+
+            <!-- Botón de Registro -->
+            <button class="signup-form__submit" type="submit">Registrarse</button>
         </form>
 
-        <div class="register-link">
+        <!-- Enlace a Login -->
+        <div class="signup-login-link">
             <p>¿Ya tienes cuenta? <a href="login.php">Inicia sesión</a></p>
         </div>
     </div>
 
+    <!-- Validación CAPTCHA -->
     <script>
         document.getElementById("registerForm").addEventListener("submit", function(event) {
             var captchaChecked = document.getElementById("captcha").checked;
             if (!captchaChecked) {
                 alert("❌ Debes marcar la casilla de verificación.");
-                event.preventDefault(); // Evita que se envíe el formulario
+                event.preventDefault();
             }
         });
     </script>

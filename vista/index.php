@@ -597,9 +597,9 @@ if ($controller !== null) {
         <!-- Sección Inferior -->
         <div class="footer-bottom">
             <div class="footer-links">
-                <a href="../../vista/politicas/privacidad.php">Política de Privacidad</a>
-                <a href="../../vista/politicas/cookies.php">Política de Cookies</a>
-                <a href="../../vista/politicas/avisolegal.php">Aviso Legal</a>
+                <a href="../vista/politicas/privacidad.php">Política de Privacidad</a>
+                <a href="../vista/politicas/cookies.php">Política de Cookies</a>
+                <a href="../vista/politicas/avisolegal.php">Aviso Legal</a>
             </div>
             <p>&copy; 2025 Hotel Calíope. Todos los derechos reservados.</p>
         </div>

@@ -98,11 +98,13 @@ CREATE TABLE `Clients` (
   `CodigoPostal` int DEFAULT NULL,
   `Id_Pago` int DEFAULT NULL,
   PRIMARY KEY (`Id_Client`),
+  UNIQUE KEY `Usuari_UNIQUE` (`Usuari`),
+  UNIQUE KEY `DNI_UNIQUE` (`DNI`),
   KEY `paisclient_idx` (`Id_Pais`),
   KEY `pagoClient_idx` (`Id_Pago`),
   CONSTRAINT `pagoClient` FOREIGN KEY (`Id_Pago`) REFERENCES `Pago` (`Id_Pago`),
   CONSTRAINT `paisclient` FOREIGN KEY (`Id_Pais`) REFERENCES `Pais` (`Id_Pais`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,7 +113,7 @@ CREATE TABLE `Clients` (
 
 LOCK TABLES `Clients` WRITE;
 /*!40000 ALTER TABLE `Clients` DISABLE KEYS */;
-INSERT INTO `Clients` VALUES (16,'Andrea','Garreta','48210716W','agarreta2@gmail.com',652331123,'Andrea','$2y$10$YCFlgk7mMF8b6mnwDsf2pOYmhuSNH6esxoAIaobyx4wa99yvb.Kbq',NULL,'Esparreguera',8292,NULL),(17,'Andrea','Garreta','48210716W','agarreta2@gmail.com',652331123,'Andrea','$2y$10$Uy.sRH3kWjjG7ZeP9i6U6ucXW9ytSkYFBkoPgl8kH3JdX20NhAzo.',NULL,'Esparreguera',8292,NULL),(18,'Prueba2','prueba','11122234L','aaaa@gmail.com',111222333,'Prueba2','$2y$10$T.AKd1IyIl0YV7BGhsWZAuWMxaQJQZn8lC61wQTDqbvTR3NmN2QEW',NULL,'Madrid',8292,NULL),(19,'admin','admin','11111111A','admin@hotelcaliope.cat',111111,'admin','$2y$10$7dUVdnx.HVIip3XQXbJDbey64js/zFlBFHpGfrrJoidRvihwAQWDy',NULL,'admin',11111,NULL),(20,'Bruno','Ostos','12345678N','prueba@gmail.com',12345623,'prueba','$2y$10$NP90IJqbZtn4Rnet/Uq8NOgURxKmncM6je2KsUnePyHGGXglDU7l.',NULL,'espa',8292,NULL),(21,'Raul','prueba','73628362L','hola@gmail.com',671229963,'Raul2','$2y$10$sohXSw.qynOMPUx4htl/lOFOuHLkZ4Y898JfEPW1FIIOxXxtLPHw.',NULL,'Esparreguera',8292,NULL),(22,'Josep','prueba','8273628L','prueba@gmail.com',725118292,'Josep','$2y$10$mDYFq52t.k9MhqoSC8qyA..S8LLgkWnInRMqxuCNj21C80/n5CpaO',NULL,'Esparreguera',8292,NULL),(23,'Andrea','Fernandez','48518293T','prueba@gmail.com',123332211,'AndreaG','$2y$10$z6AhEhvzzznTXXpaedzyCedf16j2LWO5DLU7LECRuyqU5HUocF38G',NULL,'3',2922,NULL);
+INSERT INTO `Clients` VALUES (24,'Andrea','Garreta','48210716W','agarreta2@gmail.com',65233123,'Andrea','$2y$10$ep/5IjmCHcs5h9vg5iPIoOMYh/waUw2n56k6AHWltypJbeSeQmHMW',NULL,'Esparreguera',8292,NULL);
 /*!40000 ALTER TABLE `Clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,7 +306,7 @@ CREATE TABLE `Pago` (
   CONSTRAINT `pagohotel` FOREIGN KEY (`Id_Hotel`) REFERENCES `Hotel` (`Id_Hotel`) ON DELETE CASCADE,
   CONSTRAINT `pagometodo` FOREIGN KEY (`Id_MetodoPago`) REFERENCES `MetodoPago` (`Id_MetodoPago`),
   CONSTRAINT `pagoreserva` FOREIGN KEY (`Id_Reserva`) REFERENCES `Reservas` (`Id_Reserva`)
-) ENGINE=InnoDB AUTO_INCREMENT=242 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=253 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -313,7 +315,7 @@ CREATE TABLE `Pago` (
 
 LOCK TABLES `Pago` WRITE;
 /*!40000 ALTER TABLE `Pago` DISABLE KEYS */;
-INSERT INTO `Pago` VALUES (208,4,19,258,'Método no válido','2025-04-07 16:57:30',1),(209,4,19,259,'Método no válido','2025-04-07 17:00:52',1),(210,4,19,260,'Método no válido','2025-04-07 17:01:18',1),(211,4,19,261,'Método no válido','2025-04-07 17:02:39',1),(212,4,19,262,'Método no válido','2025-04-07 17:03:24',1),(213,4,19,263,'Método no válido','2025-04-07 17:04:07',1),(214,4,19,264,'Método no válido','2025-04-07 17:07:30',1),(215,4,19,265,'Método no válido','2025-04-07 17:08:04',1),(216,4,19,266,'Método no válido','2025-04-07 17:08:15',1),(217,4,19,267,'Método no válido','2025-04-07 17:14:50',1),(218,4,19,268,'Método no válido','2025-04-07 17:15:25',1),(219,4,19,269,'Método no válido','2025-04-07 17:16:12',1),(220,3,19,270,'Método no válido','2025-04-07 17:17:27',1),(221,3,19,271,'Método no válido','2025-04-07 17:18:18',1),(222,1,19,272,'Método no válido','2025-04-07 17:27:49',1),(223,1,19,273,'Método no válido','2025-04-07 17:28:46',1),(224,2,19,274,'Método no válido','2025-04-07 17:30:13',1),(225,2,19,275,'Método no válido','2025-04-07 17:30:41',1),(226,3,19,276,'Método no válido','2025-04-07 18:44:33',1),(227,3,19,277,'Método no válido','2025-04-07 18:46:00',1),(228,2,19,278,'Método no válido','2025-04-07 18:48:52',1),(229,2,19,279,'Método no válido','2025-04-07 18:49:18',1),(232,3,19,282,'Método no válido','2025-04-07 19:02:21',1),(233,2,19,283,'Método no válido','2025-04-07 19:04:34',1),(234,1,19,284,'Método no válido','2025-04-07 19:05:35',1),(235,1,19,285,'Método no válido','2025-04-07 19:46:31',1),(237,1,19,287,'Método no válido','2025-04-07 21:00:58',1),(238,5,19,288,'Método no válido','2025-04-07 21:05:38',1),(239,4,19,289,'Método no válido','2025-04-08 16:09:03',1),(241,5,19,291,'Método no válido','2025-04-10 18:43:01',1);
+INSERT INTO `Pago` VALUES (252,2,24,302,'Método no válido','2025-04-23 18:40:27',1);
 /*!40000 ALTER TABLE `Pago` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -396,7 +398,7 @@ CREATE TABLE `Reserva_Servicio` (
 
 LOCK TABLES `Reserva_Servicio` WRITE;
 /*!40000 ALTER TABLE `Reserva_Servicio` DISABLE KEYS */;
-INSERT INTO `Reserva_Servicio` VALUES (287,2),(284,3),(272,4),(273,4),(285,4),(274,8),(275,8),(276,9),(277,9),(270,10),(271,10),(289,15),(258,16),(259,16),(260,16),(261,16),(262,16),(263,16),(264,16),(265,16),(288,20),(291,20),(283,28),(282,30),(266,31),(267,31),(268,31),(269,31),(289,31),(289,32),(291,33),(291,34);
+INSERT INTO `Reserva_Servicio` VALUES (302,7),(302,27),(302,28);
 /*!40000 ALTER TABLE `Reserva_Servicio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -448,7 +450,7 @@ CREATE TABLE `Reservas` (
   CONSTRAINT `hotelreserv` FOREIGN KEY (`Id_Hotel`) REFERENCES `Hotel` (`Id_Hotel`) ON DELETE CASCADE,
   CONSTRAINT `servicios` FOREIGN KEY (`Id_Servicio`) REFERENCES `Servicio` (`Id_Servicio`) ON DELETE CASCADE,
   CONSTRAINT `tarifas` FOREIGN KEY (`Id_Tarifa`) REFERENCES `Tarifa` (`Id_Tarifa`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=292 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=303 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -457,7 +459,7 @@ CREATE TABLE `Reservas` (
 
 LOCK TABLES `Reservas` WRITE;
 /*!40000 ALTER TABLE `Reservas` DISABLE KEYS */;
-INSERT INTO `Reservas` VALUES (258,19,9,4,NULL,NULL,0,0,0,10,10,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(259,19,9,4,NULL,NULL,0,0,0,10,10,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(260,19,9,4,NULL,NULL,0,0,0,10,10,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(261,19,9,4,NULL,NULL,0,0,0,10,10,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(262,19,9,4,NULL,NULL,0,0,0,10,10,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(263,19,9,4,NULL,NULL,120,0,0,10,250,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(264,19,9,4,NULL,NULL,120,0,0,10,250,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(265,19,9,4,NULL,NULL,120,0,0,10,250,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(266,19,9,4,NULL,NULL,120,0,0,0,240,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(267,19,9,4,NULL,NULL,120,0,0,0,240,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(268,19,9,4,NULL,NULL,120,0,0,0,240,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(269,19,9,4,NULL,NULL,120,0,0,0,240,'2025-04-09','2025-04-11',2,'2','Pagado',NULL,'No llego'),(270,19,8,3,NULL,NULL,0,0,0,60,60,'2025-05-11','2025-05-12',1,'1','Pagado',NULL,'No llego'),(271,19,8,3,NULL,NULL,260,0,0,60,320,'2025-05-11','2025-05-12',1,'1','Pagado',NULL,'No llego'),(272,19,1,1,NULL,NULL,0,20,0,5,25,'2025-04-16','2025-04-22',1,'1','Pagado',NULL,'No llego'),(273,19,1,1,NULL,NULL,100,20,0,5,625,'2025-04-16','2025-04-22',1,'1','Pagado',NULL,'No llego'),(274,19,6,2,NULL,NULL,0,35,0,7,42,'2025-04-14','2025-04-16',1,'1','Pagado',NULL,'No llego'),(275,19,6,2,NULL,NULL,160,35,0,7,362,'2025-04-14','2025-04-16',1,'1','Pagado',NULL,'No llego'),(276,19,8,3,NULL,NULL,0,60,0,18,78,'2025-04-14','2025-04-16',1,'1','Pagado',NULL,'No llego'),(277,19,8,3,NULL,NULL,260,60,0,18,598,'2025-04-14','2025-04-16',1,'1','Pagado',NULL,'No llego'),(278,19,5,2,NULL,NULL,0,20,0,0,20,'2025-04-15','2025-04-22',2,'1','Pagado',NULL,'No llego'),(279,19,5,2,NULL,NULL,110,20,0,0,790,'2025-04-15','2025-04-22',2,'1','Pagado',NULL,'No llego'),(282,19,7,3,NULL,NULL,210,15,0,0,225,'2025-04-15','2025-04-16',4,'1','Pagado',NULL,'No llego'),(283,19,5,2,NULL,NULL,110,20,0,0,240,'2025-04-23','2025-04-25',2,'1','Pagado',NULL,'No llego'),(284,19,2,1,NULL,NULL,999,20,0,10,1029,'2025-04-15','2025-04-16',2,'1','Pagado',NULL,'No llego'),(285,19,4,1,NULL,NULL,250,20,0,5,275,'2025-04-15','2025-04-16',1,'1','Pagado',NULL,'No llego'),(287,19,3,1,NULL,NULL,200,20,0,50,470,'2025-04-15','2025-04-17',2,'1','Pagado',NULL,'No llego'),(288,19,11,5,NULL,NULL,220,40,0,15,275,'2025-04-15','2025-04-16',1,'2','Pagado',NULL,'No llego'),(289,19,10,4,NULL,NULL,170,45,0,20,405,'2025-04-09','2025-04-11',1,'2','Pagado',NULL,'No llego'),(291,19,11,5,NULL,NULL,374,40,0,15,1177,'2025-04-12','2025-04-15',1,'2','Pagado',NULL,'No llego');
+INSERT INTO `Reservas` VALUES (302,24,6,2,NULL,NULL,208,35,0,12,463,'2025-07-02','2025-07-04',2,'1','Pagado',NULL,'No llego');
 /*!40000 ALTER TABLE `Reservas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -485,7 +487,7 @@ CREATE TABLE `Reservas_Actividades` (
 
 LOCK TABLES `Reservas_Actividades` WRITE;
 /*!40000 ALTER TABLE `Reservas_Actividades` DISABLE KEYS */;
-INSERT INTO `Reservas_Actividades` VALUES (258,41,30.00),(259,41,30.00),(260,35,45.00),(261,41,30.00),(262,41,30.00),(263,41,30.00),(264,41,30.00),(265,35,45.00),(266,35,45.00),(267,35,45.00),(268,35,45.00),(269,35,45.00),(270,40,15.00),(271,40,15.00),(272,38,20.00),(273,38,20.00),(274,39,35.00),(275,39,35.00),(276,34,60.00),(277,34,60.00),(278,33,20.00),(279,33,20.00),(282,40,15.00),(283,33,20.00),(284,38,20.00),(285,38,20.00),(287,38,20.00),(288,42,40.00),(289,35,45.00),(291,42,40.00);
+INSERT INTO `Reservas_Actividades` VALUES (302,39,35.00);
 /*!40000 ALTER TABLE `Reservas_Actividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -626,4 +628,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-10 18:47:19
+-- Dump completed on 2025-04-23 19:25:18
