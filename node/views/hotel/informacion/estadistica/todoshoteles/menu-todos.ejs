@@ -17,12 +17,13 @@
     </style>
 </head>
 <body class="bg-light">
-    <a href="/menu/<%= hotelId %>" class="btn btn-sm btn-danger" title="Exit">
+    <a href="/clientes" class="btn btn-sm btn-danger" title="Exit">
         <i class="fa-solid fa-right-from-bracket"></i>
     </a>
     <div class="container mt-5">
         <div class="card shadow-lg p-4">
             <h2 class="text-center mb-4">📌 Menú del Hotel</h2>
+            <p>Rol del usuario: <%= user.role %></p>
 
             <!-- Sección de Estadísticas -->
             <h4 class="text-center mt-3">📊 Estadísticas</h4>
@@ -30,7 +31,7 @@
                 <center>
                     <!-- Formulario para las actividades -->
                     <form action="/estadisticas/Actividades-CadenaHotel" method="POST">
-                        <input type="hidden" name="hotelId" value="<%= hotelId %>">
+                      
                         <button type="submit" class="btn btn-primary btn-lg mx-auto btn-custom">
                             📈 Estadística de Actividades
                         </button>
@@ -40,7 +41,7 @@
                   <center>
                     <!-- Formulario para reservas por mes -->
                     <form action="/estadisticas/Reservas-del-mes-CadenaHotel" method="POST">
-                        <input type="hidden" name="hotelId" value="<%= hotelId %>">
+                        
                         <button type="submit" class="btn btn-primary btn-lg mx-auto btn-custom">
                             📅 Reservas por Mes
                         </button>
@@ -49,7 +50,7 @@
                    <center>
                     <!-- Formulario para todas las reservas -->
                     <form action="/estadisticas/Todas-las-reservas-CadenaHotel" method="POST">
-                        <input type="hidden" name="hotelId" value="<%= hotelId %>">
+                     
                         <button type="submit" class="btn btn-primary btn-lg mx-auto btn-custom">
                             📋 Todas las Reservas
                         </button>
@@ -58,7 +59,7 @@
                     <center>
                     <!-- Formulario para reservas de servicios -->
                     <form action="/estadisticas/Servicios-CadenaHotel" method="POST">
-                        <input type="hidden" name="hotelId" value="<%= hotelId %>">
+                        
                         <button type="submit" class="btn btn-primary btn-lg mx-auto btn-custom">
                             🛎️ Reservas de Servicios
                         </button>
@@ -67,7 +68,7 @@
                     <center>
                     <!-- Formulario para temporadas más vendidas -->
                     <form action="/estadisticas/Temporadas-CadenaHotel" method="POST">
-                        <input type="hidden" name="hotelId" value="<%= hotelId %>">
+                        
                         <button type="submit" class="btn btn-primary btn-lg mx-auto btn-custom">
                             ☀️❄️ Temporadas más Vendidas
                         </button>
@@ -76,7 +77,7 @@
                     <center>
                     <!-- Formulario para reservas por tipo de habitación -->
                     <form action="/estadisticas/Habitaciones-CadenaHotel" method="POST">
-                        <input type="hidden" name="hotelId" value="<%= hotelId %>">
+                     
                         <button type="submit" class="btn btn-primary btn-lg mx-auto btn-custom">
                             🏨 Reservas por Tipo de Habitación
                         </button>
@@ -84,13 +85,6 @@
                 </center>
             </div>
 
-            <!-- Estadísticas de toda la cadena de hoteles -->
-            <h4 class="text-center mt-4">🏨 Estadísticas del Hotel <strong><%= nombreHotel %></strong></h4>
-            <div class="d-grid gap-3">
-                <a href="/menu-estadistica-hotel/<%= hotelId %>" class="btn btn-success btn-lg mx-auto btn-custom">
-                    🌍 Ver Estadísticas del <strong><%= nombreHotel %></strong>
-                </a>
-            </div>
         </div>
     </div>
 

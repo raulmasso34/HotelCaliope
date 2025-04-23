@@ -2081,25 +2081,25 @@ ORDER BY años.year;
 //ESTADISTICAS POR HOTELES
 
 // Ruta que recibe el hotelId en la URL
-router.post('/estadisticas/cadena-hoteles', (req, res) => {
-    const hotelId = req.body.hotelId;  // Accede al hotelId desde el cuerpo de la solicitud
-    const query = 'SELECT Nombre FROM Hotel WHERE Id_Hotel = ?';
+// Si usas un archivo de rutas como routes/estadisticas.js
+router.get('/estadisticas-cadena-hoteles', (req, res) => {
+    const user = req.session.user;
 
-    conexion.query(query, [hotelId], (error, results) => {
-        if (error || results.length === 0) {
-            return res.status(500).send('Error al obtener el nombre del hotel');
+    
+    // Si no hay sesión o no tiene un rol, redirige al login
+    if (user.role === 'Hotel') {
+        // Si el usuario intenta acceder a otro hotel, lo redirigimos al suyo
+    
+            return res.redirect(`/`);
         }
 
-        const nombreHotel = results[0].Nombre; // Extrae el nombre del hotel
-        res.render('hotel/informacion/estadistica/todoshoteles/menu-todos', { hotelId, nombreHotel });  // Ahora pasamos también el nombre del hotel
-    });
+    // Si pasa, renderiza la vista
+    res.render('hotel/informacion/estadistica/todoshoteles/menu-todos', { user: user });
 });
 
 
-
-
+    
 router.post('/estadisticas/Actividades-CadenaHotel', (req, res) => {
-    const hotelId = req.body.hotelId; // Ahora se obtiene desde el body
 
     const query = `
         SELECT 
@@ -2118,14 +2118,14 @@ router.post('/estadisticas/Actividades-CadenaHotel', (req, res) => {
             return res.status(500).send('Error en el servidor');
         }
 
-        res.render('hotel/informacion/estadistica/todoshoteles/actividad-hoteles', { datos: resultados, hotelId: hotelId });
+        res.render('hotel/informacion/estadistica/todoshoteles/actividad-hoteles', { datos: resultados});
     });
 });
 
 
 
 router.post('/estadisticas/Reservas-del-mes-CadenaHotel', (req, res) => {
-    const hotelId = req.body.hotelId; 
+   
     const query = `
         SELECT 
             h.Nombre AS hotel,
@@ -2146,12 +2146,12 @@ router.post('/estadisticas/Reservas-del-mes-CadenaHotel', (req, res) => {
         console.log(resultados); // Para verificar los datos en consola
 
         // Renderiza la vista con los datos agrupados por mes y hotel
-        res.render('hotel/informacion/estadistica/todoshoteles/mes-hoteles', { datos: resultados, hotelId: hotelId });
+        res.render('hotel/informacion/estadistica/todoshoteles/mes-hoteles', { datos: resultados });
     });
 });
 
 router.post('/estadisticas/Servicios-CadenaHotel', (req, res) => {
-    const hotelId = req.body.hotelId; 
+
     const query = `
         SELECT 
     h.Nombre AS hotel, 
@@ -2173,13 +2173,13 @@ ORDER BY total_reservas DESC;
         console.log(resultados); // Verifica los resultados en consola
 
         // Renderiza la vista con los datos de todos los hoteles
-        res.render('hotel/informacion/estadistica/todoshoteles/servicio-hoteles', { datos: resultados , hotelId: hotelId});
+        res.render('hotel/informacion/estadistica/todoshoteles/servicio-hoteles', { datos: resultados});
     });
 });
 
 
 router.post('/estadisticas/Habitaciones-CadenaHotel', (req, res) => {
-    const hotelId = req.body.hotelId; 
+  
     const query = `
         SELECT 
             h.Nombre AS hotel, 
@@ -2200,13 +2200,13 @@ router.post('/estadisticas/Habitaciones-CadenaHotel', (req, res) => {
         }
 
         console.log(resultados); // Para verificar los datos en consola
-        res.render('hotel/informacion/estadistica/todoshoteles/tipohab-hoteles', { datos: resultados  , hotelId: hotelId});
+        res.render('hotel/informacion/estadistica/todoshoteles/tipohab-hoteles', { datos: resultados});
     });
 });
 
 
 router.post('/estadisticas/Temporadas-CadenaHotel', (req, res) => {
-    const hotelId = req.body.hotelId; 
+    
     const query = `
         SELECT 
             h.Nombre AS hotel,
@@ -2233,12 +2233,12 @@ router.post('/estadisticas/Temporadas-CadenaHotel', (req, res) => {
         console.log(resultados); // Verifica los datos en consola
 
         // Renderiza la vista con los datos de reservas por temporada
-        res.render('hotel/informacion/estadistica/todoshoteles/temporada-hoteles', { datos: resultados , hotelId: hotelId });
+        res.render('hotel/informacion/estadistica/todoshoteles/temporada-hoteles', { datos: resultados });
     });
 });
 
 router.post('/estadisticas/Todas-las-reservas-CadenaHotel', (req, res) => {
-    const hotelId = req.body.hotelId; 
+   
     const query = `
         SELECT 
             h.Nombre AS hotel,
@@ -2260,7 +2260,7 @@ router.post('/estadisticas/Todas-las-reservas-CadenaHotel', (req, res) => {
         console.log(resultados); // Verifica los datos en consola
 
         // Renderiza la vista con los datos de reservas por año
-        res.render('hotel/informacion/estadistica/todoshoteles/reservas-hoteles', { datos: resultados, hotelId: hotelId });
+        res.render('hotel/informacion/estadistica/todoshoteles/reservas-hoteles', { datos: resultados });
     });
 });
 
