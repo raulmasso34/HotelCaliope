@@ -24,25 +24,29 @@ class LoginController {
     // Función de login
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Verificar si el CAPTCHA fue marcado
+            if (!isset($_POST['captcha'])) {
+                header("Location: ../../vista/Clientes/login.php?error=Debes marcar la casilla de verificación.");
+                exit();
+            }
+            
             $username = $_POST['Usuari'];  // Obtener el nombre de usuario del formulario
-            $dni = $_POST['DNI'];  // Obtener el DNI del formulario
             $password = $_POST['Password'];  // Obtener la contraseña del formulario
-
-            // Autenticar el usuario
-            $user = $this->loginModel->authenticate($username, $password, $dni);
-
+    
+            // Autenticar el usuario solo con username y password (sin DNI)
+            $user = $this->loginModel->authenticate($username, $password);
+    
             if ($user) {
                 // Si el usuario existe y la contraseña es correcta, establecer sesión y redirigir al perfil
                 $_SESSION['user_id'] = $user['Id_Client'];  // Guardar el ID del usuario en la sesión
                 $_SESSION['username'] = $user['Usuari'];  // Guardar el nombre de usuario en la sesión
-                header("Location: ../../vista/index.php");  // Redirigir al perfil (usando ruta absoluta o correcta)
+                header("Location: ../../vista/index.php");  // Redirigir al perfil
                 exit;  // Asegúrate de que el flujo se detenga después de la redirección
             } else {
                 // Si las credenciales son incorrectas
                 header("Location: ../../vista/Clientes/login.php?error=Usuario o contraseña incorrectos");
                 exit;
             }
-            
         }
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Verificar si el CAPTCHA fue marcado

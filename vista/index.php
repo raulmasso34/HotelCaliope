@@ -82,6 +82,7 @@ if ($controller !== null) {
 
             <div class="main-up-right">
                 <div class="links">
+                <a href="../../vista/index.php">Home</a>
                     <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
                     
                     <div class="dropdown">
@@ -103,7 +104,7 @@ if ($controller !== null) {
                     </div>
 
                     <a href="../vista/galeria/galeria.php">Galería</a>
-                    <a href="../vista/ofertas/ofertas.php">Ofertas</a>
+                  
                     <a href="../vista/Contacto/contacto.php">Contacto</a>
                     
                     <!-- Contenedor del perfil -->
@@ -138,7 +139,7 @@ if ($controller !== null) {
             <div class="mobile-menu">
                 <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
                 <a href="../vista/galeria/galeria.php">Galería</a>
-                <a href="../vista/ofertas/ofertas.php">Ofertas</a>
+       
                 <a href="../vista/Contacto/contacto.php">Contacto</a>
                 <a href="../vista/Clientes/login.php">Iniciar sesión</a>
                 <a href="../vista/Clientes/perfil.php">Perfil</a>
@@ -567,7 +568,7 @@ if ($controller !== null) {
                     <li><i class="fas fa-angle-right"></i><a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a></li>
                     <li><i class="fas fa-angle-right"></i><a href="../../vista/hoteles.php">Hoteles</a></li>
                     <li><i class="fas fa-angle-right"></i><a href="../../vista/galeria/galeria.php">Galería</a></li>
-                    <li><i class="fas fa-angle-right"></i><a href="../../vista/ofertas/ofertas.php">Ofertas</a></li>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/Contacto/contacto.php">Contacto</a></li>
                 </ul>
             </div>
 

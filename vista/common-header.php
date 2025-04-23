@@ -27,7 +27,7 @@
                 </div>
                 <div class="progress-step <?php echo ($currentStep >= 3) ? 'completed' : ''; ?>">
                     <span>3</span>
-                    <p>Extra</p>
+                    <p>Metodo de pago</p>
                 </div>
                 <div class="progress-step <?php echo ($currentStep >= 4) ? 'completed' : ''; ?>">
                     <span>4</span>

@@ -89,7 +89,7 @@ $baseWebPath = '../../static/img/habitaciones'; // Sin "/tipo" al final
                     </div>
 
                     <a href="../../vista/galeria/galeria.php">Galería</a>
-                    <a href="../../vista/ofertas/ofertas.php">Ofertas</a>
+                
                     <a href="../../vista/Contacto/contacto.php">Contacto</a>
                     
                     <!-- Contenedor del perfil -->
@@ -123,7 +123,7 @@ $baseWebPath = '../../static/img/habitaciones'; // Sin "/tipo" al final
             <div class="mobile-menu">
                 <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
                 <a href="../../vista/galeria/galeria.php">Galería</a>
-                <a href="../../vista/ofertas/ofertas.php">Ofertas</a>
+                
                 <a href="../../vista/Contacto/contacto.php">Contacto</a>
                 <a href="../../vista/Clientes/login.php">Iniciar sesión</a>
                 <a href="../../vista/Clientes/perfil.php">Perfil</a>
@@ -222,7 +222,7 @@ $baseWebPath = '../../static/img/habitaciones'; // Sin "/tipo" al final
                     <li><i class="fas fa-angle-right"></i><a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a></li>
                     <li><i class="fas fa-angle-right"></i><a href="../../vista/hoteles.php">Hoteles</a></li>
                     <li><i class="fas fa-angle-right"></i><a href="../../vista/galeria/galeria.php">Galería</a></li>
-                    <li><i class="fas fa-angle-right"></i><a href="../../vista/ofertas/ofertas.php">Ofertas</a></li>
+         
                 </ul>
             </div>
 

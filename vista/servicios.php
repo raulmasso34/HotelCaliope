@@ -3,6 +3,7 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+define('BASE_PATH', realpath(dirname(__FILE__) . '/../')); 
 
 require_once __DIR__ . '/../controller/servicios/serviciosController.php';
 require_once __DIR__ . '/../controller/actividad/actividadController.php'; 
@@ -71,6 +72,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['Reservas']['actividades'] = $_POST['actividades'] ?? [];
 }
 
+
+$currentStep = 3; // Paso actual en el proceso de reserva
+$pageTitle = "Selecciona tu Hotel";
+
+// Incluir el header común usando la ruta absoluta
+include BASE_PATH . '/vista/common-header.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -83,67 +91,105 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Selecciona Servicios y Actividades</title>
 </head>
 <body>
-
-    <h1>¿Quieres añadir algún servicio?</h1>
-    
-    <form action="../vista/pagos.php" method="POST">
-        <!-- Datos ocultos para asegurar la continuidad -->
-        <input type="hidden" name="habitacionId" value="<?php echo $_SESSION['Reservas']['habitacionId'] ?? ''; ?>">
-        <input type="hidden" name="hotelId" value="<?php echo $_SESSION['hotelId']; ?>">
-        <input type="hidden" name="checkin" value="<?php echo $_SESSION['Reservas']['checkin'] ?? ''; ?>">
-        <input type="hidden" name="checkout" value="<?php echo $_SESSION['Reservas']['checkout'] ?? ''; ?>">
-        <input type="hidden" name="guests" value="<?php echo $_SESSION['Reservas']['guests'] ?? ''; ?>">
-        <input type="hidden" name="paisId" value="<?php echo $_SESSION['Reservas']['paisId'] ?? ''; ?>">
-        <input type="hidden" name="metodoPagoId" value="<?php echo $_SESSION['Reservas']['metodoPagoId'] ?? ''; ?>">
-        <input type="hidden" name="precioHabitacion" value="<?php echo $_SESSION['Reservas']['precioHabitacion'] ?? ''; ?>">
-
-        <h2>Servicios disponibles</h2>
-<div class="servicios-container">
-<?php foreach ($servicios as $servicio) : ?>
-    <?php if ($servicio['TipoServicio'] == 1): ?>
-        <!-- Servicios obligatorios: seleccionados automáticamente y ocultos -->
-        <input type="hidden" name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" value="<?php echo $servicio['Precio']; ?>">
-        <?php 
-        // También los guardamos directamente en la sesión para asegurarnos que van a pagarse
-        $_SESSION['Reservas']['servicios'][$servicio['Id_Servicio']] = $servicio['Precio'];
-        ?>
-    <?php else: ?>
-        <label>
-            <input type="checkbox" name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" value="<?php echo $servicio['Precio']; ?>"
-                <?php if (isset($_SESSION['Reservas']['servicios'][$servicio['Id_Servicio']])) : ?>
-                    checked
-                <?php endif; ?>
-            >
-            <?php echo htmlspecialchars($servicio['Servicio']); ?> - $<?php echo number_format($servicio['Precio'], 2); ?>
-        </label><br>
-    <?php endif; ?>
-<?php endforeach; ?>
-</div>
-
+    <div class="services-container">
+        <div class="services-header">
+            <h1><i class="fas fa-spa me-2"></i>Personaliza tu Experiencia</h1>
+            <p class="mb-0">Selecciona los servicios y actividades para tu estancia</p>
+        </div>
         
-        <h2>Actividades disponibles</h2>
-        <div class="actividades-container">
-            <?php foreach ($actividades as $actividad) : ?>
-                <label>
-                <input type="checkbox" name="actividades[<?php echo $actividad['Id_Actividades']; ?>]" value="<?php echo $actividad['Precio']; ?>"
-                    <?php if (isset($_SESSION['Reservas']['actividades'][$actividad['Id_Actividades']])) : ?>
-                        checked
-                    <?php endif; ?>
-                >
-                    <?php echo htmlspecialchars($actividad['Nombre']); ?> - $<?php echo number_format($actividad['Precio'], 2); ?>
-                </label><br>
-            <?php endforeach; ?>
+        <div class="services-body">
+            <form action="../vista/pagos.php" method="POST">
+                <!-- Datos ocultos para asegurar la continuidad -->
+                <input type="hidden" name="habitacionId" value="<?php echo $_SESSION['Reservas']['habitacionId'] ?? ''; ?>">
+                <input type="hidden" name="hotelId" value="<?php echo $_SESSION['hotelId']; ?>">
+                <input type="hidden" name="checkin" value="<?php echo $_SESSION['Reservas']['checkin'] ?? ''; ?>">
+                <input type="hidden" name="checkout" value="<?php echo $_SESSION['Reservas']['checkout'] ?? ''; ?>">
+                <input type="hidden" name="guests" value="<?php echo $_SESSION['Reservas']['guests'] ?? ''; ?>">
+                <input type="hidden" name="paisId" value="<?php echo $_SESSION['Reservas']['paisId'] ?? ''; ?>">
+                <input type="hidden" name="metodoPagoId" value="<?php echo $_SESSION['Reservas']['metodoPagoId'] ?? ''; ?>">
+                <input type="hidden" name="precioHabitacion" value="<?php echo $_SESSION['Reservas']['precioHabitacion'] ?? ''; ?>">
+
+                <h2 class="section-title"><i class="fas fa-concierge-bell"></i> Servicios Premium</h2>
+                <div class="options-grid">
+                    <?php foreach ($servicios as $servicio) : ?>
+                        <?php if ($servicio['TipoServicio'] == 1): ?>
+                            <!-- Servicios obligatorios: seleccionados automáticamente y ocultos -->
+                            <input type="hidden" name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" value="<?php echo $servicio['Precio']; ?>">
+                            <?php 
+                            // También los guardamos directamente en la sesión para asegurarnos que van a pagarse
+                            $_SESSION['Reservas']['servicios'][$servicio['Id_Servicio']] = $servicio['Precio'];
+                            ?>
+                        <?php else: ?>
+                            <div class="option-card">
+                                <input type="checkbox" 
+                                       class="option-checkbox" 
+                                       id="servicio-<?php echo $servicio['Id_Servicio']; ?>" 
+                                       name="servicios[<?php echo $servicio['Id_Servicio']; ?>]" 
+                                       value="<?php echo $servicio['Precio']; ?>"
+                                    <?php if (isset($_SESSION['Reservas']['servicios'][$servicio['Id_Servicio']])) : ?>
+                                        checked
+                                    <?php endif; ?>
+                                >
+                                <label for="servicio-<?php echo $servicio['Id_Servicio']; ?>">
+                                    <div class="option-title"><?php echo htmlspecialchars($servicio['Servicio']); ?></div>
+                                    <div class="option-price">$<?php echo number_format($servicio['Precio'], 2); ?></div>
+                                    <?php if (!empty($servicio['Descripcion'])): ?>
+                                        <div class="option-description"><?php echo htmlspecialchars($servicio['Descripcion']); ?></div>
+                                    <?php endif; ?>
+                                </label>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+
+                <h2 class="section-title"><i class="fas fa-hiking"></i> Actividades Exclusivas</h2>
+                <div class="options-grid">
+                    <?php foreach ($actividades as $actividad) : ?>
+                        <div class="option-card">
+                            <input type="checkbox" 
+                                   class="option-checkbox" 
+                                   id="actividad-<?php echo $actividad['Id_Actividades']; ?>" 
+                                   name="actividades[<?php echo $actividad['Id_Actividades']; ?>]" 
+                                   value="<?php echo $actividad['Precio']; ?>"
+                                <?php if (isset($_SESSION['Reservas']['actividades'][$actividad['Id_Actividades']])) : ?>
+                                    checked
+                                <?php endif; ?>
+                            >
+                            <label for="actividad-<?php echo $actividad['Id_Actividades']; ?>">
+                                <div class="option-title"><?php echo htmlspecialchars($actividad['Nombre']); ?></div>
+                                <div class="option-price">$<?php echo number_format($actividad['Precio'], 2); ?></div>
+                                <?php if (!empty($actividad['Descripcion'])): ?>
+                                    <div class="option-description"><?php echo htmlspecialchars($actividad['Descripcion']); ?></div>
+                                <?php endif; ?>
+                            </label>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <button type="submit" class="btn-continue">
+                </button>
+            </form>
+
+            <!-- Modal personalizado -->
+            
         </div>
+    </div>
 
-        <div class="continuar-btn">
-            <input id="btn-continuar" type="submit" value="Continuar">
-        </div>
-    </form>
+    <div class="custom-modal" id="confirmationModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <i class="fas fa-question-circle"></i>
+                        <h3 class="modal-title">¿Continuar sin servicios?</h3>
+                    </div>
+                    <p class="modal-message">No has seleccionado ningún servicio o actividad adicional. ¿Estás seguro de que deseas continuar?</p>
+                    <div class="modal-buttons">
+                        <button class="modal-btn modal-btn-cancel" id="cancelBtn">Volver atrás</button>
+                        <button class="modal-btn modal-btn-confirm" id="confirmBtn">Continuar sin extras</button>
+                    </div>
+                </div>
+            </div>
 
-    <hr>
-
-    <h2>Datos almacenados en la sesión</h2>
-    <pre><?php print_r($_SESSION['Reservas']); ?></pre>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/servicios/servicios.js"></script>
 </body>
 </html>
