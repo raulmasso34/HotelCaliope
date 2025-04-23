@@ -9,6 +9,12 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", require("./router"));
 
+app.use((req, res, next) => {
+    res.locals.user = req.session.user;
+    next();
+});
+
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);

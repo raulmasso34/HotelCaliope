@@ -28,11 +28,6 @@
                                 <i class="fa-solid fa-hotel"></i> Hotel
                                 <i class="fa-solid fa-chevron-right ms-auto"></i>
                             </a>
-                    
-
-
-
-                      
                             <div class="submenu">
                                 <a href="/hotel/informacion/estadistica/todoshoteles/menu-todo<%= user.id_hotel %>" class="submenu-item">
                                     <i class="fa-solid fa-chart-pie"></i> Estadísticas
@@ -47,7 +42,7 @@
                                 <i class="fa-solid fa-chevron-right ms-auto"></i>
                             </a>
                             <div class="submenu">
-                                <a href="/no" class="submenu-item">
+                                <a href="/estadisticas-cadena-hoteles" class="submenu-item">
                                     <i class="fa-solid fa-chart-pie"></i> Estadísticas
                                 </a>
                                 <a href="/historico/ofertas" class="submenu-item">
@@ -56,7 +51,9 @@
                             </div>
                         <% } %>
                     </div>
-
+                    <a class="menu-item" href="/clientes">
+                        <i class="fa-solid fa-earth-americas"></i> Clientes
+                    </a>
                   
                     <% if (user && user.role === 'Hotel') { %>
                         <a class="menu-item" href="/oferta/<%= user.id_hotel %>">
