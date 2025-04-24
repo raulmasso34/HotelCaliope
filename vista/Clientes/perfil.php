@@ -64,6 +64,13 @@ $db->closeConnection();
             <p><strong>Ciudad:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['Ciudad']); ?></span></p>
             <p><strong>Código Postal:</strong> <span class="profile-detail"><?php echo htmlspecialchars($profile['CodigoPostal']); ?></span></p>
         </div>
+        <div class="edit-perfil">
+            <a class="btn-edit" id="btn-edit-profile" href="editPerfil.php">
+                <span class="btn-icon">✏️</span>
+                <span class="btn-text">Editar Perfil</span>
+            </a>
+            
+        </div>
 
         <div class="reservas-info">
             <h2>Reservas:</h2>
@@ -124,6 +131,9 @@ $db->closeConnection();
                 <i class="bi bi-dash"></i>
             </button>
         </div>
+                
+
+       
     </div>
 
     <!-- Scripts -->

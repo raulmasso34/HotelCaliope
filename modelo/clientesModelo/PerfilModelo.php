@@ -66,6 +66,26 @@ class PerfilModel {
         return null;  // Si hubo un error con la consulta
     }
     
+    public function getClientById($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM Clients WHERE Id_Cliente = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
+    public function updateClient($id, $nombre, $password) {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = $this->conn->prepare("UPDATE Clients SET Usuari = ?, Password = ? WHERE Id_Cliente = ?");
+        $stmt->bind_param("ssi", $nombre, $hashedPassword, $id);
+        return $stmt->execute();
+    }
+
+
 
 }
+    
+   
+
+
 ?>

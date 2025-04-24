@@ -493,6 +493,56 @@ body {
     background: var(--white);
     box-shadow: 0 3px 10px rgba(201, 166, 107, 0.1);
 }
+/* ---------------------------- REGISTRO (Complementos) ---------------------------- */
+/* Asegurar consistencia en todos los tipos de input */
+input[type="email"] {
+    padding: 1rem 1rem 1rem 3rem;
+    border: none;
+    border-bottom: 2px solid var(--light-blue);
+    font-size: 1rem;
+    transition: var(--transition-smooth);
+    background: transparent;
+    width: 100%;
+}
+
+/* Estilo específico para el icono de correo */
+.fa-envelope {
+    color: var(--gold);
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    z-index: 2;
+}
+
+/* Validación visual para email */
+input[type="email"]:valid {
+    border-color: var(--gold);
+}
+
+input[type="email"]:invalid:not(:placeholder-shown) {
+    border-color: #ff4444;
+}
+
+input[type="email"]:invalid:not(:placeholder-shown) + .input-underline {
+    background: #ff4444;
+    width: 100%;
+}
+
+/* Ajuste de posición para iconos específicos */
+.fa-id-card {
+    font-size: 1.1rem !important;
+    left: 16px !important;
+}
+
+.fa-city {
+    left: 16px !important;
+}
+
+.fa-map-marker-alt {
+    font-size: 1.1rem !important;
+}
 
 /* CAPTCHA */
 .signup-captcha {
@@ -678,6 +728,52 @@ body {
     transition: var(--transition-smooth);
     margin-bottom: 1rem;
 }
+/* Contenedor principal */
+.edit-perfil {
+    max-width: 300px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+/* Estilo base del botón */
+.btn-edit {
+    background: linear-gradient(135deg, #4a90e2, #6c5ce7); /* Degradado azul/morado */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px; /* Bordes redondeados */
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre ícono y texto */
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Efecto hover */
+.btn-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #6c5ce7, #4a90e2); /* Invierte el degradado */
+}
+
+/* Efecto al hacer clic */
+.btn-edit:active {
+    transform: translateY(0);
+}
+
+/* Estilo del ícono */
+.btn-icon {
+    font-size: 18px;
+}
+
+/* Estilo del texto */
+.btn-text {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
 .btn-reserva:hover {
     background: var(--gold);
@@ -710,3 +806,6 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+
+/*----------------------------------------EDITAR PERFIL------------------------------*/
