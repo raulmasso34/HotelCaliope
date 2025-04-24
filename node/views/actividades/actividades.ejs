@@ -34,21 +34,14 @@
                             <i class="fa-solid fa-chevron-right ms-auto"></i>
                         </a>
                           
-                          <div class="submenu">
-                              <a href="/hotel/informacion/estadistica/todoshoteles/menu-todo<%= user.id_hotel %>" class="submenu-item">
-                                  <i class="fa-solid fa-chart-pie"></i> Estadísticas
-                              </a>
-                              <a href="/historico/ofertas/<%= user.id_hotel %>" class="submenu-item">
-                                  <i class="fa-solid fa-clock-rotate-left"></i> Histórico
-                              </a>
-                          </div>
+                          
                       <% } else if (user && user.role === 'General') { %>
                           <a class="menu-item" href="/hoteles">
                               <i class="fa-solid fa-hotel"></i> Hoteles
                               <i class="fa-solid fa-chevron-right ms-auto"></i>
                           </a>
                           <div class="submenu">
-                              <a href="" class="submenu-item">
+                              <a href="/estadisticas-cadena-hoteles" class="submenu-item">
                                   <i class="fa-solid fa-chart-pie"></i> Estadísticas
                               </a>
                               <a href="/historico/ofertas" class="submenu-item">
