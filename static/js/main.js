@@ -248,11 +248,101 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-//SCROLL DE REVIEWS
 
-window.addEventListener('scroll', function() {
-    const scrollPosition = window.pageYOffset;
-    const parallaxElement = document.querySelector('.opiniones::before');
-    // Ajusta el 0.5 para cambiar la velocidad del parallax
-    parallaxElement.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+
+//OPINIONES
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Establecer el primer testimonio como activo al inicio
+    const allTestimonials = document.querySelectorAll('.testimonial');
+    if (allTestimonials.length > 0) {
+      allTestimonials[0].classList.add('active');
+    }
+    
+    const prevButton = document.querySelector('.carousel-arrow.prev');
+    const nextButton = document.querySelector('.carousel-arrow.next');
+    const dots = document.querySelectorAll('.nav-dot');
+    
+    let currentIndex = 0;
+    const totalTestimonials = allTestimonials.length;
+    
+    // Función para mostrar un testimonio específico
+    function showTestimonial(index) {
+      // Ocultar todos los testimonios
+      allTestimonials.forEach(testimonial => {
+        testimonial.classList.remove('active');
+      });
+      
+      // Mostrar el testimonio actual
+      allTestimonials[index].classList.add('active');
+      
+      // Actualizar puntos de navegación
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    }
+    
+    // Evento para el botón anterior
+    if (prevButton) {
+      prevButton.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + totalTestimonials) % totalTestimonials;
+        showTestimonial(currentIndex);
+      });
+    }
+    
+    // Evento para el botón siguiente
+    if (nextButton) {
+      nextButton.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % totalTestimonials;
+        showTestimonial(currentIndex);
+      });
+    }
+    
+    // Evento para los puntos de navegación
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        currentIndex = index;
+        showTestimonial(currentIndex);
+      });
+    });
+    
+    // Autoplay (opcional)
+    let autoplayInterval = setInterval(() => {
+      currentIndex = (currentIndex + 1) % totalTestimonials;
+      showTestimonial(currentIndex);
+    }, 5000);
+    
+    // Pausar autoplay al hover
+    const carousel = document.querySelector('.testimonials-carousel');
+    if (carousel) {
+      carousel.addEventListener('mouseenter', () => {
+        clearInterval(autoplayInterval);
+      });
+      
+      carousel.addEventListener('mouseleave', () => {
+        autoplayInterval = setInterval(() => {
+          currentIndex = (currentIndex + 1) % totalTestimonials;
+          showTestimonial(currentIndex);
+        }, 5000);
+      });
+    }
+    
+    // Efecto parallax al hacer scroll
+    const testimonialSection = document.querySelector('.testimonials-section');
+    
+    window.addEventListener('scroll', () => {
+      if (!testimonialSection) return;
+      
+      const scrollPosition = window.pageYOffset;
+      const sectionTop = testimonialSection.offsetTop;
+      const sectionHeight = testimonialSection.offsetHeight;
+      
+      // Verificar si la sección está visible
+      if (scrollPosition + window.innerHeight > sectionTop && 
+          scrollPosition < sectionTop + sectionHeight) {
+        // Calcular posición del parallax
+        const yPos = (scrollPosition - sectionTop) * 0.3;
+        document.documentElement.style.setProperty('--parallax-y', `${yPos}px`);
+      }
+    });
   });

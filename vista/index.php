@@ -70,7 +70,26 @@ foreach ($habitaciones as $habitacion) {
 
 // Asegúrate de que esta ruta sea correcta respecto a la ubicación de este archivo PHP
 $baseWebPath = '../static/img/habitaciones/';
-$baseServerPath = __DIR__ . '/../static/img/habitaciones'; // Ruta absoluta para verificación // Ruta base para las imágenes de las habitaciones
+$baseServerPath = __DIR__ . '/../static/img/habitaciones'; 
+
+require_once __DIR__ . '/../controller/hotel/hotelController.php';
+$database = new Database();
+$conn = $database->getConnection();
+$controller = new HotelController($conn);
+
+// Obtener todos los hoteles (aquí usas $habitaciones como variable)
+$habitaciones = $controller->obtenerHoteles();
+
+// Verificar si hay datos y que sea un array
+if(is_array($habitaciones) && !empty($habitaciones)) {
+    // Mezclar y limitar (usa la misma variable $habitaciones)
+    shuffle($habitaciones);
+    $hotelesMostrar = array_slice($habitaciones, 0, 3);
+} else {
+    // Manejar el caso cuando no hay hoteles
+    $hotelesMostrar = [];
+    error_log("No se encontraron hoteles o hubo un error en la consulta");
+}
 ?>
 
 
@@ -269,60 +288,34 @@ $baseServerPath = __DIR__ . '/../static/img/habitaciones'; // Ruta absoluta para
   
 
     <!-------------------------------HOTLES------------------------->
-
     <section class="hoteles-nu">
-        <div class="hoteles-txt">
-            <h1>Nuestros hoteles en...</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat sequi nisi repudiandae atque? Cupiditate ipsum natus optio ab quasi ex?</p>
-        </div>
-        <div class="hoteles-box">
-            <!-- Hotel 1 -->
-            <div class="hoteles-nu-gen">
-                <div class="sub-hoteles-nu">
-                    <img class="sub-img" src="../static/img/california/california.jpg" alt="">
-                </div>
-                <div class="sub-hoteles-nu">
-                    <h1>Florida</h1>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi blanditiis odio eaque beatae quod...</p>
-                    <div class="hoteles-boton">
-                        <button class="ver-mas-btn" data-hotel="florida">VER MÁS</button>
-                        <button>RESERVAR</button>
-                    </div>
-                </div>
-            </div>
+    <div class="hoteles-txt">
+        <h1>Nuestros hoteles en...</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat sequi nisi repudiandae atque?</p>
+    </div>
+    <div class="hoteles-box">
+        <?php foreach($hotelesMostrar as $hotel): 
+            $imagenNombre = $hotel['imagen_url'] ?? 'default.jpg';
+            $imagenPath = '../static/img/hoteles/' . $imagenNombre;
+        ?>
 
-            <!-- Hotel 2 -->
-            <div class="hoteles-nu-gen">
-                <div class="sub-hoteles-nu">
-                    <img class="sub-img" src="../static/img/california/california.jpg" alt="">
-                </div>
-                <div class="sub-hoteles-nu">
-                    <h1>California</h1>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi blanditiis odio eaque beatae quod...</p>
-                    <div class="hoteles-boton">
-                        <button class="ver-mas-btn" data-hotel="california">VER MÁS</button>
-                        <button>RESERVAR</button>
-                    </div>
-                </div>
+        <div class="hoteles-nu-gen">
+            <div class="sub-hoteles-nu">
+            <img class="sub-img" src="<?= $imagenPath ?>" alt="<?= htmlspecialchars($hotel['nombre_hotel']) ?>">
+            
             </div>
-
-            <!-- Hotel 3 -->
-            <div class="hoteles-nu-gen">
-                <div class="sub-hoteles-nu">
-                    <img class="sub-img" src="../static/img/california/california.jpg" alt="">
-                </div>
-                <div class="sub-hoteles-nu">
-                    <h1>New York</h1>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi blanditiis odio eaque beatae quod...</p>
-                    <div class="hoteles-boton">
-                        <button class="ver-mas-btn" data-hotel="new-york">VER MÁS</button>
-                        <button>RESERVAR</button>
-                    </div>
+            <div class="sub-hoteles-nu">
+                <h1><?= htmlspecialchars($hotel['nombre_hotel']) ?></h1>
+                <p><?= htmlspecialchars(substr($hotel['descripcion'], 0, 100)) ?>...</p>
+                <div class="hoteles-boton">
+                    <button class="ver-mas-btn" data-hotel="<?= strtolower(str_replace(' ', '-', $hotel['nombre_hotel'])) ?>">VER MÁS</button>
+                    <button>RESERVAR</button>
                 </div>
             </div>
         </div>
-    </section>
-
+        <?php endforeach; ?>
+    </div>
+</section>
     <!-- Modal -->
  <!-- Modal -->
     <div id="modal" class="modal">
@@ -446,35 +439,61 @@ $baseServerPath = __DIR__ . '/../static/img/habitaciones'; // Ruta absoluta para
 </div>
 </section>
 
-    <!--------------------------------OPINIONES------------------------>
-
-    <section class="opiniones">
-        <div class="opiniones-box">
-            <h1>REVIEWS</h1>
-            <div class="opiniones-carousel">
-                <!-- Cada opinión -->
-                <div class="opinion active">
-                    <p>"Excelente servicio, volveré sin dudarlo. ¡Gracias, Hotel Calíope!"</p>
-                    <span>- Juan Pérez</span>
+    <!-- CARRUSEL DE TESTIMONIOS -->
+     <!-- CARRUSEL DE TESTIMONIOS -->
+     <section class="testimonials-section">
+        <div class="section-header">
+            <h2>Experiencias de Nuestros Huéspedes</h2>
+            <p>Descubre lo que dicen quienes han vivido la experiencia Calíope</p>
+        </div>
+        
+        <div class="carousel-container">
+            <button class="carousel-arrow prev">‹</button>
+            
+            <div class="testimonials-carousel">
+                <!-- Primer testimonio (activo por defecto) -->
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">Desde el momento en que entramos, nos sentimos como en casa. La atención al detalle y el servicio personalizado superaron todas nuestras expectativas. ¡Sin duda volveremos!</p>
+                        <div class="client-info">
+                            <div class="client-name">Juan Pérez</div>
+                            <div class="client-role">Huésped frecuente</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="opinion">
-                    <p>"Un lugar increíble, perfecto para desconectar y relajarse."</p>
-                    <span>- María López</span>
+                
+                <!-- Segundo testimonio -->
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">El spa es simplemente celestial, y las habitaciones tienen una elegancia atemporal con todas las comodidades modernas. Perfecto para nuestro aniversario.</p>
+                        <div class="client-info">
+                            <div class="client-name">María López</div>
+                            <div class="client-role">Experiencia Premium</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="opinion">
-                    <p>"Atención de primera clase, instalaciones impecables."</p>
-                    <span>- Luis Rodríguez</span>
+                
+                <!-- Tercer testimonio -->
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">Como viajero frecuente, puedo decir que este hotel destaca por su excelencia. El personal anticipa cada necesidad y las instalaciones son impecables.</p>
+                        <div class="client-info">
+                            <div class="client-name">Luis Rodríguez</div>
+                            <div class="client-role">Viajero Ejecutivo</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- Botones de control -->
-            <div class="carousel-dots">
-                <button class="dot active" data-index="0"></button>
-                <button class="dot" data-index="1"></button>
-                <button class="dot" data-index="2"></button>
-            </div>
+            
+            <button class="carousel-arrow next">›</button>
+        </div>
+        
+        <div class="carousel-nav">
+            <button class="nav-dot active" data-index="0"></button>
+            <button class="nav-dot" data-index="1"></button>
+            <button class="nav-dot" data-index="2"></button>
         </div>
     </section>
-    
 
 
     <!-------------------------------DESCUBRIR------------------------->
