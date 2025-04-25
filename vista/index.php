@@ -82,14 +82,13 @@ $habitaciones = $controller->obtenerHoteles();
 
 // Verificar si hay datos y que sea un array
 if(is_array($habitaciones) && !empty($habitaciones)) {
-    // Mezclar y limitar (usa la misma variable $habitaciones)
-    shuffle($habitaciones);
+    // Mostrar los primeros 3, sin mezclar
     $hotelesMostrar = array_slice($habitaciones, 0, 3);
 } else {
-    // Manejar el caso cuando no hay hoteles
     $hotelesMostrar = [];
     error_log("No se encontraron hoteles o hubo un error en la consulta");
 }
+
 ?>
 
 
@@ -294,26 +293,44 @@ if(is_array($habitaciones) && !empty($habitaciones)) {
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat sequi nisi repudiandae atque?</p>
     </div>
     <div class="hoteles-box">
-        <?php foreach($hotelesMostrar as $hotel): 
-            $imagenNombre = $hotel['imagen_url'] ?? 'default.jpg';
-            $imagenPath = '../static/img/hoteles/' . $imagenNombre;
-        ?>
+    <?php foreach($hotelesMostrar as $hotel): 
+        $basePath = "../static/img/hoteles/";
+        
+        // Convertir nombre del hotel a formato para archivo
+        $nombreHotel = strtolower(str_replace(' ', '_', $hotel['nombre_hotel']));
+        
+        // Lista de posibles imágenes por hotel
+        $imagenes = [
+            "{$basePath}{$nombreHotel}.jpg",
+            "{$basePath}{$nombreHotel}.png",
+            "{$basePath}default.jpg"
+        ];
 
-        <div class="hoteles-nu-gen">
-            <div class="sub-hoteles-nu">
-            <img class="sub-img" src="<?= $imagenPath ?>" alt="<?= htmlspecialchars($hotel['nombre_hotel']) ?>">
-            
-            </div>
-            <div class="sub-hoteles-nu">
-                <h1><?= htmlspecialchars($hotel['nombre_hotel']) ?></h1>
-                <p><?= htmlspecialchars(substr($hotel['descripcion'], 0, 100)) ?>...</p>
-                <div class="hoteles-boton">
-                    <button class="ver-mas-btn" data-hotel="<?= strtolower(str_replace(' ', '-', $hotel['nombre_hotel'])) ?>">VER MÁS</button>
-                    <button>RESERVAR</button>
-                </div>
-            </div>
+        // Buscar la primera imagen que exista físicamente
+        foreach ($imagenes as $img) {
+            if (file_exists($img)) {
+                $imagenPath = $img;
+                break;
+            }
+        }
+        
+    ?>
+     
+<div class="hoteles-nu-gen">
+    <div class="sub-hoteles-nu">
+        <img class="sub-img" src="<?= $imagenPath ?>" alt="<?= htmlspecialchars($hotel['nombre_hotel']) ?>">
+    </div>
+    <div class="sub-hoteles-nu">
+        <h1><?= htmlspecialchars($hotel['nombre_hotel']) ?></h1>
+        <p><?= htmlspecialchars(substr($hotel['descripcion'], 0, 100)) ?>...</p>
+        <div class="hoteles-boton">
+            <button class="ver-mas-btn" data-hotel="<?= strtolower(str_replace(' ', '-', $hotel['nombre_hotel'])) ?>">VER MÁS</button>
+            <button>RESERVAR</button>
         </div>
-        <?php endforeach; ?>
+    </div>
+</div>
+<?php endforeach; ?>
+
     </div>
 </section>
     <!-- Modal -->
