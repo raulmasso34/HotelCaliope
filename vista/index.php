@@ -40,7 +40,39 @@ if ($controller !== null) {
     // Verificar si se han obtenido los países y hacer algo con ellos
     
 } 
+
+require_once __DIR__ . '/../controller/habitacion/habitacionController.php';
+
+$database = new Database();
+$conn = $database->getConnection();
+$controller = new HabitacionController($conn);
+
+$habitaciones = $controller->obtenerHabitaciones();
+if (!is_array($habitaciones)) {
+    exit("Error al cargar las habitaciones");
+}
+
+// Agrupar habitaciones por continente
+$habitaciones_por_continente = [];
+foreach ($habitaciones as $habitacion) {
+    $continente = $habitacion['Continente']; // Suponiendo que la columna Continente tiene el nombre del continente
+    $tipo = $habitacion['Tipo'];
+    
+    if (!isset($habitaciones_por_continente[$continente])) {
+        $habitaciones_por_continente[$continente] = [];
+    }
+
+    // Aseguramos que no haya habitaciones repetidas por tipo dentro del continente
+    if (!isset($habitaciones_por_continente[$continente][$tipo])) {
+        $habitaciones_por_continente[$continente][$tipo] = $habitacion; // Guardamos solo una habitación de ese tipo
+    }
+}
+
+// Asegúrate de que esta ruta sea correcta respecto a la ubicación de este archivo PHP
+$baseWebPath = '../static/img/habitaciones/';
+$baseServerPath = __DIR__ . '/../static/img/habitaciones'; // Ruta absoluta para verificación // Ruta base para las imágenes de las habitaciones
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -82,7 +114,7 @@ if ($controller !== null) {
 
             <div class="main-up-right">
                 <div class="links">
-                <a href="../../vista/index.php">Home</a>
+                <a href="#">Home</a>
                     <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
                     
                     <div class="dropdown">
@@ -356,78 +388,63 @@ if ($controller !== null) {
         </div>
     </section>
 
-        <!------------------------PROMOCIONES------------------------>
+       <!------------------------HABITACIONES DESTACADAS------------------------>
+<section class="habitaciones">
+    <div class="habitaciones-header">
+        <h6>HOTEL CALIOPE</h6>
+        <h2>HABITACIONES DESTACADAS</h2>
+        <p>Descubre nuestras exclusivas habitaciones diseñadas para ofrecerte el máximo confort y una experiencia memorable.</p>
+    </div>
 
-        <section class="promociones">
-            <div class="promo-header">
-                <h6>HOTEL CALIOPE</h6>
-                <h2>HABITACIONES DESTACADAS</h2>
-                <p>¡Vive la experiencia Calíope con nuestras promociones exclusivas! Descuentos, beneficios y escapadas únicas te esperan.</p>
-            </div>
-
-            <div class="promo-container">
-                <button class="promo-btn prev">←</button>
-
-                <div class="promo-slider" id="promoSlider">
-                <div class="promo-card">
-                    <img src="../static/img/florida/florida2.jpg" alt="Oferta 1">
-                    <div class="promo-info">
-                    <h4>Oferta Romántica</h4>
-                    <h6>23€/Noche</h6>
-                    <p>Escápate con tu persona favorita y disfruta de un ambiente exclusivo con cava y desayuno incluido.</p>
+    <div class="habitaciones-container">
+    <button class="habitaciones-btn prev">←</button>
+    <div class="habitaciones-slider" id="habitacionesSlider">
+        <?php
+        $contador = 0;
+        $max_habitaciones = 6;
+        $tipos_mostrados = []; // Array para controlar tipos únicos
+        
+        foreach ($habitaciones_por_continente as $continente => $tipos_habitacion) {
+            foreach ($tipos_habitacion as $tipo => $habitacion) {
+                // Verificar si el tipo ya fue mostrado y no superar el máximo
+                if ($contador >= $max_habitaciones || in_array($tipo, $tipos_mostrados)) {
+                    continue; // Saltar esta iteración
+                }
+                
+                // Registrar el tipo como mostrado
+                $tipos_mostrados[] = $tipo;
+                
+                // Construir la ruta de la imagen (versión mejorada)
+                $imagen_path = $baseWebPath . '/' . strtolower(str_replace(' ', ' ', $tipo)) . '1.jpg';
+                $imagen_default = $baseWebPath . '/default.jpg'; // Imagen por defecto si no existe
+                $imagen_final = file_exists(__DIR__ . '/' . $imagen_path) ? $imagen_path : $imagen_default;
+                
+                // Verificar existencia con ruta absoluta
+     
+                ?>
+                <div class="habitacion-card">
+                    <img src="<?= htmlspecialchars($imagen_final) ?>" 
+                         alt="<?= htmlspecialchars($tipo) ?>"
+                         onerror="this.src='<?= htmlspecialchars($imagen_default) ?>'">
+                    <div class="habitacion-info">
+                        <h4><?= htmlspecialchars($tipo) ?></h4>
+                        <h6>Desde <?= htmlspecialchars($habitacion['Precio']) ?>€/Noche</h6>
+                        <p><?= htmlspecialchars($habitacion['Descripcion']) ?></p>
                     </div>
                 </div>
-
-                <div class="promo-card">
-                    <img src="../static/img/florida/florida2.jpg" alt="Oferta 2">
-                    <div class="promo-info">
-                    <h4>Relax Total</h4>
-                    <h6>53€/Noche</h6>
-                    <p>Incluye acceso al spa, masaje relajante y cena para dos personas en nuestro restaurante panorámico.</p>
-                    </div>
-                </div>
-
-                <div class="promo-card">
-                    <img src="../static/img/florida/florida2.jpg" alt="Oferta 3">
-                    <div class="promo-info">
-                    <h4>Escapada Familiar</h4>
-                    <h6>39€/Noche</h6>
-                    <p>Ideal para familias: habitaciones conectadas, actividades infantiles y cena gratuita para menores de 12.</p>
-                    </div>
-                </div>
-                <div class="promo-card">
-                    <img src="../static/img/florida/florida2.jpg" alt="Oferta 2">
-                    <div class="promo-info">
-                    <h4>Relax Total</h4>
-                    <h6>53€/Noche</h6>
-                    <p>Incluye acceso al spa, masaje relajante y cena para dos personas en nuestro restaurante panorámico.</p>
-                    </div>
-                </div>
-                <div class="promo-card">
-                    <img src="../static/img/florida/florida2.jpg" alt="Oferta 2">
-                    <div class="promo-info">
-                    <h4>Relax Total</h4>
-                    <h6>53€/Noche</h6>
-                    <p>Incluye acceso al spa, masaje relajante y cena para dos personas en nuestro restaurante panorámico.</p>
-                    </div>
-                </div>
-                <div class="promo-card">
-                    <img src="../static/img/florida/florida2.jpg" alt="Oferta 2">
-                    <div class="promo-info">
-                    <h4>Relax Total</h4>
-                    <h6>53€/Noche</h6>
-                    <p>Incluye acceso al spa, masaje relajante y cena para dos personas en nuestro restaurante panorámico.</p>
-                    </div>
-                </div>
-
-                <!-- Puedes seguir añadiendo más promo-card aquí -->
-                </div>
-
-                <button class="promo-btn next">→</button>
-            </div>
-        </section>
-
-
+                <?php
+                $contador++;
+            }
+            
+            if ($contador >= $max_habitaciones) {
+                break;
+            }
+        }
+        ?>
+    </div>
+    <button class="habitaciones-btn next">→</button>
+</div>
+</section>
 
     <!--------------------------------OPINIONES------------------------>
 

@@ -124,6 +124,60 @@ document.addEventListener('DOMContentLoaded', () => {
     observer.observe(mainSection);
 });
 
+// SLIDER DE HABITACIONES
+
+document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.getElementById('habitacionesSlider');
+    const prevBtn = document.querySelector('.habitaciones-btn.prev');
+    const nextBtn = document.querySelector('.habitaciones-btn.next');
+    const cards = document.querySelectorAll('.habitacion-card');
+    let currentIndex = 0;
+    const cardWidth = cards[0].offsetWidth + 30; // Ancho de la tarjeta + gap
+  
+    // Función para mover el slider
+    function moveSlider(direction) {
+      const cardsVisible = Math.floor(slider.offsetWidth / cardWidth);
+      const maxIndex = cards.length - cardsVisible;
+      
+      if (direction === 'next') {
+        currentIndex = Math.min(currentIndex + 1, maxIndex);
+      } else {
+        currentIndex = Math.max(currentIndex - 1, 0);
+      }
+      
+      slider.scrollTo({
+        left: currentIndex * cardWidth,
+        behavior: 'smooth'
+      });
+      
+      // Actualizar visibilidad de botones
+      prevBtn.style.display = currentIndex === 0 ? 'none' : 'block';
+      nextBtn.style.display = currentIndex >= maxIndex ? 'none' : 'block';
+    }
+  
+    // Event listeners para los botones
+    prevBtn.addEventListener('click', () => moveSlider('prev'));
+    nextBtn.addEventListener('click', () => moveSlider('next'));
+  
+    // Ocultar/mostrar botones según la posición inicial
+    function updateButtons() {
+      const cardsVisible = Math.floor(slider.offsetWidth / cardWidth);
+      const maxIndex = cards.length - cardsVisible;
+      
+      prevBtn.style.display = currentIndex === 0 ? 'none' : 'block';
+      nextBtn.style.display = currentIndex >= maxIndex ? 'none' : 'block';
+    }
+  
+    // Actualizar en resize
+    window.addEventListener('resize', function() {
+      cardWidth = cards[0].offsetWidth + 30;
+      updateButtons();
+    });
+  
+    // Inicializar
+    updateButtons();
+  });
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const opinions = document.querySelectorAll('.opinion'); // Todas las opiniones
@@ -193,3 +247,12 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(benSub);
     });
 });
+
+//SCROLL DE REVIEWS
+
+window.addEventListener('scroll', function() {
+    const scrollPosition = window.pageYOffset;
+    const parallaxElement = document.querySelector('.opiniones::before');
+    // Ajusta el 0.5 para cambiar la velocidad del parallax
+    parallaxElement.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+  });

@@ -49,7 +49,7 @@ if (isset($result['success'])) {
 } else {
     $_SESSION['message'] = $result['error'];
     $_SESSION['message_type'] = 'error';
-    header('Location: edit_profile.php'); // Volver al formulario si hubo error
+    header('Location: editPerfil.php'); // Volver al formulario si hubo error
 }
 exit();
 ?>

@@ -13,7 +13,7 @@ class EditModel {
 
     // Obtener información del cliente por ID
     public function getClientById($clientId) {
-        $query = "SELECT Id_Client, Usuari, Password FROM Clients WHERE Id_Client = ?";
+        $query = "SELECT Id_Client, Usuari, Password, CorreuElectronic FROM Clients WHERE Id_Client = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("i", $clientId);
         $stmt->execute();
