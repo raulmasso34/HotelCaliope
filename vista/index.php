@@ -69,9 +69,6 @@ foreach ($habitaciones as $habitacion) {
 }
 
 // Asegúrate de que esta ruta sea correcta respecto a la ubicación de este archivo PHP
-$baseWebPath = '../static/img/habitaciones/';
-$baseServerPath = __DIR__ . '/../static/img/habitaciones'; 
-
 require_once __DIR__ . '/../controller/hotel/hotelController.php';
 $database = new Database();
 $conn = $database->getConnection();
@@ -414,6 +411,10 @@ if(is_array($habitaciones) && !empty($habitaciones)) {
         $max_habitaciones = 6;
         $tipos_mostrados = []; // Array para controlar tipos únicos
         
+        // Define la ruta base y la imagen por defecto
+        $baseWebPath = "../static/img/habitaciones";  // Ajusta esta ruta a tu entorno
+        $imagen_default = $baseWebPath . '/default.jpg';  // Imagen por defecto si no existe
+
         foreach ($habitaciones_por_continente as $continente => $tipos_habitacion) {
             foreach ($tipos_habitacion as $tipo => $habitacion) {
                 // Verificar si el tipo ya fue mostrado y no superar el máximo
@@ -425,17 +426,21 @@ if(is_array($habitaciones) && !empty($habitaciones)) {
                 $tipos_mostrados[] = $tipo;
                 
                 // Construir la ruta de la imagen (versión mejorada)
-                $imagen_path = $baseWebPath . '/' . strtolower(str_replace(' ', ' ', $tipo)) . '1.jpg';
-                $imagen_default = $baseWebPath . '/default.jpg'; // Imagen por defecto si no existe
-                $imagen_final = file_exists(__DIR__ . '/' . $imagen_path) ? $imagen_path : $imagen_default;
+                $imagen_path = $baseWebPath . '/' . strtolower(str_replace(' ', '-', $tipo)) . '1.jpg';
                 
-                // Verificar existencia con ruta absoluta
-     
+                // Verificar si el archivo de la imagen existe
+                if (file_exists(__DIR__ . '/' . $imagen_path)) {
+                    $imagen_final = $imagen_path; // Imagen existe
+                } else {
+                    $imagen_final = $imagen_default; // Usar imagen por defecto
+                }
+                
+                
                 ?>
                 <div class="habitacion-card">
                     <img src="<?= htmlspecialchars($imagen_final) ?>" 
-                         alt="<?= htmlspecialchars($tipo) ?>"
-                         onerror="this.src='<?= htmlspecialchars($imagen_default) ?>'">
+                        alt="<?= htmlspecialchars($tipo) ?>"
+                        onerror="this.src='<?= htmlspecialchars($imagen_default) ?>'">
                     <div class="habitacion-info">
                         <h4><?= htmlspecialchars($tipo) ?></h4>
                         <h6>Desde <?= htmlspecialchars($habitacion['Precio']) ?>€/Noche</h6>
@@ -450,6 +455,7 @@ if(is_array($habitaciones) && !empty($habitaciones)) {
                 break;
             }
         }
+
         ?>
     </div>
     <button class="habitaciones-btn next">→</button>
