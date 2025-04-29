@@ -358,167 +358,74 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(23, 38, 59, 0.85); /* semi-transparent secondary-blue */
-    transition: var(--transition-smooth);
+    background-color: rgba(23, 38, 59, 0.85);
 }
 
 .modal-content {
     position: relative;
-    background-color: var(--white);
+    background-color: #ffffff; /* Fondo blanco sólido para mejor contraste */
     margin: 5% auto;
     width: 80%;
     max-width: 1000px;
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
     animation: modalFadeIn 0.4s;
+    color: #333; /* Color de texto oscuro por defecto */
 }
 
-@keyframes modalFadeIn {
-    from {opacity: 0; transform: translateY(-20px);}
-    to {opacity: 1; transform: translateY(0);}
-}
-
-/* Modal Header */
-.modal-header {
-    background-color: var(--primary-blue);
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 3px solid var(--gold);
-}
-
-.modal-header h2 {
-    color: var(--white);
-    margin: 0;
-    font-size: 1.5rem;
-}
-
-.close-modal {
-    color: var(--white);
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-}
-
-.close-modal:hover {
-    color: var(--gold);
-    transform: scale(1.1);
-}
-
-/* Modal Body */
+/* Asegurar que el texto sea legible */
 .modal-body {
     padding: 20px;
-    color: var(--text-dark);
+    color: #333; /* Color oscuro para mejor legibilidad */
+    line-height: 1.6; /* Mejor espaciado entre líneas */
 }
 
-.modal-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-@media (max-width: 768px) {
-    .modal-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Image Container */
+/* Contenedor de imagen ajustado */
 .modal-image-container {
-    position: relative;
+    height: 400px;
     overflow: hidden;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: 100%;
 }
 
-.modal-image {
+.modal-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: var(--transition-smooth);
 }
 
-.modal-image:hover {
-    transform: scale(1.03);
-}
-
-/* Room Information */
-.modal-info {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
+/* Estilos para el texto */
 .modal-info h2 {
-    color: var(--primary-blue);
-    margin: 0 0 10px 0;
+    color: #1a365d; /* Azul oscuro */
+    margin-bottom: 15px;
     font-size: 1.8rem;
-    border-bottom: 2px solid var(--gold);
-    padding-bottom: 8px;
-    width: 100%;
-}
-
-.location-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    color: var(--accent-blue);
-}
-
-.location-info p {
-    margin: 0;
-    font-size: 1rem;
-}
-
-.location-info i {
-    margin-right: 5px;
-    color: var(--gold);
 }
 
 .basic-info {
-    background-color: var(--light-blue);
+    background-color: #f0f4f8; /* Fondo gris claro */
     padding: 15px;
     border-radius: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .basic-info p {
-    margin: 8px 0;
-    font-size: 1.05rem;
+    margin: 10px 0;
+    color: #2d3748; /* Texto oscuro */
 }
 
-.basic-info p strong {
-    color: var(--primary-blue);
-}
-
-/* Price Display */
-.basic-info p:nth-child(2) strong {
-    color: var(--gold);
-}
-
-.additional-info {
-    padding: 10px 0;
-}
-
-.additional-info h3 {
-    color: var(--primary-blue);
-    margin: 0 0 10px 0;
-    font-size: 1.3rem;
-}
-
-/* Services List */
+/* Servicios visibles */
 .servicios-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    padding: 0;
+}
+
+.servicios-list li {
+    background-color: #edf2f7;
+    padding: 10px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
 }
 
 .servicios-list li {

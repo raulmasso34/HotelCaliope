@@ -222,14 +222,14 @@ $baseWebPath = '../../static/img/habitaciones'; // Sin "/tipo" al final
     </div>
     <!-- Modal (debe estar fuera de tu gallery-grid) -->
     <!-- Modal (fuera del gallery-grid) -->
-<div id="habitacionModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal">&times;</span>
-        <div class="modal-body">
-            <!-- Los datos se insertarán aquí dinámicamente -->
+        <div id="habitacionModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="modal-body">
+                    <!-- Los datos se insertarán aquí dinámicamente -->
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
     <footer class="footer">
         <div class="footer-content">
@@ -284,11 +284,14 @@ $baseWebPath = '../../static/img/habitaciones'; // Sin "/tipo" al final
     </footer>
     <script src="../../static/js/habitaciones/habitaciones.js"></script>
     <script>
-document.addEventListener('DOMContentLoaded', function() {
+   document.addEventListener('DOMContentLoaded', function() {
     // Configuración del modal
     const modal = document.getElementById('habitacionModal');
     const modalBody = document.querySelector('.modal-body');
     const closeBtn = document.querySelector('.close-modal');
+    
+    // Define la ruta base para las imágenes (ajusta según tu estructura)
+    const baseWebPath = 'assets/img/habitaciones'; // Cambia esto por tu ruta real
 
     // Cuando se hace clic en "Ver detalles"
     document.querySelectorAll('.view-more').forEach(button => {
@@ -296,7 +299,6 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             
             // Obtener los datos de los atributos data-*
-            const id = this.getAttribute('data-id');
             const tipo = this.getAttribute('data-tipo') || 'No especificado';
             const capacidad = this.getAttribute('data-capacidad') || 'No especificado';
             const precio = this.getAttribute('data-precio') || 'Consultar';
@@ -305,13 +307,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const direccion = this.getAttribute('data-direccion') || 'Dirección no disponible';
             const pais = this.getAttribute('data-pais') || 'País no especificado';
             const continente = this.getAttribute('data-continente') || 'Continente no especificado';
-            const imagen = this.getAttribute('data-imagen') || 'assets/img/habitaciones/default.jpg';
+            const imagen = this.getAttribute('data-imagen') || 'default.jpg';
             
-            // Crear el contenido del modal con todos los datos del modelo, sin botón de reserva
+            // Usa la imagen específica si está definida, sino construye la ruta
+            const imagenSrc = imagen.includes('/') ? imagen : `${baseWebPath}/`;
+            
             modalBody.innerHTML = `
                 <div class="modal-grid">
                     <div class="modal-image-container">
-                        <img src="${imagen}" alt="${tipo}" class="modal-image">
+                        <img class="modal-img" src="<?= $baseWebPath ?>/<?= htmlspecialchars($habitacion['Tipo']) ?>.jpg" 
+                            alt="Habitación tipo <?= htmlspecialchars($habitacion['Tipo']) ?>">
                     </div>
                     <div class="modal-info">
                         <h2>${tipo}</h2>
@@ -335,9 +340,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
             `;
-            
+
             // Mostrar el modal
             modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Deshabilita el scroll del fondo
         });
     });
 
@@ -352,9 +358,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Cerrar el modal
-    closeBtn.addEventListener('click', () => modal.style.display = 'none');
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) modal.style.display = 'none';
+    closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restaura el scroll
+    });
+    
+    window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
     });
 });
 </script>
