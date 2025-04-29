@@ -197,7 +197,21 @@ $baseWebPath = '../../static/img/habitaciones'; // Sin "/tipo" al final
                                     <p>Capacidad: <?= htmlspecialchars($habitacion['Capacidad']) ?> personas</p>
                                     <p>Precio: $<?= htmlspecialchars($habitacion['Precio']) ?></p>
                                     <p><?= htmlspecialchars($habitacion['Descripcion']) ?></p>
-                                    <a href="#" class="view-more">Ver detalles</a>
+                                    <a href="#" class="view-more" 
+                        data-id="<?= htmlspecialchars($habitacion['Id_Habitaciones']) ?>"
+                    
+                        data-tipo="<?= htmlspecialchars($habitacion['Tipo']) ?>" 
+                        data-capacidad="<?= htmlspecialchars($habitacion['Capacidad']) ?>" 
+                        data-precio="<?= htmlspecialchars($habitacion['Precio']) ?>" 
+                        data-descripcion="<?= htmlspecialchars($habitacion['Descripcion']) ?>"
+                        data-servicios="<?= htmlspecialchars($habitacion['Servicios_Adicionales']) ?>"
+                        data-hotel="<?= htmlspecialchars($habitacion['Hotel']) ?>"
+                        data-direccion="<?= htmlspecialchars($habitacion['Direccion']) ?>"
+                        data-pais="<?= htmlspecialchars($habitacion['Pais']) ?>"
+                        data-continente="<?= htmlspecialchars($habitacion['Continente']) ?>"
+                        data-imagen="assets/img/habitaciones/hab_<?= $habitacion['Id_Habitaciones'] ?>.jpg">
+                        Ver detalles
+                    </a>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -206,6 +220,16 @@ $baseWebPath = '../../static/img/habitaciones'; // Sin "/tipo" al final
             <?php endforeach; ?>
         </div>
     </div>
+    <!-- Modal (debe estar fuera de tu gallery-grid) -->
+    <!-- Modal (fuera del gallery-grid) -->
+<div id="habitacionModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-body">
+            <!-- Los datos se insertarán aquí dinámicamente -->
+        </div>
+    </div>
+</div>
 
     <footer class="footer">
         <div class="footer-content">
@@ -259,5 +283,80 @@ $baseWebPath = '../../static/img/habitaciones'; // Sin "/tipo" al final
         </div>
     </footer>
     <script src="../../static/js/habitaciones/habitaciones.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Configuración del modal
+    const modal = document.getElementById('habitacionModal');
+    const modalBody = document.querySelector('.modal-body');
+    const closeBtn = document.querySelector('.close-modal');
+
+    // Cuando se hace clic en "Ver detalles"
+    document.querySelectorAll('.view-more').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Obtener los datos de los atributos data-*
+            const id = this.getAttribute('data-id');
+            const tipo = this.getAttribute('data-tipo') || 'No especificado';
+            const capacidad = this.getAttribute('data-capacidad') || 'No especificado';
+            const precio = this.getAttribute('data-precio') || 'Consultar';
+            const descripcion = this.getAttribute('data-descripcion') || 'Descripción no disponible';
+            const servicios = this.getAttribute('data-servicios') || 'No disponible';
+            const direccion = this.getAttribute('data-direccion') || 'Dirección no disponible';
+            const pais = this.getAttribute('data-pais') || 'País no especificado';
+            const continente = this.getAttribute('data-continente') || 'Continente no especificado';
+            const imagen = this.getAttribute('data-imagen') || 'assets/img/habitaciones/default.jpg';
+            
+            // Crear el contenido del modal con todos los datos del modelo, sin botón de reserva
+            modalBody.innerHTML = `
+                <div class="modal-grid">
+                    <div class="modal-image-container">
+                        <img src="${imagen}" alt="${tipo}" class="modal-image">
+                    </div>
+                    <div class="modal-info">
+                        <h2>${tipo}</h2>
+                        
+                        <div class="location-info">
+                            <p><i class="fas fa-map-marker-alt"></i> ${direccion}, ${pais} (${continente})</p>
+                        </div>
+                        
+                        <div class="basic-info">
+                            <p><strong>Capacidad:</strong> ${capacidad} personas</p>
+                            <p><strong>Precio:</strong> $${precio} por noche</p>
+                            <p><strong>Descripción:</strong> ${descripcion}</p>
+                        </div>
+                        
+                        <div class="additional-info">
+                            <h3>Servicios Incluidos</h3>
+                            <ul class="servicios-list">
+                                ${formatearServicios(servicios)}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Mostrar el modal
+            modal.style.display = 'block';
+        });
+    });
+
+    // Función para formatear los servicios como lista HTML
+    function formatearServicios(serviciosStr) {
+        if (!serviciosStr || serviciosStr === 'No disponible') {
+            return '<li>Información de servicios no disponible</li>';
+        }
+        
+        const servicios = serviciosStr.split(', ');
+        return servicios.map(servicio => `<li><i class="fas fa-check"></i> ${servicio}</li>`).join('');
+    }
+
+    // Cerrar el modal
+    closeBtn.addEventListener('click', () => modal.style.display = 'none');
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) modal.style.display = 'none';
+    });
+});
+</script>
 </body>
 </html>

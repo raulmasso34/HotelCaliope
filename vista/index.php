@@ -3,6 +3,7 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
 // Limpiar las variables de sesión si el usuario ha vuelto al formulario
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['reset']) && $_GET['reset'] == 'true') {
     unset($_SESSION['location']);
@@ -156,22 +157,29 @@ if(is_array($habitaciones) && !empty($habitaciones)) {
                     
                     <!-- Contenedor del perfil -->
                     <div class="dropdown-perfil">
-                        <a class="icon-perfil" href="javascript:void(0);">
-                        <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
-                        
+    <a class="icon-perfil" href="javascript:void(0);">
+        <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
+    </a>
+                <div class="dropdown-perfil-content">
+                    <?php if (!isset($_SESSION['usuario_id'])): ?>
+                        <!-- Mostrar solo si el usuario no está logueado -->
+                        <a href="../vista/Clientes/login.php">
+                            <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
                         </a>
-                        <div class="dropdown-perfil-content">
-                            <a href="../vista/Clientes/login.php">
-                                <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
-                            </a>
-                            <a href="../vista/Clientes/perfil.php">
-                                <i class="bi bi-person"></i> Perfil
-                            </a>
-                            <a href="../controller/clients/LoginController.php?action=logout" style="color: red;"> 
-                                <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
-                            </a>
-                        </div>
-                    </div>
+                    <?php endif; ?>
+
+                    <a href="../vista/Clientes/perfil.php">
+                        <i class="bi bi-person"></i> Perfil
+                    </a>
+
+                    <?php if (isset($_SESSION['usuario_id'])): ?>
+                        <!-- Mostrar solo si el usuario está logueado -->
+                        <a href="../controller/clients/LoginController.php?action=logout" style="color: red;">
+                            <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
+                        </a>
+                    <?php endif; ?>
+                </div>
+            </div>
                 </div>
             </div>
 
@@ -528,7 +536,7 @@ if(is_array($habitaciones) && !empty($habitaciones)) {
             <!-- Servicio 1 -->
             <div class="descubrir-row">
                 <div class="descubrir-img">
-                    <img src="../static/img/florida/florida3.jpg" alt="Imagen servicio 1">
+                    <img src="../static/img/index/spa.jpg" alt="Imagen servicio 1">
                 </div>
                 <div class="descubrir-info">
                     <h5>DESCUBRE</h5>
@@ -540,7 +548,7 @@ if(is_array($habitaciones) && !empty($habitaciones)) {
             <!-- Servicio 2 (invertido) -->
             <div class="descubrir-row reverse">
                 <div class="descubrir-img">
-                    <img src="../static/img/california/california.jpg" alt="Imagen servicio 2">
+                    <img src="../static/img/index/aventuras.jpg" alt="Imagen servicio 2">
                 </div>
                 <div class="descubrir-info">
                     <h5>DESCUBRE</h5>
