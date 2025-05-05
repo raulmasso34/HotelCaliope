@@ -28,22 +28,9 @@ window.addEventListener('DOMContentLoaded', () => {
   ]);
 
   initializeCarousel('carousel2', 'right-btn2', 'left-btn2', [
-    '../../../static/img/florida/florida3.jpg',
+    '../../../static/img/europa/pirineos.jpg',
     '../../../static/img/florida/florida4.jpg',
   ]);
 
-  initializeCarousel('carousel1-ofertas', 'right-btn1-ofertas', 'left-btn1-ofertas', [
-    '../../../static/img/florida/florida1.jpg',
-    '../../../static/img/florida/florida2.jpg',
-  ]);
-
-  initializeCarousel('carousel2-ofertas', 'right-btn2-ofertas', 'left-btn2-ofertas', [
-    '../../../static/img/florida/florida3.jpg',
-    '../../../static/img/florida/florida4.jpg',
-  ]);
-
-  initializeCarousel('carousel3-ofertas', 'right-btn3-ofertas', 'left-btn3-ofertas', [
-    '../../../static/img/florida/florida3.jpg',
-    '../../../static/img/florida/florida4.jpg',
-  ]);
+  
 });

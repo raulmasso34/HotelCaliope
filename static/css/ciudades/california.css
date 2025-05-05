@@ -1,167 +1,135 @@
-
-.main-main{
-  opacity: 0; 
-  transform: translateY(50px); 
-  transition: opacity 1.5s ease-out, transform 1.5s ease-out; 
-  height: 700px;
-  width: 100%;
-  margin: 7% auto;
+:root {
+  --primary-color: #2a3d66;
+  --secondary-color: #5a8ecf;
+  --accent-color: #d3ddff;
+  --text-color: #333;
+  --background-light: #f7f9fc;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --primary-blue: #1e3d59;
+  --secondary-blue: #17263b;
+  --accent-blue: #2c5282;
+  --light-blue: #edf2f7;
+  --gold: #c5a47e;
+  --white: #ffffff;
+  --text-dark: #2d3748;
+  --text-light: #e2e8f0;
 }
 
-
-.main-main.visible {
-  opacity: 1;               /* Contenido visible */
-  transform: translateY(0); /* Sin desplazamiento */
-}
-
-
-.main-box{
-
-  width: 65%;
-  height: 100%;
-  margin: auto;
-  display: flex;
-
-}
-.main-box-box{
-
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: stretch;
-  flex-wrap: nowrap;
-  width: 50%;
-  margin: auto;
-  height: 100%;
-}
-
-.stars-main{
+.main-main {
+  padding: 4rem 2rem;
  
-  width: 30%;
-  text-align: center;
-  margin-top: 3%;
 }
 
-.main-title{
-width: 80%;
+.main-box {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 2rem;
+}
 
-  margin: auto;
+.main-box-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.main-title h3{
-  font-family: "Mate SC", serif;
-font-weight: 400;
-font-style: normal;
-  font-size: 25px;
-  text-align: left;
+
+.stars-main {
+  margin-bottom: 1rem;
 }
-.main-title h1{
-  font-family: "Luxurious Roman", serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 70px;
-  text-align: left;
+
+.main-title h3 {
+  color: var(--gold);
+  font-size: 1.25rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
 }
-.main-txt{
-  
-  width: 80%;
-  text-align: justify;
-  margin: 5% auto;
+
+.main-title h1 {
+  color: var(--primary-blue);
+  font-size: 2.5rem;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
 }
 
 .main-txt p {
-  font-size: 20px;
-}
-.main-botones{
-  margin-top: 10%;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: stretch;
-  flex-wrap: nowrap;
-  height: 100%;
-  margin: auto;
+  color: var(--text-dark);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
 }
 
-.main-botones button{
-  background-color: transparent;
-  border: 2px solid #333;
-  color: #333;
-  text-align: left;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-family: Arial, sans-serif;
-  text-transform: uppercase;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  width: 25%;
-  transition: color 0.3s ease, background-color 0.3s ease;
+.main-botones {
+  display: flex;
+  gap: 1rem;
+}
+
+.main-botones button {
+  padding: 0.75rem 1.5rem;
   border: none;
-  margin: auto;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
 }
 
-.main-botones button::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background-color: #011345;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s ease;
+.main-botones button:first-child {
+  background-color: transparent;
+  color: var(--primary-blue);
+  border: 2px solid var(--gold);
 }
 
-.main-botones button:hover {
-  color: #011345;
- 
+.main-botones button:first-child:hover {
+  background-color: var(--gold);
+  color: var(--white);
 }
 
-.main-botones button:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-.main-box-right  {
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: stretch;
-  flex-wrap: nowrap;
-  width: 50%;
-  margin: auto;
-  height: 100%;
- 
-  display: flex;
- 
+.main-botones button:last-child {
+  background-color: var(--gold);
+  color: var(--white);
 }
 
-.img-left {
- 
-  width: 45%;
-  height: 60%;
-  
-  margin: auto;
-  margin-bottom: 20%;
-  position: relative;
-  top: -10%; /* Eleva la imagen 20 píxeles */
+.main-botones button:last-child:hover {
+  background-color: var(--primary-blue);
 }
 
-.img-right {
-
-  width: 45%;
-  height: 60%;
-  margin-top: 17%;
-  position: relative;
-  position: relative;
-  bottom: -10%; 
-
+.main-box-right {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 
 .img-main {
-  height: 100%;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: var(--transition-smooth);
 }
 
+.img-main:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .main-box {
+      flex-direction: column;
+  }
+  
+  .main-box-right {
+      margin-top: 2rem;
+  }
+  
+  .main-title h1 {
+      font-size: 2rem;
+  }
+}
 
 /* Carrusel dos Habitaciones con Actividades */
 
@@ -169,6 +137,234 @@ font-style: normal;
 
 /* Estilo general de la sección */
 .dispo {
+  padding: 4rem 2rem;
+  background-color: var(--white);
+  text-align: center;
+}
+
+.dispo h1 {
+  color: var(--primary-blue);
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  position: relative;
+  display: inline-block;
+}
+
+.dispo h1:after {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 3px;
+  background: var(--gold);
+  bottom: -10px;
+  left: 25%;
+}
+
+.carousels-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.carousels {
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: var(--transition-smooth);
+}
+
+.carousels:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.carousels img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+}
+
+.carousels h2 {
+  color: var(--primary-blue);
+  margin: 1rem 0 0.5rem;
+  font-size: 1.5rem;
+}
+
+.carousels p {
+  color: var(--text-dark);
+  padding: 0 1rem 1.5rem;
+  line-height: 1.6;
+}
+
+.left-btn, .right-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  z-index: 10;
+}
+
+.left-btn:hover, .right-btn:hover {
+  background: var(--gold);
+}
+
+.left-btn {
+  left: 15px;
+}
+
+.right-btn {
+  right: 15px;
+}
+
+.arrow {
+  border: solid var(--primary-blue);
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 5px;
+}
+
+.left-btn .arrow {
+  transform: rotate(135deg);
+}
+
+.right-btn .arrow {
+  transform: rotate(-45deg);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .dispo h1 {
+      font-size: 2rem;
+  }
+  
+  .carousels {
+      min-width: 100%;
+  }
+  
+  .carousels img {
+      height: 250px;
+  }
+}
+
+  /* Servicios */
+
+
+  .servicios {
+    padding: 4rem 2rem;
+    background-color: var(--background-light);
+    text-align: center;
+}
+
+.servicios h1 {
+    color: var(--primary-blue);
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.servicios h1:after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 3px;
+    background: var(--gold);
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.tabla-servicios {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 20px;
+}
+
+.tabla-servicios td {
+    background-color: var(--white);
+    padding: 2rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: var(--transition-smooth);
+    width: 33.33%;
+    vertical-align: middle;
+}
+
+.tabla-servicios td:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    background-color: var(--accent-blue);
+}
+
+.tabla-servicios td:hover p,
+.tabla-servicios td:hover i {
+    color: var(--white);
+}
+
+.tabla-servicios p {
+    color: var(--text-dark);
+    font-weight: 500;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    transition: var(--transition-smooth);
+}
+
+.tabla-servicios i {
+    color: var(--gold);
+    font-size: 2.5rem;
+    transition: var(--transition-smooth);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .tabla-servicios {
+        border-spacing: 10px;
+    }
+    
+    .tabla-servicios tr {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .tabla-servicios td {
+        width: calc(50% - 20px);
+        margin-bottom: 20px;
+        padding: 1.5rem 0.5rem;
+    }
+    
+    .servicios h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tabla-servicios td {
+        width: 100%;
+    }
+}
+
+/* OFERTAS */
+
+.ofertas {
   opacity: 0;
   transform: translateY(50px);
   transition: opacity 1.5s ease-out, transform 1.5s ease-out;
@@ -179,13 +375,13 @@ font-style: normal;
   text-align: center;
 }
 
-.dispo.visible {
+.ofertas.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
 /* Contenedor de los carruseles */
-.carousels-container {
+.carousels-container-ofertas {
   display: flex;
   justify-content: center;
   gap: 40px;  /* Aumenta el espacio entre los carruseles */
@@ -193,7 +389,7 @@ font-style: normal;
 }
 
 /* Estilo individual de cada carrusel */
-.carousels {
+.carousels-ofertas {
   width: 600px;  /* Aumenta el tamaño de cada carrusel */
   height: 600px;  /* Hacemos que el carrusel sea cuadrado */
   display: flex;
@@ -208,14 +404,14 @@ font-style: normal;
   border-radius: 10px;  /* Esquinas redondeadas */
 }
 
-.carousels h2 {
+.carousels-ofertas h2 {
   margin-top: 20px;  /* Espacio encima del título */
   font-size: 1.6em;
   color: #333;
   text-transform: uppercase;
 }
 
-.carousels p {
+.carousels-ofertas p {
   font-size: 1em;
   color: #666;
   margin-top: 10px;
@@ -225,7 +421,7 @@ font-style: normal;
 }
 
 /* Estilo de la imagen */
-.carousels img {
+.carousels-ofertas img {
   width: 100%;
   height: 100%;
   object-fit: cover;  /* Asegura que la imagen cubra todo el contenedor */
@@ -233,23 +429,23 @@ font-style: normal;
 }
 
 /* Estilo de los botones */
-button[class = "right-btn"],
-[class = "left-btn"]  {
-position: absolute;
-top: 50%;
-transform: translateY(-50%);
-background: rgba(0, 0, 0, 0.5);
-border: none;
-cursor: pointer;
-padding: 1em;
-display: flex;
-align-items: center;
-justify-content: center;
-color: #fff;
-z-index: 1;  /* Asegura que los botones estén por encima de las imágenes */
+button[class = "right-btn-ofertas"],
+[class = "left-btn-ofertas"]  {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  cursor: pointer;
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  z-index: 1;  /* Asegura que los botones estén por encima de las imágenes */
 }
 
-button .arrow {
+button .arrow-ofertas {
   width: 12px;
   height: 12px;
   border: solid #fff;
@@ -260,254 +456,75 @@ button .arrow {
 }
 
 /* Flechas normales */
-.left-btn .arrow {
+.left-btn-ofertas .arrow-ofertas {
   transform: rotate(225deg);  /* Flecha hacia la izquierda */
 }
 
-.right-btn .arrow {
+.right-btn-ofertas .arrow-ofertas {
   transform: rotate(-315deg);  /* Flecha hacia la derecha */
 }
 
-.left-btn {
+.left-btn-ofertas {
   left: 10px;
 }
 
-.right-btn {
-  right: 10px;
-}
-
-
-/* Servicios */
-
-
-.servicios {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 1.5s ease-out, transform 1.5s ease-out;
-  width: 100%;
-  margin: 5% auto; /* Espaciado vertical */
-  padding: 50px 0; /* Relleno para separar contenido */
-  box-sizing: border-box;
-  text-align: center;
-  display: flex; /* Para centrar el contenido */
-  flex-direction: column; /* Organiza en columna */
-  align-items: center; /* Centra horizontalmente */
-}
-
-.servicios.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.servicios h1 {
-font-size: 2rem; /* Ajusta el tamaño del título */
-text-align: center; /* Centra el título */
-margin-bottom: 6%; /* Espacio entre el título y la tabla */
-color: #333; /* Color del texto */
-}
-.tabla-servicios {
-display: flex; /* Organiza los <tr> como flexibles */
-flex-direction: column; /* Organiza las filas en columna */
-flex-wrap: wrap; /* Permite ajustar si es necesario */
-width: 65%; /* Ocupa el 70% del ancho */
-margin: 0 auto; /* Centrado horizontal */
-text-align: center; /* Centra el contenido textual */
-gap: 10px; /* Espacio entre filas si es necesario */
-}
-
-.tabla-servicios tr {
-border-bottom: 1px solid black;
-display: flex;
-flex-direction: row; 
-align-items: left; 
-justify-content: center;
-margin: 10px;
-}
-.tabla-servicios td {
-display: flex; /* Cada celda coloca su contenido en fila */
-align-items: center; /* Centra verticalmente texto e ícono */
-justify-content: space-between; /* Texto al inicio e ícono al final */
-flex: 1; /* Hace que cada celda ocupe el mismo ancho */
-padding: 30px 15px; /* Espaciado interno */
-font-size: 1rem; /* Ajusta el tamaño del texto */
-text-align: left; /* Alineación de texto a la izquierda */
-}
-
-.tabla-servicios td p {
-font-size: 20px; /* Tamaño del ícono */
-margin: 0 0 0 0; /* Elimina márgenes adicionales del párrafo */
-}
-
-.tabla-servicios i {
-font-size: 40px; /* Tamaño del ícono */
-color: #333; /* Color del ícono */
-margin: 0 50px 0 0; /* Elimina márgenes adicionales del párrafo */
-}
-
-
-
-/* OFERTAS */
-
-.ofertas {
-opacity: 0;
-transform: translateY(50px);
-transition: opacity 1.5s ease-out, transform 1.5s ease-out;
-width: 100%;
-margin: 5% auto;
-padding: 50px 20px;
-box-sizing: border-box;
-text-align: center;
-}
-
-.ofertas.visible {
-opacity: 1;
-transform: translateY(0);
-}
-
-/* Contenedor de los carruseles */
-.carousels-container-ofertas {
-display: flex;
-justify-content: center;
-gap: 40px;  /* Aumenta el espacio entre los carruseles */
-margin-top: 40px;
-}
-
-/* Estilo individual de cada carrusel */
-.carousels-ofertas {
-width: 600px;  /* Aumenta el tamaño de cada carrusel */
-height: 600px;  /* Hacemos que el carrusel sea cuadrado */
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-position: relative;
-box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
-            0 9px 46px 8px rgba(0, 0, 0, 0.12), 
-            0 11px 15px -7px rgba(0, 0, 0, 0.2);
-overflow: hidden;  /* Asegura que no haya desbordes */
-border-radius: 10px;  /* Esquinas redondeadas */
-}
-
-.carousels-ofertas h2 {
-margin-top: 20px;  /* Espacio encima del título */
-font-size: 1.6em;
-color: #333;
-text-transform: uppercase;
-}
-
-.carousels-ofertas p {
-font-size: 1em;
-color: #666;
-margin-top: 10px;
-padding: 0 20px;  /* Agrega relleno a los lados */
-text-align: center;
-line-height: 1.5;
-}
-
-/* Estilo de la imagen */
-.carousels-ofertas img {
-width: 100%;
-height: 100%;
-object-fit: cover;  /* Asegura que la imagen cubra todo el contenedor */
-transition: opacity 1s ease-out;  /* Para un cambio suave de imagen */
-}
-
-/* Estilo de los botones */
-button[class = "right-btn-ofertas"],
-[class = "left-btn-ofertas"]  {
-position: absolute;
-top: 50%;
-transform: translateY(-50%);
-background: rgba(0, 0, 0, 0.5);
-border: none;
-cursor: pointer;
-padding: 1em;
-display: flex;
-align-items: center;
-justify-content: center;
-color: #fff;
-z-index: 1;  /* Asegura que los botones estén por encima de las imágenes */
-}
-
-button .arrow-ofertas {
-width: 12px;
-height: 12px;
-border: solid #fff;
-border-width: 2px 2px 0 0;
-display: inline-block;
-transition: transform 0.3s ease-out;
-outline: none;
-}
-
-/* Flechas normales */
-.left-btn-ofertas .arrow-ofertas {
-transform: rotate(225deg);  /* Flecha hacia la izquierda */
-}
-
-.right-btn-ofertas .arrow-ofertas {
-transform: rotate(-315deg);  /* Flecha hacia la derecha */
-}
-
-.left-btn-ofertas {
-left: 10px;
-}
-
 .right-btn-ofertas {
-right: 10px;
+  right: 10px;
 }
 
 /*MAPA*/
 /* Sección del mapa de Galicia */
 .mapa-galicia {
-height: 800px;
-width: 100%;
-margin-bottom: 10px;
-opacity: 0; /* Por defecto, oculto */
-transform: translateY(50px); /* Movido hacia abajo */
-transition: opacity 1.5s ease-out, transform 1.5s ease-out; /* Transición suave */
+  height: 800px;
+  width: 100%;
+  margin-bottom: 10px;
+  opacity: 0; /* Por defecto, oculto */
+  transform: translateY(50px); /* Movido hacia abajo */
+  transition: opacity 1.5s ease-out, transform 1.5s ease-out; /* Transición suave */
 }
 
 /* Cuando la sección es visible */
 .mapa-galicia.visible {
-opacity: 1;
-transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Contenedor del mapa */
 .mapa-box-galicia {
-width: 60%; /* Ajustamos el tamaño de la caja */
-height: 100%;
-margin: auto;
-text-align: center;
+  width: 60%; /* Ajustamos el tamaño de la caja */
+  height: 100%;
+  margin: auto;
+  text-align: center;
 }
 
 /* Título del mapa */
 .mapa-box-galicia h2 {
-font-family: "Cormorant Garamond", serif;
-font-size: 40px;
-margin-bottom: 20px;
-color: #333; /* Un tono más suave para el título */
-width: 100%; /* Asegura que ocupe todo el ancho disponible */
-text-align: center; /* Alineamos el título al centro */
-word-wrap: break-word; /* Rompe las palabras largas si es necesario */
+  font-family: "Cormorant Garamond", serif;
+  font-size: 40px;
+  margin-bottom: 20px;
+  color: #333; /* Un tono más suave para el título */
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  text-align: center; /* Alineamos el título al centro */
+  word-wrap: break-word; /* Rompe las palabras largas si es necesario */
 }
 
 /* Párrafo de texto */
 .mapa-box-galicia p {
-width: 100%; /* Hace que el párrafo ocupe todo el ancho disponible */
-margin: 0 auto 20px; /* Añade margen inferior */
-font-size: 20px;
-color: #666; /* Color gris suave */
-line-height: 1.5; /* Mejora la legibilidad */
-text-align: justify; /* Justifica el texto para que se lea a lo largo */
-padding: 0 10px; /* Añade algo de relleno a los lados para que el texto no toque los bordes */
+  width: 100%; /* Hace que el párrafo ocupe todo el ancho disponible */
+  margin: 0 auto 20px; /* Añade margen inferior */
+  font-size: 20px;
+  color: #666; /* Color gris suave */
+  line-height: 1.5; /* Mejora la legibilidad */
+  text-align: justify; /* Justifica el texto para que se lea a lo largo */
+  padding: 0 10px; /* Añade algo de relleno a los lados para que el texto no toque los bordes */
 }
 
 /* Estilo del mapa */
 #map {
-height: 70%; 
-width: 100%; /* Asegura que el mapa ocupe el 100% del contenedor */
-margin-top: 2%;
-border: 1px solid #ddd; /* Bordes suaves */
-border-radius: 8px; /* Bordes redondeados */
-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  height: 70%; 
+  width: 100%; /* Asegura que el mapa ocupe el 100% del contenedor */
+  margin-top: 2%;
+  border: 1px solid #ddd; /* Bordes suaves */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }

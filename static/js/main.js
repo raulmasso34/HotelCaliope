@@ -346,3 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+
+  //--------------------MODAL DE HOTELES VER MAS BOTON-------------------------
+  

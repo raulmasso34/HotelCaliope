@@ -33,6 +33,7 @@ if ($profile === null) {
     exit();
 }
 
+
 // Cerrar la conexión
 $db->closeConnection();
 ?>
@@ -130,9 +131,16 @@ $db->closeConnection();
             <button id="show-less" class="btn-show btn-show-less" style="display: none;">
                 <i class="bi bi-dash"></i>
             </button>
+     
         </div>
                 
-
+        <?php if (isset($_GET['cancelada']) && $_GET['cancelada'] == 1): ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+               <br> <i class="fas fa-check-circle me-2"></i>
+                La reserva se ha cancelado correctamente.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
        
     </div>
 

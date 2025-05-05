@@ -17,117 +17,169 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../static/css/style.css">
+    <link rel="stylesheet" href="../../../static/css/GENERAL/footer.css">
+    <link rel="stylesheet" href="../../../static/css/GENERAL/header.css">
     <link rel="stylesheet" href="../../../static/css/ciudades/california.css">
     <link rel="shortcut icon" href="../../../static/img/favicon_io/favicon.ico" type="image/x-icon">
     <title>CALIFORNIA</title>
 </head>
 <body>
 <header class="main-header">
-    <div class="carousel">
-        <img class="carousel-background" src="../../../static/img/florida/florida3.jpg" alt="Fondo 1">
-        <img class="carousel-background" src="../../../static/img/florida/florida4.jpg" alt="Fondo 2">
-        <img class="carousel-background" src="../../../static/img/florida/florida5.jpg" alt="Fondo 3">
+
+        
+<section class="main-up">
+    <div class="main-up-left">
+        <img src="../../../static/img/logo_blanco.png" alt="Imagen secundaria">
     </div>
-       
-        <section class="main-up">
-            <div class="main-up-left">
-                <img src="../../../static/img/logo.png" alt="Imagen secundaria">
+
+    <div class="main-up-right">
+        <div class="links">
+        <a href="#">Home</a>
+            <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+            
+            <div class="dropdown">
+                <a href="../vista/hoteles.php" class="dropbtn">Hoteles</a>
+                <div class="dropdown-content">
+                    <div class="dropdown-section">
+                        <h4>Europa</h4>
+                        <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                        <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                        <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                    </div>
+                    <div class="dropdown-section">
+                        <h4>USA</h4>
+                        <a href="../vista/ciudades/USA/Florida.php">Florida</a>
+                        <a href="../vista/ciudades/USA/California.php">California</a>
+                        <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                    </div>
+                </div>
             </div>
-            <div class="main-up-right">
-    <div class="links">
-        <a href="#">Sobre nosotros</a>
-        <a href="#">Servicios</a>
-        <div class="dropdown">
+
+            <a href="../vista/galeria/galeria.php">Galería</a>
+        
+            <a href="../vista/Contacto/contacto.php">Contacto</a>
+            
+            <!-- Contenedor del perfil -->
+            <div class="dropdown-perfil">
+<a class="icon-perfil" href="javascript:void(0);">
+<i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
+</a>
+        <div class="dropdown-perfil-content">
+            <?php if (!isset($_SESSION['usuario_id'])): ?>
+                <!-- Mostrar solo si el usuario no está logueado -->
+                <a href="../vista/Clientes/login.php">
+                    <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+                </a>
+            <?php endif; ?>
+
+            <a href="../vista/Clientes/perfil.php">
+                <i class="bi bi-person"></i> Perfil
+            </a>
+
+            <?php if (isset($_SESSION['usuario_id'])): ?>
+                <!-- Mostrar solo si el usuario está logueado -->
+                <a href="../controller/clients/LoginController.php?action=logout" style="color: red;">
+                    <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
+                </a>
+            <?php endif; ?>
+        </div>
+    </div>
+        </div>
+    </div>
+
+    <!-- Menú hamburguesa (solo visible en pantallas pequeñas) -->
+    <div id="menu-toggle" class="menu-toggle">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <!-- Menú desplegable -->
+    <div class="mobile-menu">
+        <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+        <a href="../vista/galeria/galeria.php">Galería</a>
+
+        <a href="../vista/Contacto/contacto.php">Contacto</a>
+        <a href="../vista/Clientes/login.php">Iniciar sesión</a>
+        <a href="../vista/Clientes/perfil.php">Perfil</a>
+        
+        <!-- Enlace para Hoteles con dropdown -->
+        <div class="dropdown-mobile">
             <a href="#" class="dropbtn">Hoteles</a>
-            <div class="dropdown-content">
+            <div class="dropdown-content-mobile">
                 <div class="dropdown-section">
                     <h4>Europa</h4>
-                    <a href="../Europa/Galicia.php">Galicia</a>
-                    <a href="../Europa/Tossa.php">Tossa de Mar</a>
-                    <a href="../Europa/Pirineos.php">Pirineos</a>
+                    <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                    <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                    <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
                 </div>
                 <div class="dropdown-section">
                     <h4>USA</h4>
-                    <a href="../USA/NuevaYork.php">NuevaYork</a>
-                    <a href="../USA/Florida.php">Florida</a>
-                   
+                    <a href="../vista/ciudades/USA/Florida.php">Florida</a>
+                    <a href="../vista/ciudades/USA/California.php">California</a>
+                    <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
                 </div>
             </div>
         </div>
     </div>
+
+
+</section>
+
+
+<section class="main-center">
+    
+    <img class="carousel-background" src="../../../static/img/california/california.jpg" alt="Fondo 1">
+    <img class="carousel-background" src="../../../static/img/california/california2.jpg" alt="Fondo 2">
+    <img class="carousel-background" src="../../../static/img/tortossa/tossa3.jpg" alt="Fondo 3">
+
+
+
+    <div class="center-up">
+        <div class="center-up-up">
+            <span style="font-size: 20px; color: rgb(230, 182, 11);">
+                <i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star "></i>
+            </span>
+        </div>
+        <div class="center-up-down">
+            <h5>EXPERIENCIAS QUE TRASPASAN LO ORDINARIO</h5>
+            <H1>Descubre nuestros hoteles de lujo</H1>
+        </div>
     </div>
 
-        </section>
-        <section class="main-center">
-            <div class="center-up">
-                <div class="center-up-up">
-                <span style="font-size: 20px;  color: rgb(230, 182, 11);">
-                <i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star "></i>
-                </span>
-               
-                </div>
-                <div class="center-up-down">
-                    <h5>Lorem ipsum dolor sit amet.</h5>
-                    <H1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere, minima.</H1>
-                </div>
-            </div>
-            <div class="center-down">
-                <div class="form-reservas">
-                
-                <div class="formulario">
-                    <form action="" method="post">
-                        <label for="checkin">Fecha de Llegada:</label>
-                        <input type="date" id="checkin" name="checkin" required>
-                        <label for="checkout">Fecha de Salida:</label>
-                        <input type="date" id="checkout" name="checkout" required>
-                        <label for="tipo_habitacion">Tipo de Habitación:</label>
-                        <select id="tipo_habitacion" name="tipo_habitacion" required>
-                            <option value="sencilla">Sencilla</option>
-                            <option value="doble">Doble</option>
-                            <option value="suite">Suite</option>
-                        </select>
-                        <button type="submit">Reservar Ahora</button>
-                    </form>
-                </div>
-            </div>
-    
-          
-        </section>
 </header>
 
-<section class="main-main">
-        <div class="main-box">
-            <div class="main-box-box">
-                <div class="stars-main">
-                    <span style="font-size: 20px;  color: rgb(230, 182, 11);">
-                    <i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star "></i>
-                    </span>
-                </div>
-                <div class="main-title">
-                    <h3>LOREM IST AME TUU </h3>
-                    <h1>Lorem ipsum dolor </h1>
-                </div>
-                <div class="main-txt">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem adipisci soluta alias voluptatem facere? Vitae iure ratione saepe quos blanditiis fugiat molestias, maxime reprehenderit harum. Quod molestiae consectetur perferendis deserunt.</p>
 
-                    <div class="main-botones">
-                        <button>VER MAS</button>
-                        <button>Reservar</button>
-                    </div>
-                   
-                </div>
+<section class="main-main">
+    <div class="main-box">
+        <div class="main-box-box">
+            <div class="stars-main">
+                <span style="font-size: 20px; color: rgb(230, 182, 11);">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </span>
             </div>
-            <div class="main-box-right">
-                <div class="img-left">
-                    <img class="img-main" src="../../../static/img/florida/florida1.jpg" alt="">
+            <div class="main-title">
+                <h3>HOTEL CALÍOPE</h3>
+                <h1>Lujo Californiano</h1>
+            </div>
+            <div class="main-txt">
+                <p>Ubicado en la exclusiva costa de Malibú, el Hotel Calíope ofrece una experiencia única donde el glamour de California se fusiona con la elegancia mediterránea. Disfrute de suites con vistas al Pacífico, gastronomía de fusión con productos locales y acceso privado a playas de arena dorada. Nuestro spa inspirado en los viñedos de Napa Valley y nuestra piscina infinity con vistas al atardecer completan la experiencia.</p>
+
+                <div class="main-botones">
+                    <button>EXPLORAR</button>
+                    <button>RESERVAR</button>
                 </div>
-                <div class="img-right">
-                    <img class="img-main" src="../../../static/img/florida/florida3.jpg" alt="">
-                </div>
-                    
             </div>
         </div>
+        <div class="main-box-right">
+            <div class="img-left">
+                <img class="img-main" src="../../../static/img/california/california2.jpg" alt="Vista del Hotel Calíope en Malibú al atardecer">
+            </div>
+            <div class="img-right">
+                <img class="img-main" src="../../../static/img/california/california.jpg" alt="Suite premium con terraza y vista al océano">
+            </div>
+        </div>
+    </div>
 </section>
 
 
@@ -206,36 +258,6 @@
 
 </section>
 
-<section class="ofertas">
-<h1>OFERTAS</h1>
-  <div class="carousels-container-ofertas">
-    <!-- Primer carrusel -->
-    <div class="carousels-ofertas">
-      <button class="left-btn-ofertas" id="left-btn1-ofertas"><i class="arrow-ofertas"></i></button>
-      <img id="carousel1-ofertas" src="" alt="">
-      <button class="right-btn-ofertas" id="right-btn1-ofertas"><i class="arrow-ofertas"></i></button>
-      <h2>Habitaciones</h2>
-      <p>Descubre nuestras cómodas habitaciones con increíbles vistas.</p>
-    </div>
-    
-    <!-- Segundo carrusel -->
-    <div class="carousels-ofertas">
-      <button class="left-btn-ofertas" id="left-btn2-ofertas"><i class="arrow-ofertas"></i></button>
-      <img id="carousel2-ofertas" src="" alt="">
-      <button class="right-btn-ofertas" id="right-btn2-ofertas"><i class="arrow-ofertas"></i></button>
-      <h2>Actividades</h2>
-      <p>Explora las actividades que ofrecemos para disfrutar al máximo.</p>
-    </div>
-
-    <div class="carousels-ofertas">
-      <button class="left-btn-ofertas" id="left-btn3-ofertas"><i class="arrow-ofertas"></i></button>
-      <img id="carousel3-ofertas" src="" alt="">
-      <button class="right-btn-ofertas" id="right-btn3-ofertas"><i class="arrow-ofertas"></i></button>
-      <h2>SERVICIOS</h2>
-      <p>Explora los servicios que ofrecemos para disfrutar al máximo.</p>
-    </div>
-  </div>
-</section>
 
 <section class="mapa-galicia">
 <div class="mapa-box-galicia">
@@ -247,53 +269,55 @@
         </div>
 </section>
 
-<footer class="main-footer">
-        <div class="footer-box">
-            <!-- Sección: Sobre el Hotel -->
-            <div class="footer-sec">
-                <h1>Sobre el hotel</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam incidunt iste dolorum expedita eligendi omnis quia facere quod autem! Voluptatem.</p>
-                <a href="../../../vista/index.php"><img class="img-footer" src="../../../static/img/logo_blanco.png" alt="logo-blanco"></a>
-                <div class="language-selector">
-                <select id="language-select" onchange="changeLanguage()">
-                    <option value="es">Español</option>
-                    <option value="en">English</option>
-                    <option value="fr">Français</option>
-                </select>
-                </div>
+<footer class="footer">
+        <div class="footer-content">
+            <!-- Columna 1 - Logo y Descripción -->
+            <div class="footer-section">
+                <img src="../../../static/img/logo_blanco.png" alt="Logo Hotel Calíope" class="footer-logo">
+                <p>Descubre el lujo y la comodidad en cada rincón del mundo con Hotel Calíope.</p>
             </div>
 
-            <!-- Sección: Links -->
-            <div class="footer-sec">
-                <h1>Links</h1>
-                <div class="links-footer">
-                    <a href="#">Sobre nosotros</a>
-                    <a href="#">Servicios</a>
-                    <a href="#">Hoteles</a>
-                </div>
+            <!-- Columna 2 - Enlaces rápidos -->
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a></li>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/hoteles.php">Hoteles</a></li>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/galeria/galeria.php">Galería</a></li>
+                    <li><i class="fas fa-angle-right"></i><a href="../../vista/Contacto/contacto.php">Contacto</a></li>
+                </ul>
             </div>
 
-            <!-- Sección: Contacto y Redes Sociales -->
-            <div class="footer-sec">
-                <h1>Dónde nos encontramos</h1>
-                <div class="sec-tres">
-                    <p>Calle xxx 99999 <br> Lorem ipsum, España</p>
-                    <span class="contact-info">
-                        <i class="fa-solid fa-phone"></i> 999 999 999
-                    </span>
-                    <span class="contact-info">
-                        <i class="fa-solid fa-envelope"></i> hotelcalope@gmail.com
-                    </span>
-                    <div class="social-icons">
-                        <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    </div>
+            <!-- Columna 3 - Contacto -->
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +34 123 456 789</li>
+                    <li><i class="fas fa-envelope"></i> info@hotelcaliope.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Calle Principal 123, Madrid</li>
+                </ul>
+            </div>
+
+            <!-- Columna 4 - Redes Sociales -->
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
-        <div class="privacidad">
-            
+
+        <!-- Sección Inferior -->
+        <div class="footer-bottom">
+            <div class="footer-links">
+                <a href="../vista/politicas/privacidad.php">Política de Privacidad</a>
+                <a href="../vista/politicas/cookies.php">Política de Cookies</a>
+                <a href="../vista/politicas/avisolegal.php">Aviso Legal</a>
+            </div>
+            <p>&copy; 2025 Hotel Calíope. Todos los derechos reservados.</p>
         </div>
     </footer>
 

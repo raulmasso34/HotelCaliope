@@ -329,8 +329,15 @@ if(is_array($habitaciones) && !empty($habitaciones)) {
         <h1><?= htmlspecialchars($hotel['nombre_hotel']) ?></h1>
         <p><?= htmlspecialchars(substr($hotel['descripcion'], 0, 100)) ?>...</p>
         <div class="hoteles-boton">
-            <button class="ver-mas-btn" data-hotel="<?= strtolower(str_replace(' ', '-', $hotel['nombre_hotel'])) ?>">VER MÁS</button>
-            <button>RESERVAR</button>
+            <button class="ver-mas-btn" 
+                    data-nombre="<?= htmlspecialchars($hotel['nombre_hotel']) ?>"
+                    data-descripcion="<?= htmlspecialchars($hotel['descripcion']) ?>"
+                    data-imagen="<?= $imagenPath ?>"
+                    data-ciudad="<?= htmlspecialchars($hotel['ciudad'] ?? '') ?>"
+                    data-estrellas="<?= $hotel['estrellas'] ?? '' ?>"
+                    data-servicios="<?= htmlspecialchars($hotel['servicios'] ?? '') ?>">
+                VER MÁS
+            </button>
         </div>
     </div>
 </div>
@@ -340,16 +347,30 @@ if(is_array($habitaciones) && !empty($habitaciones)) {
 </section>
     <!-- Modal -->
  <!-- Modal -->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="modal-header">
-                <img src="../static/img/logo.png" alt="Logo" class="modal-logo">
-                <h2 id="modal-title">Detalles del hotel</h2>
+ <div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="modal-header">
+            <img src="../static/img/logo.png" alt="Logo" class="modal-logo">
+            <div class="hotel-title-container">
+                <h2 id="modal-title">Nombre del Hotel</h2>
+                <div class="hotel-rating" id="modal-rating"></div>
             </div>
-            <p id="modal-description">Aquí vendrá más información sobre el hotel...</p>
+            <p class="hotel-location" id="modal-location"><i class="fas fa-map-marker-alt"></i> Ciudad</p>
+        </div>
+        <div class="modal-body">
+            <img id="modal-image" src="" alt="Imagen del hotel" class="hotel-image">
+            <div class="hotel-description">
+                <h3>Descripción</h3>
+                <p id="modal-description"></p>
+            </div>
+            <div class="hotel-services">
+                <h3>Servicios</h3>
+                <ul id="modal-services"></ul>
+            </div>
         </div>
     </div>
+</div>
 
 
 
@@ -726,7 +747,7 @@ if(is_array($habitaciones) && !empty($habitaciones)) {
     });
 });
 
-    </script>
+</script>
 
 
 
@@ -760,68 +781,75 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-
 <script>
-   // Obtener el modal
-var modal = document.getElementById("modal");
+document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.getElementById("modal");
+    var btns = document.querySelectorAll(".ver-mas-btn");
+    var span = document.getElementsByClassName("close")[0];
 
-// Obtener los botones "Ver más"
-var btns = document.querySelectorAll(".ver-mas-btn");
+    btns.forEach(function(btn) {
+        btn.onclick = function() {
+            // Obtener todos los datos del hotel
+            var nombre = this.getAttribute('data-nombre');
+            var descripcion = this.getAttribute('data-descripcion');
+            var imagen = this.getAttribute('data-imagen');
+            var ciudad = this.getAttribute('data-ciudad');
+            var estrellas = this.getAttribute('data-estrellas');
+            var servicios = this.getAttribute('data-servicios');
 
-// Obtener el <span> (x) que cierra el modal
-var span = document.getElementsByClassName("close")[0];
+            // Actualizar el contenido del modal
+            document.getElementById("modal-title").innerText = nombre;
+            document.getElementById("modal-description").innerText = descripcion;
+            document.getElementById("modal-image").src = imagen;
+            document.getElementById("modal-image").alt = nombre;
+            document.getElementById("modal-location").innerHTML = '<i class="fas fa-map-marker-alt"></i> ' + ciudad;
 
-// Cuando el usuario haga clic en un botón "Ver más"
-btns.forEach(function(btn) {
-    btn.onclick = function() {
-        var hotel = this.getAttribute('data-hotel');
-        var title = "";
-        var description = "";
+            // Mostrar estrellas
+            var ratingContainer = document.getElementById("modal-rating");
+            ratingContainer.innerHTML = '';
+            for (var i = 0; i < 5; i++) {
+                var star = document.createElement('i');
+                star.className = i < estrellas ? 'fas fa-star' : 'far fa-star';
+                ratingContainer.appendChild(star);
+            }
 
-        // Personalizar el modal según el hotel
-        if (hotel === "florida") {
-            title = "Florida";
-            description = "Descubre nuestro hotel en Florida, un lugar ideal para disfrutar del sol, la playa y todo lo que este destino tiene para ofrecer. Ofrecemos lujosas habitaciones, restaurantes de alta calidad y un servicio excepcional.";
-        } else if (hotel === "california") {
-            title = "California";
-            description = "En California, disfruta de la vibrante vida urbana de Los Ángeles o de la tranquilidad de nuestras ubicaciones cercanas a la playa. Un destino único para tus vacaciones o viajes de negocio.";
-        } else if (hotel === "new-york") {
-            title = "New York";
-            description = "Experimenta el bullicio de Nueva York, un hotel donde la comodidad se encuentra en el centro de la ciudad. Ideal para quienes buscan explorar los íconicos lugares de la Gran Manzana.";
+            // Mostrar servicios (si existen)
+            var servicesContainer = document.getElementById("modal-services");
+            servicesContainer.innerHTML = '';
+            if (servicios) {
+                var serviciosArray = servicios.split(',');
+                serviciosArray.forEach(function(servicio) {
+                    var li = document.createElement('li');
+                    li.textContent = servicio.trim();
+                    servicesContainer.appendChild(li);
+                });
+            }
+
+            // Mostrar el modal
+            modal.style.display = "block";
+            setTimeout(function() {
+                modal.querySelector('.modal-content').classList.add('show');
+            }, 10);
         }
+    });
 
-        // Cambiar el contenido del modal
-        document.getElementById("modal-title").innerText = title;
-        document.getElementById("modal-description").innerText = description;
-
-        // Mostrar el modal con animación
-        modal.style.display = "block";
-        setTimeout(function() {
-            modal.querySelector('.modal-content').classList.add('show');
-        }, 10);
-    }
-});
-
-// Cuando el usuario haga clic en <span> (x), cerrar el modal
-span.onclick = function() {
-    modal.querySelector('.modal-content').classList.remove('show');
-    setTimeout(function() {
-        modal.style.display = "none";
-    }, 300);
-}
-
-// Cuando el usuario haga clic fuera del modal, cerrarlo
-window.onclick = function(event) {
-    if (event.target == modal) {
+    span.onclick = function() {
         modal.querySelector('.modal-content').classList.remove('show');
         setTimeout(function() {
             modal.style.display = "none";
         }, 300);
     }
-}
 
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.querySelector('.modal-content').classList.remove('show');
+            setTimeout(function() {
+                modal.style.display = "none";
+            }, 300);
+        }
+    }
+});
 </script>
-
 
 
 </body>

@@ -155,8 +155,39 @@ $checkoutDate = new DateTime($reserva['Checkout']);
         </div>
     </main>
 
-    <!-- Footer Exclusivo -->
-    <footer class="reserva-footer">
+  
+
+    <!-- Modal Cancelación -->
+<div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelModalLabel">Confirmar Cancelación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="">
+                <div class="modal-body">
+                    <p>¿Estás seguro de que deseas cancelar esta reserva? Esta acción no se puede deshacer.</p>
+                    <div class="alert alert-warning mt-3">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Atención:</strong> Si cancelas con menos de 24 horas de antelación, podrían aplicarse cargos por cancelación tardía.
+                    </div>
+                    <input type="hidden" name="reservaId" value="<?php echo $id_reserva; ?>">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>No, volver
+                    </button>
+                    <button type="submit" class="btn btn-danger" name="cancelarReserva">
+                        <i class="fas fa-trash-alt me-2"></i>Sí, cancelar reserva
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer class="reserva-footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
@@ -175,10 +206,8 @@ $checkoutDate = new DateTime($reserva['Checkout']);
         </div>
     </footer>
 
-    <!-- Modal Cancelación -->
-    <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
-        <!-- Mantener mismo modal anterior con estilos actualizados -->
-    </div>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
