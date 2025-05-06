@@ -1,5 +1,8 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 // Limpiar las variables de sesión si el usuario ha vuelto al formulario
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['reset']) && $_GET['reset'] == 'true') {
@@ -38,6 +41,8 @@ if ($controller !== null) {
     // Verificar si se han obtenido los países y hacer algo con ellos
     
 } 
+$database = new Database();
+$conn = $database->getConnection();
 ?>
 
 
@@ -51,6 +56,7 @@ if ($controller !== null) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+        
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Permanent+Marker&family=Shadows+Into+Light&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Luxurious+Roman&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Patrick+Hand&family=Permanent+Marker&family=Shadows+Into+Light&family=Staatliches&display=swap" rel="stylesheet">
@@ -109,22 +115,23 @@ if ($controller !== null) {
                     <a href="../../../vista/Contacto/contacto.php">Contacto</a>
                     
                     <!-- Contenedor del perfil -->
-                    <div class="dropdown-perfil">
-                        <a class="icon-perfil" href="javascript:void(0);">
-                            <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
+                     <div class="dropdown-perfil-content">
+       
+                        <a href="../vista/Clientes/login.php">
+                            <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
                         </a>
-                        <div class="dropdown-perfil-content">
-                            <a href="../../vista/Clientes/login.php">
-                                <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
-                            </a>
-                            <a href="../../vista/Clientes/perfil.php">
-                                <i class="bi bi-person"></i> Perfil
-                            </a>
-                            <a href="../../controller/clients/LoginController.php?action=logout" style="color: red;"> 
-                                <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
-                            </a>
-                        </div>
-                    </div>
+                    
+
+                    <a href="../vista/Clientes/perfil.php">
+                        <i class="bi bi-person"></i> Perfil
+                    </a>
+
+               
+                        <a href="../controller/clients/LoginController.php?action=logout" style="color: red;">
+                            <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
+                        </a>
+                 
+                </div>
                 </div>
             </div>
 

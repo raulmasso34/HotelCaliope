@@ -161,23 +161,22 @@ if(is_array($habitaciones) && !empty($habitaciones)) {
         <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
     </a>
                 <div class="dropdown-perfil-content">
-                    <?php if (!isset($_SESSION['usuario_id'])): ?>
-                        <!-- Mostrar solo si el usuario no está logueado -->
+       
                         <a href="../vista/Clientes/login.php">
                             <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
                         </a>
-                    <?php endif; ?>
+                    
 
                     <a href="../vista/Clientes/perfil.php">
                         <i class="bi bi-person"></i> Perfil
                     </a>
 
-                    <?php if (isset($_SESSION['usuario_id'])): ?>
+                 
                         <!-- Mostrar solo si el usuario está logueado -->
                         <a href="../controller/clients/LoginController.php?action=logout" style="color: red;">
                             <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
                         </a>
-                    <?php endif; ?>
+                 
                 </div>
             </div>
                 </div>
@@ -346,31 +345,6 @@ if(is_array($habitaciones) && !empty($habitaciones)) {
     </div>
 </section>
     <!-- Modal -->
- <!-- Modal -->
- <div id="modal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <div class="modal-header">
-            <img src="../static/img/logo.png" alt="Logo" class="modal-logo">
-            <div class="hotel-title-container">
-                <h2 id="modal-title">Nombre del Hotel</h2>
-                <div class="hotel-rating" id="modal-rating"></div>
-            </div>
-            <p class="hotel-location" id="modal-location"><i class="fas fa-map-marker-alt"></i> Ciudad</p>
-        </div>
-        <div class="modal-body">
-            <img id="modal-image" src="" alt="Imagen del hotel" class="hotel-image">
-            <div class="hotel-description">
-                <h3>Descripción</h3>
-                <p id="modal-description"></p>
-            </div>
-            <div class="hotel-services">
-                <h3>Servicios</h3>
-                <ul id="modal-services"></ul>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 
