@@ -69,137 +69,128 @@ if ($controller !== null) {
 <body>
     
 <header class="main-header">
-
+        <div class="carousel">
+            <img class="carousel-background" src="../../../static/img/florida/florida2.jpg" alt="Fondo 1">
+            <img class="carousel-background" src="../../../static/img/florida/florida3.jpg" alt="Fondo 2">
+            <img class="carousel-background" src="../../../static/img/florida/florida5.jpg" alt="Fondo 3">
+        </div>
         
-<section class="main-up">
-    <div class="main-up-left">
-        <img src="../../../static/img/logo_blanco.png" alt="Imagen secundaria">
-    </div>
+        <section class="main-up">
+            <div class="main-up-left">
+                <img src="../../../static/img/logo_blanco.png" alt="Logo Hotel Calíope">
+            </div>
 
-    <div class="main-up-right">
-        <div class="links">
-        <a href="#">Home</a>
-            <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
-            
-            <div class="dropdown">
-                <a href="../vista/hoteles.php" class="dropbtn">Hoteles</a>
-                <div class="dropdown-content">
-                    <div class="dropdown-section">
-                        <h4>Europa</h4>
-                        <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
-                        <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
-                        <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+            <div class="main-up-right">
+                <div class="links">
+                <a href="../../../vista/index.php">Home</a>
+                    <a href="../../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                    
+                    <div class="dropdown">
+                        <a href="#" class="dropbtn">Hoteles</a>
+                        <div class="dropdown-content">
+                            <div class="dropdown-section">
+                                <h4>Europa</h4>
+                                <a href="../../../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                                <a href="../../../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                                <a href="../../../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                            </div>
+                            <div class="dropdown-section">
+                                <h4>USA</h4>
+                                <a href="#">Florida</a>
+                                <a href="../../../vista/ciudades/USA/California.php">California</a>
+                                <a href="../../../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="dropdown-section">
-                        <h4>USA</h4>
-                        <a href="../vista/ciudades/USA/Florida.php">Florida</a>
-                        <a href="../vista/ciudades/USA/California.php">California</a>
-                        <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+
+                    <a href="../../../vista/galeria/galeria.php">Galería</a>
+                    
+                    <a href="../../../vista/Contacto/contacto.php">Contacto</a>
+                    
+                    <!-- Contenedor del perfil -->
+                    <div class="dropdown-perfil">
+                        <a class="icon-perfil" href="javascript:void(0);">
+                            <i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
+                        </a>
+                        <div class="dropdown-perfil-content">
+                            <a href="../../vista/Clientes/login.php">
+                                <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+                            </a>
+                            <a href="../../vista/Clientes/perfil.php">
+                                <i class="bi bi-person"></i> Perfil
+                            </a>
+                            <a href="../../controller/clients/LoginController.php?action=logout" style="color: red;"> 
+                                <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <a href="../vista/galeria/galeria.php">Galería</a>
-        
-            <a href="../vista/Contacto/contacto.php">Contacto</a>
-            
-            <!-- Contenedor del perfil -->
-            <div class="dropdown-perfil">
-<a class="icon-perfil" href="javascript:void(0);">
-<i class="bi bi-person-circle" style="font-size: 2.5rem;"></i>
-</a>
-        <div class="dropdown-perfil-content">
-            <?php if (!isset($_SESSION['usuario_id'])): ?>
-                <!-- Mostrar solo si el usuario no está logueado -->
-                <a href="../vista/Clientes/login.php">
-                    <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
-                </a>
-            <?php endif; ?>
+            <!-- Menú hamburguesa -->
+            <div id="menu-toggle" class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
 
-            <a href="../vista/Clientes/perfil.php">
-                <i class="bi bi-person"></i> Perfil
-            </a>
-
-            <?php if (isset($_SESSION['usuario_id'])): ?>
-                <!-- Mostrar solo si el usuario está logueado -->
-                <a href="../controller/clients/LoginController.php?action=logout" style="color: red;">
-                    <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
-                </a>
-            <?php endif; ?>
-        </div>
-    </div>
-        </div>
-    </div>
-
-    <!-- Menú hamburguesa (solo visible en pantallas pequeñas) -->
-    <div id="menu-toggle" class="menu-toggle">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-    </div>
-
-    <!-- Menú desplegable -->
-    <div class="mobile-menu">
-        <a href="../vista/Habitaciones/habitaciones.php">Habitaciones</a>
-        <a href="../vista/galeria/galeria.php">Galería</a>
-
-        <a href="../vista/Contacto/contacto.php">Contacto</a>
-        <a href="../vista/Clientes/login.php">Iniciar sesión</a>
-        <a href="../vista/Clientes/perfil.php">Perfil</a>
-        
-        <!-- Enlace para Hoteles con dropdown -->
-        <div class="dropdown-mobile">
-            <a href="#" class="dropbtn">Hoteles</a>
-            <div class="dropdown-content-mobile">
-                <div class="dropdown-section">
-                    <h4>Europa</h4>
-                    <a href="../vista/ciudades/Europa/Galicia.php">Galicia</a>
-                    <a href="../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
-                    <a href="../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
-                </div>
-                <div class="dropdown-section">
-                    <h4>USA</h4>
-                    <a href="../vista/ciudades/USA/Florida.php">Florida</a>
-                    <a href="../vista/ciudades/USA/California.php">California</a>
-                    <a href="../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+            <!-- Menú móvil -->
+            <div class="mobile-menu">
+                <a href="../../vista/Habitaciones/habitaciones.php">Habitaciones</a>
+                <a href="../../vista/galeria/galeria.php">Galería</a>
+       
+                <a href="../../vista/Contacto/contacto.php">Contacto</a>
+                <a href="../../vista/Clientes/login.php">Iniciar sesión</a>
+                <a href="../../vista/Clientes/perfil.php">Perfil</a>
+                
+                <div class="dropdown-mobile">
+                    <a href="#" class="dropbtn">Hoteles</a>
+                    <div class="dropdown-content-mobile">
+                        <div class="dropdown-section">
+                            <h4>Europa</h4>
+                            <a href="../../vista/ciudades/Europa/Galicia.php">Galicia</a>
+                            <a href="../../vista/ciudades/Europa/Tossa.php">Tossa de Mar</a>
+                            <a href="../../vista/ciudades/Europa/Pirineos.php">Pirineos</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>USA</h4>
+                            <a href="../../vista/ciudades/USA/Florida.php">Florida</a>
+                            <a href="../../vista/ciudades/USA/California.php">California</a>
+                            <a href="../../vista/ciudades/USA/NuevaYork.php">Nueva York</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <section class="main-center">
+            <div class="center-up">
+                <div class="center-up-up">
+                    <span style="font-size: 20px; color: rgb(230, 182, 11);">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </span>
+                </div>
+                <div class="center-up-down">
+                    <h5>Descubre el Encanto de </h5>
+                    <h1>FLORIDA</h1>
+                </div>
+            </div>
+        </section>
+        <div class="scroll-down">
+        <a href="#gallery-section" class="scroll-down-arrow">
+            <i class="fa-solid fa-chevron-down"></i>
+        </a>
     </div>
-
-
-</section>
-
-
-<section class="main-center">
-    
-    <img class="carousel-background" src="../../../static/img/florida/florida2.jpg" alt="Fondo 1">
-    <img class="carousel-background" src="../../../static/img/florida/florida.jpg" alt="Fondo 2">
-    <img class="carousel-background" src="../../../static/img/florida/florida5.jpg" alt="Fondo 3">
-
-
-
-    <div class="center-up">
-        <div class="center-up-up">
-            <span style="font-size: 20px; color: rgb(230, 182, 11);">
-                <i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star "></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star "></i>
-            </span>
-        </div>
-        <div class="center-up-down">
-            <h5>EXPERIENCIAS QUE TRASPASAN LO ORDINARIO</h5>
-            <H1>Descubre nuestros hoteles de lujo</H1>
-        </div>
-    </div>
-
-</header>
-
-
-
+    </header>
 
 <section class="main-main">
     <div class="main-box">
         <div class="main-box-box">
-            <div class="stars-main">
+            <div class="stars-main" id="stars-main">
                 <span style="font-size: 20px; color: rgb(230, 182, 11);">
                     <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                 </span>
@@ -235,7 +226,7 @@ if ($controller !== null) {
     <!-- Primer carrusel -->
     <div class="carousels">
       <button class="left-btn" id="left-btn1"><i class="arrow"></i></button>
-      <img id="carousel1" src="" alt="">
+      <img id="carousel1" src="" alt="Habitaciones del hotel">
       <button class="right-btn" id="right-btn1"><i class="arrow"></i></button>
       <h2>Habitaciones</h2>
       <p>Descubre nuestras cómodas habitaciones con increíbles vistas.</p>
@@ -244,7 +235,7 @@ if ($controller !== null) {
     <!-- Segundo carrusel -->
     <div class="carousels">
       <button class="left-btn" id="left-btn2"><i class="arrow"></i></button>
-      <img id="carousel2" src="" alt="">
+      <img id="carousel2" src="" alt="Actividades del hotel">
       <button class="right-btn" id="right-btn2"><i class="arrow"></i></button>
       <h2>Actividades</h2>
       <p>Explora las actividades que ofrecemos para disfrutar al máximo.</p>
@@ -371,6 +362,6 @@ if ($controller !== null) {
     <script src="../static/js/main.js"></script>
     <script src="../../../../static/js/calendario.js"></script>
     <script src="../../../static/js/ciudades/florida.js"></script>
-    <script src="../../../static/js/ciudades/carrousel.js"></script>
+
 </body>
 </html>
