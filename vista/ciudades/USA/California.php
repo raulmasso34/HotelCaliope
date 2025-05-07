@@ -160,8 +160,8 @@
                 <p>Ubicado en la exclusiva costa de Malibú, el Hotel Calíope ofrece una experiencia única donde el glamour de California se fusiona con la elegancia mediterránea. Disfrute de suites con vistas al Pacífico, gastronomía de fusión con productos locales y acceso privado a playas de arena dorada. Nuestro spa inspirado en los viñedos de Napa Valley y nuestra piscina infinity con vistas al atardecer completan la experiencia.</p>
 
                 <div class="main-botones">
-                    <button>EXPLORAR</button>
-                    <button>RESERVAR</button>
+                    <button>DESCUBRIR</button>
+                    <button><a href="../../galeria/galeria.php">GALERÍA</a></button>
                 </div>
             </div>
         </div>
@@ -175,6 +175,46 @@
         </div>
     </div>
 </section>
+
+<div id="hotelModal" class="hotel-modal">
+    <div class="hotel-modal-content">
+        <span class="close-btn">&times;</span>
+        <div class="modal-body">
+            <img id="modal-image" src="../../../static/img/california/california2.jpg" alt="Hotel Calíope" class="modal-image">
+            <h2>HOTEL CALÍOPE</h2>
+            <h3>Estilo y relax en la costa de California</h3>
+            <p>Rodeado de playas emblemáticas y atardeceres dorados, el Hotel Calíope en California ofrece una estancia exclusiva con espíritu californiano, diseño contemporáneo y conexión con la naturaleza.</p>
+            
+            <div class="modal-details">
+                <div class="detail-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Pacific Coast Hwy, 200, Santa Monica, CA</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fa-solid fa-star"></i>
+                    <span>Clasificación: 5 estrellas</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fa-solid fa-wifi"></i>
+                    <span>WiFi de alta velocidad</span>
+                </div>
+            </div>
+            
+            <div class="modal-amenities">
+                <h4>Servicios destacados:</h4>
+                <div class="amenities-list">
+                    <span><i class="fa-solid fa-surfboard"></i> Clases de surf privadas</span>
+                    <span><i class="fa-solid fa-utensils"></i> Restaurante orgánico de autor</span>
+                    <span><i class="fa-solid fa-spa"></i> Spa con tratamientos californianos</span>
+                    <span><i class="fa-solid fa-bicycle"></i> Alquiler de bicicletas eléctricas</span>
+                </div>
+            </div>
+            
+            <button class="modal-contact-btn"><a href="../../Contacto/contacto.php">CONTACTAR</a></button>
+        </div>
+    </div>
+</div>
+
 
 
 <!-- Coloca el script al final del cuerpo -->

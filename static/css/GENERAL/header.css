@@ -239,6 +239,12 @@ body {
     transition: all 0.3s ease;
 }
 
+
+.dropdown-perfil-content {
+    position: absolute;
+    z-index: 10; /* Asegura que el menú esté por encima de otros elementos */
+}
+
 .mobile-menu a:hover {
     background: rgba(197, 164, 126, 0.1);
     color: var(--gold);

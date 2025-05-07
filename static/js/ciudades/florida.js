@@ -151,3 +151,36 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+/*MODAL */
+document.addEventListener('DOMContentLoaded', function() {
+    // Obtener elementos
+    const modal = document.getElementById('hotelModal');
+    const saberMasBtn = document.querySelector('.main-botones button:first-child');
+    const closeBtn = document.querySelector('.close-btn');
+    
+    // Abrir modal al hacer clic en SABER MÁS
+    saberMasBtn.addEventListener('click', function() {
+        modal.style.display = 'block';
+        setTimeout(() => {
+            modal.classList.add('show');
+        }, 10);
+    });
+    
+    // Cerrar modal
+    closeBtn.addEventListener('click', closeModal);
+    
+    // Cerrar al hacer clic fuera del modal
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
+    
+    function closeModal() {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+    }
+});

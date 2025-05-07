@@ -311,22 +311,6 @@ if (!empty($hoteles)) {
 </footer>
         
    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <script src="../../static/js/galeria.js"></script>
 </body>
 </html>

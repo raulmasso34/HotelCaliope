@@ -160,9 +160,9 @@
                 <p>Ubicado en el corazón de Nueva York, el Hotel Calíope ofrece una experiencia de lujo contemporáneo con vistas icónicas al skyline. Nuestras suites con diseño neoyorquino, el rooftop con barra de martinis y el spa urbano con tratamientos inspirados en Central Park le brindarán una estancia inolvidable. A pocos pasos de Times Square, Broadway y las mejores galerías de arte de la Quinta Avenida.</p>
 
                 <div class="main-botones">
-                    <button>EXPERIENCIAS</button>
-                    <button>RESERVAR</button>
-                </div>
+                        <button>DESCUBRIR</button>
+                        <button><a href="../../galeria/galeria.php">GALERÍA</a></button>
+                    </div>
             </div>
         </div>
         <div class="main-box-right">
@@ -175,6 +175,46 @@
         </div>
     </div>
 </section>
+
+<div id="hotelModal" class="hotel-modal">
+    <div class="hotel-modal-content">
+        <span class="close-btn">&times;</span>
+        <div class="modal-body">
+            <img id="modal-image" src="../../../static/img/ny/ny1.jpg" alt="Hotel Calíope" class="modal-image">
+            <h2>HOTEL CALÍOPE</h2>
+            <h3>Estilo y sofisticación en el corazón de Nueva York</h3>
+            <p>En pleno Midtown Manhattan, el Hotel Calíope redefine el lujo urbano con un diseño vanguardista, vistas panorámicas y una experiencia neoyorquina inolvidable.</p>
+            
+            <div class="modal-details">
+                <div class="detail-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>123 Madison Ave, Nueva York, NY</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fa-solid fa-star"></i>
+                    <span>Clasificación: 5 estrellas</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fa-solid fa-wifi"></i>
+                    <span>WiFi de alta velocidad</span>
+                </div>
+            </div>
+            
+            <div class="modal-amenities">
+                <h4>Servicios destacados:</h4>
+                <div class="amenities-list">
+                    <span><i class="fa-solid fa-city"></i> Terraza con vistas a la ciudad</span>
+                    <span><i class="fa-solid fa-utensils"></i> Restaurante gourmet internacional</span>
+                    <span><i class="fa-solid fa-dumbbell"></i> Gimnasio 24h</span>
+                    <span><i class="fa-solid fa-martini-glass-citrus"></i> Sky bar en la azotea</span>
+                </div>
+            </div>
+            
+            <button class="modal-contact-btn"><a href="../../Contacto/contacto.php">CONTACTAR</a></button>
+        </div>
+    </div>
+</div>
+
 
 <!-- Coloca el script al final del cuerpo -->
 <section class="dispo">

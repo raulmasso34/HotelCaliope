@@ -202,7 +202,7 @@ if ($controller !== null) {
 
                     <div class="main-botones">
                         <button>DESCUBRIR</button>
-                        <button>RESERVAR</button>
+                        <button><a href="../../galeria/galeria.php">GALERÍA</a></button>
                     </div>
                 </div>
             </div>
@@ -216,6 +216,47 @@ if ($controller !== null) {
             </div>
         </div>
     </section>
+
+    <!-- Modal -->
+    <div id="hotelModal" class="hotel-modal">
+    <div class="hotel-modal-content">
+        <span class="close-btn">&times;</span>
+        <div class="modal-body">
+            <img id="modal-image" src="../../../static/img/tossa/tossa4.jpg" alt="Hotel Calíope" class="modal-image">
+            <h2>HOTEL CALÍOPE</h2>
+            <h3>Encanto Mediterráneo en Tossa de Mar</h3>
+            <p>Situado junto a las aguas cristalinas de la Costa Brava, el Hotel Calíope en Tossa de Mar combina elegancia costera con comodidad moderna en un entorno histórico incomparable.</p>
+            
+            <div class="modal-details">
+                <div class="detail-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Carrer del Mar, 12, Tossa de Mar</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fa-solid fa-star"></i>
+                    <span>Clasificación: 5 estrellas</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fa-solid fa-wifi"></i>
+                    <span>WiFi de alta velocidad</span>
+                </div>
+            </div>
+            
+            <div class="modal-amenities">
+                <h4>Servicios destacados:</h4>
+                <div class="amenities-list">
+                    <span><i class="fa-solid fa-umbrella-beach"></i> Acceso directo a la playa</span>
+                    <span><i class="fa-solid fa-utensils"></i> Restaurante con cocina mediterránea</span>
+                    <span><i class="fa-solid fa-spa"></i> Spa con vista al mar</span>
+                    <span><i class="fa-solid fa-water"></i> Piscina panorámica</span>
+                </div>
+            </div>
+            
+            <button class="modal-contact-btn"> <a href="../../Contacto/contacto.php">CONTACTAR</a></button>
+        </div>
+    </div>
+</div>
+
 
 <!-- Coloca el script al final del cuerpo -->
 <section class="dispo">

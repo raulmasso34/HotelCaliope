@@ -114,24 +114,18 @@ $conn = $database->getConnection();
                     
                     <a href="../../../vista/Contacto/contacto.php">Contacto</a>
                     
-                    <!-- Contenedor del perfil -->
-                     <div class="dropdown-perfil-content">
-       
-                        <a href="../vista/Clientes/login.php">
-                            <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
-                        </a>
-                    
+                    <div class="dropdown-perfil-content">
+    <!-- Enlace de perfil siempre visible -->
+    <a href="../vista/Clientes/perfil.php">
+        <i class="bi bi-person"></i> Perfil
+    </a>
 
-                    <a href="../vista/Clientes/perfil.php">
-                        <i class="bi bi-person"></i> Perfil
-                    </a>
+    <!-- Enlace para cerrar sesión siempre visible -->
+    <a href="../controller/clients/LoginController.php?action=logout" style="color: red;">
+        <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
+    </a>
+</div>
 
-               
-                        <a href="../controller/clients/LoginController.php?action=logout" style="color: red;">
-                            <i class="bi bi-box-arrow-right" style="color: red;"></i> Cerrar sesión
-                        </a>
-                 
-                </div>
                 </div>
             </div>
 
@@ -212,8 +206,8 @@ $conn = $database->getConnection();
                     <p>Ubicado en el corazón de las Rías Baixas, el Hotel Calíope combina la tradición gallega con el confort moderno. Disfrute de nuestras habitaciones con vistas al mar, la gastronomía local en nuestro restaurante premiado y el sonido relajante de las olas desde nuestro jardín atlántico.</p>
 
                     <div class="main-botones">
-                        <button>CONOCER MÁS</button>
-                        <button>RESERVAR AHORA</button>
+                        <button>DESCUBRIR</button>
+                        <button><a href="../../galeria/galeria.php">GALERÍA</a></button>
                     </div>
                 </div>
             </div>
@@ -227,6 +221,45 @@ $conn = $database->getConnection();
             </div>
         </div>
     </section>
+    <!-- Modal -->
+    <div id="hotelModal" class="hotel-modal">
+        <div class="hotel-modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-body">
+                <img id="modal-image" src="../../../static/img/Galicia/galicia2.jpg" alt="Hotel Calíope" class="modal-image">
+                <h2>HOTEL CALÍOPE</h2>
+                <h3>Experiencia Galicia Auténtica</h3>
+                <p>Ubicado en el corazón de las Rías Baixas, el Hotel Calíope ofrece una experiencia única donde la tradición gallega se fusiona con el confort moderno.</p>
+                
+                <div class="modal-details">
+                    <div class="detail-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Rúa do Mar, 23, Pontevedra</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fa-solid fa-star"></i>
+                        <span>Clasificación: 5 estrellas</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fa-solid fa-wifi"></i>
+                        <span>WiFi de alta velocidad</span>
+                    </div>
+                </div>
+                
+                <div class="modal-amenities">
+                    <h4>Servicios destacados:</h4>
+                    <div class="amenities-list">
+                        <span><i class="fa-solid fa-umbrella-beach"></i> Playa privada</span>
+                        <span><i class="fa-solid fa-utensils"></i> Restaurante premiado</span>
+                        <span><i class="fa-solid fa-spa"></i> Spa atlántico</span>
+                        <span><i class="fa-solid fa-water"></i> Piscina infinita</span>
+                    </div>
+                </div>
+                
+                <button class="modal-contact-btn"> <a href="../../Contacto/contacto.php">CONTACTAR</a></button>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Coloca el script al final del cuerpo -->

@@ -83,23 +83,31 @@ class HotelModel {
                     h.Id_Hotel AS id,
                     h.Nombre AS nombre_hotel,
                     h.Descripcion AS descripcion,
+                    h.Ciudad AS ciudad,
+                    h.Estrellas AS estrellas,
                     p.Pais AS pais,  
                     c.Nombre AS continente,
-                    c.Directorio AS directorio
+                    c.Directorio AS directorio,
+                    GROUP_CONCAT(s.Servicio ORDER BY s.Servicio ASC) AS servicios
                   FROM Hotel h
                   JOIN Pais p ON h.Id_Pais = p.Id_Pais
                   JOIN Continentes c ON p.Id_Continente = c.Id_Continente
+                  LEFT JOIN Servicio s ON h.Id_Hotel = s.Id_Hotel
+                  WHERE s.TipoServicio IS NULL OR s.TipoServicio = 0  -- Si solo quieres servicios gratuitos
+                  GROUP BY h.Id_Hotel
                   ORDER BY c.Nombre, p.Pais";
     
         $result = $this->conn->query($query);
-        
+    
         if (!$result) {
             error_log("Error en consulta: " . $this->conn->error);
             return [];
         }
-        
+    
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    
+    
 
     public function obtenerEmailPorId($hotelId) {
         $stmt = $this->conn->prepare("SELECT CorreoElectronico FROM Hotel WHERE Id_Hotel = ?");

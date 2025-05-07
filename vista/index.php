@@ -293,9 +293,10 @@ if(is_array($habitaciones) && !empty($habitaciones)) {
     <!-------------------------------HOTLES------------------------->
     <section class="hoteles-nu">
     <div class="hoteles-txt">
-        <h1>Nuestros hoteles en...</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat sequi nisi repudiandae atque?</p>
-    </div>
+    <h1>Descubre nuestros hoteles en...</h1>
+    <p>Explora los destinos más exclusivos con nosotros. Ofrecemos una experiencia única, perfecta para aquellos que buscan lujo y comodidad en cada rincón del mundo.</p>
+</div>
+
     <div class="hoteles-box">
     <?php foreach($hotelesMostrar as $hotel): 
         $basePath = "../static/img/hoteles/";
@@ -320,32 +321,46 @@ if(is_array($habitaciones) && !empty($habitaciones)) {
         
     ?>
      
-<div class="hoteles-nu-gen">
-    <div class="sub-hoteles-nu">
-        <img class="sub-img" src="<?= $imagenPath ?>" alt="<?= htmlspecialchars($hotel['nombre_hotel']) ?>">
-    </div>
-    <div class="sub-hoteles-nu">
-        <h1><?= htmlspecialchars($hotel['nombre_hotel']) ?></h1>
-        <p><?= htmlspecialchars(substr($hotel['descripcion'], 0, 100)) ?>...</p>
-        <div class="hoteles-boton">
-            <button class="ver-mas-btn" 
-                    data-nombre="<?= htmlspecialchars($hotel['nombre_hotel']) ?>"
-                    data-descripcion="<?= htmlspecialchars($hotel['descripcion']) ?>"
-                    data-imagen="<?= $imagenPath ?>"
-                    data-ciudad="<?= htmlspecialchars($hotel['ciudad'] ?? '') ?>"
-                    data-estrellas="<?= $hotel['estrellas'] ?? '' ?>"
-                    data-servicios="<?= htmlspecialchars($hotel['servicios'] ?? '') ?>">
-                VER MÁS
-            </button>
+    <div class="hoteles-nu-gen">
+        <div class="sub-hoteles-nu">
+            <img class="sub-img" src="<?= $imagenPath ?>" alt="<?= htmlspecialchars($hotel['nombre_hotel']) ?>">
+        </div>
+        <div class="sub-hoteles-nu">
+            <h1><?= htmlspecialchars($hotel['nombre_hotel']) ?></h1>
+            <p><?= htmlspecialchars(substr($hotel['descripcion'], 0, 100)) ?>...</p>
+            <div class="hoteles-boton">
+                <button class="ver-mas-btn" 
+                        data-nombre="<?= htmlspecialchars($hotel['nombre_hotel']) ?>"
+                        data-descripcion="<?= htmlspecialchars($hotel['descripcion']) ?>"
+                        data-imagen="<?= $imagenPath ?>"
+                        data-ciudad="<?= htmlspecialchars($hotel['ciudad'] ?? '') ?>"
+                        data-estrellas="<?= $hotel['estrellas'] ?? '' ?>"
+                        data-servicios="<?= htmlspecialchars($hotel['servicios'] ?? '') ?>">
+                    VER MÁS
+                </button>
+            </div>
         </div>
     </div>
-</div>
-<?php endforeach; ?>
+    <?php endforeach; ?>
 
     </div>
 </section>
     <!-- Modal -->
 
+<!-- Modal -->
+<div id="hotelModal" class="hotel-modal">
+    <div class="hotel-modal-content">
+        <span class="close-btn">&times;</span>
+        <div class="modal-body">
+            <img id="modal-image" src="" alt="" class="modal-image">
+            <h2 id="modal-name"></h2>
+            <p id="modal-description"></p>
+            <p><strong>Ciudad:</strong> <span id="modal-city"></span></p>
+            <p><strong>Estrellas:</strong> <span id="modal-stars"></span></p>
+            <p><strong>Servicios:</strong> <span id="modal-services"></span></p>
+        </div>
+    </div>
+</div>
 
 
     <!--------------------------BENEFICIOS-------------------------------->

@@ -203,8 +203,8 @@ if ($controller !== null) {
                 <p>Ubicado en el corazón de los Pirineos, el Hotel Calíope combina el encanto rústico de la montaña con el lujo contemporáneo. Disfrute de impresionantes vistas a los picos nevados, habitaciones con chimenea y acceso exclusivo a rutas de senderismo. Nuestro spa de montaña y restaurante con gastronomía pirenaica completan una experiencia única en contacto con la naturaleza.</p>
 
                 <div class="main-botones">
-                    <button>EXPERIENCIAS</button>
-                    <button>RESERVAR</button>
+                    <button>DESCUBRIR</button>
+                    <button><a href="../../galeria/galeria.php">GALERÍA</a></button>
                 </div>
             </div>
         </div>
@@ -218,6 +218,45 @@ if ($controller !== null) {
         </div>
     </div>
 </section>
+
+<div id="hotelModal" class="hotel-modal">
+    <div class="hotel-modal-content">
+        <span class="close-btn">&times;</span>
+        <div class="modal-body">
+            <img id="modal-image" src="../../../static/img/pirineos/pirineos2.jpg" alt="Hotel Calíope" class="modal-image">
+            <h2>HOTEL CALÍOPE</h2>
+            <h3>Refugio de lujo en los Pirineos</h3>
+            <p>Ubicado en un enclave privilegiado entre montañas, el Hotel Calíope en los Pirineos ofrece una experiencia única de desconexión y bienestar rodeado de naturaleza.</p>
+            
+            <div class="modal-details">
+                <div class="detail-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Camí del Bosc, s/n, Pirineos</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fa-solid fa-star"></i>
+                    <span>Clasificación: 5 estrellas</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fa-solid fa-wifi"></i>
+                    <span>WiFi de alta velocidad</span>
+                </div>
+            </div>
+            
+            <div class="modal-amenities">
+                <h4>Servicios destacados:</h4>
+                <div class="amenities-list">
+                    <span><i class="fa-solid fa-mountain"></i> Rutas de senderismo guiadas</span>
+                    <span><i class="fa-solid fa-fire"></i> Chimeneas en cada habitación</span>
+                    <span><i class="fa-solid fa-spa"></i> Spa alpino</span>
+                    <span><i class="fa-solid fa-snowflake"></i> Actividades de invierno</span>
+                </div>
+            </div>
+            
+            <button class="modal-contact-btn"><a href="../../Contacto/contacto.php">CONTACTAR</a></button>
+        </div>
+    </div>
+</div>
 
 
 <!-- Coloca el script al final del cuerpo -->

@@ -202,9 +202,10 @@ if ($controller !== null) {
             <div class="main-txt">
                 <p>Ubicado frente a las legendarias aguas turquesas de Miami Beach, el Hotel Calíope combina el glamour art déco con comodidades modernas. Disfrute de habitaciones con balcones privados, tres piscinas climatizadas, acceso directo a la playa y nuestro exclusivo spa con tratamientos inspirados en los cayos de Florida. A sólo pasos de South Beach y la vibrante vida nocturna de Ocean Drive.</p>
 
+                
                 <div class="main-botones">
-                    <button>GALERÍA</button>
-                    <button>SABER MÁS</button>
+                    <button>DESCUBRIR</button>
+                    <button><a href="../../galeria/galeria.php">GALERÍA</a></button>
                 </div>
             </div>
         </div>
@@ -218,6 +219,46 @@ if ($controller !== null) {
         </div>
     </div>
 </section>
+
+<div id="hotelModal" class="hotel-modal">
+    <div class="hotel-modal-content">
+        <span class="close-btn">&times;</span>
+        <div class="modal-body">
+            <img id="modal-image" src="../../../static/img/florida/florida4.jpg" alt="Hotel Calíope" class="modal-image">
+            <h2>HOTEL CALÍOPE</h2>
+            <h3>Lujo tropical en la costa de Florida</h3>
+            <p>Frente a las arenas doradas y el azul turquesa del mar, el Hotel Calíope en Florida te invita a vivir una experiencia vibrante con todo el confort y estilo del sur de Estados Unidos.</p>
+            
+            <div class="modal-details">
+                <div class="detail-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Ocean Drive, 101, Miami Beach, Florida</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fa-solid fa-star"></i>
+                    <span>Clasificación: 5 estrellas</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fa-solid fa-wifi"></i>
+                    <span>WiFi de alta velocidad</span>
+                </div>
+            </div>
+            
+            <div class="modal-amenities">
+                <h4>Servicios destacados:</h4>
+                <div class="amenities-list">
+                    <span><i class="fa-solid fa-umbrella-beach"></i> Playa exclusiva</span>
+                    <span><i class="fa-solid fa-utensils"></i> Restaurante de cocina fusión</span>
+                    <span><i class="fa-solid fa-cocktail"></i> Bar tropical junto a la piscina</span>
+                    <span><i class="fa-solid fa-spa"></i> Spa con tratamientos caribeños</span>
+                </div>
+            </div>
+            
+            <button class="modal-contact-btn"><a href="../../Contacto/contacto.php">CONTACTAR</a></button>
+        </div>
+    </div>
+</div>
+
 
 <!-- Coloca el script al final del cuerpo -->
 <section class="dispo">

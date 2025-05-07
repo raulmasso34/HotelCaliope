@@ -349,4 +349,66 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   //--------------------MODAL DE HOTELES VER MAS BOTON-------------------------
+  // Obtener el modal
+var modal = document.getElementById("hotelModal");
+
+// Obtener el botón que abre el modal
+var btns = document.querySelectorAll('.ver-mas-btn');
+
+// Obtener el <span> que cierra el modal
+var span = document.getElementsByClassName("close-btn")[0];
+
+// Agregar un evento a cada botón "VER MÁS"
+// Modificación para añadir animación al abrir/cerrar
+// Función para abrir el modal
+function openModal(btn) {
+  // Rellenar datos básicos
+  document.getElementById("modal-name").innerText = btn.getAttribute('data-nombre');
+  document.getElementById("modal-description").innerText = btn.getAttribute('data-descripcion');
+  document.getElementById("modal-image").src = btn.getAttribute('data-imagen');
+  document.getElementById("modal-city").innerText = btn.getAttribute('data-ciudad');
   
+  // Formatear estrellas
+  const starsCount = parseInt(btn.getAttribute('data-estrellas'));
+  document.getElementById("modal-stars").innerHTML = '★'.repeat(starsCount) + '☆'.repeat(5-starsCount);
+  
+  // Formatear servicios como tags
+  const servicios = btn.getAttribute('data-servicios').split(',');
+  const servicesContainer = document.getElementById("modal-services");
+  servicesContainer.innerHTML = '';
+  
+  servicios.forEach(servicio => {
+    if (servicio.trim() !== '') {
+      const tag = document.createElement('span');
+      tag.textContent = servicio.trim();
+      servicesContainer.appendChild(tag);
+    }
+  });
+  
+  // Mostrar modal con animación
+  modal.style.display = "block";
+  setTimeout(() => {
+    modal.classList.add('show');
+  }, 10);
+}
+
+// Función para cerrar el modal
+function closeModal() {
+  modal.classList.remove('show');
+  setTimeout(() => {
+    modal.style.display = "none";
+  }, 300);
+}
+
+// Event listeners
+document.querySelectorAll('.ver-mas-btn').forEach(btn => {
+  btn.addEventListener('click', () => openModal(btn));
+});
+
+document.querySelector('.close-btn').addEventListener('click', closeModal);
+
+window.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    closeModal();
+  }
+});
