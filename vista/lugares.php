@@ -1,7 +1,5 @@
 <?php
 session_start();
-
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -15,6 +13,10 @@ require_once __DIR__ . '/../controller/hotel/hotelController.php';
 // Conectar a la base de datos
 $database = new Database();
 $db = $database->getConnection();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../vista/Clientes/login.php');
+    exit;
+}
 
 // Crear instancia del controlador
 $reservaController = new ReservaController();

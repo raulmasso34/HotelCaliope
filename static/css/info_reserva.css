@@ -202,16 +202,125 @@
     opacity: 0.8;
 }
 
-@media (max-width: 768px) {
+/* ----------------- RESERVA RESPONSIVE MEJORADO ----------------- */
+@media (max-width: 1200px) {
     .reserva-grid {
-        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .reserva-main {
+        padding: 3rem 0;
+    }
+    
+    .reserva-header-card {
+        padding: 1.75rem; /* Aumentado */
+    }
+    
+    .reserva-header-card h1 {
+        font-size: 1.8rem; /* Aumentado */
     }
     
     .footer-content {
         grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .reserva-grid {
+        grid-template-columns: 1fr;
+        padding: 1.75rem; /* Aumentado */
+        gap: 2.5rem; /* Aumentado */
+    }
+    
+    .reserva-header-card {
+        padding: 1.5rem; /* Aumentado */
+    }
+    
+    .reserva-header-card h1 {
+        font-size: 1.6rem; /* Ajustado */
+    }
+    
+    .status-badge {
+        top: 1rem; /* Aumentado */
+        right: 1rem; /* Aumentado */
+        font-size: 0.9rem; /* Aumentado */
+        padding: 0.6rem 1.2rem; /* Aumentado */
+    }
+    
+    .detail-label {
+        min-width: 160px; /* Aumentado */
+        font-size: 1rem; /* Nuevo */
+    }
+    
+    .detail-value {
+        font-size: 1rem; /* Nuevo */
     }
     
     .reserva-actions {
-        flex-direction: column;
+        padding: 1.75rem; /* Aumentado */
+    }
+    
+    .btn-cancel,
+    .btn-back {
+        padding: 0.85rem 1.5rem; /* Aumentado */
+        font-size: 1rem; /* Nuevo */
+    }
+}
+
+@media (max-width: 576px) {
+    .reserva-main {
+        padding: 2.5rem 0; /* Aumentado */
+    }
+    
+    .section-title {
+        font-size: 1.3rem; /* Aumentado */
+        padding-bottom: 1rem; /* Aumentado */
+    }
+    
+    .detail-item {
+        padding: 1rem; /* Aumentado */
+        margin-bottom: 1.25rem; /* Aumentado */
+    }
+    
+    .detail-item.total {
+        padding: 1.25rem; /* Aumentado */
+    }
+    
+    .detail-item.total .detail-value {
+        font-size: 1.3rem; /* Aumentado */
+    }
+    
+    .btn-cancel,
+    .btn-back {
+        padding: 1rem; /* Aumentado */
+        font-size: 1.1rem; /* Aumentado */
+    }
+}
+
+@media (max-width: 400px) {
+    .reserva-header-card h1 {
+        font-size: 1.5rem; /* Ajustado */
+    }
+    
+    .reserva-header-card {
+        padding: 1.5rem 1.25rem; /* Ajustado */
+    }
+    
+    .status-badge {
+        font-size: 0.95rem; /* Aumentado */
+        padding: 0.7rem 1.3rem; /* Aumentado */
+    }
+    
+    .detail-label,
+    .detail-value {
+        font-size: 1.05rem; /* Aumentado */
+    }
+    
+    .footer-copyright {
+        font-size: 1rem; /* Aumentado */
+        padding-top: 2.5rem; /* Aumentado */
     }
 }
