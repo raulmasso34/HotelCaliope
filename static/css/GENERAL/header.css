@@ -264,6 +264,7 @@ body {
     display: block;
 }
 
+
 /* Media Queries para el menú móvil */
 @media (max-width: 768px) {
     .links {
@@ -450,4 +451,9 @@ body {
     60% {
         transform: translateY(-5px);
     }
+}
+
+
+@media (max-width: 768px) {
+    
 }
