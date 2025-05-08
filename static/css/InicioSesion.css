@@ -737,7 +737,8 @@ body {
 
 /* Estilo base del botón */
 .btn-edit {
-    background: linear-gradient(135deg, #4a90e2, #6c5ce7); /* Degradado azul/morado */
+    background: var(--primary-blue); 
+    text-decoration: none;/* Degradado azul/morado */
     color: white;
     padding: 12px 25px;
     border: none;
@@ -756,7 +757,7 @@ body {
 .btn-edit:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    background: linear-gradient(135deg, #6c5ce7, #4a90e2); /* Invierte el degradado */
+    background: var(--gold); /* Invierte el degradado */
 }
 
 /* Efecto al hacer clic */

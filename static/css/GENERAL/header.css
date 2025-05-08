@@ -409,6 +409,8 @@ body {
     margin-bottom: 30px;
 }
 
+
+
 /* Flecha de scroll */
 .scroll-down {
     position: absolute;
@@ -455,5 +457,5 @@ body {
 
 
 @media (max-width: 768px) {
-    
+
 }
