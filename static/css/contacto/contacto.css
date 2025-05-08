@@ -141,7 +141,145 @@
 
 
 
+/* Contact Main - Responsive */
+@media (max-width: 1200px) {
+    .contact-main {
+        padding-top: 180px;
+    }
+    
+    .stats-container,
+    .info-container {
+        max-width: 1000px;
+    }
+}
 
+@media (max-width: 992px) {
+    .contact-main {
+        padding-top: 160px;
+    }
+    
+    .contact-stats {
+        margin-top: -80px;
+    }
+    
+    .stats-container {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .stat-item {
+        flex: 1 1 calc(50% - 20px);
+        min-width: 250px;
+    }
+    
+    .info-container {
+        grid-template-columns: repeat(2, 1fr);
+        margin: 60px auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-main {
+        padding-top: 140px;
+    }
+    
+    .contact-stats {
+        margin-top: -60px;
+    }
+    
+    .stats-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .stat-item {
+        flex: 1 1 100%;
+        padding: 25px;
+    }
+    
+    .info-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin: 40px auto;
+    }
+    
+    .info-card {
+        padding: 30px;
+    }
+    
+    .card-icon {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .card-icon i {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 576px) {
+    .contact-main {
+        padding-top: 120px;
+    }
+    
+    .stat-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .stat-icon i {
+        font-size: 20px;
+    }
+    
+    .stat-info h3 {
+        font-size: 1.3rem;
+    }
+    
+    .info-card {
+        padding: 25px 20px;
+    }
+    
+    .info-card h3 {
+        font-size: 1.3rem;
+    }
+    
+    .card-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .card-icon i {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 400px) {
+    .contact-main {
+        padding-top: 100px;
+    }
+    
+    .contact-stats {
+        margin-top: -40px;
+    }
+    
+    .stats-container {
+        padding: 0 15px;
+    }
+    
+    .info-container {
+        padding: 0 15px;
+    }
+    
+    .stat-item {
+        padding: 20px;
+    }
+}
 
 
 
