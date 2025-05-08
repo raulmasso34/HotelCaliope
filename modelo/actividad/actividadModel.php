@@ -17,7 +17,7 @@ class ActividadModel {
         $sql = "SELECT Id_Actividades, Id_Hotel, Dia_Inicio, Dia_Fin, Hora_Inicio, Hora_Fin, 
                        Capacidad_Maxima, Ubicacion, Descripcion, Precio, Nombre 
                 FROM Actividades 
-                WHERE Id_Hotel = ? AND Dia_Fin >= CURDATE()";  
+                WHERE Id_Hotel = ?";  
     
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $hotelId);
